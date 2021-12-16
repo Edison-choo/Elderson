@@ -8,19 +8,19 @@
     ".NETCoreApp,Version=v3.1": []
   },
   "packageFolders": {
-    "C:\\Users\\Edison Choo\\.nuget\\packages\\": {}
+    "C:\\Users\\yuzhe\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\coding\\VisualStudioProj\\EDP\\Elderson\\Elderson.csproj",
+      "projectUniqueName": "C:\\Users\\yuzhe\\Documents\\GitHub\\Elderson\\Elderson.csproj",
       "projectName": "Elderson",
-      "projectPath": "D:\\coding\\VisualStudioProj\\EDP\\Elderson\\Elderson.csproj",
-      "packagesPath": "C:\\Users\\Edison Choo\\.nuget\\packages\\",
-      "outputPath": "D:\\coding\\VisualStudioProj\\EDP\\Elderson\\obj\\",
+      "projectPath": "C:\\Users\\yuzhe\\Documents\\GitHub\\Elderson\\Elderson.csproj",
+      "packagesPath": "C:\\Users\\yuzhe\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\yuzhe\\Documents\\GitHub\\Elderson\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Edison Choo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\yuzhe\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -63,7 +63,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
       }
     }
   }
