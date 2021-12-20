@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\yuzhe\\Documents\\GitHub\\Elderson\\Elderson.csproj": {}
+    "D:\\coding\\VisualStudioProj\\EDP\\Elderson\\Elderson.csproj": {}
   },
   "projects": {
-    "C:\\Users\\yuzhe\\Documents\\GitHub\\Elderson\\Elderson.csproj": {
+    "D:\\coding\\VisualStudioProj\\EDP\\Elderson\\Elderson.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\yuzhe\\Documents\\GitHub\\Elderson\\Elderson.csproj",
+        "projectUniqueName": "D:\\coding\\VisualStudioProj\\EDP\\Elderson\\Elderson.csproj",
         "projectName": "Elderson",
-        "projectPath": "C:\\Users\\yuzhe\\Documents\\GitHub\\Elderson\\Elderson.csproj",
-        "packagesPath": "C:\\Users\\yuzhe\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\yuzhe\\Documents\\GitHub\\Elderson\\obj\\",
+        "projectPath": "D:\\coding\\VisualStudioProj\\EDP\\Elderson\\Elderson.csproj",
+        "packagesPath": "C:\\Users\\Edison Choo\\.nuget\\packages\\",
+        "outputPath": "D:\\coding\\VisualStudioProj\\EDP\\Elderson\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\yuzhe\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Edison Choo\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -39,6 +39,30 @@
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.11, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[5.0.11, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[3.1.18, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.18, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[3.1.5, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -57,7 +81,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     }

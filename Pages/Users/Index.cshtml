@@ -1,0 +1,114 @@
+﻿@page
+@model Elderson.Pages.Users.UserManagementModel
+@{
+    Layout = "Shared/_LayoutITSupport";
+    ViewData["Title"] = "User management page";
+}
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Hoverable Table</h4>
+        <p class="card-description">
+            Add class <code>.table-hover</code>
+        </p>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Jacob</td>
+                        <td>Patient</td>
+                        <td class="text-danger"><label class="badge badge-danger">Locked</label></td>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary">View</button>
+                                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id="dropdownMenuSplitButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuSplitButton1">
+                                    <a class="dropdown-item" href="#">Edit</a>
+                                    <a class="dropdown-item" href="#">Lock</a>
+                                    <a class="dropdown-item" href="#">Change password</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Jacob</td>
+                        <td>Patient</td>
+                        <td><label class="badge badge-warning">Pending Verification</label></td>
+                        <td class="text-danger">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary">View</button>
+                                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id="dropdownMenuSplitButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuSplitButton1" style="">
+                                    <a class="dropdown-item" href="#">Edit</a>
+                                    <a class="dropdown-item" href="#">Lock</a>
+                                    <a class="dropdown-item" href="#">Change password</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Jacob</td>
+                        <td>Patient</td>
+                        <td><label class="badge badge-danger">Locked</label></td>
+                        <td class="text-danger">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary">View</button>
+                                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id="dropdownMenuSplitButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuSplitButton1" style="">
+                                    <a class="dropdown-item" href="#">Edit</a>
+                                    <a class="dropdown-item" href="#">Lock</a>
+                                    <a class="dropdown-item" href="#">Change password</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Jacob</td>
+                        <td>Patient</td>
+                        <td><label class="badge badge-danger">Locked</label></td>
+                        <td class="text-danger">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary">View</button>
+                                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id="dropdownMenuSplitButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuSplitButton1" style="">
+                                    <a class="dropdown-item" href="#">Edit</a>
+                                    <a class="dropdown-item" href="#">Lock</a>
+                                    <a class="dropdown-item" href="#">Change password</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Jacob</td>
+                        <td>Patient</td>
+                        <td><label class="badge badge-danger">Locked</label></td>
+                        <td class="text-danger">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary">View</button>
+                                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id="dropdownMenuSplitButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuSplitButton1" style="">
+                                    <a class="dropdown-item" href="#">Edit</a>
+                                    <a class="dropdown-item" href="#">Lock</a>
+                                    <a class="dropdown-item" href="#">Change password</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
