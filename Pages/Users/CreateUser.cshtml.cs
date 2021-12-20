@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Elderson.Models;
 using Elderson.Services;
+using System.Security.Cryptography;
+using System.Text;
+using System.ComponentModel.DataAnnotations;
 
 namespace Elderson.Pages.Users
 {
@@ -13,6 +16,9 @@ namespace Elderson.Pages.Users
     {
         [BindProperty]
         public User newUser { get; set; }
+        [BindProperty]
+        //[Required, Compare(nameof(CreateUserModel.newUser.Password))]
+        public string confirmPwd { get; set; }
         private UserService _svc;
         public CreateUserModel(UserService service)
         {
@@ -28,7 +34,27 @@ namespace Elderson.Pages.Users
             {
                 //HttpContext.Session.SetString("SSName", MyEmployee.Name);
                 //HttpContext.Session.SetString("SSDept", MyEmployee.Department);
-                _svc.AddUser(newUser);
+
+                // Hash Password
+                RandomNumberGenerator rng = RandomNumberGenerator.Create();
+                byte[] saltByte = new byte[8];
+                rng.GetBytes(saltByte);
+                var salt = Convert.ToBase64String(saltByte);
+                SHA512 hashing = SHA512.Create();
+                string pwdWithSalt = newUser.Password + salt;
+                byte[] hashWithSalt = hashing.ComputeHash(Encoding.UTF8.GetBytes(pwdWithSalt));
+                newUser.Password = Convert.ToBase64String(hashWithSalt);
+
+                // Add user to Db
+                var valid = false;
+                while (!(valid))
+                {
+                    string guid = Guid.NewGuid().ToString();
+                    newUser.Id = guid;
+                    newUser.CreatedAt = DateTime.Now;
+                    valid = _svc.AddUser(newUser);
+                }
+                
                 return RedirectToPage("Index");
             }
 

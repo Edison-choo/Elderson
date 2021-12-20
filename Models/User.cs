@@ -12,11 +12,11 @@ namespace Elderson.Models
         [Required]
         public string Email { get; set; }
         public string Password { get; set; }
-        public string Phone { get; set; }
-        [DataType(DataType.Date)]
-        public DateTime BirthDate { get; set; }
+        public int Phone { get; set; }
+        //[DataType(DataType.Date)]
+        public DateTime Birthdate { get; set; }
         [Required]
-        public string FullName { get; set; }
+        public string Fullname { get; set; }
         public string Gender { get; set; }
         [Required]
         public string UserType { get; set; }

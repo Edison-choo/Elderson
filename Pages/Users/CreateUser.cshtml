@@ -13,8 +13,8 @@
                 <form class="forms-sample" method="post" asp-action="">
                     <div class="form-group">
                         <label for="exampleInputName1">Name</label>
-                        <input asp-for="newUser.FullName" type="text" class="form-control" id="exampleInputName1" placeholder="Name">
-                        <span asp-validation-for="newUser.FullName" class="text-danger"></span>
+                        <input asp-for="newUser.Fullname" type="text" class="form-control" id="exampleInputName1" placeholder="Name">
+                        <span asp-validation-for="newUser.Fullname" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail3">Email address</label>
@@ -28,8 +28,8 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword4">Confirm Password</label>
-                        <input asp-for="newUser.Password" type="password" class="form-control" id="exampleInputPassword4" placeholder="Password">
-                        <span asp-validation-for="newUser.Password" class="text-danger"></span>
+                        <input asp-for="confirmPwd" type="password" class="form-control" id="exampleInputPassword4" placeholder="Password">
+                        <span asp-validation-for="confirmPwd" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label>Select User Type</label>
@@ -43,11 +43,11 @@
                         @Html.DropDownList("newUser.UserType", new SelectList(Enum.GetValues(typeof(Models.UserType))), "--Select an option--")
                         <span asp-validation-for="newUser.UserType" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
+                    @*<div class="form-group">
                         <label for="exampleInputBirthDate">Birth Date</label>
                         <input asp-for="newUser.BirthDate" type="number" class="form-control" id="exampleInputBirthDate" placeholder="Birth Date">
                         <span asp-validation-for="newUser.BirthDate" class="text-danger"></span>
-                    </div>
+                    </div>*@
                     <div class="form-group">
                         <label for="exampleInputEmail3">Phone</label>
                         <input asp-for="newUser.Phone" type="number" class="form-control" id="exampleInputPhone" placeholder="Phone">

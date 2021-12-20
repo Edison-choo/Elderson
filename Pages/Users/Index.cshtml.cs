@@ -20,6 +20,7 @@ namespace Elderson.Pages.Users
         }
         public void OnGet()
         {
+            allusers = _svc.GetAllUsers();
         }
     }
 }
