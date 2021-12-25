@@ -21,5 +21,6 @@ namespace Elderson.Models
         [Required]
         public string UserType { get; set; }
         public DateTime CreatedAt { get; set; }
+        public string PasswordSalt { get; set; }
     }
 }

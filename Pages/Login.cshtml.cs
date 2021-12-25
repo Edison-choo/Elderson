@@ -4,13 +4,62 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Elderson.Models;
+using Elderson.Services;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Elderson.Pages.Users
 {
     public class LoginModel : PageModel
     {
+        [BindProperty]
+        public string Email { get; set; }
+
+        [BindProperty]
+        public string Password { get; set; }
+
+        [BindProperty]
+        public string ErrorMsg { get; set; }
+
+        private UserService _svc;
+        public LoginModel(UserService service)
+        {
+            _svc = service;
+        }
         public void OnGet()
         {
+        }
+
+        public IActionResult OnPost()
+        {
+            try
+            {
+                var user = _svc.GetPatientUserByEmail(Email);
+                if (user != null)
+                {
+                    SHA512 hashing = SHA512.Create();
+                    string dbSalt = user.PasswordSalt;
+                    string pwdWithSalt = Password + dbSalt;
+                    byte[] hashWithSalt = hashing.ComputeHash(Encoding.UTF8.GetBytes(pwdWithSalt));
+
+                    if (user.Password.Equals(Convert.ToBase64String(hashWithSalt)))
+                    {
+                        return RedirectToPage("Users/Index");
+                    } else
+                    {
+                        ErrorMsg = "Login Information is incorrect";
+                        return Page();
+                    }
+                } else
+                {
+                    ErrorMsg = "Login Information is incorrect";
+                    return Page();
+                }
+            } catch
+            {
+                return Page();
+            }
         }
     }
 }

@@ -1,0 +1,122 @@
+﻿@page "/{id}"
+@model Elderson.Pages.ISR.Users.ProfileModel
+@{
+    Layout = "Shared/_LayoutITSupport";
+    ViewData["Title"] = "User Profile page";
+}
+
+<div class="row">
+    <form class="forms-sample" method="post" asp-action="">
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div class="d-flex">
+                                <img src="#" alt="Alternate Text" />
+                                <div style="margin-left:20px;">
+                                    <h4>@Model.SelectedUser.Fullname</h4>
+                                    <p>@Model.SelectedUser.UserType</p>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-primary"><a asp-page="/Users/UserProfile/">View</a> </button>
+                                    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id="dropdownMenuSplitButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuSplitButton1">
+                                        <a class="dropdown-item" href="/Users/EditUser/">Edit</a>
+                                        <a class="dropdown-item" href="/Users/LockUser/">Lock</a>
+                                        <a class="dropdown-item" href="/Users/ChangePwd/">Change password</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="row">
+            <div class="col-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Contact Information</h4>
+                        <hr />
+                        <div>
+                            <div>Email Adress</div>
+                            <div>@Model.SelectedUser.Email</div>
+                        </div>
+                        <div>
+                            <div>Phone Number</div>
+                            <div>@Model.SelectedUser.Phone</div>
+                        </div>
+                        @{ if (Model.SelectedUser.UserType == "Patient")
+                            {
+                                <div>
+                                    <div>Emergency Contact Name</div>
+                                    <div>example@gmail.com</div>
+                                </div>
+                                <div>
+                                    <div>Emergency Contact Number</div>
+                                    <div>example@gmail.com</div>
+                                </div>
+                            }
+                        }
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Personal Information</h4>
+                        <hr />
+                        <div class="row">
+                            <div class="col-6 grid-margin">
+                                <div>
+                                    <div>Age</div>
+                                    <div>example@gmail.com</div>
+                                </div>
+                                <div>
+                                    <div>Gender</div>
+                                    <div>@Model.SelectedUser.Gender</div>
+                                </div>
+                            </div>
+                            <div class="col-6 grid-margin">
+                                <div>
+                                    <div>Birth Date</div>
+                                    <div>@Model.SelectedUser.Birthdate</div>
+                                </div>
+                                @{ if (Model.SelectedUser.UserType == "Patient")
+                                    {
+                                        <div>
+                                            <div>Relationship</div>
+                                            <div>example@gmail.com</div>
+                                        </div>
+                                    }
+                                }
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 grid-margin">
+                                @{ if (Model.SelectedUser.UserType == "Patient")
+                                    {
+                                        <div>
+                                            <div>Home Address</div>
+                                            <div>example@gmail.com</div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

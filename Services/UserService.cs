@@ -27,6 +27,12 @@ namespace Elderson.Services
             return user;
         }
 
+        public User GetPatientUserByEmail(String email)
+        {
+            User user = _context.Users.Where(e => e.Email == email && e.UserType == "Patient").FirstOrDefault();
+            return user;
+        }
+
         private bool UserExists(string id)
         {
             return _context.Users.Any(e => e.Id == id);

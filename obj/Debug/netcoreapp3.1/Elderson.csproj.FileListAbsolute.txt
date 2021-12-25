@@ -43,7 +43,6 @@ D:\coding\VisualStudioProj\EDP\Elderson\obj\Debug\netcoreapp3.1\Razor\Pages\Shar
 D:\coding\VisualStudioProj\EDP\Elderson\obj\Debug\netcoreapp3.1\Razor\Pages\Login.cshtml.g.cs
 D:\coding\VisualStudioProj\EDP\Elderson\obj\Debug\netcoreapp3.1\Razor\Pages\OrganizationLogin.cshtml.g.cs
 D:\coding\VisualStudioProj\EDP\Elderson\obj\Debug\netcoreapp3.1\Razor\Pages\Shared\_LayoutEmpty.cshtml.g.cs
-D:\coding\VisualStudioProj\EDP\Elderson\obj\Debug\netcoreapp3.1\Razor\Pages\Users\Index.cshtml.g.cs
 D:\coding\VisualStudioProj\EDP\Elderson\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Razor.Language.dll
 D:\coding\VisualStudioProj\EDP\Elderson\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.dll
 D:\coding\VisualStudioProj\EDP\Elderson\bin\Debug\netcoreapp3.1\Microsoft.CodeAnalysis.CSharp.dll
@@ -178,4 +177,6 @@ D:\coding\VisualStudioProj\EDP\Elderson\bin\Debug\netcoreapp3.1\runtimes\win-x64
 D:\coding\VisualStudioProj\EDP\Elderson\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\e_sqlite3.dll
 D:\coding\VisualStudioProj\EDP\Elderson\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 D:\coding\VisualStudioProj\EDP\Elderson\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-D:\coding\VisualStudioProj\EDP\Elderson\obj\Debug\netcoreapp3.1\Razor\Pages\Users\CreateUser.cshtml.g.cs
+D:\coding\VisualStudioProj\EDP\Elderson\obj\Debug\netcoreapp3.1\Razor\Pages\ISR\Users\CreateUser.cshtml.g.cs
+D:\coding\VisualStudioProj\EDP\Elderson\obj\Debug\netcoreapp3.1\Razor\Pages\ISR\Users\Index.cshtml.g.cs
+D:\coding\VisualStudioProj\EDP\Elderson\obj\Debug\netcoreapp3.1\Razor\Pages\ISR\Users\Profile.cshtml.g.cs
