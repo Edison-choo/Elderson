@@ -9,6 +9,7 @@ using Elderson.Services;
 using System.Security.Cryptography;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.Extensions.Logging;
 
 namespace Elderson.Pages.Users
 {
@@ -17,12 +18,23 @@ namespace Elderson.Pages.Users
         [BindProperty]
         public User newUser { get; set; }
         [BindProperty]
-        //[Required, Compare(nameof(CreateUserModel.newUser.Password))]
+        public Administrator AdminRole { get; set; }
+        [BindProperty]
+        public Doctor DoctorRole { get; set; }
+        [BindProperty]
+        public Patient PatientRole { get; set; }
+        [BindProperty]
+        [Required]
+        public string pwd { get; set; }
+        [BindProperty]
+        [Required]
         public string confirmPwd { get; set; }
         private UserService _svc;
-        public CreateUserModel(UserService service)
+        private readonly ILogger<CreateUserModel> _logger;
+        public CreateUserModel(ILogger<CreateUserModel> logger, UserService service)
         {
             _svc = service;
+            _logger = logger;
         }
         public void OnGet()
         {
@@ -34,6 +46,7 @@ namespace Elderson.Pages.Users
             {
                 //HttpContext.Session.SetString("SSName", MyEmployee.Name);
                 //HttpContext.Session.SetString("SSDept", MyEmployee.Department);
+                newUser.Password = pwd;
 
                 // Hash Password
                 RandomNumberGenerator rng = RandomNumberGenerator.Create();
@@ -46,6 +59,11 @@ namespace Elderson.Pages.Users
                 newUser.Password = Convert.ToBase64String(hashWithSalt);
                 newUser.PasswordSalt = salt;
 
+                if (_svc.GetUserByEmail(newUser.Email) != null)
+                {
+                    return Page();
+                }
+
                 // Add user to Db
                 var valid = false;
                 while (!(valid))
@@ -55,10 +73,39 @@ namespace Elderson.Pages.Users
                     newUser.CreatedAt = DateTime.Now;
                     valid = _svc.AddUser(newUser);
                 }
+
+                string typeGuid = Guid.NewGuid().ToString();
+                switch (newUser.UserType)
+                {
+                    case "Patient":
+                        PatientRole.Id = typeGuid;
+                        PatientRole.UserId = newUser.Id;
+                        _svc.AddPatient(PatientRole);
+                        break;
+                    case "Doctor":
+                        DoctorRole.Id = typeGuid;
+                        DoctorRole.UserId = newUser.Id;
+                        _svc.AddDoctor(DoctorRole);
+                        break;
+                    case "Administrator":
+                        AdminRole.Id = typeGuid;
+                        AdminRole.UserId = newUser.Id;
+                        _svc.AddAdministrator(AdminRole);
+                        break;
+                    case "Pharmacist":
+                        break;
+                    case "ITSupport":
+                        break;
+                }
                 
                 return RedirectToPage("Index");
             }
+            var error = ModelState.Values.SelectMany(v => v.Errors.Select(b => b.ErrorMessage));
+            foreach (var i in error)
+            {
+                _logger.LogInformation(i);
 
+            }
             return Page();
         }
     }

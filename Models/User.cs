@@ -9,13 +9,12 @@ namespace Elderson.Models
     public class User
     {
         public string Id { get; set; }
-        [Required]
+        [Required, RegularExpression(@"^\S+@\S+\.\S+$", ErrorMessage ="The email format is invalid")]
         public string Email { get; set; }
         public string Password { get; set; }
         public int Phone { get; set; }
         [DataType(DataType.Date)]
         public DateTime Birthdate { get; set; }
-        [Required]
         public string Fullname { get; set; }
         public string Gender { get; set; }
         public string UserType { get; set; }

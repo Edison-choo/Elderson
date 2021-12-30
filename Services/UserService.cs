@@ -27,6 +27,12 @@ namespace Elderson.Services
             return user;
         }
 
+        public User GetUserByEmail(String email)
+        {
+            User user = _context.Users.Where(e => e.Email == email).SingleOrDefault();
+            return user;
+        }
+
         public User GetPatientUserByEmail(String email)
         {
             User user = _context.Users.Where(e => e.Email == email && e.UserType == "Patient").FirstOrDefault();
@@ -103,6 +109,150 @@ namespace Elderson.Services
             }
             return deleted;
         }
-    
+
+        // Patient Service
+        private bool PatientExists(string id)
+        {
+            return _context.Patients.Any(e => e.Id == id);
+        }
+
+        public bool AddPatient(Patient patient)
+        {
+            if (PatientExists(patient.Id))
+            {
+                return false;
+            }
+            _context.Add(patient);
+            _context.SaveChanges();
+            return true;
+        }
+
+        public Patient GetPatientById(String id)
+        {
+            Patient patient = _context.Patients.Where(e => e.Id == id).FirstOrDefault();
+            return patient;
+        }
+
+        public bool DeletePatient(Patient thepatient)
+        {
+            bool deleted = true;
+            _context.Attach(thepatient).State = EntityState.Modified;
+
+            try
+            {
+                _context.Remove(thepatient);
+                _context.SaveChanges();
+                deleted = true;
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!PatientExists(thepatient.Id))
+                {
+                    deleted = false;
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return deleted;
+        }
+
+        // Doctor Service
+        private bool DoctorExists(string id)
+        {
+            return _context.Doctors.Any(e => e.Id == id);
+        }
+
+        public bool AddDoctor(Doctor doctor)
+        {
+            if (DoctorExists(doctor.Id))
+            {
+                return false;
+            }
+            _context.Add(doctor);
+            _context.SaveChanges();
+            return true;
+        }
+
+        public Doctor GetDoctorById(String id)
+        {
+            Doctor doctor = _context.Doctors.Where(e => e.Id == id).FirstOrDefault();
+            return doctor;
+        }
+
+        public bool DeleteDoctor(Doctor thedoctor)
+        {
+            bool deleted = true;
+            _context.Attach(thedoctor).State = EntityState.Modified;
+
+            try
+            {
+                _context.Remove(thedoctor);
+                _context.SaveChanges();
+                deleted = true;
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!DoctorExists(thedoctor.Id))
+                {
+                    deleted = false;
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return deleted;
+        }
+
+        // Administrator Service
+        private bool AdministratorExists(string id)
+        {
+            return _context.Administrators.Any(e => e.Id == id);
+        }
+
+        public bool AddAdministrator(Administrator administrator)
+        {
+            if (AdministratorExists(administrator.Id))
+            {
+                return false;
+            }
+            _context.Add(administrator);
+            _context.SaveChanges();
+            return true;
+        }
+
+        public Administrator GetAdministratorById(String id)
+        {
+            Administrator administrator = _context.Administrators.Where(e => e.Id == id).FirstOrDefault();
+            return administrator;
+        }
+
+        public bool DeleteAdministrator(Administrator theadministrator)
+        {
+            bool deleted = true;
+            _context.Attach(theadministrator).State = EntityState.Modified;
+
+            try
+            {
+                _context.Remove(theadministrator);
+                _context.SaveChanges();
+                deleted = true;
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!AdministratorExists(theadministrator.Id))
+                {
+                    deleted = false;
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return deleted;
+        }
+
     }
 }

@@ -7,8 +7,12 @@
 
 <div class="card">
     <div class="card-body">
-        <h4 class="card-title">All User Table</h4>
+        <div class="d-flex justify-content-between align-items-start">
+            <h4 class="card-title">All User Table</h4>
+            <button class="btn btn-primary btn-l text-white mb-0 me-0" type="button"><i class="mdi mdi-account-plus"></i>Add new member</button>
 
+        </div>
+        
         <div class="table-responsive">
             <table class="table table-hover">
                 <thead>
@@ -30,18 +34,19 @@
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-primary"><a asp-page="Profile" asp-route-id="@item.Id">View</a> </button>
                                     @*<button type="button" class="btn btn-primary"><a asp-page="Edit" asp-route-id="@item.Id">Edit</a> </button>*@
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">Edit </button>
-                                    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id="@item.Id" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    @*<button type="button" class="btn btn-primary delete" data-toggle="modal" data-target=@("#staticBackdrop"+item.Id)>Edit </button>*@
+                                    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id=@("dropdownMenuSplitButton"+item.Id) data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     </button>
-                                    <div class="dropdown-menu" aria-labelledby="#@item.Id">
+                                    <div class="dropdown-menu" aria-labelledby=@("dropdownMenuSplitButton"+item.Id)>
                                         <a class="dropdown-item" asp-page="Edit" asp-route-id="@item.Id">Edit</a>
                                         <a class="dropdown-item" asp-page="Lock" asp-route-id="@item.Id">Lock</a>
                                         <a class="dropdown-item" asp-page="ChangePwd" asp-route-id="@item.Id">Change password</a>
+                                        <a class="dropdown-item"  data-toggle="modal" data-target=@("#staticBackdrop"+item.Id)>Delete</a>
                                     </div>
                                 </div>
                             </td>
                         </tr>
-                        <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal fade" id=@("staticBackdrop"+item.Id) data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-body">
@@ -53,7 +58,7 @@
                                         </div>
                                         <div class="d-flex justify-content-between" style="margin-top:30px;">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-danger"><a href="https://https:/localhost:44311/api/User/Delete/">Delete</a></button>
+                                            <button type="button" onclick=@("deleteUser("+"'"+item.Id+"'"+")") class="btn btn-danger">Delete</button>
                                         </div>
                                     </div>
                                 </div>
@@ -83,16 +88,7 @@
                         <td>Patient</td>
                         <td><label class="badge badge-danger">Locked</label></td>
                         <td class="text-danger">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-primary">View</button>
-                                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id="dropdownMenuSplitButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuSplitButton1" style="">
-                                    <a class="dropdown-item" href="#">Edit</a>
-                                    <a class="dropdown-item" href="#">Lock</a>
-                                    <a class="dropdown-item" href="#">Change password</a>
-                                </div>
-                            </div>
+                            
                         </td>
                     </tr>
                     <tr>
@@ -100,16 +96,7 @@
                         <td>Patient</td>
                         <td><label class="badge badge-danger">Locked</label></td>
                         <td class="text-danger">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-primary">View</button>
-                                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id="dropdownMenuSplitButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuSplitButton1" style="">
-                                    <a class="dropdown-item" href="#">Edit</a>
-                                    <a class="dropdown-item" href="#">Lock</a>
-                                    <a class="dropdown-item" href="#">Change password</a>
-                                </div>
-                            </div>
+                            
                         </td>
                     </tr>
                     <tr>
@@ -117,16 +104,7 @@
                         <td>Patient</td>
                         <td><label class="badge badge-danger">Locked</label></td>
                         <td class="text-danger">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-primary">View</button>
-                                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id="dropdownMenuSplitButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuSplitButton1" style="">
-                                    <a class="dropdown-item" href="#">Edit</a>
-                                    <a class="dropdown-item" href="#">Lock</a>
-                                    <a class="dropdown-item" href="#">Change password</a>
-                                </div>
-                            </div>
+                            
                         </td>
                     </tr>
                 </tbody>
@@ -134,4 +112,17 @@
         </div>
     </div>
 </div>
+
+<script>
+
+    function deleteUser(userId) {
+        $.ajax({
+            url: 'https://localhost:44311/api/User/'+userId,
+            type: 'DELETE',
+            success: function (result) {
+                console.log("Item delete successfully")
+            }
+        });
+    }
+</script>
 
