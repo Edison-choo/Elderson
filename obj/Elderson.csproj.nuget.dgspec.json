@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\coding\\VisualStudioProj\\EDP\\Elderson\\Elderson.csproj": {}
+    "C:\\Users\\ICONI\\OneDrive\\Desktop\\Elderson\\Elderson.csproj": {}
   },
   "projects": {
-    "D:\\coding\\VisualStudioProj\\EDP\\Elderson\\Elderson.csproj": {
+    "C:\\Users\\ICONI\\OneDrive\\Desktop\\Elderson\\Elderson.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\coding\\VisualStudioProj\\EDP\\Elderson\\Elderson.csproj",
+        "projectUniqueName": "C:\\Users\\ICONI\\OneDrive\\Desktop\\Elderson\\Elderson.csproj",
         "projectName": "Elderson",
-        "projectPath": "D:\\coding\\VisualStudioProj\\EDP\\Elderson\\Elderson.csproj",
-        "packagesPath": "C:\\Users\\Edison Choo\\.nuget\\packages\\",
-        "outputPath": "D:\\coding\\VisualStudioProj\\EDP\\Elderson\\obj\\",
+        "projectPath": "C:\\Users\\ICONI\\OneDrive\\Desktop\\Elderson\\Elderson.csproj",
+        "packagesPath": "C:\\Users\\ICONI\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ICONI\\OneDrive\\Desktop\\Elderson\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Edison Choo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ICONI\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -85,7 +85,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
         }
       }
     }
