@@ -180,3 +180,9 @@ D:\coding\VisualStudioProj\EDP\Elderson\bin\Debug\netcoreapp3.1\runtimes\win\lib
 D:\coding\VisualStudioProj\EDP\Elderson\obj\Debug\netcoreapp3.1\Razor\Pages\ISR\Users\CreateUser.cshtml.g.cs
 D:\coding\VisualStudioProj\EDP\Elderson\obj\Debug\netcoreapp3.1\Razor\Pages\ISR\Users\Index.cshtml.g.cs
 D:\coding\VisualStudioProj\EDP\Elderson\obj\Debug\netcoreapp3.1\Razor\Pages\ISR\Users\Profile.cshtml.g.cs
+D:\coding\VisualStudioProj\EDP\Elderson\obj\Debug\netcoreapp3.1\Razor\Pages\ISR\Users\ChangePwd.cshtml.g.cs
+D:\coding\VisualStudioProj\EDP\Elderson\obj\Debug\netcoreapp3.1\Razor\Pages\ISR\Users\Edit.cshtml.g.cs
+D:\coding\VisualStudioProj\EDP\Elderson\obj\Debug\netcoreapp3.1\Razor\Pages\Register.cshtml.g.cs
+D:\coding\VisualStudioProj\EDP\Elderson\bin\Debug\netcoreapp3.1\MailKit.dll
+D:\coding\VisualStudioProj\EDP\Elderson\bin\Debug\netcoreapp3.1\MimeKit.dll
+D:\coding\VisualStudioProj\EDP\Elderson\bin\Debug\netcoreapp3.1\BouncyCastle.Crypto.dll

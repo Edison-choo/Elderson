@@ -1,4 +1,4 @@
-﻿@page "/{id}"
+﻿@page
 @model Elderson.Pages.ISR.Users.ProfileModel
 @{
     Layout = "Shared/_LayoutITSupport";
@@ -13,15 +13,15 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <div class="d-flex">
-                                <img src="#" alt="Alternate Text" />
-                                <div style="margin-left:20px;">
-                                    <h4>@Model.SelectedUser.Fullname</h4>
+                                <img style="border-radius:50px; height:85px; width:85px;" src="~/images/faces/face1.jpg" alt="Alternate Text" />
+                                <div style="margin-left:20px; margin-top:30px;">
+                                    <h3>@Model.SelectedUser.Fullname</h3>
                                     <p>@Model.SelectedUser.UserType</p>
                                 </div>
                             </div>
                             
                             <div>
-                                <div class="btn-group">
+                                <div class="btn-group"  style="margin-top:30px;">
                                     <button type="button" class="btn btn-primary"><a asp-page="/Users/UserProfile/">View</a> </button>
                                     <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id="dropdownMenuSplitButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     </button>
@@ -47,22 +47,22 @@
                         <h4 class="card-title">Contact Information</h4>
                         <hr />
                         <div>
-                            <div>Email Adress</div>
-                            <div>@Model.SelectedUser.Email</div>
+                            <div class="profileLb">Email Adress</div>
+                            <div class="profileData">@Model.SelectedUser.Email</div>
                         </div>
                         <div>
-                            <div>Phone Number</div>
-                            <div>@Model.SelectedUser.Phone</div>
+                            <div class="profileLb">Phone Number</div>
+                            <div class="profileData">@Model.SelectedUser.Phone</div>
                         </div>
                         @{ if (Model.SelectedUser.UserType == "Patient")
                             {
                                 <div>
-                                    <div>Emergency Contact Name</div>
-                                    <div>example@gmail.com</div>
+                                    <div class="profileLb">Emergency Contact Name</div>
+                                    <div class="profileData">example@gmail.com</div>
                                 </div>
                                 <div>
-                                    <div>Emergency Contact Number</div>
-                                    <div>example@gmail.com</div>
+                                    <div class="profileLb">Emergency Contact Number</div>
+                                    <div class="profileData">example@gmail.com</div>
                                 </div>
                             }
                         }
@@ -76,26 +76,26 @@
                         <h4 class="card-title">Personal Information</h4>
                         <hr />
                         <div class="row">
-                            <div class="col-6 grid-margin">
+                            <div class="col-md-6 grid-margin">
                                 <div>
-                                    <div>Age</div>
-                                    <div>example@gmail.com</div>
+                                    <div class="profileLb">Age</div>
+                                    <div class="profileData">example@gmail.com</div>
                                 </div>
                                 <div>
-                                    <div>Gender</div>
-                                    <div>@Model.SelectedUser.Gender</div>
+                                    <div class="profileLb">Gender</div>
+                                    <div class="profileData">@Model.SelectedUser.Gender</div>
                                 </div>
                             </div>
-                            <div class="col-6 grid-margin">
+                            <div class="col-md-6 grid-margin">
                                 <div>
-                                    <div>Birth Date</div>
-                                    <div>@Model.SelectedUser.Birthdate</div>
+                                    <div class="profileLb">Birth Date</div>
+                                    <div class="profileData">@Model.SelectedUser.Birthdate</div>
                                 </div>
                                 @{ if (Model.SelectedUser.UserType == "Patient")
                                     {
                                         <div>
-                                            <div>Relationship</div>
-                                            <div>example@gmail.com</div>
+                                            <div class="profileLb">Relationship</div>
+                                            <div class="profileData">example@gmail.com</div>
                                         </div>
                                     }
                                 }
@@ -107,8 +107,8 @@
                                 @{ if (Model.SelectedUser.UserType == "Patient")
                                     {
                                         <div>
-                                            <div>Home Address</div>
-                                            <div>example@gmail.com</div>
+                                            <div class="profileLb">Home Address</div>
+                                            <div class="profileData">example@gmail.com</div>
                                         </div>
                                     }
                                 }

@@ -13,14 +13,14 @@ namespace Elderson.Models
         public string Email { get; set; }
         public string Password { get; set; }
         public int Phone { get; set; }
-        //[DataType(DataType.Date)]
+        [DataType(DataType.Date)]
         public DateTime Birthdate { get; set; }
         [Required]
         public string Fullname { get; set; }
         public string Gender { get; set; }
-        [Required]
         public string UserType { get; set; }
         public DateTime CreatedAt { get; set; }
         public string PasswordSalt { get; set; }
+        public int CountryCode { get; set; }
     }
 }

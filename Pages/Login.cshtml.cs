@@ -8,6 +8,7 @@ using Elderson.Models;
 using Elderson.Services;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.AspNetCore.Http;
 
 namespace Elderson.Pages.Users
 {
@@ -45,7 +46,9 @@ namespace Elderson.Pages.Users
 
                     if (user.Password.Equals(Convert.ToBase64String(hashWithSalt)))
                     {
-                        return RedirectToPage("Users/Index");
+                        HttpContext.Session.SetString("LoginUser", user.Fullname);
+                        HttpContext.Session.SetString("LoginUserType", user.UserType);
+                        return RedirectToPage("Index");
                     } else
                     {
                         ErrorMsg = "Login Information is incorrect";

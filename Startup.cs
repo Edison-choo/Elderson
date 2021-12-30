@@ -29,6 +29,7 @@ namespace Elderson
             services.AddSession();
             services.AddTransient<UserService>();
             services.AddDbContext<EldersonContext>();
+            //services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,7 +53,9 @@ namespace Elderson
 
             app.UseAuthorization();
 
-            app.UseSession();
+            app.UseSession(); 
+            
+            //app.UseMvcWithDefaultRoute();
 
             app.UseEndpoints(endpoints =>
             {

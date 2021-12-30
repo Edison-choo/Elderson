@@ -29,87 +29,109 @@
                             <td>
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-primary"><a asp-page="Profile" asp-route-id="@item.Id">View</a> </button>
-                                    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id="dropdownMenuSplitButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <button type="button" class="btn btn-primary"><a asp-page="Edit" asp-route-id="@item.Id">Edit</a> </button>
+                                    @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">Edit </button>*@
+                                    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id="@item.Id" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuSplitButton1">
-                                        <a class="dropdown-item" href="/Users/EditUser/@item.Id">Edit</a>
-                                        <a class="dropdown-item" href="/Users/LockUser/@item.Id">Lock</a>
-                                        <a class="dropdown-item" href="/Users/ChangePwd/@item.Id">Change password</a>
+                                    <div class="dropdown-menu" aria-labelledby="@item.Id">
+                                        <a class="dropdown-item" asp-page="Edit" asp-route-id="@item.Id">Edit</a>
+                                        <a class="dropdown-item" asp-page="Lock" asp-route-id="@item.Id">Lock</a>
+                                        <a class="dropdown-item" asp-page="ChangePwd" asp-route-id="@item.Id">Change password</a>
                                     </div>
                                 </div>
                             </td>
                         </tr>
+                        
                     }
-                        <tr>
-                            <td>Jacob</td>
-                            <td>Patient</td>
-                            <td><label class="badge badge-warning">Pending Verification</label></td>
-                            <td class="text-danger">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-primary">View</button>
-                                    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id="dropdownMenuSplitButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuSplitButton1" style="">
-                                        <a class="dropdown-item" href="#">Edit</a>
-                                        <a class="dropdown-item" href="#">Lock</a>
-                                        <a class="dropdown-item" href="#">Change password</a>
-                                    </div>
+                    <tr>
+                        <td>Jacob</td>
+                        <td>Patient</td>
+                        <td><label class="badge badge-warning">Pending Verification</label></td>
+                        <td class="text-danger">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary">View</button>
+                                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id="dropdownMenuSplitButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuSplitButton1" style="">
+                                    <a class="dropdown-item" href="#">Edit</a>
+                                    <a class="dropdown-item" href="#">Lock</a>
+                                    <a class="dropdown-item" href="#">Change password</a>
                                 </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Jacob</td>
-                            <td>Patient</td>
-                            <td><label class="badge badge-danger">Locked</label></td>
-                            <td class="text-danger">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-primary">View</button>
-                                    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id="dropdownMenuSplitButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuSplitButton1" style="">
-                                        <a class="dropdown-item" href="#">Edit</a>
-                                        <a class="dropdown-item" href="#">Lock</a>
-                                        <a class="dropdown-item" href="#">Change password</a>
-                                    </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Jacob</td>
+                        <td>Patient</td>
+                        <td><label class="badge badge-danger">Locked</label></td>
+                        <td class="text-danger">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary">View</button>
+                                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id="dropdownMenuSplitButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuSplitButton1" style="">
+                                    <a class="dropdown-item" href="#">Edit</a>
+                                    <a class="dropdown-item" href="#">Lock</a>
+                                    <a class="dropdown-item" href="#">Change password</a>
                                 </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Jacob</td>
-                            <td>Patient</td>
-                            <td><label class="badge badge-danger">Locked</label></td>
-                            <td class="text-danger">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-primary">View</button>
-                                    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id="dropdownMenuSplitButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuSplitButton1" style="">
-                                        <a class="dropdown-item" href="#">Edit</a>
-                                        <a class="dropdown-item" href="#">Lock</a>
-                                        <a class="dropdown-item" href="#">Change password</a>
-                                    </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Jacob</td>
+                        <td>Patient</td>
+                        <td><label class="badge badge-danger">Locked</label></td>
+                        <td class="text-danger">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary">View</button>
+                                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id="dropdownMenuSplitButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuSplitButton1" style="">
+                                    <a class="dropdown-item" href="#">Edit</a>
+                                    <a class="dropdown-item" href="#">Lock</a>
+                                    <a class="dropdown-item" href="#">Change password</a>
                                 </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Jacob</td>
-                            <td>Patient</td>
-                            <td><label class="badge badge-danger">Locked</label></td>
-                            <td class="text-danger">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-primary">View</button>
-                                    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id="dropdownMenuSplitButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuSplitButton1" style="">
-                                        <a class="dropdown-item" href="#">Edit</a>
-                                        <a class="dropdown-item" href="#">Lock</a>
-                                        <a class="dropdown-item" href="#">Change password</a>
-                                    </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Jacob</td>
+                        <td>Patient</td>
+                        <td><label class="badge badge-danger">Locked</label></td>
+                        <td class="text-danger">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary">View</button>
+                                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id="dropdownMenuSplitButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuSplitButton1" style="">
+                                    <a class="dropdown-item" href="#">Edit</a>
+                                    <a class="dropdown-item" href="#">Lock</a>
+                                    <a class="dropdown-item" href="#">Change password</a>
                                 </div>
-                            </td>
-                        </tr>
-                    </tbody>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
             </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="text-center">
+                    <h4>
+                        Are you sure you want to delete this user?
+
+                    </h4>
+                </div>
+                <div class="d-flex justify-content-between" style="margin-top:30px;">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
