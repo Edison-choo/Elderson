@@ -1,0 +1,154 @@
+﻿/*font Variables*/
+$roboto: 'Roboto', sans-serif;
+/*Color Variables*/
+$bc: #5cb85c;
+$heding: #405867;
+$pfont: #5f6771;
+
+// Mixins
+@mixin transition($property: all, $duration: 300ms, $animate: linear, $delay: 0s) {
+    transition: $property $duration $animate $delay;
+}
+
+// Placeholder Mixins
+@mixin placeholder {
+    &.placeholder {
+        @content;
+    }
+
+    &:-moz-placeholder {
+        @content;
+    }
+
+    &::-moz-placeholder {
+        @content;
+    }
+
+    &::-webkit-input-placeholder {
+        @content;
+    }
+}
+
+// Font family link
+@import url('https://fonts.googleapis.com/css?family=Roboto:300i,400,400i,500,700,900');
+
+    #msform {
+        text-align: center;
+        position: relative;
+        padding-top: 50px;
+        min-height: 820px;
+        max-width: 810px;
+        margin: 0 auto;
+        background: #ffffff;
+        z-index: 1;
+
+        fieldset {
+            border: 0;
+            padding: 20px 105px 0;
+            position: relative;
+            width: 100%;
+            left: 0;
+            right: 0;
+
+            &:not(:first-of-type) {
+                display: none;
+            }
+        }
+
+        #progressbar {
+            margin-bottom: 30px;
+            overflow: hidden;
+
+            li {
+                list-style-type: none;
+                color: #99a2a8;
+                font-size: 9px;
+                width: calc(100%/3);
+                float: left;
+                position: relative;
+                font: 500 13px/1 $roboto;
+
+                &:nth-child(2) {
+                    &:before {
+                        content: "\f12f";
+                    }
+                }
+
+                &:nth-child(3) {
+                    &:before {
+                        content: "\f457";
+                    }
+                }
+
+                &:before {
+                    content: "\f1fa";
+                    font: normal normal normal 30px/50px Ionicons;
+                    width: 50px;
+                    height: 50px;
+                    line-height: 50px;
+                    display: block;
+                    background: #eaf0f4;
+                    border-radius: 50%;
+                    margin: 0 auto 10px auto;
+                }
+
+                &:after {
+                    content: '';
+                    width: 100%;
+                    height: 10px;
+                    background: #eaf0f4;
+                    position: absolute;
+                    left: -50%;
+                    top: 21px;
+                    z-index: -1;
+                }
+
+                &:last-child {
+                    &:after {
+                        width: 150%;
+                    }
+                }
+
+                &.active {
+                    color: $bc;
+
+                    &:before, &:after {
+                        background: $bc;
+                        color: white;
+                    }
+                }
+            }
+        }
+
+        .action-button {
+            background: $bc;
+            color: white;
+            border: 0 none;
+            border-radius: 5px;
+            cursor: pointer;
+            min-width: 130px;
+            font: 700 14px/40px $roboto;
+            border: 1px solid $bc;
+            margin: 0 5px;
+            text-transform: uppercase;
+            display: inline-block;
+
+            &:hover, &:focus {
+                background: $heding;
+                border-color: $heding;
+            }
+        }
+
+        .previous_button {
+            background: transparent;
+            color: #99a2a8;
+            border-color: #99a2a8;
+
+            &:hover, &:focus {
+                background: $heding;
+                border-color: $heding;
+                color: #fff;
+            }
+        }
+    }
+
