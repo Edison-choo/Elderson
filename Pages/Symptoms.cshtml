@@ -1,0 +1,21 @@
+﻿@page
+@model Elderson.Pages.SymptomsModel
+@{
+}
+<div style="margin:100px;"></div>
+<div class="container">
+    <form action="/" method="post">
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Enter a description of your symptoms:</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="">When did your symptoms start to appear:</label>
+            <input type="date" name="name" value="" />
+        </div>
+        <div style="display:inline-block">
+            <div style="float:left"><a asp-page="/Clinic" class="btn btn-primary">Back</a></div>
+            <div style="float:right"><a asp-page="/Symptoms" class="btn btn-primary">Continue</a></div>
+        </div>
+    </form>
+</div>
