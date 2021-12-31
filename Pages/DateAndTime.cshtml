@@ -2,24 +2,23 @@
 @model Elderson.Pages.Shared.DateAndTimeModel
 @{
 }
+
 <div style="margin:100px;"></div>
 <div class="container">
-    <div class="row">
-        <div class="col-md-4 form-group">
-            <input type="text" name="name" class="form-control" id="name" placeholder="Clinic" value="@Model.myClinic">
-            <div class="validate"></div>
+    <form method="post">
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <input asp-for="myClinic" type="text" class="form-control" placeholder="Clinic" value="@Model.myClinic">
+                <div class="validate"></div>
+            </div>
+            <div class="col-md-6 form-group mt-3 mt-md-0">
+                <input asp-for="myDateTime" type="datetime-local" class="form-control">
+                <div class="validate"></div>
+            </div>
         </div>
-        <div class="col-md-4 form-group mt-3 mt-md-0">
-            <input type="date" class="form-control" name="email" id="email">
-            <div class="validate"></div>
+        <div style="display:inline-block">
+            <div style="float:left"><a asp-page="/Clinic" class="btn btn-primary">Back</a></div>
+            <div style="float:right"><button class="btn btn-primary">Continue</button></div>
         </div>
-        <div class="col-md-4 form-group mt-3 mt-md-0">
-            <input type="time" class="form-control" name="phone" id="phone">
-            <div class="validate"></div>
-        </div>
-    </div>
-    <div style="display:inline-block">
-        <div style="float:left"><a asp-page="/Clinic" class="btn btn-primary">Back</a></div>
-        <div style="float:right"><a asp-page="/Symptoms" class="btn btn-primary">Continue</a></div>
-    </div>
+    </form>
 </div>

@@ -1,0 +1,33 @@
+﻿@page
+@model Elderson.Pages.CartModel
+@{
+}
+<div style="margin:100px;"></div>
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tr>
+            <td>
+                <div>@Model.myClinic Consultation</div>
+                <div>Booking Date: @Model.myDateTime</div>
+            </td>
+            <td>$20.00</td>
+            <td>1</td>
+            <td>$20.00</td>
+        </tr>
+        <tr>
+            <td colspan="3">Total</td>
+            <td>$20.00</td>
+        </tr>
+    </table>
+    <br />
+    <div style="display:inline-flex"><a href="#" class="btn btn-primary" style="float:right">PROCEED TO PAYMENT</a></div>
+    <br />
+</div>
