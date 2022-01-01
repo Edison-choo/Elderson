@@ -58,11 +58,11 @@
                             {
                                 <div>
                                     <div class="profileLb">Emergency Contact Name</div>
-                                    <div class="profileData">example@gmail.com</div>
+                                    <div class="profileData">@Model.PatientRole.EmergencyName</div>
                                 </div>
                                 <div>
                                     <div class="profileLb">Emergency Contact Number</div>
-                                    <div class="profileData">example@gmail.com</div>
+                                    <div class="profileData">@Model.PatientRole.EmergencyNum</div>
                                 </div>
                             }
                         }
@@ -94,8 +94,34 @@
                                 @{ if (Model.SelectedUser.UserType == "Patient")
                                     {
                                         <div>
+                                            <div class="profileLb">NRIC</div>
+                                            <div class="profileData">@Model.PatientRole.Nric</div>
+                                        </div>
+                                        <div>
                                             <div class="profileLb">Relationship</div>
-                                            <div class="profileData">example@gmail.com</div>
+                                            <div class="profileData">@Model.PatientRole.Relationship</div>
+                                        </div>
+                                    }
+                                    else if (Model.SelectedUser.UserType == "Doctor")
+                                    {
+                                        <div>
+                                            <div class="profileLb">Clinic</div>
+                                            <div class="profileData">@Model.DoctorRole.Clinic</div>
+                                        </div>
+                                    }
+                                    else if (Model.SelectedUser.UserType == "Administrator")
+                                    {
+                                        <div>
+                                            <div class="profileLb">Clinic</div>
+                                            <div class="profileData">@Model.AdminRole.Clinic</div>
+                                        </div>
+                                        <div>
+                                            <div class="profileLb">Opening Hours</div>
+                                            <div class="profileData">@Model.AdminRole.OpeningHours</div>
+                                        </div>
+                                        <div>
+                                            <div class="profileLb">Closing Hours</div>
+                                            <div class="profileData">@Model.AdminRole.ClosingHours</div>
                                         </div>
                                     }
                                 }
@@ -108,7 +134,7 @@
                                     {
                                         <div>
                                             <div class="profileLb">Home Address</div>
-                                            <div class="profileData">example@gmail.com</div>
+                                            <div class="profileData">@Model.PatientRole.HomeAddr</div>
                                         </div>
                                     }
                                 }

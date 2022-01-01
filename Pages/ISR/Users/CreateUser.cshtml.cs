@@ -100,10 +100,10 @@ namespace Elderson.Pages.Users
                 
                 return RedirectToPage("Index");
             }
-            var error = ModelState.Values.SelectMany(v => v.Errors.Select(b => b.ErrorMessage));
+            var error = ModelState.Values.SelectMany(v => v.Errors.Select(b => b.Exception));
             foreach (var i in error)
             {
-                _logger.LogInformation(i);
+                _logger.LogInformation(i.Message + i.StackTrace);
 
             }
             return Page();

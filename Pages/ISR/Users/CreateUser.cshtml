@@ -86,7 +86,7 @@
 
                             </div>
                             <div style="width:70%;">
-                                <input asp-for="newUser.Birthdate" type="date" class="form-control" id="exampleInputEmail3" placeholder="Email">
+                                <input asp-for="newUser.Birthdate" type="date" class="form-control" id="exampleInputEmail3" placeholder="BIRTHDATE">
                                 <span asp-validation-for="newUser.Birthdate" class="text-danger"></span>
                             </div>
 
@@ -321,7 +321,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group" style="width:76%;">
-                                        <input type="number" class="form-control" id="EmergencyPhone" asp-for="newUser.Phone" placeholder="PHONE NUMBER">
+                                        <input type="text" class="form-control" id="EmergencyPhone" asp-for="newUser.Phone" placeholder="PHONE NUMBER">
                                     </div>
                                 </div>
                                 <span asp-validation-for="newUser.Phone" class="text-danger"></span>
@@ -421,13 +421,6 @@
 
                             </div>
                             <div style="width:70%;">
-                                @*<select class="js-example-basic-single w-100">
-                                    <option value="Patient">Patient</option>
-                                    <option value="Doctor">Doctor</option>
-                                    <option value="Administator">Administrator</option>
-                                    <option value="IT Support">IT Support</option>
-                                    <option value="Pharmacist">Pharmacist</option>
-                                </select>*@
                                 @Html.DropDownList("PatientRole.Relationship", new SelectList(Enum.GetValues(typeof(Models.RelationshipType))), "--Select Marital Status--", new { @class = "form-control" })
                                 <span asp-validation-for="PatientRole.Relationship" class="text-danger"></span>
                             </div>
@@ -675,7 +668,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group" style="width:76%;">
-                                        <input type="number" class="form-control" value="0" asp-for="PatientRole.EmergencyNum" id="emergencyNumber" placeholder="EMERGENCY NUMBER">
+                                        <input type="text" class="form-control" asp-for="PatientRole.EmergencyNum" id="emergencyNumber" placeholder="EMERGENCY NUMBER">
                                     </div>
                                 </div>
                                 <span asp-validation-for="PatientRole.EmergencyNum" class="text-danger"></span>

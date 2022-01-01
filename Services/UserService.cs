@@ -129,7 +129,7 @@ namespace Elderson.Services
 
         public Patient GetPatientById(String id)
         {
-            Patient patient = _context.Patients.Where(e => e.Id == id).FirstOrDefault();
+            Patient patient = _context.Patients.Where(e => e.UserId == id).FirstOrDefault();
             return patient;
         }
 
@@ -158,6 +158,30 @@ namespace Elderson.Services
             return deleted;
         }
 
+        public bool UpdatePatient(Patient thepatient)
+        {
+            bool updated = true;
+            _context.Attach(thepatient).State = EntityState.Modified;
+
+            try
+            {
+                _context.SaveChanges();
+                updated = true;
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!PatientExists(thepatient.Id))
+                {
+                    updated = false;
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return updated;
+        }
+
         // Doctor Service
         private bool DoctorExists(string id)
         {
@@ -177,7 +201,7 @@ namespace Elderson.Services
 
         public Doctor GetDoctorById(String id)
         {
-            Doctor doctor = _context.Doctors.Where(e => e.Id == id).FirstOrDefault();
+            Doctor doctor = _context.Doctors.Where(e => e.UserId == id).FirstOrDefault();
             return doctor;
         }
 
@@ -206,6 +230,30 @@ namespace Elderson.Services
             return deleted;
         }
 
+        public bool UpdateDoctor(Doctor thedoctor)
+        {
+            bool updated = true;
+            _context.Attach(thedoctor).State = EntityState.Modified;
+
+            try
+            {
+                _context.SaveChanges();
+                updated = true;
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!DoctorExists(thedoctor.Id))
+                {
+                    updated = false;
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return updated;
+        }
+
         // Administrator Service
         private bool AdministratorExists(string id)
         {
@@ -225,7 +273,7 @@ namespace Elderson.Services
 
         public Administrator GetAdministratorById(String id)
         {
-            Administrator administrator = _context.Administrators.Where(e => e.Id == id).FirstOrDefault();
+            Administrator administrator = _context.Administrators.Where(e => e.UserId == id).FirstOrDefault();
             return administrator;
         }
 
@@ -252,6 +300,30 @@ namespace Elderson.Services
                 }
             }
             return deleted;
+        }
+
+        public bool UpdateAdministrator(Administrator theadmin)
+        {
+            bool updated = true;
+            _context.Attach(theadmin).State = EntityState.Modified;
+
+            try
+            {
+                _context.SaveChanges();
+                updated = true;
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!AdministratorExists(theadmin.Id))
+                {
+                    updated = false;
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return updated;
         }
 
     }

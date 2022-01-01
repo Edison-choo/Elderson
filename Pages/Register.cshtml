@@ -25,23 +25,27 @@
                                 @*<div class="brand-logo">
                 <img src="../../images/logo.svg" alt="logo">
             </div>*@
-                                <form class="pt-3 .#msform" asp-action="/Login">
+                                <form class="pt-3 .#msform" method="post">
                                     <fieldset>
                                         <h4>Register Page</h4>
                                         <h6 class="fw-light">Create an account</h6>
 
-                                            <div class="form-group">
-                                                <input type="text" asp-for="newUser.Fullname" class="form-control form-control-lg" id="Fullname" placeholder="FULL NAME">
-                                            </div>
+                                        <div class="form-group">
+                                            <input type="text" asp-for="newUser.Fullname" class="form-control form-control-lg" id="Fullname" placeholder="FULL NAME">
+                                            <span asp-validation-for="newUser.Fullname" class="text-danger"></span>
+                                        </div>
 
                                         <div class="form-group">
                                             <input type="email" asp-for="newUser.Email" class="form-control form-control-lg" id="Email" placeholder="EMAIL">
+                                            <span asp-validation-for="newUser.Email" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" asp-for="newUser.Password" class="form-control form-control-lg" id="Password" placeholder="PASSWORD">
+                                            <input type="password" asp-for="pwd" class="form-control form-control-lg" id="Password" placeholder="PASSWORD">
+                                            <span asp-validation-for="pwd" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
                                             <input type="password" asp-for="confirmPwd" class="form-control form-control-lg" id="ConPassword" placeholder="CONFIRM PASSWORD">
+                                            <span asp-validation-for="confirmPwd" class="text-danger"></span>
                                         </div>
 
                                         <span style="color:red;"></span>
@@ -70,6 +74,7 @@
                                         <h4>Personal Details</h4>
                                         <div class="form-group" style="width:48%;">
                                             <input type="date" asp-for="newUser.Birthdate" class="form-control form-control-lg" id="Birthdate" placeholder="BIRTH DATE">
+                                            <span asp-validation-for="newUser.Birthdate" class="text-danger"></span>
                                         </div>
                                         <div class="d-flex justify-content-between">
                                             <div class="form-group" style="width:20%;">
@@ -293,18 +298,31 @@
                                                         <option data-countryCode="ZW" value="263">Zimbabwe (+263)</option>
                                                     </optgroup>
                                                 </select>
+                                                <span asp-validation-for="newUser.CountryCode" class="text-danger"></span>
                                             </div>
                                             <div class="form-group" style="width:78%;">
-                                                <input type="number" asp-for="newUser.Phone" class="form-control form-control-lg" id="Phone" placeholder="PHONE NUMBER">
+                                                <input type="text" asp-for="newUser.Phone" class="form-control form-control-lg" id="Phone" placeholder="PHONE NUMBER">
+                                                <span asp-validation-for="newUser.Phone" class="text-danger"></span>
                                             </div>
+
                                         </div>
                                         <div class="form-group">
                                             @Html.RadioButton("newUser.Gender", "Male", new { style = "margin-right:10px;" }) <span>Male</span>
                                             @Html.RadioButton("newUser.Gender", "Female", new { style = "margin:0 10px;" }) <span>Female</span>
+                                            <span asp-validation-for="newUser.Gender" class="text-danger"></span>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <input asp-for="PatientRole.Nric" type="text" class="form-control form-control-lg" id="nric" placeholder="NRIC">
+                                            <span asp-validation-for="PatientRole.Nric" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <input asp-for="PatientRole.EmergencyName" type="text" class="form-control form-control-lg" id="emergencyName" placeholder="EMERGENCY NAME">
+                                            <span asp-validation-for="PatientRole.EmergencyName" class="text-danger"></span>
                                         </div>
                                         <div class="d-flex justify-content-between">
                                             <div class="form-group" style="width:20%;">
-                                                <select class="form-control" style="width:100%; height:100%;" name="countryCode" id="">
+                                                <select class="form-control" style="width:100%; height:100%;" name="countryCode" id="" asp-for="PatientRole.CountryCode">
                                                     <option data-countryCode="SG" value="65" Selected>Singapore (+65)</option>
 
                                                     <optgroup label="Other countries">
@@ -524,16 +542,20 @@
                                                         <option data-countryCode="ZW" value="263">Zimbabwe (+263)</option>
                                                     </optgroup>
                                                 </select>
+                                                <span asp-validation-for="PatientRole.CountryCode" class="text-danger"></span>
                                             </div>
                                             <div class="form-group" style="width:76%;">
-                                                <input type="number" asp-for="newUser.Phone" class="form-control form-control-lg" id="Phone" placeholder="EMERGENCY PHONE NUMBER">
+                                                <input type="text" asp-for="PatientRole.EmergencyNum" class="form-control form-control-lg" id="Phone" placeholder="EMERGENCY PHONE NUMBER">
+                                                <span asp-validation-for="PatientRole.EmergencyNum" class="text-danger"></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control form-control-lg" id="Relationship" placeholder="RELATIONSHIP">
+                                            @Html.DropDownList("PatientRole.Relationship", new SelectList(Enum.GetValues(typeof(Models.RelationshipType))), "--Select Marital Status--", new { @class = "form-control form-control-lg" })
+                                            <span asp-validation-for="PatientRole.Relationship" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
-                                            <textarea class="form-control form-control-lg" id="HomeAddress" placeholder="HOME ADDRESS"></textarea>
+                                            <textarea asp-for="PatientRole.HomeAddr" class="form-control" id="homeAddress" placeholder="HOME ADDRESS"></textarea>
+                                            <span asp-validation-for="PatientRole.HomeAddr" class="text-danger"></span>
                                         </div>
                                         <div class="d-flex justify-content-between">
                                             <button type="button" class="btn btn-primary me-2 previous_button">Cancel</button>
@@ -546,18 +568,18 @@
                                     <fieldset>
                                         <h4>Card Details (Optional)</h4>
                                         <h6 class="fw-light">Set as your primary payment information</h6>
-                                        <div class="form-group" style="width:48%;">
+                                        <div class="form-group">
                                             <input type="text" class="form-control form-control-lg" id="CardName" placeholder="NAME ON CARD">
                                         </div>
                                         <div class="form-group">
-                                            <input type="number" class="form-control form-control-lg" id="CardNumber" placeholder="CARD NUMBER">
+                                            <input type="text" class="form-control form-control-lg" id="CardNumber" placeholder="CARD NUMBER">
                                         </div>
                                         <div class="d-flex justify-content-between">
                                             <div class="form-group" style="width:48%;">
                                                 <input type="text" class="form-control form-control-lg" id="ExpiryDate" placeholder="EXPIRY DATE">
                                             </div>
                                             <div class="form-group" style="width:48%;">
-                                                <input type="number" class="form-control form-control-lg" id="SecurityCode" placeholder="SECURITY CODE">
+                                                <input type="text" class="form-control form-control-lg" id="SecurityCode" placeholder="SECURITY CODE">
                                             </div>
                                         </div>
                                         <div class="d-flex justify-content-between">

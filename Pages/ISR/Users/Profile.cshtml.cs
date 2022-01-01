@@ -13,6 +13,12 @@ namespace Elderson.Pages.ISR.Users
     {
         [BindProperty]
         public User SelectedUser { get; set; }
+        [BindProperty]
+        public Administrator AdminRole { get; set; }
+        [BindProperty]
+        public Doctor DoctorRole { get; set; }
+        [BindProperty]
+        public Patient PatientRole { get; set; }
         private UserService _svc;
         public ProfileModel(UserService service)
         {
@@ -21,6 +27,9 @@ namespace Elderson.Pages.ISR.Users
         public void OnGet(string id)
         {
             SelectedUser = _svc.GetUserById(id);
+            PatientRole = _svc.GetPatientById(id);
+            AdminRole = _svc.GetAdministratorById(id);
+            DoctorRole = _svc.GetDoctorById(id);
         }
     }
 }

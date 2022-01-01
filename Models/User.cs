@@ -12,7 +12,7 @@ namespace Elderson.Models
         [Required, RegularExpression(@"^\S+@\S+\.\S+$", ErrorMessage ="The email format is invalid")]
         public string Email { get; set; }
         public string Password { get; set; }
-        public int Phone { get; set; }
+        public string Phone { get; set; }
         [DataType(DataType.Date)]
         public DateTime Birthdate { get; set; }
         public string Fullname { get; set; }
@@ -20,6 +20,6 @@ namespace Elderson.Models
         public string UserType { get; set; }
         public DateTime CreatedAt { get; set; }
         public string PasswordSalt { get; set; }
-        public int CountryCode { get; set; }
+        public string CountryCode { get; set; }
     }
 }

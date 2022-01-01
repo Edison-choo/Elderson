@@ -11,6 +11,7 @@ using System.Text;
 using System.ComponentModel.DataAnnotations;
 using MailKit.Net.Smtp;
 using MimeKit;
+using Microsoft.Extensions.Logging;
 
 namespace Elderson.Pages
 {
@@ -19,12 +20,19 @@ namespace Elderson.Pages
         [BindProperty]
         public User newUser { get; set; }
         [BindProperty]
-        //[Required, Compare(nameof(CreateUserModel.newUser.Password))]
+        public Patient PatientRole { get; set; }
+        [BindProperty]
+        [Required]
+        public string pwd { get; set; }
+        [BindProperty]
+        [Required]
         public string confirmPwd { get; set; }
         private UserService _svc;
-        public RegisterModel(UserService service)
+        private readonly ILogger<RegisterModel> _logger;
+        public RegisterModel(ILogger<RegisterModel> logger,UserService service)
         {
             _svc = service;
+            _logger = logger;
         }
         public void OnGet()
         {
@@ -37,6 +45,7 @@ namespace Elderson.Pages
             {
                 //HttpContext.Session.SetString("SSName", MyEmployee.Name);
                 //HttpContext.Session.SetString("SSDept", MyEmployee.Department);
+                newUser.Password = pwd;
 
                 // Hash Password
                 RandomNumberGenerator rng = RandomNumberGenerator.Create();
@@ -50,6 +59,11 @@ namespace Elderson.Pages
                 newUser.PasswordSalt = salt;
                 newUser.UserType = "Patient";
 
+                if (_svc.GetUserByEmail(newUser.Email) != null)
+                {
+                    return Page();
+                }
+
                 // Add user to Db
                 var valid = false;
                 while (!(valid))
@@ -60,11 +74,21 @@ namespace Elderson.Pages
                     valid = _svc.AddUser(newUser);
                 }
 
-                
+                string typeGuid = Guid.NewGuid().ToString();
+                PatientRole.Id = typeGuid;
+                PatientRole.UserId = newUser.Id;
+                _svc.AddPatient(PatientRole);
 
-                return RedirectToPage("Index");
+
+
+                return RedirectToPage("Login");
             }
+            var error = ModelState.Values.SelectMany(v => v.Errors.Select(b => b.ErrorMessage));
+            foreach (var i in error)
+            {
+                _logger.LogInformation(i);
 
+            }
             return Page();
         }
 

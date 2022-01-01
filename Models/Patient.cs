@@ -11,9 +11,9 @@ namespace Elderson.Models
         public string Nric { get; set; }
         public string HomeAddr { get; set; }
         public string EmergencyName { get; set; }
-        public int EmergencyNum { get; set; }
+        public string EmergencyNum { get; set; }
         public string Relationship { get; set; }
         public string UserId { get; set; }
-        public int CountryCode { get; set; }
+        public string CountryCode { get; set; }
     }
 }
