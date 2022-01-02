@@ -61,6 +61,7 @@ namespace Elderson.Pages
 
                 if (_svc.GetUserByEmail(newUser.Email) != null)
                 {
+                    _logger.LogInformation($"Register user unsuccessfully. Email is already being used.");
                     return Page();
                 }
 
@@ -79,16 +80,16 @@ namespace Elderson.Pages
                 PatientRole.UserId = newUser.Id;
                 _svc.AddPatient(PatientRole);
 
-
+                _logger.LogInformation($"Register user {newUser.Id} successfully.");
 
                 return RedirectToPage("Login");
             }
-            var error = ModelState.Values.SelectMany(v => v.Errors.Select(b => b.ErrorMessage));
-            foreach (var i in error)
-            {
-                _logger.LogInformation(i);
+            //var error = ModelState.Values.SelectMany(v => v.Errors.Select(b => b.ErrorMessage));
+            //foreach (var i in error)
+            //{
+            //    _logger.LogInformation(i);
 
-            }
+            //}
             return Page();
         }
 

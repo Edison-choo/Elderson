@@ -9,6 +9,7 @@ using Elderson.Services;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.Extensions.Logging;
 
 namespace Elderson.Pages.ISR.Users
 {
@@ -30,8 +31,10 @@ namespace Elderson.Pages.ISR.Users
         public string ErrorMsg { get; set; }
 
         private UserService _svc;
-        public ChangePwdModel(UserService service)
+        private readonly ILogger<ChangePwdModel> _logger;
+        public ChangePwdModel(ILogger<ChangePwdModel> logger, UserService service)
         {
+            _logger = logger;
             _svc = service;
         }
         public void OnGet(string id)
@@ -65,24 +68,26 @@ namespace Elderson.Pages.ISR.Users
                         Boolean valid = _svc.UpdateUser(user);
                         if (valid)
                         {
+                            _logger.LogInformation($"Update user {user.Id} password successfully.");
                             return RedirectToPage("Index");
                         }
                     }
                     else
                     {
+                        _logger.LogInformation($"Update user {user.Id} password unsuccessfully. The passwords do not match.");
                         ErrorMsg = "New password does not match";
                     }
 
                 }
                 else
                 {
+                    _logger.LogInformation($"Update user {user.Id} password successfully. Password is incorrect.");
                     ErrorMsg = "Current password is incorrect";
                 }
                 return Page();
             }
             else
             {
-                ErrorMsg = "test";
                 return Page();
             }
         }

@@ -5,28 +5,140 @@
     ViewData["Title"] = "Register page";
 }
 
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    .multisteps-form__progress {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+    }
+
+    .multisteps-form__progress-btn {
+        transition-property: all;
+        transition-duration: 0.15s;
+        transition-timing-function: linear;
+        transition-delay: 0s;
+        position: relative;
+        padding-top: 20px;
+        color: rgba(108, 117, 125, .7);
+        text-indent: -9999px;
+        border: none;
+        background-color: transparent;
+        outline: none !important;
+        cursor: pointer;
+        font-size:0.9em;
+    }
+
+    .multisteps-form__progress-btn:before {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        display: block;
+        width: 13px;
+        height: 13px;
+        content: '';
+        transform: translateX(-50%);
+        transition: all 0.15s linear 0s, transform 0.15s cubic-bezier(0.05, 1.09, 0.16, 1.4) 0s;
+        border: 2px solid currentColor;
+        border-radius: 50%;
+        background-color: #fff;
+        box-sizing: border-box;
+        z-index: 3;
+    }
+
+    .multisteps-form__progress-btn:after {
+        position: absolute;
+        top: 5px;
+        left: calc(-50% - 13px / 2);
+        transition-property: all;
+        transition-duration: 0.15s;
+        transition-timing-function: linear;
+        transition-delay: 0s;
+        display: block;
+        width: 100%;
+        height: 2px;
+        content: '';
+        background-color: currentColor;
+        z-index: 3;
+    }
+
+    .multisteps-form__progress-btn:first-child:after {
+        display: none;
+    }
+
+    .multisteps-form__progress-btn.js-active {
+        color: #007bff;
+    }
+
+    .multisteps-form__progress-btn.js-active:before {
+        transform: translateX(-50%) scale(1.2);
+        background-color: currentColor;
+    }
+
+    .multisteps-form__panel {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 0;
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    .multisteps-form__panel.js-active {
+        height: auto;
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .multisteps-form__panel[data-animation="scaleIn"] {
+        transform: scale(0.9);
+    }
+
+    .multisteps-form__panel[data-animation="scaleIn"].js-active {
+        transition-property: all;
+        transition-duration: 0.2s;
+        transition-timing-function: linear;
+        transition-delay: 0s;
+        transform: scale(1);
+    }
+
+    @@media (min-width: 500px) {
+    .multisteps-form__progress-btn {
+        text-indent: 0;
+    }
+}
+</style>
+
 <div class="container-scroller">
     <div class="container-fluid page-body-wrapper full-page-wrapper">
         <div class="content-wrapper d-flex align-items-center auth px-0">
             <div class="row w-100 mx-0">
                 <div class="col-lg-6 mx-auto">
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <div class="auth-form-light text-left py-5 px-4 px-sm-5" style="height:100%;">
-                                <ul id="progressbar">
-                                    <li class="active">Verify Phone</li>
-                                    <li>Upload Documents</li>
-                                    <li>Security Questions</li>
-                                </ul>
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="row " style="margin-bottom:30px;">
+                                <div class="p-4 rounded bg-white">
+                                    <div class="col-12 col-lg-8 ml-auto mr-auto mb-4">
+                                        <div class="multisteps-form__progress">
+                                            <button class="multisteps-form__progress-btn js-active" type="button" title="User Info">Login Information</button>
+                                            <button class="multisteps-form__progress-btn" type="button" title="Address">Personal Information</button>
+                                            <button class="multisteps-form__progress-btn" type="button" title="Order Info">Credit Card Information</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="row d-flex justify-content-center">
+                        
                         <div class="col-lg-8">
-                            <div class="auth-form-light text-left py-5 px-4 px-sm-5">
-                                @*<div class="brand-logo">
-                <img src="../../images/logo.svg" alt="logo">
-            </div>*@
-                                <form class="pt-3 .#msform" method="post">
-                                    <fieldset>
+                            <div class="">
+                                <form class="pt-3 .#msform multisteps-form__form" method="post">
+                                    <fieldset class="multisteps-form__panel p-4 rounded bg-white js-active" data-animation="scaleIn">
                                         <h4>Register Page</h4>
                                         <h6 class="fw-light">Create an account</h6>
 
@@ -57,7 +169,7 @@
                                             </div>
                                         </div>
                                         <div class="mt-3">
-                                            <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn next" type="button">Next</button>
+                                            <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn js-btn-next" type="button">Next</button>
                                         </div>
 
                                         <div class="text-center mt-4 fw-light">
@@ -70,7 +182,8 @@
                                             </button>
                                         </div>
                                     </fieldset>
-                                    <fieldset>
+                                    
+                                    <fieldset class="multisteps-form__panel p-4 rounded bg-white" data-animation="scaleIn">
                                         <h4>Personal Details</h4>
                                         <div class="form-group" style="width:48%;">
                                             <input type="date" asp-for="newUser.Birthdate" class="form-control form-control-lg" id="Birthdate" placeholder="BIRTH DATE">
@@ -558,14 +671,14 @@
                                             <span asp-validation-for="PatientRole.HomeAddr" class="text-danger"></span>
                                         </div>
                                         <div class="d-flex justify-content-between">
-                                            <button type="button" class="btn btn-primary me-2 previous_button">Cancel</button>
+                                            <button type="button" class="btn btn-primary me-2 js-btn-prev">Cancel</button>
 
-                                            <button type="button" class="btn btn-primary me-2 next">Next</button>
+                                            <button type="button" class="btn btn-primary me-2 js-btn-next">Next</button>
 
                                         </div>
                                     </fieldset>
                                     
-                                    <fieldset>
+                                    <fieldset class="multisteps-form__panel p-4 rounded bg-white" data-animation="scaleIn">
                                         <h4>Card Details (Optional)</h4>
                                         <h6 class="fw-light">Set as your primary payment information</h6>
                                         <div class="form-group">
@@ -583,7 +696,7 @@
                                             </div>
                                         </div>
                                         <div class="d-flex justify-content-between">
-                                            <button type="button" class="btn btn-primary me-2 previous_button">Cancel</button>
+                                            <button type="button" class="btn btn-primary me-2 js-btn-prev">Cancel</button>
 
                                             <button type="submit" class="btn btn-primary me-2">Submit</button>
 
@@ -602,108 +715,140 @@
 </div>
 
 <script>
-    ; (function ($) {
-        "use strict";
+    //DOM elements
+    const DOMstrings = {
+        stepsBtnClass: 'multisteps-form__progress-btn',
+        stepsBtns: document.querySelectorAll(`.multisteps-form__progress-btn`),
+        stepsBar: document.querySelector('.multisteps-form__progress'),
+        stepsForm: document.querySelector('.multisteps-form__form'),
+        stepsFormTextareas: document.querySelectorAll('.multisteps-form__textarea'),
+        stepFormPanelClass: 'multisteps-form__panel',
+        stepFormPanels: document.querySelectorAll('.multisteps-form__panel'),
+        stepPrevBtnClass: 'js-btn-prev',
+        stepNextBtnClass: 'js-btn-next'
+    }; //remove class from a set of items
 
-        //* Form js
-        function verificationForm() {
-            //jQuery time
-            var current_fs, next_fs, previous_fs; //fieldsets
-            var left, opacity, scale; //fieldset properties which we will animate
-            var animating; //flag to prevent quick multi-click glitches
+    const removeClasses = (elemSet, className) => {
+        elemSet.forEach(elem => {
+            elem.classList.remove(className);
+        });
+    }; //return exect parent node of the element
 
-            $(".next").click(function () {
-                if (animating) return false;
-                animating = true;
 
-                current_fs = $(this).parent();
-                next_fs = $(this).parent().next();
+    const findParent = (elem, parentClass) => {
+        let currentNode = elem;
 
-                //activate next step on progressbar using the index of next_fs
-                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+        while (!currentNode.classList.contains(parentClass)) {
+            currentNode = currentNode.parentNode;
+        }
 
-                //show the next fieldset
-                next_fs.show();
-                //hide the current fieldset with style
-                current_fs.animate({
-                    opacity: 0
-                }, {
-                    step: function (now, mx) {
-                        //as the opacity of current_fs reduces to 0 - stored in "now"
-                        //1. scale current_fs down to 80%
-                        scale = 1 - (1 - now) * 0.2;
-                        //2. bring next_fs from the right(50%)
-                        left = (now * 50) + "%";
-                        //3. increase opacity of next_fs to 1 as it moves in
-                        opacity = 1 - now;
-                        current_fs.css({
-                            'transform': 'scale(' + scale + ')',
-                            'position': 'absolute'
-                        });
-                        next_fs.css({
-                            'left': left,
-                            'opacity': opacity
-                        });
-                    },
-                    duration: 800,
-                    complete: function () {
-                        current_fs.hide();
-                        animating = false;
-                    },
-                    //this comes from the custom easing plugin
-                    easing: 'easeInOutBack'
-                });
-            });
+        return currentNode;
+    }; //get active button step number
 
-            $(".previous").click(function () {
-                if (animating) return false;
-                animating = true;
 
-                current_fs = $(this).parent();
-                previous_fs = $(this).parent().prev();
+    const getActiveStep = elem => {
+        return Array.from(DOMstrings.stepsBtns).indexOf(elem);
+    }; //set all steps before clicked (and clicked too) to active
 
-                //de-activate current step on progressbar
-                $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
 
-                //show the previous fieldset
-                previous_fs.show();
-                //hide the current fieldset with style
-                current_fs.animate({
-                    opacity: 0
-                }, {
-                    step: function (now, mx) {
-                        //as the opacity of current_fs reduces to 0 - stored in "now"
-                        //1. scale previous_fs from 80% to 100%
-                        scale = 0.8 + (1 - now) * 0.2;
-                        //2. take current_fs to the right(50%) - from 0%
-                        left = ((1 - now) * 50) + "%";
-                        //3. increase opacity of previous_fs to 1 as it moves in
-                        opacity = 1 - now;
-                        current_fs.css({
-                            'left': left
-                        });
-                        previous_fs.css({
-                            'transform': 'scale(' + scale + ')',
-                            'opacity': opacity
-                        });
-                    },
-                    duration: 800,
-                    complete: function () {
-                        current_fs.hide();
-                        animating = false;
-                    },
-                    //this comes from the custom easing plugin
-                    easing: 'easeInOutBack'
-                });
-            });
+    const setActiveStep = activeStepNum => {
+        //remove active state from all the state
+        removeClasses(DOMstrings.stepsBtns, 'js-active'); //set picked items to active
 
-            $(".submit").click(function () {
-                return false;
-            })
-        };
+        DOMstrings.stepsBtns.forEach((elem, index) => {
+            if (index <= activeStepNum) {
+                elem.classList.add('js-active');
+            }
+        });
+    }; //get active panel
 
-        /*Function Calls*/
-        verificationForm();
 
-    })(jQuery);
+    const getActivePanel = () => {
+        let activePanel;
+        DOMstrings.stepFormPanels.forEach(elem => {
+            if (elem.classList.contains('js-active')) {
+                activePanel = elem;
+            }
+        });
+        return activePanel;
+    }; //open active panel (and close unactive panels)
+
+
+    const setActivePanel = activePanelNum => {
+        //remove active class from all the panels
+        removeClasses(DOMstrings.stepFormPanels, 'js-active'); //show active panel
+
+        DOMstrings.stepFormPanels.forEach((elem, index) => {
+            if (index === activePanelNum) {
+                elem.classList.add('js-active');
+                setFormHeight(elem);
+            }
+        });
+    }; //set form height equal to current panel height
+
+
+    const formHeight = activePanel => {
+        const activePanelHeight = activePanel.offsetHeight;
+        DOMstrings.stepsForm.style.height = `${activePanelHeight}px`;
+    };
+
+    const setFormHeight = () => {
+        const activePanel = getActivePanel();
+        formHeight(activePanel);
+    }; //STEPS BAR CLICK FUNCTION
+
+
+    DOMstrings.stepsBar.addEventListener('click', e => {
+        //check if click target is a step button
+        const eventTarget = e.target;
+
+        if (!eventTarget.classList.contains(`${DOMstrings.stepsBtnClass}`)) {
+            return;
+        } //get active button step number
+
+
+        const activeStep = getActiveStep(eventTarget); //set all steps before clicked (and clicked too) to active
+
+        setActiveStep(activeStep); //open active panel
+
+        setActivePanel(activeStep);
+    }); //PREV/NEXT BTNS CLICK
+
+    DOMstrings.stepsForm.addEventListener('click', e => {
+        const eventTarget = e.target; //check if we clicked on `PREV` or NEXT` buttons
+
+        if (!(eventTarget.classList.contains(`${DOMstrings.stepPrevBtnClass}`) || eventTarget.classList.contains(`${DOMstrings.stepNextBtnClass}`))) {
+            return;
+        } //find active panel
+
+
+        const activePanel = findParent(eventTarget, `${DOMstrings.stepFormPanelClass}`);
+        let activePanelNum = Array.from(DOMstrings.stepFormPanels).indexOf(activePanel); //set active step and active panel onclick
+
+        if (eventTarget.classList.contains(`${DOMstrings.stepPrevBtnClass}`)) {
+            activePanelNum--;
+        } else {
+            activePanelNum++;
+        }
+
+        setActiveStep(activePanelNum);
+        setActivePanel(activePanelNum);
+    }); //SETTING PROPER FORM HEIGHT ONLOAD
+
+    window.addEventListener('load', setFormHeight, false); //SETTING PROPER FORM HEIGHT ONRESIZE
+
+    window.addEventListener('resize', setFormHeight, false); //changing animation via animation select !!!YOU DON'T NEED THIS CODE (if you want to change animation type, just change form panels data-attr)
+
+    const setAnimationType = newType => {
+        DOMstrings.stepFormPanels.forEach(elem => {
+            elem.dataset.animation = newType;
+        });
+    }; //selector onchange - changing animation
+
+
+    const animationSelect = document.querySelector('.pick-animation__select');
+    animationSelect.addEventListener('change', () => {
+        const newAnimationType = animationSelect.value;
+        setAnimationType(newAnimationType);
+    });
 </script>

@@ -8,6 +8,7 @@ using Elderson.Services;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 namespace Elderson.Pages
 {
@@ -23,8 +24,10 @@ namespace Elderson.Pages
         public string ErrorMsg { get; set; }
 
         private UserService _svc;
-        public OrganizationLoginModel(UserService service)
+        private readonly ILogger<OrganizationLoginModel> _logger;
+        public OrganizationLoginModel(ILogger<OrganizationLoginModel> logger, UserService service)
         {
+            _logger = logger;
             _svc = service;
         }
         public void OnGet()
@@ -47,16 +50,19 @@ namespace Elderson.Pages
                     {
                         HttpContext.Session.SetString("LoginUser", user.Fullname);
                         HttpContext.Session.SetString("LoginUserType", user.UserType);
+                        _logger.LogInformation($"Organization User {user.Id} login successfullly.");
                         return RedirectToPage("Index");
                     }
                     else
                     {
+                        _logger.LogInformation($"Organization User {user.Id} login unsuccessfullly. Password is incorrect.");
                         ErrorMsg = "Login Information is incorrect";
                         return Page();
                     }
                 }
                 else
                 {
+                    _logger.LogInformation($"Organization User login unsuccessfullly. Login information is incorrect.");
                     ErrorMsg = "Login Information is incorrect";
                     return Page();
                 }

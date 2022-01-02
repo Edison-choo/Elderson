@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Elderson.Models;
 using Elderson.Services;
 using System.Globalization;
+using Microsoft.Extensions.Logging;
 
 namespace Elderson.Pages.ISR.Users
 {
@@ -27,8 +28,10 @@ namespace Elderson.Pages.ISR.Users
         public Doctor UpdatedDoctor { get; set; }
         public Patient UpdatedPatient { get; set; }
         private UserService _svc;
-        public EditModel(UserService service)
+        private readonly ILogger<EditModel> _logger;
+        public EditModel(ILogger<EditModel> logger, UserService service)
         {
+            _logger = logger;
             _svc = service;
         }
         public void OnGet(string id)
@@ -48,6 +51,11 @@ namespace Elderson.Pages.ISR.Users
             }
 
             UpdatedUser = _svc.GetUserById(SelectedUser.Id);
+            if (_svc.GetUserByEmail(SelectedUser.Email) != null && SelectedUser.Email != UpdatedUser.Email)
+            {
+                _logger.LogInformation($"Edit user {SelectedUser.Id} unsuccessfully. Email is already being used.");
+                return Page();
+            }
             UpdatedUser.Fullname = SelectedUser.Fullname;
             UpdatedUser.Email = SelectedUser.Email;
             UpdatedUser.Phone = SelectedUser.Phone;
@@ -76,13 +84,14 @@ namespace Elderson.Pages.ISR.Users
                 case "Administrator":
                     UpdatedAdmin = _svc.GetAdministratorById(UpdatedUser.Id);
                     UpdatedAdmin.Clinic = AdminRole.Clinic;
-                    UpdatedAdmin.OpeningHours = AdminRole.OpeningHours;
+                    UpdatedAdmin.OpeningHours = AdminRole.OpeningHours;                                                                                                                                                                                                                                                                                                                                                                             
                     UpdatedAdmin.ClosingHours = AdminRole.ClosingHours;
                     _svc.UpdateAdministrator(UpdatedAdmin);
                     break;
             }
             if (valid)
             {
+                _logger.LogInformation($"Edit user {SelectedUser.Id} successfully.");
                 return RedirectToPage("Index");
             }
 

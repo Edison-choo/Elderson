@@ -38,6 +38,7 @@ namespace Elderson.Pages.Users
         }
         public void OnGet()
         {
+            
         }
 
         public IActionResult OnPost()
@@ -61,6 +62,7 @@ namespace Elderson.Pages.Users
 
                 if (_svc.GetUserByEmail(newUser.Email) != null)
                 {
+                    _logger.LogInformation($"Create user {newUser.Id} unsuccessfullly. Email is already being used.");
                     return Page();
                 }
 
@@ -97,15 +99,16 @@ namespace Elderson.Pages.Users
                     case "ITSupport":
                         break;
                 }
-                
+
+                _logger.LogInformation($"Create user {newUser.Id} successfullly.");
                 return RedirectToPage("Index");
             }
-            var error = ModelState.Values.SelectMany(v => v.Errors.Select(b => b.Exception));
-            foreach (var i in error)
-            {
-                _logger.LogInformation(i.Message + i.StackTrace);
+            //var error = ModelState.Values.SelectMany(v => v.Errors.Select(b => b.Exception));
+            //foreach (var i in error)
+            //{
+            //    _logger.LogInformation(i);
 
-            }
+            //}
             return Page();
         }
     }

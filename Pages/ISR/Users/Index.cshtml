@@ -1,15 +1,23 @@
 ﻿@page
 @model Elderson.Pages.Users.UserManagementModel
+@using Elderson.Models;
 @{
     Layout = "Shared/_LayoutITSupport";
     ViewData["Title"] = "User management page";
 }
 
+<style>
+    a {
+        color: white;
+        text-decoration: none;
+    }
+</style>
+
 <div class="card">
     <div class="card-body">
         <div class="d-flex justify-content-between align-items-start">
             <h4 class="card-title">All User Table</h4>
-            <button class="btn btn-primary btn-l text-white mb-0 me-0" type="button"><i class="mdi mdi-account-plus"></i>Add new member</button>
+            <button class="btn btn-primary btn-l text-white mb-0 me-0" type="button"><a asp-page="CreateUser"><i class="mdi mdi-account-plus"></i>Add new member</a> </button>
 
         </div>
         
@@ -24,89 +32,74 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.allusers)
-                    {
-                        <tr>
-                            <td>@item.Fullname</td>
-                            <td>@item.UserType</td>
-                            <td class="text-danger"><label class="badge badge-danger">Locked</label></td>
-                            <td>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-primary"><a asp-page="Profile" asp-route-id="@item.Id">View</a> </button>
-                                    @*<button type="button" class="btn btn-primary"><a asp-page="Edit" asp-route-id="@item.Id">Edit</a> </button>*@
-                                    @*<button type="button" class="btn btn-primary delete" data-toggle="modal" data-target=@("#staticBackdrop"+item.Id)>Edit </button>*@
-                                    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id=@("dropdownMenuSplitButton"+item.Id) data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby=@("dropdownMenuSplitButton"+item.Id)>
-                                        <a class="dropdown-item" asp-page="Edit" asp-route-id="@item.Id">Edit</a>
-                                        <a class="dropdown-item" asp-page="Lock" asp-route-id="@item.Id">Lock</a>
-                                        <a class="dropdown-item" asp-page="ChangePwd" asp-route-id="@item.Id">Change password</a>
-                                        <a class="dropdown-item"  data-toggle="modal" data-target=@("#staticBackdrop"+item.Id)>Delete</a>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <div class="modal fade" id=@("staticBackdrop"+item.Id) data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-body">
-                                        <div class="text-center">
-                                            <h4>
-                                                Are you sure you want to delete this user?
 
-                                            </h4>
+                    @{ if (Model.allusers.FirstOrDefault() != null)
+                        {
+                            foreach (var item in Model.allusers)
+                            {
+                                <tr>
+                                    <td>@item.Fullname</td>
+                                    <td>@item.UserType</td>
+                                    <td class="text-danger"><label class="badge badge-danger">Locked</label></td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary"><a asp-page="Profile" asp-route-id="@item.Id">View</a> </button>
+                                            @*<button type="button" class="btn btn-primary"><a asp-page="Edit" asp-route-id="@item.Id">Edit</a> </button>*@
+                                            @*<button type="button" class="btn btn-primary delete" data-toggle="modal" data-target=@("#staticBackdrop"+item.Id)>Edit </button>*@
+                                            <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id=@("dropdownMenuSplitButton" + item.Id) data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby=@("dropdownMenuSplitButton" + item.Id)>
+                                                <a class="dropdown-item" asp-page="Edit" asp-route-id="@item.Id">Edit</a>
+                                                <a class="dropdown-item" asp-page="Lock" asp-route-id="@item.Id">Lock</a>
+                                                <a class="dropdown-item" asp-page="ChangePwd" asp-route-id="@item.Id">Change password</a>
+                                                <a class="dropdown-item" data-toggle="modal" data-target=@("#staticBackdrop" + item.Id)>Delete</a>
+                                            </div>
                                         </div>
-                                        <div class="d-flex justify-content-between" style="margin-top:30px;">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="button" onclick=@("deleteUser("+"'"+item.Id+"'"+")") class="btn btn-danger">Delete</button>
+                                    </td>
+                                </tr>
+                                <div class="modal fade" id=@("staticBackdrop" + item.Id) data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <div class="text-center">
+                                                    <h4>
+                                                        Are you sure you want to delete this user?
+
+                                                    </h4>
+                                                </div>
+                                                <div class="d-flex justify-content-between" style="margin-top:30px;">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="button" onclick=@("deleteUser(" + "'" + item.Id + "'" + ")") class="btn btn-danger">Delete</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td>Name</td>
+                                <td>User Type</td>
+                                <td><label class="badge badge-info">Example</label></td>
+                                <td class="text-danger">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-primary">View</button>
+                                        <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id="dropdownMenuSplitButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuSplitButton1" style="">
+                                            <a class="dropdown-item" href="#">Edit</a>
+                                            <a class="dropdown-item" href="#">Lock</a>
+                                            <a class="dropdown-item" href="#">Change password</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
 
                     }
-                    <tr>
-                        <td>Jacob</td>
-                        <td>Patient</td>
-                        <td><label class="badge badge-warning">Pending Verification</label></td>
-                        <td class="text-danger">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-primary">View</button>
-                                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id="dropdownMenuSplitButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuSplitButton1" style="">
-                                    <a class="dropdown-item" href="#">Edit</a>
-                                    <a class="dropdown-item" href="#">Lock</a>
-                                    <a class="dropdown-item" href="#">Change password</a>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Jacob</td>
-                        <td>Patient</td>
-                        <td><label class="badge badge-danger">Locked</label></td>
-                        <td class="text-danger">
-                            
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Jacob</td>
-                        <td>Patient</td>
-                        <td><label class="badge badge-danger">Locked</label></td>
-                        <td class="text-danger">
-                            
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Jacob</td>
-                        <td>Patient</td>
-                        <td><label class="badge badge-danger">Locked</label></td>
-                        <td class="text-danger">
-                            
-                        </td>
-                    </tr>
                 </tbody>
             </table>
         </div>

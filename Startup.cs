@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Elderson.Services;
 using Elderson.Models;
+using Serilog;
 
 namespace Elderson
 {
@@ -48,6 +49,8 @@ namespace Elderson
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            //app.UseSerilogRequestLogging();
 
             app.UseRouting();
 

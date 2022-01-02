@@ -66,6 +66,19 @@ namespace Elderson
             {
                 var deleteUser = _svc.GetUserById(userId);
                 _svc.DeleteUser(deleteUser);
+
+                switch (deleteUser.UserType)
+                {
+                    case "Patient":
+                        _svc.DeletePatient(_svc.GetPatientById(userId));
+                        break;
+                    case "Doctor":
+                        _svc.DeleteDoctor(_svc.GetDoctorById(userId));
+                        break;
+                    case "Administrator":
+                        _svc.DeleteAdministrator(_svc.GetAdministratorById(userId));
+                        break;
+                }
             }
             catch (Exception ex)
             {

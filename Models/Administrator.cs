@@ -10,9 +10,9 @@ namespace Elderson.Models
         public string Id { get; set; }
         public string Clinic { get; set; }
         public int BookingCount { get; set; }
-        public float Earnings { get; set; }
-        public DateTime OpeningHours { get; set; }
-        public DateTime ClosingHours { get; set; }
+        public Double Earnings { get; set; }
+        public TimeSpan OpeningHours { get; set; }
+        public TimeSpan ClosingHours { get; set; }
         public int TotalBookings { get; set; }
         public string UserId { get; set; }
     }

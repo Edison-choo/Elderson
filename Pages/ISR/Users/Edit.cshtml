@@ -597,15 +597,15 @@
                             <div>
                                 <div class="profileLb">Clinic</div>
                                 <div class="profileData">
-                                    <input asp-for="DoctorRole.Clinic" value="@Model.DoctorRole.Clinic" type="text" class="form-control" id="clinic" placeholder="Clinic">
-                                    <span asp-validation-for="DoctorRole.Clinic" class="text-danger"></span>
+                                    <input asp-for="AdminRole.Clinic" value="@Model.AdminRole.Clinic" type="text" class="form-control" id="clinic" placeholder="Clinic">
+                                    <span asp-validation-for="AdminRole.Clinic" class="text-danger"></span>
                                 </div>
                                 
                             </div>
                             <div>
                                 <div class="profileLb">Opening Hours</div>
                                 <div class="profileData">
-                                    <input asp-for="AdminRole.OpeningHours" type="time" value="00:00:00" class="form-control" id="openingHours" placeholder="OPENING HOURS">
+                                    <input asp-for="AdminRole.OpeningHours" value="@Model.AdminRole.OpeningHours" type="time" class="form-control" id="openingHours" placeholder="OPENING HOURS">
                                     <span asp-validation-for="AdminRole.OpeningHours" class="text-danger"></span>
                                 </div>
                                 
@@ -613,7 +613,7 @@
                             <div>
                                 <div class="profileLb">Closing Hours</div>
                                 <div class="profileData">
-                                    <input asp-for="AdminRole.ClosingHours" type="time" value="00:00:00" class="form-control" id="closingHours" placeholder="CLOSING HOURS">
+                                    <input asp-for="AdminRole.ClosingHours" value="@Model.AdminRole.ClosingHours" type="time" class="form-control" id="closingHours" placeholder="CLOSING HOURS">
                                     <span asp-validation-for="AdminRole.ClosingHours" class="text-danger"></span>
                                 </div>
                                 
