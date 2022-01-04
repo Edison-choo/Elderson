@@ -53,7 +53,7 @@ namespace Elderson.Pages.ISR.Users
             UpdatedUser = _svc.GetUserById(SelectedUser.Id);
             if (_svc.GetUserByEmail(SelectedUser.Email) != null && SelectedUser.Email != UpdatedUser.Email)
             {
-                _logger.LogInformation($"Edit user {SelectedUser.Id} unsuccessfully. Email is already being used.");
+                _logger.LogInformation("Edit user {userId} unsuccessfully. Email is already being used.", SelectedUser.Id);
                 return Page();
             }
             UpdatedUser.Fullname = SelectedUser.Fullname;
@@ -91,7 +91,7 @@ namespace Elderson.Pages.ISR.Users
             }
             if (valid)
             {
-                _logger.LogInformation($"Edit user {SelectedUser.Id} successfully.");
+                _logger.LogInformation("Edit user {userId} successfully.", SelectedUser.Id);
                 return RedirectToPage("Index");
             }
 

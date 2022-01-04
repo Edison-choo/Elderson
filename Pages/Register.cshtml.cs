@@ -61,7 +61,7 @@ namespace Elderson.Pages
 
                 if (_svc.GetUserByEmail(newUser.Email) != null)
                 {
-                    _logger.LogInformation($"Register user unsuccessfully. Email is already being used.");
+                    _logger.LogInformation("Register user unsuccessfully. Email is already being used.");
                     return Page();
                 }
 
@@ -80,7 +80,7 @@ namespace Elderson.Pages
                 PatientRole.UserId = newUser.Id;
                 _svc.AddPatient(PatientRole);
 
-                _logger.LogInformation($"Register user {newUser.Id} successfully.");
+                _logger.LogInformation("Register user {userId} successfully.", newUser.Id);
 
                 return RedirectToPage("Login");
             }

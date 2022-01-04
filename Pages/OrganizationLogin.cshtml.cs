@@ -50,19 +50,19 @@ namespace Elderson.Pages
                     {
                         HttpContext.Session.SetString("LoginUser", user.Fullname);
                         HttpContext.Session.SetString("LoginUserType", user.UserType);
-                        _logger.LogInformation($"Organization User {user.Id} login successfullly.");
+                        _logger.LogInformation("Organization User {userId} login successfullly.", user.Id);
                         return RedirectToPage("Index");
                     }
                     else
                     {
-                        _logger.LogInformation($"Organization User {user.Id} login unsuccessfullly. Password is incorrect.");
+                        _logger.LogInformation("Organization User {userId} login unsuccessfullly. Password is incorrect.", user.Id);
                         ErrorMsg = "Login Information is incorrect";
                         return Page();
                     }
                 }
                 else
                 {
-                    _logger.LogInformation($"Organization User login unsuccessfullly. Login information is incorrect.");
+                    _logger.LogInformation("Organization User login unsuccessfullly. Login information is incorrect.");
                     ErrorMsg = "Login Information is incorrect";
                     return Page();
                 }

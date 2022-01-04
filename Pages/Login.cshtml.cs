@@ -51,17 +51,17 @@ namespace Elderson.Pages.Users
                     {
                         HttpContext.Session.SetString("LoginUser", user.Fullname);
                         HttpContext.Session.SetString("LoginUserType", user.UserType);
-                        _logger.LogInformation($"User {user.Id} login successfullly.");
+                        _logger.LogInformation("User {userId} login successfullly.", user.Id);
                         return RedirectToPage("Index");
                     } else
                     {
-                        _logger.LogInformation($"User {user.Id} login unsuccessfullly. Password is incorrect.");
+                        _logger.LogInformation("User {userId} login unsuccessfullly. Password is incorrect.", user.Id);
                         ErrorMsg = "Login Information is incorrect";
                         return Page();
                     }
                 } else
                 {
-                    _logger.LogInformation($"User login unsuccessfullly. Login information is incorrect.");
+                    _logger.LogInformation("User login unsuccessfullly. Login information is incorrect.");
                     ErrorMsg = "Login Information is incorrect";
                     return Page();
                 }

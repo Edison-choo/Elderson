@@ -68,20 +68,20 @@ namespace Elderson.Pages.ISR.Users
                         Boolean valid = _svc.UpdateUser(user);
                         if (valid)
                         {
-                            _logger.LogInformation($"Update user {user.Id} password successfully.");
+                            _logger.LogInformation("Update user {userId} password successfully.", user.Id);
                             return RedirectToPage("Index");
                         }
                     }
                     else
                     {
-                        _logger.LogInformation($"Update user {user.Id} password unsuccessfully. The passwords do not match.");
+                        _logger.LogInformation("Update user {userId} password unsuccessfully. The passwords do not match.", user.Id);
                         ErrorMsg = "New password does not match";
                     }
 
                 }
                 else
                 {
-                    _logger.LogInformation($"Update user {user.Id} password successfully. Password is incorrect.");
+                    _logger.LogInformation("Update user {userId} password successfully. Password is incorrect.", user.Id);
                     ErrorMsg = "Current password is incorrect";
                 }
                 return Page();

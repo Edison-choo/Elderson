@@ -24,6 +24,15 @@
     <link rel="shortcut icon" href="~/images/favicon.png" />
 
     <link rel="stylesheet" href="~/css/Custom.css" />
+
+    @{
+        if (ViewData["Header"] == "CHAT")
+        {
+            <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+            <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.css" >
+        }
+    }
 </head>
 <body>
     <header>
@@ -46,8 +55,9 @@
             <div class="navbar-menu-wrapper d-flex align-items-top">
                 <ul class="navbar-nav">
                     <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
-                        <h1 class="welcome-text">Good Morning, <span class="text-black fw-bold">John Doe</span></h1>
-                        <h3 class="welcome-sub-text">Your performance summary this week </h3>
+                        <h3 class="welcome-sub-text">@ViewData["Breadcrumb"] </h3>
+                        <h1 class="welcome-text"><span class="text-black fw-bold">@ViewData["Header"]</span></h1>
+
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
@@ -211,18 +221,19 @@
                 </div>
                 <div>
                     <a class="navbar-brand brand-logo" href="index.html">
-                        <img src="images/logo.svg" alt="logo" />
+                        <img src="~/images/logo.svg" alt="logo" />
                     </a>
                     <a class="navbar-brand brand-logo-mini" href="index.html">
-                        <img src="images/logo-mini.svg" alt="logo" />
+                        <img src="~/images/logo-mini.svg" alt="logo" />
                     </a>
                 </div>
             </div>
             <div class="navbar-menu-wrapper d-flex align-items-top">
                 <ul class="navbar-nav">
                     <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
-                        <h1 class="welcome-text">Good Morning, <span class="text-black fw-bold">John Doe</span></h1>
-                        <h3 class="welcome-sub-text">Your performance summary this week </h3>
+
+                        <h3 class="welcome-sub-text">@ViewData["Breadcrumb"]</h3>
+                        <h1 class="welcome-text"><span class="text-black fw-bold">@ViewData["Header"]</span></h1>
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
@@ -324,7 +335,7 @@
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item preview-item">
                                 <div class="preview-thumbnail">
-                                    <img src="images/faces/face10.jpg" alt="image" class="img-sm profile-pic">
+                                    <img src="~/images/faces/face10.jpg" alt="image" class="img-sm profile-pic">
                                 </div>
                                 <div class="preview-item-content flex-grow py-2">
                                     <p class="preview-subject ellipsis font-weight-medium text-dark">Marian Garner </p>
@@ -333,7 +344,7 @@
                             </a>
                             <a class="dropdown-item preview-item">
                                 <div class="preview-thumbnail">
-                                    <img src="images/faces/face12.jpg" alt="image" class="img-sm profile-pic">
+                                    <img src="~/images/faces/face12.jpg" alt="image" class="img-sm profile-pic">
                                 </div>
                                 <div class="preview-item-content flex-grow py-2">
                                     <p class="preview-subject ellipsis font-weight-medium text-dark">David Grey </p>
@@ -342,7 +353,7 @@
                             </a>
                             <a class="dropdown-item preview-item">
                                 <div class="preview-thumbnail">
-                                    <img src="images/faces/face1.jpg" alt="image" class="img-sm profile-pic">
+                                    <img src="~/images/faces/face1.jpg" alt="image" class="img-sm profile-pic">
                                 </div>
                                 <div class="preview-item-content flex-grow py-2">
                                     <p class="preview-subject ellipsis font-weight-medium text-dark">Travis Jenkins </p>
@@ -353,11 +364,11 @@
                     </li>
                     <li class="nav-item dropdown d-none d-lg-block user-dropdown">
                         <a class="nav-link" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img class="img-xs rounded-circle" src="images/faces/face8.jpg" alt="Profile image">
+                            <img class="img-xs rounded-circle" src="~/images/faces/face8.jpg" alt="Profile image">
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
                             <div class="dropdown-header text-center">
-                                <img class="img-md rounded-circle" src="images/faces/face8.jpg" alt="Profile image">
+                                <img class="img-md rounded-circle" src="~/images/faces/face8.jpg" alt="Profile image">
                                 <p class="mb-1 mt-3 font-weight-semibold">Allen Moreno</p>
                                 <p class="fw-light text-muted mb-0">allenmoreno@gmail.com</p>
                             </div>
@@ -490,7 +501,7 @@
                         </div>
                         <ul class="chat-list">
                             <li class="list active">
-                                <div class="profile"><img src="images/faces/face1.jpg" alt="image"><span class="online"></span></div>
+                                <div class="profile"><img src="~/images/faces/face1.jpg" alt="image"><span class="online"></span></div>
                                 <div class="info">
                                     <p>Thomas Douglas</p>
                                     <p>Available</p>
@@ -498,7 +509,7 @@
                                 <small class="text-muted my-auto">19 min</small>
                             </li>
                             <li class="list">
-                                <div class="profile"><img src="images/faces/face2.jpg" alt="image"><span class="offline"></span></div>
+                                <div class="profile"><img src="~/images/faces/face2.jpg" alt="image"><span class="offline"></span></div>
                                 <div class="info">
                                     <div class="wrapper d-flex">
                                         <p>Catherine</p>
@@ -509,7 +520,7 @@
                                 <small class="text-muted my-auto">23 min</small>
                             </li>
                             <li class="list">
-                                <div class="profile"><img src="images/faces/face3.jpg" alt="image"><span class="online"></span></div>
+                                <div class="profile"><img src="~/images/faces/face3.jpg" alt="image"><span class="online"></span></div>
                                 <div class="info">
                                     <p>Daniel Russell</p>
                                     <p>Available</p>
@@ -517,7 +528,7 @@
                                 <small class="text-muted my-auto">14 min</small>
                             </li>
                             <li class="list">
-                                <div class="profile"><img src="images/faces/face4.jpg" alt="image"><span class="offline"></span></div>
+                                <div class="profile"><img src="~/images/faces/face4.jpg" alt="image"><span class="offline"></span></div>
                                 <div class="info">
                                     <p>James Richardson</p>
                                     <p>Away</p>
@@ -525,7 +536,7 @@
                                 <small class="text-muted my-auto">2 min</small>
                             </li>
                             <li class="list">
-                                <div class="profile"><img src="images/faces/face5.jpg" alt="image"><span class="online"></span></div>
+                                <div class="profile"><img src="~/images/faces/face5.jpg" alt="image"><span class="online"></span></div>
                                 <div class="info">
                                     <p>Madeline Kennedy</p>
                                     <p>Available</p>
@@ -533,7 +544,7 @@
                                 <small class="text-muted my-auto">5 min</small>
                             </li>
                             <li class="list">
-                                <div class="profile"><img src="images/faces/face6.jpg" alt="image"><span class="online"></span></div>
+                                <div class="profile"><img src="~/images/faces/face6.jpg" alt="image"><span class="online"></span></div>
                                 <div class="info">
                                     <p>Sarah Graves</p>
                                     <p>Available</p>
