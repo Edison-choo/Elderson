@@ -1,6 +1,7 @@
 ﻿@page
 @model Elderson.Pages.Users.UserManagementModel
 @using Elderson.Models;
+
 @{
     Layout = "Shared/_LayoutITSupport";
     ViewData["Title"] = "User management page";
@@ -15,6 +16,33 @@
     }
 </style>
 
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        console.log("Loading webpage...")
+        $.ajax({
+            url: 'https://localhost:44311/api/User',
+            type: 'GET',
+            success: function (result) {
+                console.log("Items retrieve successfully")
+                console.log(result);
+                $('#userstable').DataTable(
+                    {
+                        "ajax": result,
+                        "columns": [
+                            { "data": "Fullname" },
+                            { "data": "UserType" },
+                            { "data": "" }
+                        ]
+                    }
+                );
+            }
+        });
+    });
+</script>
+
 <div class="card">
     <div class="card-body">
         <div class="d-flex justify-content-between align-items-start">
@@ -22,7 +50,7 @@
             <button class="btn btn-primary btn-l text-white mb-0 me-0" type="button"><a asp-page="CreateUser"><i class="mdi mdi-account-plus"></i>Add new member</a> </button>
 
         </div>
-        
+
         <div class="table-responsive">
             <table class="table table-hover">
                 <thead>
@@ -105,14 +133,26 @@
                 </tbody>
             </table>
         </div>
+
+        
     </div>
 </div>
+
+<div class="card">
+    <div class="card-body">
+        <table class="display" id="userstable" style="width:100%">
+        </table>
+    </div>
+    
+</div>
+
+
 
 <script>
 
     function deleteUser(userId) {
         $.ajax({
-            url: 'https://localhost:44311/api/User/'+userId,
+            url: 'https://localhost:44311/api/User/' + userId,
             type: 'DELETE',
             success: function (result) {
                 console.log("Item delete successfully")

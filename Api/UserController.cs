@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Elderson.Models;
 using Elderson.Services;
+using System.Text.Json;
 
 namespace Elderson
 {
@@ -31,12 +32,15 @@ namespace Elderson
             try
             {
                 alluser = _svc.GetAllUsers();
+                var jsonStr = JsonSerializer.Serialize(alluser.Select(x => new { x.Id, x.Fullname, x.UserType}));
+                return Ok(jsonStr);
             }
             catch (Exception ex)
             {
                 Console.WriteLine("instalmentController.getCarLoan", ex);
+                return BadRequest();
             }
-            return Ok(alluser);
+            
         }
 
         //// GET api/<UserController>/5
