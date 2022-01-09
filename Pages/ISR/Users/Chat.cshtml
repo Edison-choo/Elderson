@@ -347,6 +347,8 @@
 </style>
 
 
+
+
 <div class="main-section d-flex justify-content-between" style="background-color:transparent;">
     <div class="left card">
         <div class="head-section">
@@ -425,8 +427,8 @@
         </div>
         <div class="body-section">
             <div class="right-section">
-                <div class="message mCustomScrollbar" data-mcs-theme="minimal-dark">
-                    <ul>
+                <div class="message" data-mcs-theme="minimal-dark">
+                    <ul id="messageList">
                         <li class="msg-left">
                             <div class="msg-left-sub">
                                 <div class="msg-desc">
@@ -534,8 +536,8 @@
                             <button class="btn"><i class="fa fa-photo"></i></button>
                             <input type="file" name="myfile" />
                         </div>
-                        <input type="text" name="" placeholder="type here...">
-                        <button class="btn-send"><i class="fa fa-send"></i></button>
+                        <input id="messageInput" type="text" name="" placeholder="type here...">
+                        <button id="sendButton" type="button" class="btn-send"><i class="fa fa-send"></i></button>
                     </form>
                 </div>
             </div>
@@ -550,3 +552,5 @@
 <!-- custom scrollbar plugin -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/chat.js"></script>

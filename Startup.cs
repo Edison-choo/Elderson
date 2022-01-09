@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Elderson.Services;
 using Elderson.Models;
 using Serilog;
+using Elderson.Hubs;
 
 namespace Elderson
 {
@@ -27,6 +28,7 @@ namespace Elderson
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.AddSignalR();
             services.AddSession();
             services.AddTransient<UserService>();
             services.AddDbContext<EldersonContext>();
@@ -63,6 +65,7 @@ namespace Elderson
                 endpoints.MapRazorPages();
                 endpoints.MapControllerRoute("default", "api/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllers();
+                endpoints.MapHub<ChatHub>("/chatHub");
             });
         }
     }
