@@ -1,4 +1,77 @@
 ﻿@page
 @model Elderson.Pages.ISR.Contacts.SendEmailModel
-@{
-}
+@{ Layout = "Shared/_LayoutITSupport";
+                ViewData["Title"] = "Send email page";
+                ViewData["Header"] = "SEND EMAIL";
+                ViewData["Breadcrumb"] = "Contact"; }
+
+<div class="row">
+    <form class="forms-sample" method="post" asp-action="">
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Email Content</h4>
+                        <hr />
+                        <div class="form-group d-flex">
+                            <div style="width:10%;">
+                                <label for="exampleInputEmail3">To:</label>
+
+                            </div>
+                            <div style="width:90%;">
+                                <input type="email" class="form-control" id="exampleInputEmail3">
+                                <span class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="form-group d-flex">
+                            <div style="width:10%;">
+                                <label for="password">CC:</label>
+
+                            </div>
+                            <div style="width:90%;">
+                                <input type="email" class="form-control" id="password">
+                                <span class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="form-group d-flex">
+                            <div style="width:10%;">
+                                <label for="confirmPassword">Subject:</label>
+
+                            </div>
+                            <div style="width:90%;">
+                                <input type="text" class="form-control" id="subject">
+                                <span class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="form-group d-flex">
+                            <div style="width:10%;">
+                                <label for="confirmPassword">Body:</label>
+
+                            </div>
+                            <div style="width:90%;">
+                                <textarea class="form-control" id="body"></textarea>
+                                <span class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="form-group d-flex">
+                            <div style="width:10%;">
+
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width:90%;">SEND</button>
+
+                        </div>
+                        
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </form>
+</div>

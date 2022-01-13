@@ -1,0 +1,87 @@
+﻿@page
+@model Elderson.Pages.ISR.Incidents.DetailModel
+@{
+    Layout = "Shared/_LayoutITSupport";
+    ViewData["Title"] = "Incident Detail page";
+    ViewData["Header"] = "INCIDENT DETIALS";
+    ViewData["Breadcrumb"] = "Incident Management > Incidents";
+}
+
+<style>
+    a {
+        color: white;
+        text-decoration: none;
+    }
+</style>
+
+<div class="row">
+    <form class="forms-sample" method="post" asp-action="">
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div class="d-flex">
+                                <div style="margin-left:20px; margin-top:20px;">
+                                    <h3>Accidental deletion</h3>
+                                    <p>Created on 11/11/2021</p>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="btn-group" style="margin-top:30px;">
+                                    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id="dropdownMenuSplitButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        ACTION
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuSplitButton1">
+                                        <a class="dropdown-item" asp-page="Edit">Edit</a>
+                                        <a class="dropdown-item" data-toggle="modal" data-target="">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Incident Information</h4>
+                        <hr />
+                        <div>
+                            <div class="profileLb">Description:</div>
+                            <div class="profileData">
+                                He tried to login on 01 December 2021, but it wasn’t successful. So he contact IT Support through website chat. I check with him and
+                                the logs, find out that the account was deleted.
+                            </div>
+                        </div>
+                        <div>
+                            <div class="profileLb">Reason:</div>
+                            <div class="profileData">
+                                Someone gains access to his account and delete the account.
+                            </div>
+                        </div>
+                        <div>
+                            <div class="profileLb">Recommendation:</div>
+                            <div class="profileData">
+                                If user wants to delete, he or she needs to enter password again to delete.
+                            </div>
+                        </div>
+                        <div>
+                            <div class="profileLb">Wrote By:</div>
+                            <div class="profileData">
+                                Demon Cosma
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
