@@ -1,0 +1,33 @@
+﻿@page
+@model Elderson.PatientDetailsModel
+@{
+    ViewData["Title"] = "PatientDetails";
+    Layout = "Shared/_LayoutAdmin";
+    ViewData["Header"] = "Patients";
+    ViewData["Breadcrumb"] = "Patients";
+}
+
+
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.1/mdb.min.js"></script>
+
+<body>
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start">
+        </div>
+        <div class="table-responsive">
+            <button class="btn btn-primary btn-l text-white mb-0 me-0" type="button"><a asp-page="CreateUser"><i class="mdi mdi-account-plus"></i>Add new member</a> </button>
+            <table class="display table table-hover" id="userstable" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Action</th>
+
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
+    </div>
+</body>
