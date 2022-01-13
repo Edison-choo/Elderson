@@ -1,16 +1,14 @@
 ﻿@page
 @model Elderson.Pages.ISR.Users.ChatModel
-@{
-    Layout = "Shared/_LayoutITSupport";
-    ViewData["Title"] = "Chat page";
-    ViewData["Header"] = "CHAT";
-    ViewData["Breadcrumb"] = "Contact";
-}
+@{ Layout = "Shared/_LayoutITSupport";
+                ViewData["Title"] = "Chat page";
+                ViewData["Header"] = "CHAT";
+                ViewData["Breadcrumb"] = "Contact"; }
 
 <style>
     .left {
-        width:400px;
-        height:700px;
+        width: 400px;
+        height: 700px;
     }
 
     .right {
@@ -36,7 +34,7 @@
         clear: both;
         overflow: visible;
         width: 100%;
-        height:75px;
+        height: 75px;
     }
 
     .headLeft-section {
@@ -67,13 +65,12 @@
     .headRight-section {
         width: 100%;
         float: left;
-        
     }
 
     .headRight-sub {
         padding: 10px 15px 0px 15px;
         height: 75px;
-        z-index:3;
+        z-index: 3;
     }
 
     .body-section {
@@ -194,7 +191,7 @@
     .message {
         height: calc(100% - 68px);
         font-family: sans-serif;
-        padding-bottom:50px;
+        padding-bottom: 50px;
     }
 
         .message ul {
@@ -212,13 +209,13 @@
                 clear: both;
             }
 
-            .message ul li:last-child {
-                margin-bottom:20px;
-            }
+                .message ul li:last-child {
+                    margin-bottom: 20px;
+                }
 
                 .message ul li.msg-left {
                     float: left;
-                    max-width:500px;
+                    max-width: 500px;
                 }
 
                     .message ul li.msg-left .msg-desc {
@@ -546,11 +543,75 @@
     </div>
 </div>
 
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
 
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <!-- custom scrollbar plugin -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
-<script src="~/js/signalr/dist/browser/signalr.js"></script>
-<script src="~/js/chat.js"></script>
+
+@*
+<script src="~/js/chat.js"></script>*@
+
+<script>
+    class Message {
+        constructor(username, text, when) {
+            this.userName = username;
+            this.text = text;
+            this.when = when;
+        }
+    }
+
+    var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+
+    //Disable the send button until connection is established.
+    document.getElementById("sendButton").disabled = true;
+
+    connection.start().then(function () {
+        document.getElementById("sendButton").disabled = false;
+
+        connection.invoke("getConnectionId")
+            .then(function (connectionId) {
+                sessionStorage.setItem('connectionId', connectionId);
+            }).catch(err => console.error(err.toString()));
+    }).catch(function (err) {
+        return console.error(err.toString());
+    });
+
+    document.getElementById("sendButton").addEventListener("click", function (event) {
+        var user = "test";
+        var text = document.getElementById("messageInput").value;
+        console.log("sending...")
+
+        document.getElementById("messageInput").value = "";
+        let message = new Message(user, text, Date.now);
+        console.log(`sending ${message} says ${message.text}`);
+        connection.invoke("SendMessage", message).catch(function (err) {
+            return console.error(err.toString());
+        });
+        event.preventDefault();
+    });
+
+    connection.on("ReceiveMessage", function (message) {
+        console.log(`${message.username} says ${message.text}`);
+        var li = document.createElement("li");
+        li.setAttribute("class", "msg-left")
+        var divFirst = document.createElement("div");
+        divFirst.setAttribute("class", "msg-left")
+        var divSecond = document.createElement("div");
+        divSecond.setAttribute("class", "msg-left-sub")
+        var divThird = document.createElement("div");
+        divThird.setAttribute("class", "msg-desc")
+        var small = document.createElement("small");
+
+        li.appendChild(divFirst);
+        divFirst.appendChild(divSecond);
+        divSecond.appendChild(divThird);
+        divSecond.appendChild(small);
+
+        divThird.textContent = `${message.username} says ${message.text}`;
+
+        document.getElementById("messageList").appendChild(li)
+    });
+</script>

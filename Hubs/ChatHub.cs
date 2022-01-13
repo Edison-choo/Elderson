@@ -15,5 +15,16 @@ namespace Elderson.Hubs
             await Clients.All.SendAsync("ReceiveMessage", message);
         }
 
+        public string GetConnectionId()
+        {
+            return Context.ConnectionId;
+        }
+
+        public async Task Send(Message message, string userId)
+        {
+            Console.WriteLine(message.Text);
+            await Clients.Client(userId).SendAsync("ReceiveMessage", message);
+        }
+
     }
 }

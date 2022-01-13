@@ -28,6 +28,8 @@
 
   <ItemGroup>
     <Folder Include="Database\" />
+    <Folder Include="Pages\ISR\Incidents\" />
+    <Folder Include="Pages\ISR\Logs\" />
   </ItemGroup>
 
 </Project>
