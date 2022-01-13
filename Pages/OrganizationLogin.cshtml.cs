@@ -51,6 +51,10 @@ namespace Elderson.Pages
                         HttpContext.Session.SetString("LoginUser", user.Fullname);
                         HttpContext.Session.SetString("LoginUserType", user.UserType);
                         _logger.LogInformation("Organization User {userId} login successfullly.", user.Id);
+                        if (user.UserType == "Doctor")
+                        {
+                            return RedirectToPage("Doctors");
+                        }
                         return RedirectToPage("Index");
                     }
                     else
