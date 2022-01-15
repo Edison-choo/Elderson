@@ -14,17 +14,23 @@
             </tr>
         </thead>
         <tr>
-            <td>
-                <div>@Model.myClinic Consultation</div>
-                <div>Booking Date: @Model.myDateTime</div>
-            </td>
-            <td>$20.00</td>
-            <td>1</td>
-            <td>$20.00</td>
+            @if (Model.myCart != null)
+            {
+                @foreach (var item in Model.myCart)
+                {
+                    <td>
+                        <div>@item.ItemName</div>
+                        <div>@item.BookDateTime</div>
+                    </td>
+                    <td>$@item.Price</td>
+                    <td>@item.Quantity</td>
+                    <td>$@(item.Price * item.Quantity)</td>
+                }
+            }
         </tr>
         <tr>
             <td colspan="3">Total</td>
-            <td>$20.00</td>
+            <td>$@Model.myTotal</td>
         </tr>
     </table>
     <br />

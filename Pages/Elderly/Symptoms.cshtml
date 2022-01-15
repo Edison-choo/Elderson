@@ -16,13 +16,7 @@
 
     <!-- Collapsed content -->
     <div class="collapse mt-3 scroll-section" id="collapseWithScrollbar" style="max-width: 500px">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad
-        squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente
-        ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
-        farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them
-        accusamus labore sustainable VHS. 3 wolf moon officia aute, non cupidatat skateboard dolor
-        brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua
-        put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
+
     </div>
     <br />
     <form method="post">
@@ -30,13 +24,9 @@
             <label for="">Enter a description of your symptoms:</label>
             <textarea asp-for="mySymptoms" class="form-control" rows="3"></textarea>
         </div>
-        <div class="form-group">
-            <label for="">When did your symptoms start to appear:</label>
-            <input asp-for="mySymptomStart" type="date" />
-        </div>
-        <div style="display:inline-block">
-            <div style="float:left"><a asp-page="/Clinic" class="btn btn-primary">Back</a></div>
-            <div style="float:right"><button class="btn btn-primary">Continue</button></div>
+        <div>
+            <a asp-page="/Clinic" class="btn btn-primary" style="display:inline-block">Back</a>
+            <button class="btn btn-primary justify-content-end" type="submit" style="display:inline-block">Add To Cart</button>
         </div>
     </form>
 </div>

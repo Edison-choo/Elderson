@@ -12,9 +12,8 @@ namespace Elderson.Models
         public int Price { get; set; }
         public int Quantity { get; set; }
         public string Clinic { get; set; }
-        public DateTime BookDateTime { get; set; }
+        public string BookDateTime { get; set; }
         public string Symptoms { get; set; }
-        public string PatientID { get; set; }
         public string DoctorID { get; set; }
     }
 }

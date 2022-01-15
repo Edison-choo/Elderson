@@ -7,7 +7,9 @@
     <form method="post">
         <div class="row">
             <div class="col-md-6 form-group">
-                <input asp-for="myClinic" type="text" class="form-control" placeholder="Clinic" value="@Model.myClinic">
+                <input type="text" class="form-control" placeholder="Clinic" value="@Model.myDoctor (@Model.myClinic)" disabled>
+                <input type="hidden" asp-for="myClinic" value="@Model.myClinic" />
+                <input type="hidden" asp-for="myDoctor" value="@Model.myDoctor" />
                 <div class="validate"></div>
             </div>
             <div class="col-md-6 form-group mt-3 mt-md-0">
@@ -15,9 +17,77 @@
                 <div class="validate"></div>
             </div>
         </div>
+        <div>
+            <table id="calendar" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th><</th>
+                        <th colspan="5" id="month" style="text-align:center;"></th>
+                        <th>></th>
+                    </tr>
+                    <tr id="week">
+                        <th>Sun</th>
+                        <th>Mon</th>
+                        <th>Tue</th>
+                        <th>Wed</th>
+                        <th>Thu</th>
+                        <th>Fri</th>
+                        <th>Sat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <div style="display:inline-block">
-            <div style="float:left"><a asp-page="/Elderly/Clinic" class="btn btn-primary">Back</a></div>
+            <div style="float:left"><a asp-page="/Elderly/Doctor" asp-route-clinic="@Model.myClinic" class="btn btn-primary">Back</a></div>
             <div style="float:right"><button class="btn btn-primary">Continue</button></div>
         </div>
     </form>
 </div>
+<script src="~/js/bootstrap-table.js"></script>
+<script src="~/js/datepicker.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<style>
+    #week th{
+        text-align:center;
+    }
+</style>
+<script>
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var tdy = new Date();
+    var month = months[tdy.getMonth()];
+    var year = tdy.getFullYear();
+    function leapYear(year) {
+        if (year % 4 == 0)
+            return true
+        else
+            return false
+    }
+    function getDays(month, year) {
+        var montharr = Array(12)
+        montharr[0] = 31
+        montharr[1] = (leapYear(year)) ? 29 : 28
+        montharr[2] = 31
+        montharr[3] = 30
+        montharr[4] = 31
+        montharr[5] = 30
+        montharr[6] = 31
+        montharr[7] = 31
+        montharr[8] = 30
+        montharr[9] = 31
+        montharr[10] = 30
+        montharr[11] = 31
+        return montharr[month]
+    }
+    function setCal() {
+        
+    }
+    function drawCal(firstDay, lastDate, date, monthName, year) {
+
+    }
+    document.getElementById("month").innerHTML = month;
+</script>
