@@ -11,18 +11,21 @@
                 <input type="hidden" asp-for="myDoctor" value="@Model.myDoctor" />
                 <div class="validate"></div>
             </div>
-            <div class="col-md-6 form-group mt-3 mt-md-0">
-                <input asp-for="myDateTime" type="datetime-local" class="form-control">
-                <div class="validate"></div>
+            <div class="col-md-3 form-group mt-3 mt-md-0">
+                <input type="date" class="form-control" id="dateSelect" disabled>
             </div>
+            <div class="col-md-3 form-group mt-3 mt-md-0">
+                <input type="time" class="form-control" id="timeSelect" value="09:00" disabled>
+            </div>
+            <input asp-for="myDateTime" type="datetime-local" class="form-control" hidden>
         </div>
         <div>
             <table id="calendar" class="table table-bordered">
-                <thead>
+                <thead class="bordered">
                     <tr>
-                        <th class="calClick"><</th>
+                        <th class="calClick" id="prevMonth"><</th>
                         <th colspan="5" id="month" style="text-align:center;"></th>
-                        <th class="calClick">></th>
+                        <th class="calClick" id="nextMonth">></th>
                     </tr>
                     <tr id="week">
                         <th>Sun</th>
@@ -34,9 +37,11 @@
                         <th>Sat</th>
                     </tr>
                 </thead>
-                <tbody id="calBody">
+                <tbody id="calBody" class="table table-bordered">
                 </tbody>
             </table>
+        </div>
+        <div id="timeSelect">
         </div>
         <div style="display:inline-block">
             <div style="float:left"><a asp-page="/Elderly/Doctor" asp-route-clinic="@Model.myClinic" class="btn btn-primary">Back</a></div>
@@ -53,18 +58,120 @@
         cursor: pointer;
     }
 
-        .calClick hover {
-            opacity: 80%;
-        }
+    .calClick hover {
+        opacity: 80%;
+    }
+    #calBody td {
+        border: 1px solid #B8B8B8;
+        color: #B8B8B8;
+    }
+    .a {
+        background: #25ECD1;
+        cursor: pointer;
+        color: #666666 !important;
+    }
+    .a:hover{
+        filter: brightness(85%);
+    }
+    .b {
+        background: #FF8038;
+        cursor: not-allowed;
+        color: #666666 !important;
+    }
+    #timeSelect{
+        display: flex;
+        padding: 10px;
+    }
+    #timeSelect div {
+        padding: 10px;
+        border-radius: 15px;
+        border: 1px solid #B8B8B8;
+        margin: 10px;
+    }
+    .dtSelected {
+        border: 3px solid blue;
+    }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    let dateStr = `{
+	                "20": "a",
+	                "21": "a",
+	                "22": "o",
+	                "23": "o",
+	                "24": "a",
+	                "25": "a"
+                    }`
+    let dates = [
+        {
+            "date": "1",
+            "avail":"a"
+        },
+        {
+            "date": "2",
+            "avail": "b"
+        },
+        {
+            "date": "3",
+            "avail": "a"
+        },
+        {
+            "date": "4",
+            "avail": "a"
+        },
+    ]
+    let times = [
+        {
+            "time": "",
+            "avail": "a"
+        },
+        {
+            "time": "2",
+            "avail": "b"
+        },
+        {
+            "time": "3",
+            "avail": "a"
+        },
+        {
+            "time": "4",
+            "avail": "a"
+        },
+    ]
     var tdy = new Date();
-    var firstDay = new Date(tdy.getFullYear(), tdy.getMonth(), 1);
-    var month = months[tdy.getMonth()];
-    var year = tdy.getFullYear();
-    setCal()
+    let this_month = tdy.getMonth();
+    let this_year = tdy.getFullYear();
+    setCal(this_month, this_year);
+    setDateAvail();
+    setDateClick();
+    $("#prevMonth").click(function () {
+        $("#calBody").html("")
+        if (this_month == 0) {
+            this_year -= 1;
+            this_month = 11;
+        }
+        else {
+            this_month -= 1;
+        }
+        setCal(this_month, this_year);
+        setDateAvail();
+        setDateClick();
+    })
+    $("#nextMonth").click(function () {
+        $("#calBody").html("")
+        if (this_month == 11) {
+            this_year += 1;
+            this_month = 0;
+        }
+        else {
+            this_month += 1;
+        }
+        console.log(this_month + ":" + this_year);
+        setCal(this_month, this_year);
+        setDateAvail();
+        setDateClick();
+    })
     function leapYear(year) {
         if (year % 4 == 0)
             return true
@@ -87,27 +194,54 @@
         montharr[11] = 31
         return montharr[month]
     }
-    
-    function drawCal(firstDay, lastDate, date, monthName, year) {
-
-    }
-    $("#month").text(month);
-    function setCal() {
+    function setCal(month, year) {
+        var firstDay = new Date(year, month, 1);
+        $("#month").text(months[month]);
         var dateCount = 0
         var date = 1
         for (let i = 0; i < 6; i++) {
             $("#calBody").append("<tr>");
             for (let j = 0; j < 7; j++) {
-                if (firstDay.getDay() > dateCount || date > getDays(tdy.getMonth(), year)) {
+                if (firstDay.getDay() > dateCount || date > getDays(month, year)) {
                     $("#calBody").append("<td></td>");
                 }
                 else {
-                    $("#calBody").append(`<td>${date}</td>`);
+                    $("#calBody").append(`<td id="d${date}m${month}">${date}</td>`);
                     date += 1;
                 }
                 dateCount += 1
             }
             $("#calBody").append("</tr>")
         }
+    }
+    function setDateAvail() {
+        for (var i = 0; i < dates.length; i++) {
+            var obj = dates[i];
+            console.log(obj.date);
+            $(`#d${obj.date}m${this_month}`).addClass(obj.avail);
+        }
+    }
+    function setTime(date) {
+        $("#timeSelect").html("");
+        for (var i = 0; i < 5; i++) {
+            $("#timeSelect").append(`<div class="a" data-value="12:00">12:00 pm - 12:30 pm</div>`);
+        }
+    }
+    function setDateClick() {
+        $(".a").each(function () {
+            $(this).click(function () {
+                $(".a").css("border", "1px solid #B8B8B8")
+                date = `${this_year}-${(this_month + 1).toLocaleString("en-US", {
+                    minimumIntegerDigits: 2,
+                    useGrouping: false
+                })}-${parseInt($(this).text()).toLocaleString("en-US", {
+                    minimumIntegerDigits: 2,
+                    useGrouping: false
+                })}`
+                $("#dateSelect").val(date)
+                $(this).css("border", "3px solid blue");
+                setTime(date)
+            })
+        })
     }
 </script>
