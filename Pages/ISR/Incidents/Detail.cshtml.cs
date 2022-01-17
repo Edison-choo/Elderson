@@ -24,7 +24,7 @@ namespace Elderson.Pages.ISR.Incidents
         }
         public void OnGet(string id)
         {
-            SelectedIncident = _svc.GetIncidentById(Convert.ToInt32(id));
+            SelectedIncident = _svc.GetIncidentById(id);
             SelectedUser = _u_svc.GetUserById(SelectedIncident.UserId);
         }
     }

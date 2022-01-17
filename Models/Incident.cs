@@ -7,8 +7,8 @@ namespace Elderson.Models
 {
     public class Incident
     {
-        public int Id { get; set; }
-        public string Timestamp { get; set; }
+        public string Id { get; set; }
+        public DateTime Timestamp { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string Reason { get; set; }

@@ -18,18 +18,18 @@ namespace Elderson.Services
         public List<Incident> GetAllIncidents()
         {
             List<Incident> AllIncidents = new List<Incident>();
-            AllIncidents = _context.Incidents.ToList();
+            AllIncidents = _context.Incident.ToList();
             return AllIncidents;
         }
-        public Incident GetIncidentById(int id)
+        public Incident GetIncidentById(string id)
         {
-            Incident incident = _context.Incidents.Where(e => e.Id == id).FirstOrDefault();
+            Incident incident = _context.Incident.Where(e => e.Id == id).FirstOrDefault();
             return incident;
         }
 
-        private bool IncidentExists(int id)
+        private bool IncidentExists(string id)
         {
-            return _context.Incidents.Any(e => e.Id == id);
+            return _context.Incident.Any(e => e.Id == id);
         }
 
         public bool AddIncident(Incident incident)

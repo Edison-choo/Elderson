@@ -12,6 +12,7 @@
 
 <div class="row">
     <form class="forms-sample" method="post" asp-action="">
+        <input type="hidden" asp-for="SelectedIncident.Id" value="@Model.SelectedIncident.Id"/>
         <div class="row">
             <div class="col-12 grid-margin stretch-card">
                 <div class="card">
