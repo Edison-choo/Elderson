@@ -2,7 +2,6 @@
 @model Elderson.Pages.Shared.DateAndTimeModel
 @{
 }
-
 <div class="container">
     <form method="post">
         <div class="row">
@@ -21,9 +20,9 @@
             <table id="calendar" class="table table-bordered">
                 <thead>
                     <tr>
-                        <th><</th>
+                        <th class="calClick"><</th>
                         <th colspan="5" id="month" style="text-align:center;"></th>
-                        <th>></th>
+                        <th class="calClick">></th>
                     </tr>
                     <tr id="week">
                         <th>Sun</th>
@@ -35,10 +34,7 @@
                         <th>Sat</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td></td>
-                    </tr>
+                <tbody id="calBody">
                 </tbody>
             </table>
         </div>
@@ -48,19 +44,27 @@
         </div>
     </form>
 </div>
-<script src="~/js/bootstrap-table.js"></script>
-<script src="~/js/datepicker.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <style>
-    #week th{
-        text-align:center;
+    #week th {
+        text-align: center;
     }
+
+    .calClick {
+        cursor: pointer;
+    }
+
+        .calClick hover {
+            opacity: 80%;
+        }
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     var tdy = new Date();
+    var firstDay = new Date(tdy.getFullYear(), tdy.getMonth(), 1);
     var month = months[tdy.getMonth()];
     var year = tdy.getFullYear();
+    setCal()
     function leapYear(year) {
         if (year % 4 == 0)
             return true
@@ -83,11 +87,27 @@
         montharr[11] = 31
         return montharr[month]
     }
-    function setCal() {
-        
-    }
+    
     function drawCal(firstDay, lastDate, date, monthName, year) {
 
     }
-    document.getElementById("month").innerHTML = month;
+    $("#month").text(month);
+    function setCal() {
+        var dateCount = 0
+        var date = 1
+        for (let i = 0; i < 6; i++) {
+            $("#calBody").append("<tr>");
+            for (let j = 0; j < 7; j++) {
+                if (firstDay.getDay() > dateCount || date > getDays(tdy.getMonth(), year)) {
+                    $("#calBody").append("<td></td>");
+                }
+                else {
+                    $("#calBody").append(`<td>${date}</td>`);
+                    date += 1;
+                }
+                dateCount += 1
+            }
+            $("#calBody").append("</tr>")
+        }
+    }
 </script>
