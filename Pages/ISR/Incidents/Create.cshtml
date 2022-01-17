@@ -21,8 +21,8 @@
 
                             </div>
                             <div style="width:80%;">
-                                <input type="text" class="form-control" id="exampleInputEmail3">
-                                <span class="text-danger"></span>
+                                <input asp-for="newIncident.Title" type="text" class="form-control" id="exampleInputEmail3">
+                                <span asp-validation-for="newIncident.Title" class="text-danger"></span>
                             </div>
 
                         </div>
@@ -32,8 +32,8 @@
 
                             </div>
                             <div style="width:80%;">
-                                <textarea rows="6" class="form-control" id="body"></textarea>
-                                <span class="text-danger"></span>
+                                <textarea asp-for="newIncident.Description" rows="6" class="form-control" id="body"></textarea>
+                                <span asp-validation-for="newIncident.Description" class="text-danger"></span>
                             </div>
 
                         </div>
@@ -43,8 +43,8 @@
 
                             </div>
                             <div style="width:80%;">
-                                <textarea rows="6" class="form-control" id="body"></textarea>
-                                <span class="text-danger"></span>
+                                <textarea asp-for="newIncident.Reason" rows="6" class="form-control" id="body"></textarea>
+                                <span asp-validation-for="newIncident.Reason" class="text-danger"></span>
                             </div>
 
                         </div>
@@ -54,8 +54,8 @@
 
                             </div>
                             <div style="width:80%;">
-                                <textarea rows="6" class="form-control" id="body"></textarea>
-                                <span class="text-danger"></span>
+                                <textarea asp-for="newIncident.Recommendation" rows="6" class="form-control" id="body"></textarea>
+                                <span asp-validation-for="newIncident.Recommendation" class="text-danger"></span>
                             </div>
 
                         </div>
