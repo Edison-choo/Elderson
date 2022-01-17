@@ -24,8 +24,8 @@
 
                             </div>
                             <div style="width:80%;">
-                                <input type="text" value="Accidental deletion" class="form-control" id="exampleInputEmail3">
-                                <span class="text-danger"></span>
+                                <input type="text" asp-for="SelectedIncident.Title" value="@Model.SelectedIncident.Title" class="form-control" id="exampleInputEmail3">
+                                <span asp-validation-for="SelectedIncident.Title" class="text-danger"></span>
                             </div>
 
                         </div>
@@ -35,9 +35,9 @@
 
                             </div>
                             <div style="width:80%;">
-                                <textarea rows="6" class="form-control" id="body">He tried to login on 01 December 2021, but it wasn’t successful. So he contact IT Support through website chat. I check with him and the logs, find out that the account was deleted.
-                                </textarea>
-                                <span class="text-danger"></span>
+                                <textarea asp-for="SelectedIncident.Description" rows="6" class="form-control" id="body">He tried to login on 01 December 2021, but it wasn’t successful. So he contact IT Support through website chat. I check with him and the logs, find out that the account was deleted.
+                                @Model.SelectedIncident.Description</textarea>
+                                <span asp-validation-for="SelectedIncident.Description" class="text-danger"></span>
                             </div>
 
                         </div>
@@ -47,9 +47,9 @@
 
                             </div>
                             <div style="width:80%;">
-                                <textarea rows="6" class="form-control" id="body">Someone gains access to his account and delete the account.
-                                </textarea>
-                                <span class="text-danger"></span>
+                                <textarea asp-for="SelectedIncident.Reason" rows="6" class="form-control" id="body">Someone gains access to his account and delete the account.
+                                @Model.SelectedIncident.Reason</textarea>
+                                <span asp-validation-for="SelectedIncident.Reason" class="text-danger"></span>
                             </div>
 
                         </div>
@@ -59,9 +59,9 @@
 
                             </div>
                             <div style="width:80%;">
-                                <textarea rows="6" class="form-control" id="body">If user wants to delete, he or she needs to enter password again to delete.
-                                </textarea>
-                                <span class="text-danger"></span>
+                                <textarea asp-for="SelectedIncident.Recommendation" rows="6" class="form-control" id="body">If user wants to delete, he or she needs to enter password again to delete.
+                                @Model.SelectedIncident.Recommendation</textarea>
+                                <span asp-validation-for="SelectedIncident.Recommendation" class="text-danger"></span>
                             </div>
 
                         </div>

@@ -31,6 +31,7 @@ namespace Elderson
             services.AddSignalR();
             services.AddSession();
             services.AddTransient<UserService>();
+            services.AddTransient<IncidentService>();
             services.AddDbContext<EldersonContext>();
             services.AddControllers();
         }

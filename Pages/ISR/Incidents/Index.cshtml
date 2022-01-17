@@ -25,7 +25,7 @@
 <script>$(document).ready(function () {
         console.log("Loading webpage...")
         $.ajax({
-            url: 'https://localhost:44311/api/User',
+            url: 'https://localhost:44311/api/Incident',
             type: 'GET',
             success: function (result) {
                 console.log("Items retrieve successfully")
@@ -33,31 +33,28 @@
 
             }
         });
-        $('#userstable').DataTable(
+        $('#incidentstable').DataTable(
             {
                 "ajax": {
-                    'url': 'https://localhost:44311/api/User',
+                    'url': 'https://localhost:44311/api/Incident',
                     'type': 'GET',
                     "dataSrc": function (json) {
                         return JSON.parse(JSON.stringify(json));
                     }
                 },
                 "columns": [
-                    { "data": "Fullname" },
-                    { "data": "UserType" },
+                    { "data": "Title" },
+                    { "data": "User"  },
                     {
                         "data": function (data, type, full) {
                             return `<div class="btn-group">
                                             <button type="button" class="btn dropdown-toggle dropdown-toggle-split" id=${"dropdownMenuSplitButton" + data.Id} data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
-                                                    <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
-                                                </svg>
+                                                <i style="font-size:1.5em;" class="mdi mdi-dots-vertical"></i>
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby=${"dropdownMenuSplitButton" + data.Id}>
-                                                <a class="dropdown-item" href="/ISR/Users/Profile?id=${data.Id}">View</a>
-                                                <a class="dropdown-item" href="/ISR/Users/Edit?id=${data.Id}">Edit</a>
-                                                <a class="dropdown-item" href="/ISR/Users/Lock?id=${data.Id}">Lock</a>
-                                                <a class="dropdown-item" href="/ISR/Users/ChangePwd?id=${data.Id}">Change password</a>
+                                                <a class="dropdown-item" href="/ISR/Incidents/Detail?id=${data.Id}">View</a>
+                                                <a class="dropdown-item" href="/ISR/Incidents/Edit?id=${data.Id}">Edit</a>
+                                                <a class="dropdown-item" href="/ISR/Incidents/Lock?id=${data.Id}">Lock</a>
                                                 <a class="dropdown-item" data-toggle="modal" data-targe=${"#staticBackdrop" + data.Id}>Delete</a>
                                                 </div>
                                             </div>
@@ -73,7 +70,7 @@
                                                 </div>
                                                 <div class="d-flex justify-content-between" style="margin-top:30px;">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <button type="button" onclick=${"deleteUser(" + "'" + data.Id + "'" + ")"} class="btn btn-danger">Delete</button>
+                                                    <button type="button" onclick=${"deleteIncident(" + "'" + data.Id + "'" + ")"} class="btn btn-danger">Delete</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -100,13 +97,13 @@
 <div class="card">
     <div class="card-body">
         <div class="d-flex justify-content-between align-items-start">
-            <h4 class="card-title">All User Table</h4>
+            <h4 class="card-title">All Incidents Table</h4>
             <button class="btn btn-primary btn-l text-white mb-0 me-0" type="button"><a asp-page="CreateUser"><i class="mdi mdi-account-plus"></i>Add new member</a> </button>
 
         </div>
         <div class="table-responsive">
 
-            <table class="table table-hover" id="userstable" style="width:100%">
+            <table class="table table-hover" id="incidentstable" style="width:100%">
                 <thead>
                     <tr>
                         <th>TITLE</th>
