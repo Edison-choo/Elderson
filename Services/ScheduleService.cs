@@ -30,5 +30,11 @@ namespace Elderson.Services
             _context.SaveChanges();
             return true;
         }
+        public List<Schedule> GetAllSchedule()
+        {
+            List<Schedule> AllSchedule = new List<Schedule>();
+            AllSchedule = _context.Schedule.ToList();
+            return AllSchedule;
+        }
     }
 }
