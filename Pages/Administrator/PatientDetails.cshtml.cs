@@ -27,21 +27,5 @@ namespace Elderson
         {
 
         }
-
-        public IActionResult OnPost()
-        {
-            if (!(ModelState.IsValid))
-            {
-                _logger.LogInformation("{actionStatus} {userAction}. Model state is invalid.", "Unsuccessful", "create new Entry");
-                return Page();
-            }
-
-            string guid = Guid.NewGuid().ToString();
-            NewEntry.Id = guid;
-            NewEntry.DateofVisit = DateTime.Now;
-
-            _logger.LogInformation("{actionStatus} {userAction} {incidentId} by User {userId}.", "Successful", "create incident", newIncident.Id, newIncident.UserId);
-            return RedirectToPage("Index");
-        }
     }
 }
