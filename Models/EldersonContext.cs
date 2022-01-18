@@ -24,7 +24,10 @@ namespace Elderson.Models
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Message> Messages { get; set; }
-        public DbSet<PatientDetails> PatientDetails { get; set; }
-        public DbSet<Payment> Payment { get; set; }
+
+        public DbSet<Incident> Incident { get; set; }
+        public DbSet<FAQ> FAQs { get; set; }
+
+
     }
 }

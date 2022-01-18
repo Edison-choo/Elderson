@@ -23,8 +23,8 @@
                         <div class="d-flex justify-content-between">
                             <div class="d-flex">
                                 <div style="margin-left:20px; margin-top:20px;">
-                                    <h3>Accidental deletion</h3>
-                                    <p>Created on 11/11/2021</p>
+                                    <h3>@Model.SelectedIncident.Title</h3>
+                                    <p>Created on @Model.SelectedIncident.Timestamp</p>
                                 </div>
                             </div>
 
@@ -34,7 +34,7 @@
                                         ACTION
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuSplitButton1">
-                                        <a class="dropdown-item" asp-page="Edit">Edit</a>
+                                        <a class="dropdown-item" asp-page="Edit" asp-route-id="@Model.SelectedIncident.Id">Edit</a>
                                         <a class="dropdown-item" data-toggle="modal" data-target="">Delete</a>
                                     </div>
                                 </div>
@@ -56,26 +56,25 @@
                         <div>
                             <div class="profileLb">Description:</div>
                             <div class="profileData">
-                                He tried to login on 01 December 2021, but it wasn’t successful. So he contact IT Support through website chat. I check with him and
-                                the logs, find out that the account was deleted.
+                                @Model.SelectedIncident.Description
                             </div>
                         </div>
                         <div>
                             <div class="profileLb">Reason:</div>
                             <div class="profileData">
-                                Someone gains access to his account and delete the account.
+                                @Model.SelectedIncident.Reason
                             </div>
                         </div>
                         <div>
                             <div class="profileLb">Recommendation:</div>
                             <div class="profileData">
-                                If user wants to delete, he or she needs to enter password again to delete.
+                                @Model.SelectedIncident.Recommendation
                             </div>
                         </div>
                         <div>
                             <div class="profileLb">Wrote By:</div>
                             <div class="profileData">
-                                Demon Cosma
+                                @Model.SelectedUser.Fullname
                             </div>
                         </div>
 
