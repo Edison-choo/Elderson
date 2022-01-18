@@ -19,6 +19,10 @@ namespace Elderson.Pages
         [BindProperty]
         public string myDoctor { get; set; }
         [BindProperty]
+        public string myDate { get; set; }
+        [BindProperty]
+        public string myTime { get; set; }
+        [BindProperty]
         public string myDateTime { get; set; }
         [BindProperty]
         public string mySymptoms { get; set; }
@@ -32,6 +36,8 @@ namespace Elderson.Pages
             {
                 myClinic = HttpContext.Session.GetString("myClinic");
                 myDoctor = HttpContext.Session.GetString("myDoctor");
+                myDate = HttpContext.Session.GetString("myDate");
+                myTime = HttpContext.Session.GetString("myTime");
                 myDateTime = HttpContext.Session.GetString("myDateTime");
             }
             else
