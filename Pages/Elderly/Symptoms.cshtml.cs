@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Elderson.Models;
@@ -15,16 +16,22 @@ namespace Elderson.Pages
         public List<CartItem> myCart { get; set; }
         CartItem cartItem = new CartItem();
         [BindProperty]
+        [Required]
         public string myClinic { get; set; }
         [BindProperty]
+        [Required]
         public string myDoctor { get; set; }
         [BindProperty]
+        [Required]
         public string myDate { get; set; }
         [BindProperty]
+        [Required]
         public string myTime { get; set; }
         [BindProperty]
+        [Required]
         public string myDateTime { get; set; }
         [BindProperty]
+        [Required]
         public string mySymptoms { get; set; }
         public void OnGet()
         {
@@ -47,16 +54,20 @@ namespace Elderson.Pages
         }
         public IActionResult OnPost()
         {
-            cartItem.ItemName = "Online Consultation";
-            cartItem.Price = 20;
-            cartItem.Quantity = 1;
-            cartItem.Clinic = myClinic;
-            cartItem.BookDateTime = HttpContext.Session.GetString("myDateTime");
-            cartItem.Symptoms = mySymptoms;
-            cartItem.DoctorID = "1";
-            myCart.Add(cartItem);
-            HttpContext.Session.SetCart("Cart", myCart);
+            if (ModelState.IsValid)
+            {
+                cartItem.ItemName = "Online Consultation";
+                cartItem.Price = 20;
+                cartItem.Quantity = 1;
+                cartItem.Clinic = myClinic;
+                cartItem.BookDateTime = HttpContext.Session.GetString("myDateTime");
+                cartItem.Symptoms = mySymptoms;
+                cartItem.DoctorID = "1";
+                myCart.Add(cartItem);
+                HttpContext.Session.SetCart("Cart", myCart);
+            }
             return RedirectToPage("Cart");
+
         }
     }
 }

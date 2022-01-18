@@ -15,11 +15,11 @@ namespace Elderson.Models
         public DateTime BookDateTime { get; set; }
         [Required]
         public string Symptoms { get; set; }
-        [Required, DataType(DataType.Date)]
-        public DateTime StartDate { get; set; }
         [Required]
         public string PatientID { get; set; }
         [Required]
         public string DoctorID { get; set; }
+        [Required]
+        public string CallUUID { get; set; }
     }
 }

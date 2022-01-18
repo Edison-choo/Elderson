@@ -36,6 +36,7 @@ namespace Elderson
             services.AddDbContext<EldersonContext>();
             services.AddTransient<AdministratorService>();
             services.AddTransient<ScheduleService>();
+            services.AddTransient<BookingService>();
             services.AddControllers();
         }
 
