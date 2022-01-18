@@ -28,6 +28,8 @@ namespace Elderson.Models
         public DbSet<Incident> Incident { get; set; }
         public DbSet<FAQ> FAQs { get; set; }
 
+        public DbSet<PatientDetails> PatientDetails { get; set; }
+        public DbSet<Payment> Payment { get; set; }
 
     }
 }
