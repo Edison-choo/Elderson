@@ -7,17 +7,82 @@
     ViewData["Breadcrumb"] = "Patients > Patient Details";
 }
 
-
-<script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.1/mdb.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 
 <body>
-    <div class="card-body">
-        <div class="d-flex justify-content-between align-items-start">
-        </div>
-        <div class="table-responsive">
-            <button class="btn btn-primary btn-l text-white mb-0 me-0" type="button" style="float:right"><a asp-page="CreateUser"><i class="mdi mdi-account-plus"></i>Add new Entry</a> </button>
-        </div>
+    <form class="form-inline" style="float:right; margin-bottom: 10px;">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+
+    <div class="table-responsive">
+        <button class="btn btn-primary btn-l text-white mb-0 me-0" type="button" style="float:right" id="addEntry"><i class="mdi mdi-account-plus"></i>Add new Entry</a> </button>
+    </div>
+    <div id="PatientDetails">
 
     </div>
 </body>
+
+<script>
+    const addEntry = document.getElementById("addEntry");
+    addEntry.addEventListener("click", addEntries);
+
+    function addEntries() {
+        const title = document.createElement("input");
+        const description = document.createElement("textarea");
+        const submit = document.createElement("button");
+        const cancel = document.createElement("button");
+        const newDiv = document.createElement("div");
+     
+        //console.log("add");
+        newDiv.classList.add("card");
+        title.placeholder = "Title";
+        description.placeholder = "Description";
+        submit.innerText = "Submit";
+        cancel.innerText = "x";
+        title.classList.add("title");
+        description.classList.add("description");
+        submit.classList.add("submit");
+        cancel.classList.add("cancel");
+        description.rows = "4";
+        newDiv.appendChild(cancel);
+        newDiv.appendChild(title);
+        newDiv.appendChild(description);
+        newDiv.appendChild(submit);
+        document.getElementById("PatientDetails").appendChild(newDiv);
+    }
+</script>
+
+<style>
+    .card{
+        width: auto;
+        height:auto;
+        margin-top: 10px;
+    }
+    .title{
+        width: 50%;
+        margin-top: 8px;
+        margin-left: 5%;
+        border-radius:5px;
+    }
+    .description{
+        width: 50%;
+        margin-top: 8px;
+        margin-left: 5%;
+        border-radius:5px;
+    }
+    .submit{
+        width:10%;
+        margin-left:80%;
+        margin-top: 8px;
+        margin-bottom: 10px;
+        border-radius:5px;
+        margin-right: 10px;
+    }
+    .cancel{
+        background: none;
+        border: none;
+        margin-top: 10px;
+        margin-left:90%;
+    }
+</style>
