@@ -129,32 +129,35 @@ for (var i = 0; i < dates.length; i++) {
 function setTime(date) {
 $("#timePicker").html("");
 for (var i = 0; i < 5; i++) {
-    $("#timePicker").append(`<div class="a" data-value="${i}">${i}:00 PM</div>`);
-    setTimeClick();
+    $("#timePicker").append(`<div class="a" data-value="0${i}:00">0${i}:00 PM</div>`);
+    setTimeClick(date);
 }
+}
+function padZero(val) {
+    if (val >= 10)
+        return val
+    else
+        return '0' + val;
 }
 function setDateClick() {
 $("#calBody .a").each(function () {
     $(this).click(function () {
         $("#calBody .a").css("border", "1px solid #B8B8B8")
-        date = `${this_year}-${(this_month + 1).toLocaleString("en-US", {
-            minimumIntegerDigits: 2,
-            useGrouping: false
-        })}-${parseInt($(this).text()).toLocaleString("en-US", {
-            minimumIntegerDigits: 2,
-            useGrouping: false
-        })}`
+        date = `${this_year}-${padZero(this_month + 1)}-${padZero(parseInt($(this).text()))}`
         $("#dateSelect").val(date)
+        $("#dateTimeSelect").val("");
         $(this).css("border", "3px solid blue");
-        setTime(date);
+        setTime(padZero(parseInt($(this).text())));
     })
 })
 }
-function setTimeClick() {
+function setTimeClick(date) {
 $("#timePicker .a").each(function () {
     $(this).click(function () {
         $("#timePicker").children().css("border", "1px solid #B8B8B8");
-        $("#timeSelect").val($(this).data("value"));
+        $("#timeSelect").val($(this).text());
+        datetime = `${this_year}-${padZero(this_month + 1)}-${padZero(parseInt(date))}T${$(this).data("value")}`
+        $("#dateTimeSelect").val(datetime)
         $(this).css("border", "3px solid blue");
     })
 })

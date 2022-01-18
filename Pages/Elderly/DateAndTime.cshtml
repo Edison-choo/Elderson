@@ -42,7 +42,8 @@
             </div>
             <div class="col-md-3 form-group mt-3 mt-md-0">
                 <div class="form-outline">
-                    <input class="form-control"
+                    <input asp-for="myDate"
+                           class="form-control"
                            id="dateSelect"
                            type="text"
                            value="-"
@@ -54,6 +55,7 @@
             <div class="col-md-3 form-group mt-3 mt-md-0">
                 <div class="form-outline">
                     <input class="form-control"
+                           asp-for="myTime"
                            id="timeSelect"
                            type="text"
                            value="-"
@@ -62,7 +64,7 @@
                     <label class="form-label" for="timeSelect">Time</label>
                 </div>
             </div>
-            <input asp-for="myDateTime" type="datetime-local" class="form-control" hidden>
+            <input asp-for="myDateTime" id="dateTimeSelect" type="datetime-local" class="form-control" hidden>
         </div>
         <br />
         <div>

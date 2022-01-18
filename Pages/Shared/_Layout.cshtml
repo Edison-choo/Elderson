@@ -80,8 +80,17 @@
                                         <a class="nav-link" href="#">Appointments</a>
                                     </li>
                                 }
-                            } 
-                         }
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/Elderly/Clinic">Book</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Appointments</a>
+                                </li>
+                            }
+                        }
                         <li class="nav-item">
                             <a class="nav-link" href="#">FAQ</a>
                         </li>
@@ -156,16 +165,24 @@
                             </div>
                         </div>
                     }
-                } else
-                {
-
                 }
+                else
+                {
+                    <div class="d-flex align-items-center">
+                        <a href="/Login" class="btn btn-link">
+                            Login
+                        </a>
+                        <a href="/Register" class="btn btn-primary">
+                            Sign up for free
+                        </a>
+                    </div>
+            }
             }
 
             <!-- Right elements -->
-        </div>
-        <!-- Container wrapper -->
-    </nav>
+            </div>
+            <!-- Container wrapper -->
+        </nav>
     <!-- Navbar -->
     <main id="main">
         @RenderBody()

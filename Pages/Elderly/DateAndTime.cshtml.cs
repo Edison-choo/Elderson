@@ -19,6 +19,10 @@ namespace Elderson.Pages.Shared
         public string myDoctor { get; set; }
         [BindProperty]
         public DateTime myDateTime { get; set; }
+        [BindProperty]
+        public string myDate { get; set; }
+        [BindProperty]
+        public string myTime { get; set; }
         public void OnGet(string clinic, string doctor)
         {
             if (HttpContext.Session.GetString("myClinic") != null)
@@ -43,6 +47,8 @@ namespace Elderson.Pages.Shared
         {
             HttpContext.Session.SetString("myClinic", myClinic);
             HttpContext.Session.SetString("myDoctor", myDoctor);
+            HttpContext.Session.SetString("myDate", myDate);
+            HttpContext.Session.SetString("myTime", myTime);
             HttpContext.Session.SetString("myDateTime", myDateTime.ToString("dd MMMM yyyy HH:MM tt"));
             return RedirectToPage("Symptoms");
         }
