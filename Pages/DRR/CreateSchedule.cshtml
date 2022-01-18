@@ -9,7 +9,7 @@
 <form method="post">
     <div class="row">
         <div class="col-md-3 form-group mt-3 mt-md-0">
-            <input type="datetime" class="form-control" id="dateSelect" asp-for="date" disabled>
+            <input type="datetime-local" class="form-control" value="-" id="dateSelect" asp-for="datetime" disabled>
         </div>
     </div>
     <div>
@@ -164,7 +164,6 @@
     setCal(this_month, this_year);
     setDateAvail();
     setDateClick();
-    setTimeClick();
     $("#prevMonth").click(function () {
         $("#calBody").html("")
         if (this_month == 0) {
@@ -177,8 +176,6 @@
         setCal(this_month, this_year);
         setDateAvail();
         setDateClick();
-        setTimeClick();
-        setTimeClick();
     })
     $("#nextMonth").click(function () {
         $("#calBody").html("")
@@ -292,7 +289,7 @@
                 secondmin = 3;
             }
         }
-        setTimeClick();
+        setTimeClick(date)
     }
     function setDateClick() {
         $(".a").each(function () {
@@ -307,21 +304,28 @@
                 })}`
                 $("#dateSelect").val(date)
                 $(this).css("border", "3px solid blue");
-                setTime(date)
+                setTime(padZero(parseInt($(this).text())));
             })
         })
     }
 
-    function setTimeClick() {
+    function padZero(val) {
+        if (val >= 10)
+            return val
+        else
+            return '0' + val;
+    }
+
+    function setTimeClick(date) {
         $(".timing").each(function () {
             $(this).click(function () {
                 $(".timing").css("border", "1px solid #B8B8B8")
                 $(this).css("border", "1px solid #000000")
                 $("#continueBtn").css("display", "block")
-                var time = $(this).data("value") + ":00";
-                var endtime = $(this).data("value2") + ":00";
-                $("#timeSelect").val(time);
+                var datetime = `${this_year}-${padZero(this_month + 1)}-${padZero(parseInt(date))}T${$(this).data("value")}`
+                $('#dateSelect').val(datetime)
             })
         })
     }
+
 </script>

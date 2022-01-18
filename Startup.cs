@@ -35,6 +35,7 @@ namespace Elderson
             services.AddTransient<ChatService>();
             services.AddDbContext<EldersonContext>();
             services.AddTransient<AdministratorService>();
+            services.AddTransient<ScheduleService>();
             services.AddControllers();
         }
 
