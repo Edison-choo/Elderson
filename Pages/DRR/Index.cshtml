@@ -26,7 +26,7 @@
     $(document).ready(function () {
         console.log("Loading webpage...")
         $.ajax({
-            url: 'https://localhost:44311/api/User',
+            url: 'https://localhost:44311/api/Schedule',
             type: 'GET',
             success: function (result) {
                 console.log("Items retrieve successfully")
@@ -34,18 +34,18 @@
 
             }
         });
-        $('#userstable').DataTable(
+        $('#scheduletable').DataTable(
             {
                 "ajax": {
-                    'url': 'https://localhost:44311/api/User',
+                    'url': 'https://localhost:44311/api/Schedule',
                     'type': 'GET',
                     "dataSrc": function (json) {
                         return JSON.parse(JSON.stringify(json));
                     }
                 },
                 "columns": [
-                    { "data": "Fullname" },
-                    { "data": "UserType" },
+                    { "data": "StartDateTime" },
+                    { "data": "StartDateTime" },
                     {
                         "data": function (data, type, full) {
                             return `<div class="btn-group">
@@ -68,7 +68,7 @@
                                                 </div>
                                                 <div class="d-flex justify-content-between" style="margin-top:30px;">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <button type="button" onclick=${"deleteUser(" + "'" + data.Id + "'" + ")"} class="btn btn-danger">Delete</button>
+                                                    <button type="button">Delete</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -102,7 +102,7 @@
         </div>
         <div class="table-responsive">
 
-            <table class="table table-hover" id="userstable" style="width:100%">
+            <table class="table table-hover" id="scheduletable" style="width:100%">
                 <thead>
                     <tr>
                         <th>Day</th>

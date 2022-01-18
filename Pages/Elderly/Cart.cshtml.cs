@@ -40,7 +40,7 @@ namespace Elderson.Pages
         {
             if (ModelState.IsValid)
             {
-                
+                myCart = HttpContext.Session.GetCart("Cart");
                 foreach (CartItem item in myCart)
                 {
                     string callUUID = Guid.NewGuid().ToString();
@@ -54,7 +54,7 @@ namespace Elderson.Pages
                     _svc.AddBooking(book);
                 }
             }
-            return RedirectToPage("/");
+            return RedirectToPage("Elderly");
         }
     }
     public static class SessionExtensions

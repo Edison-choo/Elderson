@@ -16,19 +16,14 @@ namespace Elderson.Pages
         public List<CartItem> myCart { get; set; }
         CartItem cartItem = new CartItem();
         [BindProperty]
-        [Required]
         public string myClinic { get; set; }
         [BindProperty]
-        [Required]
         public string myDoctor { get; set; }
         [BindProperty]
-        [Required]
         public string myDate { get; set; }
         [BindProperty]
-        [Required]
         public string myTime { get; set; }
         [BindProperty]
-        [Required]
         public string myDateTime { get; set; }
         [BindProperty]
         [Required]
@@ -65,9 +60,9 @@ namespace Elderson.Pages
                 cartItem.DoctorID = "1";
                 myCart.Add(cartItem);
                 HttpContext.Session.SetCart("Cart", myCart);
+                return RedirectToPage("Cart");
             }
-            return RedirectToPage("Cart");
-
+            return Page();
         }
     }
 }
