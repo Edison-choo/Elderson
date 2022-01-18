@@ -361,7 +361,7 @@
             <div class="left-section mCustomScrollbar" data-mcs-theme="minimal-dark">
                 <ul>
 
-                    <li>
+                    <li class="active chatActive" id="e5e6ec80-f50c-4a24-a8ba-a570a501f6f9" onclick="changeChat(this, 'e5e6ec80-f50c-4a24-a8ba-a570a501f6f9')">
                         <div class="chatList">
                             <div class="img">
                                 <i class="fa fa-circle"></i>
@@ -370,11 +370,11 @@
                             <div class="desc">
                                 <small class="time">05:30 am</small>
                                 <h5>Luis Yankee</h5>
-                                <small>Lorem ipsum dolor sit amet...</small>
+                                <small>e5e6ec80-f50c-4a24-a8ba-a570a501f6f9</small>
                             </div>
                         </div>
                     </li>
-                    <li>
+                    <li id="test" onclick="changeChat(this, 'test')">
                         <div class="chatList">
                             <div class="img">
                                 <i class="fa fa-circle"></i>
@@ -387,33 +387,9 @@
                             </div>
                         </div>
                     </li>
-                    <li class="active">
-                        <div class="chatList">
-                            <div class="img">
-                                <img src="/demo/man03.png">
-                            </div>
-                            <div class="desc">
-                                <small class="time">4 day</small>
-                                <h5>Lajy Ion</h5>
-                                <small>Lorem ipsum dolor sit amet...</small>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="chatList">
-                            <div class="img">
-                                <img src="/demo/man04.png">
-                            </div>
-                            <div class="desc">
-                                <small class="time">18 day</small>
-                                <h5>Lod Kine</h5>
-                                <small>Lorem ipsum dolor sit amet...</small>
-                            </div>
-                        </div>
-                    </li>
                     @{ foreach (var user in Model.allmessages)
                         {
-            <li>
+            <li id="@user.Key" onclick="changeChat(this, '@user.Key')">
                 <div class="chatList">
                     <div class="img">
                         <i class="fa fa-circle"></i>
@@ -422,7 +398,7 @@
                     <div class="desc">
                         <small class="time">05:30 am</small>
                         <h5>Luis Yankee</h5>
-                        <small>@user</small>
+                        <small>@user.Key</small>
                     </div>
                 </div>
             </li>
@@ -443,7 +419,7 @@
         <div class="body-section">
             <div class="right-section">
                 <div class="message" data-mcs-theme="minimal-dark">
-                    <ul id="messageList">
+                    <ul id="messageList" class="e5e6ec80-f50c-4a24-a8ba-a570a501f6f9 showActive">
                         <li class="msg-left">
                             <div class="msg-left-sub">
                                 <div class="msg-desc">
@@ -543,32 +519,62 @@
                                 <small>05:25 am</small>
                             </div>
                         </li>
-                        @{ foreach (var msg in Model.allmessages[""])
-                            {
-                                if (msg.ToUserId == HttpContext.Session.GetString("LoginUser"))
-                                {
-                    <li class="msg-left">
-                        <div class="msg-left-sub">
-                            <div class="msg-desc">
-                                @msg.Text
-                            </div>
-                            <small>@msg.When</small>
-                        </div>
-                    </li> }
-                                else
-                                {
-                                    <li class="msg-right">
-                                        <div class="msg-left-sub">
-                                            <div class="msg-desc">
-                                                @msg.Text
-                                            </div>
-                                            <small>@msg.When</small>
-                                        </div>
-                                    </li>
-                                }
-                                } }
                     </ul>
+                    <ul id="messageList" class="test" style="display:none;">
+                        <li class="msg-left">
+                            <div class="msg-left-sub">
+                                <div class="msg-desc">
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                    tempor incididunt ut labore et dolore magna aliqua.
+                                </div>
+                                <small>05:25 am</small>
+                            </div>
+                        </li>
+
+                        <li class="msg-right">
+                            <div class="msg-left-sub">
+                                <div class="msg-desc">
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                    tempor incididunt ut labore et dolore magna aliqua.
+                                </div>
+                                <small>05:25 am</small>
+                            </div>
+                        </li>
+                        
+
+
+                    </ul>
+                    @{ foreach (var user in Model.allmessages)
+                        {
+                <ul id="messageList" class="@user.Key" style="display:none;">
+                    @{ foreach (var msg in Model.allmessages[user.Key])
+                                        {
+                                            if (msg.ToUserId == HttpContext.Session.GetString("LoginUser"))
+                                            {
+                        <li class="msg-left">
+                            <div class="msg-left-sub">
+                                <div class="msg-desc">
+                                    @msg.Text
+                                </div>
+                                <small>@msg.When</small>
+                            </div>
+                        </li>
+ }
+                    else
+                    {
+                <li class="msg-right">
+                    <div class="msg-left-sub">
+                        <div class="msg-desc">
+                            @msg.Text
+                        </div>
+                        <small>@msg.When</small>
+                    </div>
+                </li>
+ }
+        } }
+                </ul> } }
                 </div>
+               
                 <div class="right-section-bottom">
                     <form>
                         <div class="upload-btn">
@@ -597,14 +603,16 @@
     <script src="~/js/chat.js"></script>*@
 
 <script>
+    var toUserId = "";
+
     class Message {
-        constructor(username, text, when) {
+        constructor(username, text, when, userId, toUserId) {
             this.userName = username;
             this.text = text;
             this.when = when;
             this.Id = "";
-            this.UserId = "";
-            this.ToUserId = "";
+            this.UserId = userId;
+            this.ToUserId = toUserId;
         }
     }
 
@@ -627,10 +635,12 @@
     document.getElementById("sendButton").addEventListener("click", function (event) {
         var user = "test";
         var text = document.getElementById("messageInput").value;
-        console.log("sending...")
+        var userId = '@HttpContext.Session.GetString("LoginUser")';
+        
+        console.log("sending..." + toUserId);
 
         document.getElementById("messageInput").value = "";
-        let message = new Message(user, text, Date.now);
+        let message = new Message(user, text, Date.now, userId, toUserId);
         console.log(`sending ${message} says ${message.text}`);
         connection.invoke("SendMessage", message).catch(function (err) {
             return console.error(err.toString());
@@ -657,6 +667,25 @@
 
         divThird.textContent = `${message.username} says ${message.text}`;
 
-        document.getElementById("messageList").appendChild(li)
+        document.getElementById("messageList").appendChild(li);
     });
+</script>
+
+<script>
+    function changeChat(e, userId) {
+        console.log("Changing...");
+        var chat = document.getElementsByClassName(userId)[0];
+        document.querySelector(".chatActive").classList.remove("active", "chatActive");
+        var user = document.getElementById(userId);
+        user.classList.add("chatActive", "active");
+
+        var oldChat = document.getElementsByClassName("showActive")[0];
+        oldChat.classList.remove("showActive");
+        chat.classList.add("showActive");
+        oldChat.style.display = "none";
+        chat.style.display = "block";
+
+        toUserId = userId;
+        console.log(toUserId);
+    }
 </script>
