@@ -31,5 +31,7 @@ namespace Elderson.Models
         public DbSet<PatientDetails> PatientDetails { get; set; }
         public DbSet<Payment> Payment { get; set; }
 
+        public DbSet<Schedule> Schedule { get; set; }
+
     }
 }

@@ -1,0 +1,327 @@
+﻿@page
+@model Elderson.Pages.DRR.CreateScheduleModel
+@{
+    Layout = "Shared/_LayoutDoctor";
+    ViewData["Title"] = "Schedule For Booking";
+    ViewData["Breadcrumb"] = "Elderson > My Schedule > Create Schedule";
+    ViewData["Header"] = "Schedule For Booking";
+}
+<form method="post">
+    <div class="row">
+        <div class="col-md-3 form-group mt-3 mt-md-0">
+            <input type="datetime" class="form-control" id="dateSelect" asp-for="date" disabled>
+        </div>
+    </div>
+    <div>
+        <table id="calendar" class="table table-bordered">
+            <thead class="bordered">
+                <tr>
+                    <th class="calClick" id="prevMonth"><</th>
+                    <th colspan="5" id="month" style="text-align:center;"></th>
+                    <th class="calClick" id="nextMonth">></th>
+                </tr>
+                <tr id="week">
+                    <th>Sun</th>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                </tr>
+            </thead>
+            <tbody id="calBody" class="table table-bordered">
+            </tbody>
+        </table>
+    </div>
+    <div id="timeSelect3">
+    </div>
+    <div id="timeSelect2">
+    </div>
+    <div style="display:inline-block">
+        <div style="float:left"><a asp-page="/DRR/Index" class="btn btn-primary">Back</a></div>
+        <div style="float:right"><button id="continueBtn" class="btn btn-primary">Continue</button></div>
+    </div>
+</form>
+
+<style>
+    #week th {
+        text-align: center;
+    }
+
+    .calClick {
+        cursor: pointer;
+    }
+
+        .calClick hover {
+            opacity: 80%;
+        }
+
+    #calBody td {
+        border: 1px solid #B8B8B8;
+        color: #B8B8B8;
+    }
+
+    .a {
+        background: #25ECD1;
+        cursor: pointer;
+        color: #666666 !important;
+    }
+
+        .a:hover {
+            filter: brightness(85%);
+        }
+
+    .b {
+        background: #FF8038;
+        cursor: not-allowed;
+        color: #666666 !important;
+    }
+
+    #timeSelect3 {
+        display: flex;
+        padding: 10px;
+    }
+
+        #timeSelect3 div {
+            padding: 10px;
+            border-radius: 15px;
+            border: 1px solid #B8B8B8;
+            margin: 10px;
+        }
+
+    #timeSelect2 {
+        display: flex;
+        padding: 10px;
+    }
+
+        #timeSelect2 div {
+            padding: 10px;
+            border-radius: 15px;
+            border: 1px solid #B8B8B8;
+            margin: 10px;
+        }
+
+    .dtSelected {
+        border: 3px solid blue;
+    }
+
+    .timing{
+        width: 100px;
+    }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $("#continueBtn").css("display", "none")
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    let dateStr = `{
+	                "20": "a",
+	                "21": "a",
+	                "22": "o",
+	                "23": "o",
+	                "24": "a",
+	                "25": "a"
+                    }`
+    let dates = [
+        {
+            "date": "18",
+            "avail":"a"
+        },
+        {
+            "date": "19",
+            "avail": "a"
+        },
+        {
+            "date": "20",
+            "avail": "a"
+        },
+        {
+            "date": "21",
+            "avail": "a"
+        },
+    ]
+    let times = [
+        {
+            "time": "",
+            "avail": "a"
+        },
+        {
+            "time": "2",
+            "avail": "b"
+        },
+        {
+            "time": "3",
+            "avail": "a"
+        },
+        {
+            "time": "4",
+            "avail": "a"
+        },
+    ]
+    var tdy = new Date();
+    let this_month = tdy.getMonth();
+    let this_year = tdy.getFullYear();
+    setCal(this_month, this_year);
+    setDateAvail();
+    setDateClick();
+    setTimeClick();
+    $("#prevMonth").click(function () {
+        $("#calBody").html("")
+        if (this_month == 0) {
+            this_year -= 1;
+            this_month = 11;
+        }
+        else {
+            this_month -= 1;
+        }
+        setCal(this_month, this_year);
+        setDateAvail();
+        setDateClick();
+        setTimeClick();
+        setTimeClick();
+    })
+    $("#nextMonth").click(function () {
+        $("#calBody").html("")
+        if (this_month == 11) {
+            this_year += 1;
+            this_month = 0;
+        }
+        else {
+            this_month += 1;
+        }
+        console.log(this_month + ":" + this_year);
+        setCal(this_month, this_year);
+        setDateAvail();
+        setDateClick();
+    })
+    function leapYear(year) {
+        if (year % 4 == 0)
+            return true
+        else
+            return false
+    }
+    function getDays(month, year) {
+        var montharr = Array(12)
+        montharr[0] = 31
+        montharr[1] = (leapYear(year)) ? 29 : 28
+        montharr[2] = 31
+        montharr[3] = 30
+        montharr[4] = 31
+        montharr[5] = 30
+        montharr[6] = 31
+        montharr[7] = 31
+        montharr[8] = 30
+        montharr[9] = 31
+        montharr[10] = 30
+        montharr[11] = 31
+        return montharr[month]
+    }
+    function setCal(month, year) {
+        var firstDay = new Date(year, month, 1);
+        $("#month").text(months[month]);
+        var dateCount = 0
+        var date = 1
+        for (let i = 0; i < 6; i++) {
+            $("#calBody").append("<tr>");
+            for (let j = 0; j < 7; j++) {
+                if (firstDay.getDay() > dateCount || date > getDays(month, year)) {
+                    $("#calBody").append("<td></td>");
+                }
+                else {
+                    $("#calBody").append(`<td id="d${date}m${month}">${date}</td>`);
+                    date += 1;
+                }
+                dateCount += 1
+            }
+            $("#calBody").append("</tr>")
+        }
+    }
+    function setDateAvail() {
+        for (var i = 0; i < dates.length; i++) {
+            var obj = dates[i];
+            console.log(obj.date);
+            $(`#d${obj.date}m${this_month}`).addClass(obj.avail);
+        }
+    }
+    function setTime(date) {
+        $("#timeSelect3").html("");
+        $("#timeSelect2").html("");
+        var hour = 9;
+        var min = 0;
+        var secondhour = 9;
+        var secondmin = 3;
+        for (var i = 0; i < 12; i++) {
+            if (hour == 9 && secondhour == 9) {
+                $("#timeSelect3").append(`<div class="timing a" data-value="0${hour}:${min}0">${hour}:${min}0 - <br/> ${secondhour}:${secondmin}0 </div>`);
+            } else if (hour == 9 && secondhour > 9) {
+                $("#timeSelect3").append(`<div class="timing a" data-value="0${hour}:${min}0" data-value2="${secondhour}:${secondmin}0">${hour}:${min}0 - <br/> ${secondhour}:${secondmin}0 </div>`);
+            } else {
+                $("#timeSelect3").append(`<div class="timing a" data-value="${hour}:${min}0" data-value2="${secondhour}:${secondmin}0">${hour}:${min}0 - <br/> ${secondhour}:${secondmin}0 </div>`);
+            }
+            
+            if (min == 0) {
+                min = 3;
+            } else {
+                hour++;
+                min = 0;
+            }
+
+            if (secondmin == 3) {
+                secondhour++;
+                secondmin = 0;
+            } else {
+                secondmin = 3;
+            }
+            if (hour == 15 && min == 3) {
+                break;
+            }
+        }
+        for (var i = 0; i < 12; i++) {
+            $("#timeSelect2").append(`<div class="timing a" data-value="${hour}:${min}0"">${hour}:${min}0 - <br/> ${secondhour}:${secondmin}0</div>`);
+            if (min == 0) {
+                min = 3;
+            } else {
+                hour++;
+                min = 0;
+            }
+
+            if (secondmin == 3) {
+                secondhour++;
+                secondmin = 0;
+            } else {
+                secondmin = 3;
+            }
+        }
+        setTimeClick();
+    }
+    function setDateClick() {
+        $(".a").each(function () {
+            $(this).click(function () {
+                $(".a").css("border", "1px solid #B8B8B8")
+                date = `${this_year}-${(this_month + 1).toLocaleString("en-US", {
+                    minimumIntegerDigits: 2,
+                    useGrouping: false
+                })}-${parseInt($(this).text()).toLocaleString("en-US", {
+                    minimumIntegerDigits: 2,
+                    useGrouping: false
+                })}`
+                $("#dateSelect").val(date)
+                $(this).css("border", "3px solid blue");
+                setTime(date)
+            })
+        })
+    }
+
+    function setTimeClick() {
+        $(".timing").each(function () {
+            $(this).click(function () {
+                $(".timing").css("border", "1px solid #B8B8B8")
+                $(this).css("border", "1px solid #000000")
+                $("#continueBtn").css("display", "block")
+                var time = $(this).data("value") + ":00";
+                var endtime = $(this).data("value2") + ":00";
+                $("#timeSelect").val(time);
+            })
+        })
+    }
+</script>
