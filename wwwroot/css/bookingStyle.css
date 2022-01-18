@@ -1,0 +1,116 @@
+﻿/*Stepper*/
+.stepper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.stepperItem {
+    flex: 0.25;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.stepperItemDiv {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 50px;
+    height: 50px;
+    background: #6C63FF;
+    border-radius: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    color: #FFFFFF;
+    margin-bottom: 5px;
+}
+
+.stepperDivText {
+    width: 100px;
+}
+
+.stepperItemLine {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.stepperLine {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-bottom: 1px solid black;
+    height: 25px;
+}
+
+.stepActive {
+    background: #25EDC1;
+}
+
+.stepComplete {
+    background: #16C612;
+    cursor: pointer;
+}
+.stepComplete:hover {
+    filter: brightness(85%);
+}
+/*Stepper*/
+
+.tableStyle {
+    border: 1px solid #DEE2E6;
+    border-radius: 15px;
+}
+
+#week th {
+    text-align: center;
+}
+
+.calClick {
+    cursor: pointer;
+}
+
+    .calClick hover {
+        opacity: 80%;
+    }
+
+#calBody td {
+    border: 1px solid #B8B8B8;
+    color: #B8B8B8;
+    padding: 15px;
+}
+
+.a {
+    background: #25ECD1;
+    cursor: pointer;
+    color: #666666 !important;
+}
+
+    .a:hover {
+        filter: brightness(85%);
+    }
+
+.b {
+    background: #FF8038;
+    cursor: not-allowed;
+    color: #666666 !important;
+}
+
+#timePicker {
+    display: flex;
+    padding: 10px;
+}
+
+    #timePicker div {
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #B8B8B8;
+        margin: 10px;
+    }
+
+.dtSelected {
+    border: 3px solid blue;
+}

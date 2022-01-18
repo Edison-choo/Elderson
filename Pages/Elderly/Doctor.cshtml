@@ -2,29 +2,45 @@
 @model Elderson.Pages.Elderly.DoctorModel
 @{
 }
-<nav aria-label="breadcrumb">
+<link rel="stylesheet" href="~/css/bookingStyle.css" />
+<nav aria-label="breadcrumb" style="margin:35px;">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Elderson</a></li>
         <li class="breadcrumb-item"><a href="#">Clinic</a></li>
         <li class="breadcrumb-item active" aria-current="page">Doctor</li>
     </ol>
+    <h3>Symptoms</h3>
 </nav>
 <div class="container">
+    <div>
+        <ol class="stepper">
+            <li class="stepperItem"><div class="stepperItemDiv stepComplete"><i class="fas fa-check"></i></div><div class="stepperDivText">Select Clinic</div></li>
+            <li class="stepperItemLine"><div class="stepperLine"></div></li>
+            <li class="stepperItem"><div class="stepperItemDiv stepActive">2</div><div class="stepperDivText">Select Doctor</div></li>
+            <li class="stepperItemLine"><div class="stepperLine"></div></li>
+            <li class="stepperItem"><div class="stepperItemDiv">3</div><div class="stepperDivText">Select Date & Time</div></li>
+            <li class="stepperItemLine"><div class="stepperLine"></div></li>
+            <li class="stepperItem"><div class="stepperItemDiv">4</div><div class="stepperDivText">Enter Symptoms</div></li>
+        </ol>
+    </div>
     <h3 style="margin-top:40px;margin-bottom:40px;">Doctors in "@Model.myClinic"</h3>
-    <div class="card" style="width:300px; margin:10px;">
-        <img src="https://thumbs.dreamstime.com/z/smiling-female-doctors-working-office-asian-76064205.jpg"
-             class="card-img-top" style="border-radius: 50%; width:150px; height:150px; margin-left:auto; margin-right:auto; margin-top:40px;" />
-        <div class="card-body">
-            <h5 class="card-title" style="text-align:center;">Koh Hui Wen</h5>
-            <h6 style="text-align:center;">General Practitioner</h6>
-            <br />
-            <p class="card-text" style="text-align:center;">
-                Experience: 4 Years
+    <div>
+        <div class="card" style="width:300px; margin:10px;">
+            <img src="https://thumbs.dreamstime.com/z/smiling-female-doctors-working-office-asian-76064205.jpg"
+                 class="card-img-top" style="border-radius: 50%; width:150px; height:150px; margin-left:auto; margin-right:auto; margin-top:40px;" />
+            <div class="card-body">
+                <h5 class="card-title" style="text-align:center;">Koh Hui Wen</h5>
+                <h6 style="text-align:center;">General Practitioner</h6>
                 <br />
-                Languages: English, Chinese
-                <br />
-            </p>
-            <a asp-page="/Elderly/DateAndTime" asp-route-clinic="@Model.myClinic" asp-route-doctor="Koh Hui Wen" style="text-align: center; display: block;" class="btn btn-primary">SELECT DOCTOR</a>
+                <p class="card-text" style="text-align:center;">
+                    Experience: 4 Years
+                    <br />
+                    Languages: English, Chinese
+                    <br />
+                </p>
+                <a asp-page="/Elderly/DateAndTime" asp-route-clinic="@Model.myClinic" asp-route-doctor="Koh Hui Wen" style="text-align: center; display: block;" class="btn btn-primary">SELECT DOCTOR</a>
+            </div>
         </div>
     </div>
+    <a asp-page="/Elderly/Clinic" class="btn btn-primary">BACK</a>
 </div>

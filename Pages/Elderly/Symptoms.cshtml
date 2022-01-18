@@ -2,21 +2,67 @@
 @model Elderson.Pages.SymptomsModel
 @{
 }
-<div style="margin:100px;"></div>
+<link rel="stylesheet" href="~/css/bookingStyle.css" />
+<nav aria-label="breadcrumb" style="margin:35px;">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Elderson</a></li>
+        <li class="breadcrumb-item"><a href="#">Clinic</a></li>
+        <li class="breadcrumb-item"><a href="#">Doctor</a></li>
+        <li class="breadcrumb-item"><a href="#">Date & Time</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Symptoms</li>
+    </ol>
+    <h3>Symptoms</h3>
+</nav>
 <div class="container">
-    <!-- Button triggers collapse -->
-    <a class="btn btn-primary"
-       data-mdb-toggle="collapse"
-       href="#collapseWithScrollbar"
-       role="button"
-       aria-expanded="false"
-       aria-controls="collapseExample">
-        Longer content
-    </a>
-
-    <!-- Collapsed content -->
-    <div class="collapse mt-3 scroll-section" id="collapseWithScrollbar" style="max-width: 500px">
-
+    <div>
+        <ol class="stepper">
+            <li class="stepperItem"><div class="stepperItemDiv stepComplete"><i class="fas fa-check"></i></div><div class="stepperDivText">Select Clinic</div></li>
+            <li class="stepperItemLine"><div class="stepperLine"></div></li>
+            <li class="stepperItem"><div class="stepperItemDiv stepComplete"><i class="fas fa-check"></i></div><div class="stepperDivText">Select Doctor</div></li>
+            <li class="stepperItemLine"><div class="stepperLine"></div></li>
+            <li class="stepperItem"><div class="stepperItemDiv stepComplete"><i class="fas fa-check"></i></div><div class="stepperDivText">Select Date & Time</div></li>
+            <li class="stepperItemLine"><div class="stepperLine"></div></li>
+            <li class="stepperItem"><div class="stepperItemDiv stepActive">4</div><div class="stepperDivText">Enter Symptoms</div></li>
+        </ol>
+    </div>
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <div class="form-outline">
+                <input class="form-control"
+                       id="formControlDoctor"
+                       type="text"
+                       value="@Model.myDoctor (@Model.myClinic)"
+                       aria-label="readonly input example"
+                       readonly />
+                <label class="form-label" for="formControlDoctor">Doctor</label>
+            </div>
+            <input type="hidden" asp-for="myClinic" value="@Model.myClinic" />
+            <input type="hidden" asp-for="myDoctor" value="@Model.myDoctor" />
+            <div class="validate"></div>
+        </div>
+        <div class="col-md-3 form-group mt-3 mt-md-0">
+            <div class="form-outline">
+                <input class="form-control"
+                       id="dateSelect"
+                       type="text"
+                       value="-"
+                       aria-label="readonly input example"
+                       readonly />
+                <label class="form-label" for="dateSelect">Date</label>
+            </div>
+        </div>
+        <div class="col-md-3 form-group mt-3 mt-md-0">
+            <div class="form-outline">
+                <input class="form-control"
+                       id="timeSelect"
+                       type="text"
+                       value="-"
+                       aria-label="readonly input example"
+                       readonly />
+                <label class="form-label" for="timeSelect">Time</label>
+            </div>
+        </div>
+        <input asp-for="myDateTime" type="datetime-local" class="form-control" hidden>
     </div>
     <br />
     <form method="post">
@@ -24,6 +70,7 @@
             <label for="">Enter a description of your symptoms:</label>
             <textarea asp-for="mySymptoms" class="form-control" rows="3"></textarea>
         </div>
+        <br />
         <div>
             <a asp-page="DateAndTime" asp-route-clinic="@Model.myClinic" asp-route-doctor="@Model.myDoctor" class="btn btn-primary" style="display:inline-block">Back</a>
             <button class="btn btn-primary justify-content-end" type="submit" style="display:inline-block">Add To Cart</button>

@@ -2,35 +2,74 @@
 @model Elderson.Pages.ClinicModel
 @{
 }
-<nav aria-label="breadcrumb">
+<link rel="stylesheet" href="~/css/bookingStyle.css" />
+<nav aria-label="breadcrumb" style="margin:35px;">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Elderson</a></li>
         <li class="breadcrumb-item active" aria-current="page">Clinic</li>
     </ol>
+    <h3>Clinic</h3>
 </nav>
 <div class="container">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Clinic</th>
-                <th>Location</th>
-                <th>Booking Hours</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Healthwerkz Medical Centre</td>
-                <td>ANG MO KIO AVE 3</td>
-                <td>7:00 AM - 1:00PM</td>
-                <td><a asp-page="/Elderly/Doctor" asp-route-clinic="Healthwerkz Medical Centre" class="btn btn-primary">Book Appointment</a></td>
-            </tr>
-            <tr>
-                <td>Healthwerkz Medical Centre</td>
-                <td>ANG MO KIO AVE 3</td>
-                <td>7:00 AM - 1:00PM</td>
-                <td><button class="btn btn-primary">Book Appointment</button></td>
-            </tr>
-        </tbody>
-    </table>
+    <div>
+        <ol class="stepper">
+            <li class="stepperItem"><div class="stepperItemDiv stepActive">1</div><div class="stepperDivText">Select Clinic</div></li>
+            <li class="stepperItemLine"><div class="stepperLine"></div></li>
+            <li class="stepperItem"><div class="stepperItemDiv">2</div><div class="stepperDivText">Select Doctor</div></li>
+            <li class="stepperItemLine"><div class="stepperLine"></div></li>
+            <li class="stepperItem"><div class="stepperItemDiv">3</div><div class="stepperDivText">Select Date & Time</div></li>
+            <li class="stepperItemLine"><div class="stepperLine"></div></li>
+            <li class="stepperItem"><div class="stepperItemDiv">4</div><div class="stepperDivText">Enter Symptoms</div></li>
+        </ol>
+    </div>
+    <div class="input-group rounded" style="margin-bottom: 50px;">
+        <input type="text" value="" placeholder="Search by clinic name, location, ..." class="form-control rounded" />
+        <span style="margin-left:10px;"><button class="btn btn-primary" type="button">SEARCH</button></span>
+    </div>
+    <div class="tableStyle">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Clinic</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th>Phone</th>
+                    <th>Booking Hours</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="5">
+                        <div>Healthwerkz Medical Centre</div>
+                        <div>240 River Valley Road, S23897</div>
+                    </td>
+                    <td>68366986</td>
+                    <td>7:00 AM - 1:00PM</td>
+                    <td><a asp-page="/Elderly/Doctor" asp-route-clinic="Healthwerkz Medical Centre" class="btn btn-primary btn-sm px-3">Select</a></td>
+                </tr>
+            </tbody>
+        </table>
+        <div>
+            <div aria-label="Page navigation example" style="margin-left:auto;margin-right:auto;">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
