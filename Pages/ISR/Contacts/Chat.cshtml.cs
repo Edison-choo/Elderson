@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Elderson.Models;
+using Elderson.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -14,10 +16,14 @@ namespace Elderson.Pages.ISR.Users
     {
         [BindProperty]
         public Message messages { get; set; }
+        [BindProperty]
+        public Dictionary<string, List<Message>> allmessages { get; set; }
         private readonly EldersonContext _context;
-        public ChatModel(EldersonContext context)
+        private ChatService _svc;
+        public ChatModel(EldersonContext context, ChatService service)
         {
             _context = context;
+            _svc = service;
         }
         public void OnGet()
         {
@@ -50,6 +56,14 @@ namespace Elderson.Pages.ISR.Users
             //}
 
             //messages = _context.Messages.ToList();
+            if (HttpContext.Session.GetString("LoginUser") != null)
+            {
+                allmessages = _svc.GetAllChats(HttpContext.Session.GetString("LoginUser"));
+            } else
+            {
+                allmessages = new Dictionary<string, List<Message>>();
+            }
+            
         }
     }
 }

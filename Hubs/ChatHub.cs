@@ -1,4 +1,5 @@
 ﻿using Elderson.Models;
+using Elderson.Services;
 using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
@@ -9,9 +10,15 @@ namespace Elderson.Hubs
 {
     public class ChatHub: Hub
     {
+        private ChatService _svc;
+        public ChatHub(ChatService service)
+        {
+            _svc = service;
+        }
         public async Task SendMessage(Message message)
         {
             Console.WriteLine(message.Text);
+            _svc.AddChat(message);
             await Clients.All.SendAsync("ReceiveMessage", message);
         }
 

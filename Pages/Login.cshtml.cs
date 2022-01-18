@@ -49,19 +49,20 @@ namespace Elderson.Pages.Users
 
                     if (user.Password.Equals(Convert.ToBase64String(hashWithSalt)))
                     {
-                        HttpContext.Session.SetString("LoginUser", user.Fullname);
+                        HttpContext.Session.SetString("LoginUser", user.Id);
                         HttpContext.Session.SetString("LoginUserType", user.UserType);
-                        _logger.LogInformation("User {userId} login successfullly.", user.Id);
-                        return RedirectToPage("Index");
+                        
+                        _logger.LogInformation("{actionStatus} User {userId} {userAction}.", "Successful", user.Id, "login");
+                        return Redirect("~/Elderly/Index");
                     } else
                     {
-                        _logger.LogInformation("User {userId} login unsuccessfullly. Password is incorrect.", user.Id);
+                        _logger.LogInformation("{actionStatus} User {userId} {userAction}. Password is incorrect.", "Unsuccessful", user.Id, "login");
                         ErrorMsg = "Login Information is incorrect";
                         return Page();
                     }
                 } else
                 {
-                    _logger.LogInformation("User login unsuccessfullly. Login information is incorrect.");
+                    _logger.LogInformation("{actionStatus} User {userId} {userAction}. Login information is incorrect.", "unsuccessful", user.Id, "login");
                     ErrorMsg = "Login Information is incorrect";
                     return Page();
                 }

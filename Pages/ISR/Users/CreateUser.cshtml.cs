@@ -62,7 +62,7 @@ namespace Elderson.Pages.Users
 
                 if (_svc.GetUserByEmail(newUser.Email) != null)
                 {
-                    _logger.LogInformation("Create user {userId} unsuccessfullly. Email is already being used.", newUser.Id);
+                    _logger.LogInformation("{actionStatus} User {userId} {userAction}. Email is already being used.", "Unsuccessful", newUser.Id, "create user");
                     return Page();
                 }
 
@@ -100,7 +100,7 @@ namespace Elderson.Pages.Users
                         break;
                 }
 
-                _logger.LogInformation("Create user {userId} successfullly.", newUser.Id);
+                _logger.LogInformation("{actionStatus} User {userId} {userAction}.", "Successful", newUser.Id, "create user");
                 return RedirectToPage("Index");
             }
             //var error = ModelState.Values.SelectMany(v => v.Errors.Select(b => b.Exception));

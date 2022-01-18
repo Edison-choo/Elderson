@@ -30,6 +30,7 @@ namespace Elderson.Pages.ISR.Incidents
         {
             if (!(ModelState.IsValid))
             {
+                _logger.LogInformation("{actionStatus} {userAction}. Model state is invalid.", "Unsuccessful", "create incident");
                 return Page();
             }
 
@@ -39,7 +40,7 @@ namespace Elderson.Pages.ISR.Incidents
             newIncident.UserId = "3af4d0f9-0c8a-46b3-8465-b90cbf0090c9";
             _svc.AddIncident(newIncident);
 
-            _logger.LogInformation("Create incident {incidentId} successfullly.", newIncident.Id);
+            _logger.LogInformation("{actionStatus} {userAction} {incidentId} by User {userId}.", "Successful", "create incident", newIncident.Id, newIncident.UserId);
             return RedirectToPage("Index");
         }
     }

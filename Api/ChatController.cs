@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 
 namespace Elderson.Api
 {
-    [Authorize]
+    [Route("api/[controller]")]
+    [ApiController]
     public class ChatController : Controller
     {
         private readonly EldersonContext _context;

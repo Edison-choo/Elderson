@@ -32,6 +32,7 @@ namespace Elderson
             services.AddSession();
             services.AddTransient<UserService>();
             services.AddTransient<IncidentService>();
+            services.AddTransient<ChatService>();
             services.AddDbContext<EldersonContext>();
             services.AddControllers();
         }
@@ -64,7 +65,7 @@ namespace Elderson
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
-                //endpoints.MapControllerRoute("default", "api/{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute("default", "api/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllers();
                 endpoints.MapHub<ChatHub>("/chatHub");
             });

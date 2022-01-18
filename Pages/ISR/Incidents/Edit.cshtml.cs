@@ -30,6 +30,7 @@ namespace Elderson.Pages.ISR.Incidents
         {
             if (!(ModelState.IsValid))
             {
+                _logger.LogInformation("{actionStatus} {userAction}.", "Unsuccessful", "edit incident");
                 return Page();
             }
 
@@ -42,7 +43,7 @@ namespace Elderson.Pages.ISR.Incidents
 
             if (valid)
             {
-                _logger.LogInformation("Edit incident {incidentId} successfully.", SelectedIncident.Id);
+                _logger.LogInformation("{actionStatus} {userAction} {incidentId} of User {userId}.", "Successful", "edit incident", SelectedIncident.Id, SelectedIncident.UserId);
                 return RedirectToPage("Index");
             }
 

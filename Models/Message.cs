@@ -8,15 +8,13 @@ namespace Elderson.Models
 {
     public class Message
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Username { get; set; }
         public string Text { get; set; }
         public DateTime When { get; set; }
 
-        public static implicit operator Message(List<Message> v)
-        {
-            throw new NotImplementedException();
-        }
+        public string UserId { get; set; }
+        public string ToUserId { get; set; }
 
         //public string UserId { get; set; }
         //public virtual AppUser Sender { get; set; }

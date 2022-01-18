@@ -1,9 +1,10 @@
 ﻿@page
 @model Elderson.Pages.ISR.Users.ChatModel
+@using Microsoft.AspNetCore.Http;
 @{ Layout = "Shared/_LayoutITSupport";
-                ViewData["Title"] = "Chat page";
-                ViewData["Header"] = "CHAT";
-                ViewData["Breadcrumb"] = "Contact"; }
+  ViewData["Title"] = "Chat page";
+  ViewData["Header"] = "CHAT";
+  ViewData["Breadcrumb"] = "Contact"; }
 
 <style>
     .left {
@@ -359,6 +360,7 @@
         <div class="body-section">
             <div class="left-section mCustomScrollbar" data-mcs-theme="minimal-dark">
                 <ul>
+
                     <li>
                         <div class="chatList">
                             <div class="img">
@@ -409,6 +411,22 @@
                             </div>
                         </div>
                     </li>
+                    @{ foreach (var user in Model.allmessages)
+                        {
+            <li>
+                <div class="chatList">
+                    <div class="img">
+                        <i class="fa fa-circle"></i>
+                        <img src="/demo/man01.png">
+                    </div>
+                    <div class="desc">
+                        <small class="time">05:30 am</small>
+                        <h5>Luis Yankee</h5>
+                        <small>@user</small>
+                    </div>
+                </div>
+            </li>
+ } }
                 </ul>
             </div>
         </div>
@@ -525,6 +543,30 @@
                                 <small>05:25 am</small>
                             </div>
                         </li>
+                        @{ foreach (var msg in Model.allmessages[""])
+                            {
+                                if (msg.ToUserId == HttpContext.Session.GetString("LoginUser"))
+                                {
+                    <li class="msg-left">
+                        <div class="msg-left-sub">
+                            <div class="msg-desc">
+                                @msg.Text
+                            </div>
+                            <small>@msg.When</small>
+                        </div>
+                    </li> }
+                                else
+                                {
+                                    <li class="msg-right">
+                                        <div class="msg-left-sub">
+                                            <div class="msg-desc">
+                                                @msg.Text
+                                            </div>
+                                            <small>@msg.When</small>
+                                        </div>
+                                    </li>
+                                }
+                                } }
                     </ul>
                 </div>
                 <div class="right-section-bottom">
@@ -552,7 +594,7 @@
 
 
 @*
-<script src="~/js/chat.js"></script>*@
+    <script src="~/js/chat.js"></script>*@
 
 <script>
     class Message {
@@ -560,6 +602,9 @@
             this.userName = username;
             this.text = text;
             this.when = when;
+            this.Id = "";
+            this.UserId = "";
+            this.ToUserId = "";
         }
     }
 

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Elderson.Models;
 using Elderson.Services;
+using Microsoft.AspNetCore.Http;
 
 namespace Elderson.Pages.Users
 {
@@ -18,9 +19,19 @@ namespace Elderson.Pages.Users
         {
             _svc = service;
         }
-        public void OnGet()
+        public IActionResult OnGet()
         {
-            allusers = _svc.GetAllUsers();
+            if (HttpContext.Session.GetString("LoginUser") != null)
+            {
+                if (HttpContext.Session.GetString("LoginUserType") == "ITSupport")
+                {
+
+                    allusers = _svc.GetAllUsers();
+                    return Page();
+                }
+            }
+            
+            return Redirect("~/Elderly");
         }
     }
 }

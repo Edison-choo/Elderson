@@ -43,6 +43,18 @@ namespace Elderson
             
         }
 
+        [HttpGet("{apiname}", Name = "Signout")]
+        public ActionResult Signout()
+        {
+            if (HttpContext.Session.GetString("LoginUser") != null)
+            {
+                HttpContext.Session.Remove("LoginUser");
+                HttpContext.Session.Remove("LoginUserType");
+                
+            }
+            return Ok();
+        }
+
         //// GET api/<UserController>/5
         //[HttpGet("{id}")]
         //public string Get(int id)

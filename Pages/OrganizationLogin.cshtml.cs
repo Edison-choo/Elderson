@@ -48,31 +48,42 @@ namespace Elderson.Pages
 
                     if (user.Password.Equals(Convert.ToBase64String(hashWithSalt)))
                     {
-                        HttpContext.Session.SetString("LoginUser", user.Fullname);
+                        HttpContext.Session.SetString("LoginUser", user.Id);
                         HttpContext.Session.SetString("LoginUserType", user.UserType);
-                        _logger.LogInformation("Organization User {userId} login successfullly.", user.Id);
+                        _logger.LogInformation("{actionStatus} {userType} User {userId} {userAction}.", "Successful", user.UserType, user.Id, "login");
+
                         if (user.UserType == "Doctor")
                         {
-                            return RedirectToPage("Doctors");
+                            return Redirect("~/DRR");
+                        } else if (user.UserType == "ITSupport")
+                        {
+                            return Redirect("~/ISR/Users");
+                        } else if (user.UserType == "Administrator")
+                        {
+                            return Redirect("~/Administrator");
+                        } else if (user.UserType == "Pharmacist")
+                        {
+                            return Redirect("~/Pharmacist");
                         }
-                        return RedirectToPage("Index");
+                        return Redirect("~/Index");
                     }
                     else
                     {
-                        _logger.LogInformation("Organization User {userId} login unsuccessfullly. Password is incorrect.", user.Id);
+                        _logger.LogInformation("{actionStatus} Organization User {userId} {userAction}. Password is incorrect.", "Unsuccessful", user.Id, "login");
                         ErrorMsg = "Login Information is incorrect";
                         return Page();
                     }
                 }
                 else
                 {
-                    _logger.LogInformation("Organization User login unsuccessfullly. Login information is incorrect.");
+                    _logger.LogInformation("{actionStatus} Organization User {userAction}. Login information is incorrect.", "Unsuccessful", "login");
                     ErrorMsg = "Login Information is incorrect";
                     return Page();
                 }
             }
-            catch
+            catch (Exception e)
             {
+                Console.WriteLine(e);
                 return Page();
             }
         }
