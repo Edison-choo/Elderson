@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Elderson.Pages.Pharmacist.MedSup
 {
-    public class ViewSupplierModel : PageModel
+    public class EditSupplierModel : PageModel
     {
         public void OnGet()
         {
