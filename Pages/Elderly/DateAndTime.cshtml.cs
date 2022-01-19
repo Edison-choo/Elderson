@@ -22,10 +22,9 @@ namespace Elderson.Pages.Shared
         [Required]
         public string myDoctor { get; set; }
         [BindProperty]
-        [Required]
         public string myDoctorName { get; set; }
         [BindProperty]
-        [Required]
+        [Required(ErrorMessage = "Please enter date and time of booking!"), DataType(DataType.DateTime)]
         public DateTime myDateTime { get; set; }
         [BindProperty]
         [Required]
@@ -71,6 +70,7 @@ namespace Elderson.Pages.Shared
             if (ModelState.IsValid)
             {
 <<<<<<< HEAD
+<<<<<<< HEAD
                 HttpContext.Session.SetString("myClinic", myClinic);
                 HttpContext.Session.SetString("myDoctor", myDoctor);
                 HttpContext.Session.SetString("myDate", myDate);
@@ -80,6 +80,19 @@ namespace Elderson.Pages.Shared
 =======
                 if (myDateTime > DateTime.Now)
                 {
+=======
+                if (myDateTime > DateTime.Now)
+                {
+                    bool valid = true;
+                    if (!(_svc.UserExists(myDoctor)))
+                    {
+                        valid = false;
+                    }
+                    if (!(_sSvc.ScheduleAvaliable(myDoctor, myDateTime)))
+                    {
+                        valid = false;
+                    }
+>>>>>>> parent of e8257f9 (done)
                     HttpContext.Session.SetString("myClinic", myClinic);
                     HttpContext.Session.SetString("myDoctor", myDoctor);
                     HttpContext.Session.SetString("myDate", myDate);
@@ -91,7 +104,10 @@ namespace Elderson.Pages.Shared
                 {
                     return Page();
                 }
+<<<<<<< HEAD
 >>>>>>> parent of 2bf0c8e (validation)
+=======
+>>>>>>> parent of e8257f9 (done)
             }
             return Page();
         }
