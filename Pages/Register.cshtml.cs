@@ -83,7 +83,14 @@ namespace Elderson.Pages
                 _logger.LogInformation("{actionStatus} User {userId} {userAction}.", "Successful", newUser.Id, "register");
 
                 return RedirectToPage("Login");
+            } else
+            {
+                string messages = string.Join("; ", ModelState.Values
+                                        .SelectMany(x => x.Errors)
+                                        .Select(x => x.ErrorMessage));
+                Console.WriteLine(messages);
             }
+
             return Page();
         }
 

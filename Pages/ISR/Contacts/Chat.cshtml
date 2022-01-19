@@ -359,10 +359,10 @@
         </div>
         <div class="body-section">
             <div class="left-section mCustomScrollbar" data-mcs-theme="minimal-dark">
-                <ul>
+                <ul id="chatUser">
                     @{ if (HttpContext.Session.GetString("LoginUser") == "8d96eb8d-fdc9-45f9-bf11-bc69bf93ef39")
                         {
-                            <li id="test chatActive" onclick="changeChat(this, 'test')">
+                            <li id="test" class="active chatActive" onclick="changeChat(this, 'test')">
                                 <div class="chatList">
                                     <div class="img">
                                         <i class="fa fa-circle"></i>
@@ -375,10 +375,11 @@
                                     </div>
                                 </div>
                             </li>
+
                         }
                         else
                         {
-                            <li class="active chatActive" id="8d96eb8d-fdc9-45f9-bf11-bc69bf93ef39" onclick="changeChat(this, '8d96eb8d-fdc9-45f9-bf11-bc69bf93ef39')">
+                            <li id="8d96eb8d-fdc9-45f9-bf11-bc69bf93ef39" onclick="changeChat(this, '8d96eb8d-fdc9-45f9-bf11-bc69bf93ef39')">
                                 <div class="chatList">
                                     <div class="img">
                                         <i class="fa fa-circle"></i>
@@ -391,7 +392,7 @@
                                     </div>
                                 </div>
                             </li>
-                            <li id="test" onclick="changeChat(this, 'test')">
+                            <li id="test" class="active chatActive" onclick="changeChat(this, 'test')">
                                 <div class="chatList">
                                     <div class="img">
                                         <i class="fa fa-circle"></i>
@@ -409,19 +410,23 @@
 
                     @{ foreach (var user in Model.allmessages)
                         {
-                            <li id="@user.Key" onclick="changeChat(this, '@user.Key')">
-                                <div class="chatList">
-                                    <div class="img">
-                                        <i class="fa fa-circle"></i>
-                                        <img src="/demo/man01.png">
+                            if (user.Key != "8d96eb8d-fdc9-45f9-bf11-bc69bf93ef39")
+                            {
+                                <li id="@user.Key" onclick="changeChat(this, '@user.Key')">
+                                    <div class="chatList">
+                                        <div class="img">
+                                            <i class="fa fa-circle"></i>
+                                            <img src="/demo/man01.png">
+                                        </div>
+                                        <div class="desc">
+                                            <small class="time">05:30 am</small>
+                                            <h5>Luis Yankee</h5>
+                                            <small>@user.Key</small>
+                                        </div>
                                     </div>
-                                    <div class="desc">
-                                        <small class="time">05:30 am</small>
-                                        <h5>Luis Yankee</h5>
-                                        <small>@user.Key</small>
-                                    </div>
-                                </div>
-                            </li>
+                                </li>
+                            }
+                            
                         } }
                 </ul>
             </div>
@@ -438,37 +443,65 @@
         </div>
         <div class="body-section">
             <div class="right-section">
-                <div class="message" data-mcs-theme="minimal-dark">
+                <div class="message wholeChat" data-mcs-theme="minimal-dark"  >
                     @{ if (HttpContext.Session.GetString("LoginUser") != "8d96eb8d-fdc9-45f9-bf11-bc69bf93ef39")
                         {
-                            <ul id="messageList" class="8d96eb8d-fdc9-45f9-bf11-bc69bf93ef39">
-                                <li class="msg-left">
-                                    <div class="msg-left-sub">
-                                        <div class="msg-desc">
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua.
-                                        </div>
-                                        <small>05:25 am</small>
+                        <ul id="messageList" class="8d96eb8d-fdc9-45f9-bf11-bc69bf93ef39" style="display:none;">
+                            <li class="msg-left">
+                                <div class="msg-left-sub">
+                                    <div class="msg-desc">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                        tempor incididunt ut labore et dolore magna aliqua.
                                     </div>
-                                </li>
+                                    <small>05:25 am</small>
+                                </div>
+                            </li>
 
-                                <li class="msg-right">
-                                    <div class="msg-right-sub">
-                                        <div class="msg-desc">
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua.
-                                        </div>
-                                        <small>05:25 am</small>
+                            <li class="msg-right">
+                                <div class="msg-right-sub">
+                                    <div class="msg-desc">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                        tempor incididunt ut labore et dolore magna aliqua.
                                     </div>
-                                </li>
+                                    <small>05:25 am</small>
+                                </div>
+                            </li>
+                            @{ if (Model.allmessages.ContainsKey("8d96eb8d-fdc9-45f9-bf11-bc69bf93ef39"))
+                                {
+                                    foreach (var msg in Model.allmessages["8d96eb8d-fdc9-45f9-bf11-bc69bf93ef39"])
+                                    {
+                                        if (msg.ToUserId == HttpContext.Session.GetString("LoginUser"))
+                                        {
+                                        <li class="msg-left">
+                                            <div class="msg-left-sub">
+                                                <div class="msg-desc">
+                                                    @msg.Text
+                                                </div>
+                                                <small>@msg.When</small>
+                                            </div>
+                                        </li>
+                                        }
+                                        else
+                                        {
+                                        <li class="msg-right">
+                                            <div class="msg-right-sub">
+                                                <div class="msg-desc">
+                                                    @msg.Text
+                                                </div>
+                                                <small>@msg.When</small>
+                                            </div>
+                                        </li>
+                                            }
+                                        }
+                                    }
+                                }
 
-
-                            </ul>
+                        </ul>
                         }
                     }
 
 
-                    <ul id="messageList" class="test showActive" style="display:none;">
+                    <ul id="messageList" class="test showActive">
                         <li class="msg-left">
                             <div class="msg-left-sub">
                                 <div class="msg-desc">
@@ -592,6 +625,27 @@
         document.getElementById("messageInput").value = "";
         let message = new Message(user, text, Date.now, userId, toUserId);
         console.log(`sending ${message} says ${message.text}`);
+
+
+        var li = document.createElement("li");
+        var divFirst = document.createElement("div");
+        var divSecond = document.createElement("div");
+        var divThird = document.createElement("div");
+        var small = document.createElement("small");
+        li.setAttribute("class", "msg-right")
+        divFirst.setAttribute("class", "msg-right")
+        divSecond.setAttribute("class", "msg-right-sub")
+        divThird.setAttribute("class", "msg-desc")
+        li.appendChild(divFirst);
+        divFirst.appendChild(divSecond);
+        divSecond.appendChild(divThird);
+        divSecond.appendChild(small);
+
+        divThird.textContent = `${message.text}`;
+
+        document.getElementsByClassName(toUserId)[0].appendChild(li);
+
+
         connection.invoke("SendMessage", message).catch(function (err) {
             return console.error(err.toString());
         });
@@ -599,44 +653,50 @@
     });
 
     connection.on("ReceiveMessage", function (message) {
-        console.log(`${message.username} says ${message.text}`);
-        var li = document.createElement("li");
-        var divFirst = document.createElement("div");
-        var divSecond = document.createElement("div");
-        var divThird = document.createElement("div");
-        var small = document.createElement("small");
+        console.log(`${message.UserId} sends to ${message.ToUserId}`);
 
-        if (@HttpContext.Session.GetString("LoginUser") == message.ToUserId) {
+        if ('@HttpContext.Session.GetString("LoginUser")' != message.UserId && '@HttpContext.Session.GetString("LoginUser")' != message.ToUserId) {
+            var li = document.createElement("li");
+            var divFirst = document.createElement("div");
+            var divSecond = document.createElement("div");
+            var divThird = document.createElement("div");
+            var small = document.createElement("small");
 
             li.setAttribute("class", "msg-left")
             divFirst.setAttribute("class", "msg-left")
             divSecond.setAttribute("class", "msg-left-sub")
             divThird.setAttribute("class", "msg-desc")
 
-        } else {
+            li.appendChild(divFirst);
+            divFirst.appendChild(divSecond);
+            divSecond.appendChild(divThird);
+            divSecond.appendChild(small);
 
-            li.setAttribute("class", "msg-right")
-            divFirst.setAttribute("class", "msg-right")
-            divSecond.setAttribute("class", "msg-right-sub")
-            divThird.setAttribute("class", "msg-desc")
+            divThird.textContent = `${message.text}`;
 
+            console.log(document.getElementsByClassName(message.UserId)[0]);
+
+            if (document.getElementsByClassName(message.UserId)[0] == null) {
+                document.getElementById("chatUser").innerHTML += `<li id="${message.UserId}" class="" onclick="changeChat(this, '${message.UserId}')">
+                                <div class="chatList">
+                                    <div class="img">
+                                        <i class="fa fa-circle"></i>
+                                        <img src="/demo/man02.png">
+                                    </div>
+                                    <div class="desc">
+                                        <small class="time">3 day</small>
+                                        <h5>user</h5>
+                                        <small>${message.UserId}</small>
+                                    </div>
+                                </div>
+                            </li>`;
+                document.getElementsByClassName("wholeChat")[0].innerHTML += `<ul id="messageList" class="${message.UserId}" style="display:none;"></ul>`;
+                document.getElementsByClassName(message.UserId)[0].appendChild(li);
+            } else {
+                document.getElementsByClassName(message.UserId)[0].appendChild(li);
+
+            }
         }
-
-
-
-        li.appendChild(divFirst);
-        divFirst.appendChild(divSecond);
-        divSecond.appendChild(divThird);
-        divSecond.appendChild(small);
-
-        divThird.textContent = `${message.username} says ${message.text}`;
-
-        if (document.getElementsByClassName(message.UserId) != null and @HttpContext.Session.GetString("LoginUser") != message.UserId) {
-            document.getElementsByClassName(message.UserId).appendChild(li);
-        } else if (document.getElementsByClassName(message.ToUserId) != null and @HttpContext.Session.GetString("LoginUser") != message.ToUserId) {
-            document.getElementsByClassName(message.ToUserId).appendChild(li);
-        }
-
 
     });
 </script>

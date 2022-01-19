@@ -100,7 +100,6 @@ namespace Elderson
             try
             {
                 var deleteUser = _svc.GetUserById(userId);
-                _svc.DeleteUser(deleteUser);
 
                 switch (deleteUser.UserType)
                 {
@@ -114,6 +113,8 @@ namespace Elderson
                         _svc.DeleteAdministrator(_svc.GetAdministratorById(userId));
                         break;
                 }
+
+                _svc.DeleteUser(deleteUser);
             }
             catch (Exception ex)
             {

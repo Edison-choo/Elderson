@@ -74,8 +74,8 @@
                                 <div>
                                     <div class="profileLb">Emergency Contact Name</div>
                                     <div class="profileData">
-                                        @if (Model.PatientRole.EmergencyNum != null)
-                                        {@Model.PatientRole.EmergencyNum}
+                                        @if (Model.PatientRole.EmergencyName != null)
+                                        {@Model.PatientRole.EmergencyName}
                                     else
                                     {<text>To be updated</text>}
                                     </div>
@@ -115,6 +115,20 @@
                                     {<text>To be updated</text>}
                                     </div>
                                 </div>
+                                @{
+                                    if (Model.SelectedUser.UserType == "Doctor")
+                                    {
+                                        <div>
+                                            <div class="profileLb">Language</div>
+                                            <div class="profileData">
+                                                @if (Model.DoctorRole.Language != null)
+                                                {@Model.DoctorRole.Language}
+                                            else
+                                            { <text>To be updated</text>}
+                                            </div>
+                                        </div>
+                                    }
+                                }
                             </div>
                             <div class="col-md-6 grid-margin">
                                 <div>
@@ -154,6 +168,15 @@
                                             <div class="profileData">
                                                 @if (Model.DoctorRole.Clinic != null)
                                                 {@Model.DoctorRole.Clinic}
+                                            else
+                                            {<text>To be updated</text>}
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="profileLb">Work Experience</div>
+                                            <div class="profileData">
+                                                @if (Model.DoctorRole.WorkExp != null)
+                                                {@Model.DoctorRole.WorkExp}
                                             else
                                             {<text>To be updated</text>}
                                             </div>

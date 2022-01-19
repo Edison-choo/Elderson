@@ -37,7 +37,7 @@ namespace Elderson.Pages.ISR.Incidents
             string guid = Guid.NewGuid().ToString();
             newIncident.Id = guid;
             newIncident.Timestamp = DateTime.Now;
-            newIncident.UserId = "3af4d0f9-0c8a-46b3-8465-b90cbf0090c9";
+            newIncident.UserId = "8d96eb8d-fdc9-45f9-bf11-bc69bf93ef39";
             _svc.AddIncident(newIncident);
 
             _logger.LogInformation("{actionStatus} {userAction} {incidentId} by User {userId}.", "Successful", "create incident", newIncident.Id, newIncident.UserId);

@@ -93,22 +93,22 @@
             );
         });</script>
 
-<div class="card">
+<div class="card" style="padding-left:10px;">
     <div class="card-body">
         <div class="d-flex justify-content-between align-items-start">
             <h4 class="card-title">All Incidents Table</h4>
             <button class="btn btn-primary btn-l text-white mb-0 me-0" type="button"><a asp-page="Create"><i class="mdi mdi-account-plus"></i>Add new incident</a> </button>
 
         </div>
-        <div class="table-responsive">
+        <div class="table-responsive" style="width:100%; padding-bottom:30px;">
 
-            <table class="table table-hover" id="incidentstable" style="width:100%">
+            <table class="table table-hover" id="incidentstable">
                 <thead>
                     <tr>
                         <th>TITLE</th>
-                        <th style="width:20%;">WROTE BY</th>
+                        <th style="width:175px;">WROTE BY</th>
                         <th style="width:175px;">Action</th>
-
+                        <th style="width:5px;"></th>
                     </tr>
                 </thead>
             </table>

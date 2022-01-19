@@ -34,7 +34,12 @@ namespace Elderson.Hubs
         public async Task Send(Message message, string userId)
         {
             Console.WriteLine(message.Text);
-            await Clients.Client(userId).SendAsync("ReceiveMessage", message);
+            
+            string guid = Guid.NewGuid().ToString();
+            message.Id = guid;
+            message.When = DateTime.Now;
+            _svc.AddChat(message);
+            await Clients.All.SendAsync("ReceiveMessage", message);
         }
 
     }
