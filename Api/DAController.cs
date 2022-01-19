@@ -28,13 +28,13 @@ namespace Elderson.Api
             try
             {
                 dSchedule = _svc.GetOneDoctorSchedule(doctorID);
-                var jsonStr = JsonSerializer.Serialize(dSchedule.Select(s =>));
+                var jsonStr = JsonSerializer.Serialize(dSchedule.Select(s => new { s.StartDateTime, s.Availability}));
+                return Ok(jsonStr);
             }
             catch
             {
-
+                return BadRequest();
             }
-            return dSchedule;
         }
 
     }
