@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Elderson.Models;
 using Elderson.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -11,16 +12,18 @@ namespace Elderson.Pages.DRR
 {
     public class IndexModel : PageModel
     {
-        [BindProperty]
-        public List<User> allusers { get; set; }
-        private UserService _svc;
-        public IndexModel(UserService service)
+        
+        public IActionResult OnGet()
         {
-            _svc = service;
-        }
-        public void OnGet()
-        {
-            allusers = _svc.GetAllUsers();
+            if (HttpContext.Session.GetString("LoginUser") != null)
+            {
+                if (HttpContext.Session.GetString("LoginUserType") == "Doctor")
+                {
+                    return Page();
+                }
+            }
+
+            return Redirect("~/Elderly");
         }
     }
 }

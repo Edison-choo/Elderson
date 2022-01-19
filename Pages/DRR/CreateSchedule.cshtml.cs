@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Elderson.Models;
 using Elderson.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -37,8 +38,17 @@ namespace Elderson.Pages.DRR
             _svc = service;
             _logger = logger;
         }
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            if (HttpContext.Session.GetString("LoginUser") != null)
+            {
+                if (HttpContext.Session.GetString("LoginUserType") == "Doctor")
+                {
+                    return Page();
+                }
+            }
+
+            return Redirect("~/Elderly");
         }
 
         public IActionResult OnPost()
@@ -48,7 +58,7 @@ namespace Elderson.Pages.DRR
             while (!(valid))
             {
                 newschedule.Id = Guid.NewGuid().ToString();
-                newschedule.DoctorId = "2";
+                newschedule.DoctorId = HttpContext.Session.GetString("LoginUser");
                 StartDateTime = new DateTime(Year, Month, Date, hour, min, 00);
                 newschedule.StartDateTime = StartDateTime;
                 newschedule.Availability = "A";

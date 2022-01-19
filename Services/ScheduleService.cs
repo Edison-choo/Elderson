@@ -1,4 +1,5 @@
 ﻿using Elderson.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,37 @@ namespace Elderson.Services
             List<Schedule> AllSchedule = new List<Schedule>();
             AllSchedule = _context.Schedule.ToList();
             return AllSchedule;
+        }
+
+        public Schedule GetScheduleById(String id)
+        {
+            Schedule schedule = _context.Schedule.Where(e => e.Id == id).FirstOrDefault();
+            return schedule;
+        }
+
+        public bool DeleteSchedule (Schedule schedule)
+        {
+            bool deleted = true;
+            _context.Attach(schedule).State = EntityState.Modified;
+
+            try
+            {
+                _context.Remove(schedule);
+                _context.SaveChanges();
+                deleted = true;
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ScheduleExist(schedule.Id))
+                {
+                    deleted = false;
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return deleted;
         }
     }
 }

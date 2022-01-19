@@ -42,5 +42,22 @@ namespace Elderson.Api
             }
 
         }
+
+        // DELETE api/<ScheduleController>/2
+        [HttpDelete("{scheduleId}")]
+        public ActionResult Delete(string scheduleId)
+        {
+            try
+            {
+                var deleteUser = _svc.GetScheduleById(scheduleId);
+                _svc.DeleteSchedule(deleteUser);
+                return RedirectToPage("DRR/Index");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("UserController.DeleteUser", ex);
+            }
+            return Ok();
+        }
     }
 }
