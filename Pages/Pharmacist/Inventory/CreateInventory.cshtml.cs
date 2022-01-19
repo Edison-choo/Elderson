@@ -27,5 +27,28 @@ namespace Elderson.Pages.Pharmacist.Inventory
         public void OnGet()
         {
         }
+
+        public IActionResult OnPost()
+        {
+            if (ModelState.IsValid)
+            {
+                if (_svc.GetMedicationByName(newMedication.MedName) != null)
+                {
+                    return Page();
+                }
+
+                string guid = Guid.NewGuid().ToString();
+                newInventory.Id = guid;
+                newInventory.MedicationId = guid;
+                newMedication.Id = guid;
+                _svc.AddMedication(newMedication);
+                _svc.AddMedicationToInventory(newInventory);
+                return RedirectToPage("InventoryList");
+            }
+
+
+            return Page();
+        
+        }
     }
 }

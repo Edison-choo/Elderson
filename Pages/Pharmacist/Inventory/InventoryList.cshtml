@@ -7,37 +7,126 @@
     ViewData["Breadcrumb"] = "Inventory";
 }
 
-<body>
-    <div class="row">
-        <form class="form-inline" style="margin-bottom: 10px; float:right;">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search for Medications" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-    </div>
+<style>
+    a {
+        color: white;
+        text-decoration: none;
+    }
 
-    <div class="row">
-        <div class="card">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-start">
-                </div>
-                <div class="table-responsive">
-                    <table class="display table table-hover" id="userstable" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Type</th>
-                                <th>Current Amt</th>
-                                <th>Price</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-            </div>
+    .dropdown-toggle::after {
+        display: none;
+    }
+</style>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        console.log("Loading webpage...")
+        $.ajax({
+            url: 'https://localhost:44311/api/MedInventory',
+            type: 'GET',
+            success: function (result) {
+                console.log("Items retrieve successfully")
+                console.log(JSON.parse(result));
+
+            }
+        });
+        $('#inventorytable').DataTable(
+            {
+                "ajax": {
+                    'url': 'https://localhost:44311/api/MedInventory',
+                    'type': 'GET',
+                    "dataSrc": function (json) {
+                        return JSON.parse(JSON.stringify(json));
+                    }
+                },
+                "columns": [
+                    { "data": "Id" },
+                    { "data": "MedName" },
+                    { "data": "MedType" },
+                    { "data": "CurrentAmt" },
+                    { "data": "Price" },
+                    {
+                        "data": function (data, type, full) {
+                            return `<div class="btn-group">
+                                            <button type="button" class="btn dropdown-toggle dropdown-toggle-split" id=${"dropdownMenuSplitButton" + data.Id} data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i style="font-size:1.5em;" class="mdi mdi-dots-vertical"></i>
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby=${"dropdownMenuSplitButton" + data.Id}>
+                                                <a class="dropdown-item" href="/ISR/Users/Profile?id=${data.Id}">View</a>
+                                                <a class="dropdown-item" href="/ISR/Users/Edit?id=${data.Id}">Edit</a>
+                                                <a class="dropdown-item" href="/ISR/Users/Lock?id=${data.Id}">Lock</a>
+                                                <a class="dropdown-item" href="/ISR/Users/ChangePwd?id=${data.Id}">Change password</a>
+                                                <a class="dropdown-item" data-toggle="modal" data-targe=${"#staticBackdrop" + data.Id}>Delete</a>
+                                                </div>
+                                            </div>
+<div class="modal fade" id=${"staticBackdrop" + data.Id} data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <div class="text-center">
+                                                    <h4>
+                                                        Are you sure you want to delete this user?
+
+                                                    </h4>
+                                                </div>
+                                                <div class="d-flex justify-content-between" style="margin-top:30px;">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="button" onclick=${"deleteUser(" + "'" + data.Id + "'" + ")"} class="btn btn-danger">Delete</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>`;
+                            }
+                        }
+                    ],
+                    "info": true,
+                    "ordering": true,
+                    "search": true,
+                    "processing": true,
+                    'autoWidth': false,
+                    'lengthChange': false,
+                    'paging': true,
+                    'pagingType':'numbers',
+                    'ordering': false,
+                    'dom': "fltip",
+                    'pageLength': 5
+                }
+            );
+        });
+</script>
+
+<div class="card">
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start">
+            <h4 class="card-title">All User Table</h4>
+            <button class="btn btn-primary btn-l text-white mb-0 me-0" type="button"><a asp-page="CreateInventory">Add New Medication</a> </button>
+
         </div>
+        <div class="table-responsive">
+
+            <table class="table table-hover" id="inventorytable" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Current Amt</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
     </div>
 
-</body>
+</div>
+
+
 
 
 
