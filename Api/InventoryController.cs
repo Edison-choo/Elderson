@@ -66,7 +66,7 @@ namespace Elderson.Api
         //{
         //}
 
-        [HttpDelete("{userId}")]
+        [HttpDelete("{Id}")]
         public ActionResult Delete(string Id)
         {
             try
