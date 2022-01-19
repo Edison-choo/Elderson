@@ -18,7 +18,7 @@ namespace Elderson.Services
         public List<Booking> GetBookingOfUser(string id)
         {
             List<Booking> AllUserBookings = new List<Booking>();
-            AllUserBookings = _context.Bookings.Where(b => b.PatientID == id).ToList();
+            AllUserBookings = _context.Booking.Where(b => b.PatientID == id).ToList();
             return AllUserBookings;
         }
         public bool AddBooking(Booking booking)

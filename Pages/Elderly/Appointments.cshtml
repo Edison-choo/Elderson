@@ -22,12 +22,18 @@
                 </tr>
             </thead>
             <tbody>
+                @if (Model.myBooking != null)
+            {
+                @foreach (var item in Model.myBooking)
+                {
                 <tr>
-                    <td>Healthwerkz Medical Centre</td>
-                    <td>3rd December 2021</td>
-                    <td>11:30 am - 12:00 pm</td>
+                    <td>@item.Clinic</td>
+                    <td>@item.BookDateTime</td>
                     <td><a href="#" class="btn btn-primary">Join Call</a></td>
                 </tr>
+                }
+            } 
+                
             </tbody>
         </table>
     </div>

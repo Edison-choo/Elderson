@@ -32,7 +32,7 @@ namespace Elderson.Models
         public DbSet<Payment> Payment { get; set; }
 
         public DbSet<Schedule> Schedule { get; set; }
-        public DbSet<Booking> Bookings { get; set; }
+        public DbSet<Booking> Booking { get; set; }
 
     }
 }

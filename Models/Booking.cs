@@ -8,7 +8,7 @@ namespace Elderson.Models
 {
     public class Booking
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         [Required]
         public string Clinic { get; set; }
         [Required, DataType(DataType.DateTime)]

@@ -23,9 +23,10 @@ namespace Elderson.Pages.Elderly
         {
             if (HttpContext.Session.GetString("LoginUser") != null)
             {
-                string id = HttpContext.Session.GetString("LoginUser");
-                myBooking = _svc.GetBookingOfUser(id);
+                //string id = HttpContext.Session.GetString("LoginUser");
+                myBooking = _svc.GetBookingOfUser("1");
             }
+            myBooking = _svc.GetBookingOfUser("1");
         }
     }
 }

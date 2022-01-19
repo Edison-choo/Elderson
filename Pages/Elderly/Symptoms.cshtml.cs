@@ -54,7 +54,7 @@ namespace Elderson.Pages
                 cartItem.ItemName = "Online Consultation";
                 cartItem.Price = 20;
                 cartItem.Quantity = 1;
-                cartItem.Clinic = myClinic;
+                cartItem.Clinic = HttpContext.Session.GetString("myClinic");
                 cartItem.BookDateTime = HttpContext.Session.GetString("myDateTime");
                 cartItem.Symptoms = mySymptoms;
                 cartItem.DoctorID = "1";

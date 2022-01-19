@@ -43,8 +43,10 @@ namespace Elderson.Pages
                 myCart = HttpContext.Session.GetCart("Cart");
                 foreach (CartItem item in myCart)
                 {
+                    string bookUUID = Guid.NewGuid().ToString();
                     string callUUID = Guid.NewGuid().ToString();
                     Booking book = new Booking();
+                    book.Id = bookUUID;
                     book.Clinic = item.Clinic;
                     book.BookDateTime = Convert.ToDateTime(item.BookDateTime);
                     book.Symptoms = item.Symptoms;
