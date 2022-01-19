@@ -17,7 +17,7 @@ namespace Elderson.Hubs
         }
         public async Task SendMessage(Message message)
         {
-            Console.WriteLine(message.Text);
+            Console.WriteLine(message.UserId + message.Text + message.ToUserId);
 
             string guid = Guid.NewGuid().ToString();
             message.Id = guid;
