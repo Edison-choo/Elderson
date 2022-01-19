@@ -104,6 +104,7 @@
                             <div style="width:70%;">
 
                                 <p>@Model.SelectedUser.UserType</p>
+                                <input type="hidden" asp-for="SelectedUser.UserType" value="@Model.SelectedUser.UserType" />
                                 <span asp-validation-for="SelectedUser.UserType" class="text-danger"></span>
                             </div>
 
@@ -139,8 +140,8 @@
             </div>
         </div>
     </div> }
-                else if (Model.SelectedUser.UserType == "Patient")
-                {
+else if (Model.SelectedUser.UserType == "Patient")
+{
     <div class="row patientForm">
         <div class="col-12 grid-margin stretch-card">
             <div class="card">
@@ -216,8 +217,8 @@
             </div>
         </div>
     </div> }
-                else if (Model.SelectedUser.UserType == "Administrator")
-                {
+else if (Model.SelectedUser.UserType == "Administrator")
+{
     <div class="row adminForm">
         <div class="col-12 grid-margin stretch-card">
             <div class="card">

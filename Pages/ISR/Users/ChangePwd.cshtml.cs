@@ -21,12 +21,23 @@ namespace Elderson.Pages.ISR.Users
         [BindProperty]
         [Required]
         public string currentPwd { get; set; }
+        //[BindProperty]
+        //[Required]
+        //public string newPwd { get; set; }
+        //[BindProperty]
+        //[Required, Compare("newPwd", ErrorMessage = "Passwords do not match")]
+        //public string confirmPwd { get; set; }
         [BindProperty]
-        [Required]
-        public string newPwd { get; set; }
-        [BindProperty]
-        [Required]
-        public string confirmPwd { get; set; }
+        public ViewModel viewModel { get; set; }
+        public class ViewModel
+        {
+            [Required]
+            public string newPwd { get; set; }
+
+            [Required]
+            [Compare(nameof(newPwd), ErrorMessage = "Passwords do not match.")]
+            public string confirmPwd { get; set; }
+        }
         [BindProperty]
         public string ErrorMsg { get; set; }
 
@@ -58,9 +69,9 @@ namespace Elderson.Pages.ISR.Users
 
                 if (user.Password.Equals(Convert.ToBase64String(checkHashWithSalt)))
                 {
-                    if (newPwd.Equals(confirmPwd))
+                    if (viewModel.newPwd.Equals(viewModel.confirmPwd))
                     {
-                        string pwdWithSalt = newPwd + user.PasswordSalt;
+                        string pwdWithSalt = viewModel.newPwd + user.PasswordSalt;
                         byte[] hashWithSalt = hashing.ComputeHash(Encoding.UTF8.GetBytes(pwdWithSalt));
                         user.Password = Convert.ToBase64String(hashWithSalt);
 

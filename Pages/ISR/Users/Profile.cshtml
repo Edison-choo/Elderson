@@ -29,9 +29,9 @@
                                     <p>@Model.SelectedUser.UserType</p>
                                 </div>
                             </div>
-                            
+
                             <div>
-                                <div class="btn-group"  style="margin-top:30px;">
+                                <div class="btn-group" style="margin-top:30px;">
                                     <button type="button" class="btn btn-primary"><a asp-page="Edit" asp-route-id="@Model.SelectedUser.Id">Edit</a> </button>
                                     <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id="dropdownMenuSplitButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     </button>
@@ -67,7 +67,7 @@
                                 {@Model.SelectedUser.Phone}
                             else
                             { <text>To be updated</text>}
-                                                    </div>
+                            </div>
                         </div>
                         @{ if (Model.SelectedUser.UserType == "Patient")
                             {
@@ -78,7 +78,7 @@
                                         {@Model.PatientRole.EmergencyNum}
                                     else
                                     {<text>To be updated</text>}
-                                                                    </div>
+                                    </div>
                                 </div>
                                 <div>
                                     <div class="profileLb">Emergency Contact Number</div>
@@ -87,7 +87,7 @@
                                         {@Model.PatientRole.EmergencyNum}
                                     else
                                     { <text>To be updated</text>}
-                                                                    </div>
+                                    </div>
                                 </div>
                             }
                         }
@@ -113,18 +113,18 @@
                                         {@Model.SelectedUser.Gender}
                                     else
                                     {<text>To be updated</text>}
-                                                                    </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-6 grid-margin">
                                 <div>
                                     <div class="profileLb">Birth Date</div>
                                     <div class="profileData">
-                                        @if (Model.SelectedUser.Birthdate != null)
-                                        {@Model.SelectedUser.Birthdate}
+                                        @if (Model.Birthdate != null)
+                                        {@Model.Birthdate}
                                     else
                                     { <text>To be updated</text>}
-                                                                    </div>
+                                    </div>
                                 </div>
                                 @{ if (Model.SelectedUser.UserType == "Patient")
                                     {
@@ -135,7 +135,7 @@
                                                 {@Model.PatientRole.Nric}
                                             else
                                             { <text>To be updated</text>}
-                                                                                    </div>
+                                            </div>
                                         </div>
                                         <div>
                                             <div class="profileLb">Relationship</div>
@@ -144,7 +144,7 @@
                                                 {@Model.PatientRole.Relationship}
                                             else
                                             { <text>To be updated</text>}
-                                                                                    </div>
+                                            </div>
                                         </div>
                                     }
                                     else if (Model.SelectedUser.UserType == "Doctor")
@@ -156,7 +156,7 @@
                                                 {@Model.DoctorRole.Clinic}
                                             else
                                             {<text>To be updated</text>}
-                                                                                    </div>
+                                            </div>
                                         </div>
                                     }
                                     else if (Model.SelectedUser.UserType == "Administrator")
@@ -168,7 +168,7 @@
                                                 {@Model.AdminRole.Clinic}
                                             else
                                             { <text>To be updated</text>}
-                                                                                    </div>
+                                            </div>
                                         </div>
                                         <div>
                                             <div class="profileLb">Opening Hours</div>
@@ -177,7 +177,7 @@
                                                 {@Model.AdminRole.OpeningHours}
                                             else
                                             {<text>To be updated</text>}
-                                                                                    </div>
+                                            </div>
                                         </div>
                                         <div>
                                             <div class="profileLb">Closing Hours</div>
@@ -186,7 +186,7 @@
                                                 {@Model.AdminRole.ClosingHours}
                                             else
                                             { <text>To be updated</text>}
-                                                                                    </div>
+                                            </div>
                                         </div>
                                     }
                                 }
@@ -203,8 +203,8 @@
                                                 @if (Model.PatientRole.HomeAddr != null)
                                                 {@Model.PatientRole.HomeAddr}
                                             else
-                                            { <text>To be updated</text> }
-                                                                                    </div>
+                                            { <text>To be updated</text>}
+                                            </div>
                                         </div>
                                     }
                                 }
@@ -216,3 +216,38 @@
         </div>
     </form>
 </div>
+
+<div class="modal fade" id=@("staticBackdrop"+@Model.SelectedUser.Id) data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="text-center">
+                    <h4>
+                        Are you sure you want to delete this user?
+
+                    </h4>
+                </div>
+                <div class="d-flex justify-content-between" style="margin-top:30px;">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" onclick=@("deleteUser("+"'"+@Model.SelectedUser.Id+"'"+")") class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function deleteUser(userId) {
+        $.ajax({
+            url: 'https://localhost:44311/api/User/' + userId,
+            type: 'DELETE',
+            success: function (result) {
+
+                console.log(result);
+                window.location.href = "/ISR/Users";
+
+            }
+        });
+    }
+</script>
