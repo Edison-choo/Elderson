@@ -15,6 +15,18 @@ namespace Elderson.Pages.DRR
         [BindProperty]
         public Schedule newschedule { get; set; }
         public DateTime datetime { get; set; }
+        [BindProperty]
+        public int Date { get; set; }
+        [BindProperty]
+        public int Month { get; set; }
+        [BindProperty]
+        public int Year { get; set; }
+        [BindProperty]
+        public int hour { get; set; }
+        [BindProperty]
+        public int min { get; set; }
+        public DateTime StartDateTime { get; set; }
+
         public Schedule schedule { get; set; }
 
         private ScheduleService _svc;
@@ -37,7 +49,8 @@ namespace Elderson.Pages.DRR
             {
                 newschedule.Id = Guid.NewGuid().ToString();
                 newschedule.DoctorId = "2";
-                newschedule.StartDateTime = datetime;
+                StartDateTime = new DateTime(Year, Month, Date, hour, min, 00);
+                newschedule.StartDateTime = StartDateTime;
                 newschedule.Availability = "A";
                 valid = _svc.AddSchedule(newschedule);
             }

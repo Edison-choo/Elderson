@@ -9,7 +9,12 @@
 <form method="post">
     <div class="row">
         <div class="col-md-3 form-group mt-3 mt-md-0">
-            <input class="form-control"  id="dateSelect" asp-for="datetime" disabled>
+            <input class="form-control" id="dateSelect" asp-for="datetime" disabled>
+            <input type="hidden" asp-for="Date" id="Date" />
+            <input type="hidden" asp-for="Month" id="Month" />
+            <input type="hidden" asp-for="Year" id="Year" />
+            <input type="hidden" asp-for="hour" id="hour" />
+            <input type="hidden" asp-for="min" id="min" />
         </div>
     </div>
     <div>
@@ -249,11 +254,11 @@
         var secondmin = 3;
         for (var i = 0; i < 12; i++) {
             if (hour == 9 && secondhour == 9) {
-                $("#timeSelect3").append(`<div class="timing a" data-value="0${hour}:${min}0">${hour}:${min}0 - <br/> ${secondhour}:${secondmin}0 </div>`);
+                $("#timeSelect3").append(`<div class="timing a" data-hour="0${hour}" data-min="${min}0" data-value="0${hour}:${min}0">${hour}:${min}0 - <br/> ${secondhour}:${secondmin}0 </div>`);
             } else if (hour == 9 && secondhour > 9) {
-                $("#timeSelect3").append(`<div class="timing a" data-value="0${hour}:${min}0" data-value2="${secondhour}:${secondmin}0">${hour}:${min}0 - <br/> ${secondhour}:${secondmin}0 </div>`);
+                $("#timeSelect3").append(`<div class="timing a" data-hour="0${hour}" data-min="${min}0" data-value="0${hour}:${min}0" data-value2="${secondhour}:${secondmin}0">${hour}:${min}0 - <br/> ${secondhour}:${secondmin}0 </div>`);
             } else {
-                $("#timeSelect3").append(`<div class="timing a" data-value="${hour}:${min}0" data-value2="${secondhour}:${secondmin}0">${hour}:${min}0 - <br/> ${secondhour}:${secondmin}0 </div>`);
+                $("#timeSelect3").append(`<div class="timing a" data-hour="${hour}" data-min="${min}0" data-value="${hour}:${min}0" data-value2="${secondhour}:${secondmin}0">${hour}:${min}0 - <br/> ${secondhour}:${secondmin}0 </div>`);
             }
             
             if (min == 0) {
@@ -274,7 +279,7 @@
             }
         }
         for (var i = 0; i < 12; i++) {
-            $("#timeSelect2").append(`<div class="timing a" data-value="${hour}:${min}0"">${hour}:${min}0 - <br/> ${secondhour}:${secondmin}0</div>`);
+            $("#timeSelect2").append(`<div class="timing a" data-hour="${hour}" data-min="${min}0" data-value="${hour}:${min}0"">${hour}:${min}0 - <br/> ${secondhour}:${secondmin}0</div>`);
             if (min == 0) {
                 min = 3;
             } else {
@@ -322,6 +327,11 @@
                 $(".timing").css("border", "1px solid #B8B8B8")
                 $(this).css("border", "1px solid #000000")
                 $("#continueBtn").css("display", "block")
+                $("#Date").val(padZero(parseInt(date)))
+                $("#Month").val(padZero(this_month + 1))
+                $("#Year").val(this_year);
+                $("#hour").val($(this).data("hour"))
+                $("#min").val($(this).data("min"))
                 var datetime = `${this_year}-${padZero(this_month + 1)}-${padZero(parseInt(date))}T${$(this).data("value")}`
                 $('#dateSelect').val(datetime)
             })
