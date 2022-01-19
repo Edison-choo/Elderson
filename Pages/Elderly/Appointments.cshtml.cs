@@ -13,7 +13,7 @@ namespace Elderson.Pages.Elderly
     public class AppointmentModel : PageModel
     {
         [BindProperty]
-        public List<Booking> myBooking { get; set; }
+        public List<Booking> myBookings { get; set; }
         private BookingService _svc;
         public AppointmentModel(BookingService service)
         {
@@ -24,9 +24,9 @@ namespace Elderson.Pages.Elderly
             if (HttpContext.Session.GetString("LoginUser") != null)
             {
                 //string id = HttpContext.Session.GetString("LoginUser");
-                myBooking = _svc.GetBookingOfUser("1");
+                myBookings = _svc.GetBookingOfUser("1");
             }
-            myBooking = _svc.GetBookingOfUser("1");
+            myBookings = _svc.GetBookingOfUser("1");
         }
     }
 }

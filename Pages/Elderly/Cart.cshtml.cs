@@ -56,7 +56,7 @@ namespace Elderson.Pages
                     _svc.AddBooking(book);
                 }
             }
-            return RedirectToPage("Elderly");
+            return RedirectToPage("/");
         }
     }
     public static class SessionExtensions

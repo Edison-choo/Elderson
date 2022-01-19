@@ -22,14 +22,28 @@
                 </tr>
             </thead>
             <tbody>
-                @if (Model.myBooking != null)
-            {
-                @foreach (var item in Model.myBooking)
+                @if (Model.myBookings != null)
+                {
+                @foreach (var item in Model.myBookings)
                 {
                 <tr>
                     <td>@item.Clinic</td>
                     <td>@item.BookDateTime</td>
                     <td><a href="#" class="btn btn-primary">Join Call</a></td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle"
+                                    type="button"
+                                    id="bookingDropdown"
+                                    data-mdb-toggle="dropdown"
+                                    aria-expanded="false">
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <li><a class="dropdown-item" asp-page="/Elderly/RescheduleAppointment" asp-route-id="@item.Id">Reschedule</a></li>
+                                <li><a class="dropdown-item" href="#">Cancel</a></li>
+                            </ul>
+                        </div>
+                    </td>
                 </tr>
                 }
             } 

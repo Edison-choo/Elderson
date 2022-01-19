@@ -1,0 +1,84 @@
+﻿@page
+@model Elderson.Pages.Elderly.RescheduleAppointmentModel
+@{
+}
+<link rel="stylesheet" href="~/css/bookingStyle.css" />
+<nav aria-label="breadcrumb" style="margin:35px;">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Elderson</a></li>
+        <li class="breadcrumb-item"><a href="#">Appointments</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Reschedule Appointment</li>
+    </ol>
+    <h3>Reschedule Appointment</h3>
+</nav>
+<div class="container">
+    <form method="post">
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <div class="form-outline">
+                    <input class="form-control"
+                           id="formControlDoctor"
+                           type="text"
+                           value="@Model.myBooking.Clinic"
+                           aria-label="readonly input example"
+                           readonly />
+                    <label class="form-label" for="formControlDoctor">Doctor</label>
+                </div>
+                <div class="validate"></div>
+            </div>
+            <div class="col-md-3 form-group mt-3 mt-md-0">
+                <div class="form-outline">
+                    <input class="form-control"
+                           id="dateSelect"
+                           type="text"
+                           value="-"
+                           aria-label="readonly input example"
+                           readonly />
+                    <label class="form-label" for="dateSelect">Date</label>
+                </div>
+            </div>
+            <div class="col-md-3 form-group mt-3 mt-md-0">
+                <div class="form-outline">
+                    <input class="form-control"
+                           id="timeSelect"
+                           type="text"
+                           value="-"
+                           aria-label="readonly input example"
+                           readonly />
+                    <label class="form-label" for="timeSelect">Time</label>
+                </div>
+            </div>
+            <input asp-for="myDateTime" id="dateTimeSelect" type="datetime-local" class="form-control" hidden>
+        </div>
+        <br />
+        <div>
+            <table id="calendar" class="table table-bordered">
+                <thead class="bordered">
+                    <tr>
+                        <th class="calClick" id="prevMonth" style="text-align:center;"><h4><i class="fas fa-angle-left"></i></h4></th>
+                        <th colspan="5" style="text-align:center;"><h4 id="month"></h4></th>
+                        <th class="calClick" id="nextMonth" style="text-align:center;"><h4><i class="fas fa-angle-right"></i></h4></th>
+                    </tr>
+                    <tr id="week">
+                        <th>Sun</th>
+                        <th>Mon</th>
+                        <th>Tue</th>
+                        <th>Wed</th>
+                        <th>Thu</th>
+                        <th>Fri</th>
+                        <th>Sat</th>
+                    </tr>
+                </thead>
+                <tbody id="calBody">
+                </tbody>
+            </table>
+        </div>
+        <div id="timePicker">
+        </div>
+        <div style="display:inline-block">
+            <div style="float:right"><button class="btn btn-primary">Continue</button></div>
+        </div>
+    </form>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="~/js/datepicker.js"></script>

@@ -68,5 +68,18 @@ namespace Elderson.Services
             }
             return deleted;
         }
+
+
+        //Wye Keong Services :)
+        public List<Schedule> GetOneDoctorSchedule(string doctorID)
+        {
+            List<Schedule> mySchedules = new List<Schedule>();
+            mySchedules = _context.Schedule.Where(d => d.DoctorId == doctorID).ToList();
+            return mySchedules;
+        }
+        public bool DoctorScheduleExists(string doctorID)
+        {
+            return _context.Schedule.Any(e => e.DoctorId == doctorID);
+        }
     }
 }

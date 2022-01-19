@@ -101,35 +101,35 @@ return montharr[month]
 }
 function setCal(month, year) {
     var firstDay = new Date(year, month, 1);
-$("#month").text(months[month]);
-var dateCount = 0
-var date = 1
-for (let i = 0; i < 6; i++) {
-    $("#calBody").append("<tr>");
-for (let j = 0; j < 7; j++) {
-            if (firstDay.getDay() > dateCount || date > getDays(month, year)) {
-    $("#calBody").append("<td></td>");
+    $("#month").text(months[month]);
+    var monthDays = getDays(month, year);
+    var dateCount = 0
+    var date = 1
+    for (let i = 0; i < 6; i++) {
+        $("#calBody").append("<tr>");
+    for (let j = 0; j < 7; j++) {
+                if (firstDay.getDay() > dateCount || date > monthDays) {
+        $("#calBody").append("<td></td>");
+                }
+    else {
+        $("#calBody").append(`<td id="d${date}m${month}">${date}</td>`);
+    date += 1;
+                }
+    dateCount += 1
             }
-else {
-    $("#calBody").append(`<td id="d${date}m${month}">${date}</td>`);
-date += 1;
-            }
-dateCount += 1
+    $("#calBody").append("</tr>")
         }
-$("#calBody").append("</tr>")
-    }
 }
 function setDateAvail() {
 for (var i = 0; i < dates.length; i++) {
     var obj = dates[i];
-    console.log(obj.date);
     $(`#d${obj.date}m${this_month}`).addClass(obj.avail);
 }
 }
 function setTime(date) {
 $("#timePicker").html("");
 for (var i = 0; i < 5; i++) {
-    $("#timePicker").append(`<div class="a" data-value="0${i}:00">0${i}:00 PM</div>`);
+    $("#timePicker").append(`<div class="a" id="" data-value="0${i}:00">0${i}:00 PM</div>`);
     setTimeClick(date);
 }
 }
@@ -146,7 +146,7 @@ $("#calBody .a").each(function () {
         date = `${this_year}-${padZero(this_month + 1)}-${padZero(parseInt($(this).text()))}`
         $("#dateSelect").val(date)
         $("#dateTimeSelect").val("");
-        $(this).css("border", "3px solid blue");
+        $(this).css("border", "3px solid #1977CC");
         setTime(padZero(parseInt($(this).text())));
     })
 })
@@ -158,7 +158,7 @@ $("#timePicker .a").each(function () {
         $("#timeSelect").val($(this).text());
         datetime = `${this_year}-${padZero(this_month + 1)}-${padZero(parseInt(date))}T${$(this).data("value")}`
         $("#dateTimeSelect").val(datetime)
-        $(this).css("border", "3px solid blue");
+        $(this).css("border", "3px solid #1977CC");
     })
 })
 }
