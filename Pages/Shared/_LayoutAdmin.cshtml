@@ -22,8 +22,8 @@
     <link rel="stylesheet" href="~/css/vertical-layout-light/style.css">
     <!-- endinject -->
     <link rel="shortcut icon" href="~/images/favicon.png" />
-    <link rel="stylesheet" href="~/css/Custom.css" />
 
+    <link rel="stylesheet" href="~/css/Custom.css" />
 
     @{
         if (ViewData["Header"] == "CHAT")
@@ -35,6 +35,31 @@
     }
 </head>
 <body>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- plugins:js -->
+    <script src="~/lib/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="~/lib/chart.js/Chart.min.js"></script>
+    <script src="~/lib/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="~/lib/progressbar.js/progressbar.min.js"></script>
+
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="~/js/off-canvas.js"></script>
+    <script src="~/js/hoverable-collapse.js"></script>
+    <script src="~/js/template.js"></script>
+    <script src="~/js/settings.js"></script>
+    <script src="~/js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page-->
+    <script src="~/js/dashboard.js"></script>
+    <script src="~/js/Chart.roundedBarCharts.js"></script>
+    <!-- End custom js for this page-->
+
+    @RenderSection("Scripts", required: false)
     <header>
         <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">
             <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
@@ -567,7 +592,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/Administrator/PatientList" >
+                        <a class="nav-link" href="/Administrator/PatientList">
                             <i class="menu-icon mdi mdi-floor-plan"></i>
                             <span class="menu-title">Patients</span>
                         </a>
@@ -598,44 +623,17 @@
                 <!-- content-wrapper ends -->
                 <!-- partial:partials/_footer.html -->
                 @*<footer class="footer">
-                <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block"></span>
-                    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Copyright © 2021. All rights reserved.</span>
-                </div>
-            </footer>*@
+                        <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block"></span>
+                            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Copyright © 2021. All rights reserved.</span>
+                        </div>
+                    </footer>*@
                 <!-- partial -->
             </div>
             <!-- main-panel ends -->
         </div>
         <!-- page-body-wrapper ends -->
     </div>
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-
-    <!-- plugins:js -->
-    <script src="~/lib/js/vendor.bundle.base.js"></script>
-    <!-- endinject -->
-    <!-- Plugin js for this page -->
-    <script src="~/lib/chart.js/Chart.min.js"></script>
-    <script src="~/lib/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
-    <script src="~/lib/progressbar.js/progressbar.min.js"></script>
-
-    <!-- End plugin js for this page -->
-    <!-- inject:js -->
-    <script src="~/js/off-canvas.js"></script>
-    <script src="~/js/hoverable-collapse.js"></script>
-    <script src="~/js/template.js"></script>
-    <script src="~/js/settings.js"></script>
-    <script src="~/js/todolist.js"></script>
-    <!-- endinject -->
-    <!-- Custom js for this page-->
-    <script src="~/js/dashboard.js"></script>
-    <script src="~/js/Chart.roundedBarCharts.js"></script>
-    <!-- End custom js for this page-->
-
-    @RenderSection("Scripts", required: false)
 </body>
 </html>
 

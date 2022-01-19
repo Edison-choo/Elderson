@@ -7,16 +7,14 @@
     ViewData["Breadcrumb"] = "Patients > Patient Details";
 }
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 
-<form class="form-inline" style="float:right; margin-bottom: 10px;">
-    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-</form>
+
 
 <div class="table-responsive">
     <button class="btn btn-primary btn-l text-white mb-0 me-0" type="button" style="float:right" id="add-entry" onclick="addEntry()"><i class="mdi mdi-account-plus"></i>Add new Entry</a> </button>
@@ -24,7 +22,7 @@
 <div id="counter" class="mb-2"></div>
 
 <div class="center"></div>
-<div id="entries" style="display: none">
+<div id="entries" style="display: none; margin-bottom: 10px;">
     <form method="post" id="form">
         <div class="card">
             <div class="card-header">Entry<button class="delete-cross" onclick="cancelEntry()">x</button></div>
@@ -36,10 +34,6 @@
         </div>
     </form>
 </div>
-
-<style>
-
-</style>
 
 
 <script>
@@ -73,10 +67,29 @@
                                                 <i style="font-size:1.5em;" class="mdi mdi-dots-vertical"></i>
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby=${"dropdownMenuSplitButton" + data.Id}>
-                                                <a class="dropdown-item" href="/ISR/Users/Edit?id=${data.Id}">Edit</a>
-                                                <a class="dropdown-item" data-toggle="modal" data-targe=${"#staticBackdrop" + data.Id}>Delete</a>
+                                                <a class="dropdown-item" data-toggle="modal" data-target=${"#editBackdrop" + data.Id}>Edit</a>
+                                                <a class="dropdown-item" data-toggle="modal" data-target=${"#staticBackdrop" + data.Id}>Delete</a>
                                                 </div>
                                             </div>
+<form id="editDetails">
+<div class="modal fade" id=${"editBackdrop" + data.Id} data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                            <table style="text-align:center; width: 95%;">
+                                                <td><input placeholder="Title" asp-for="NewEntry.Title"></tr>
+                                                <td><textarea placeholder="Description" rows="4" asp-for="NewEntry.DetailsofVisit"></textarea></tr>
+                                            </table>        
+                                                </div>
+                                                <div class="d-flex justify-content-between" style="margin-top:30px;">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button style="height:44px;" type="button" onclick=${"editEntry(" + "'" + data.Id + "'" + ")"} class="btn btn-success">Update</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+</form>
 <div class="modal fade" id=${"staticBackdrop" + data.Id} data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
@@ -89,7 +102,7 @@
                                                 </div>
                                                 <div class="d-flex justify-content-between" style="margin-top:30px;">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <button type="button" onclick=${"deleteUser(" + "'" + data.Id + "'" + ")"} class="btn btn-danger">Delete</button>
+                                                    <button style="height:44px;" type="button" onclick=${"deleteEntry(" + "'" + data.Id + "'" + ")"} class="btn btn-danger">Delete</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -118,13 +131,20 @@
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-hover" id="detailstable" style="width:100%">
-               
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th style="width:20%;">Description</th>
+                        <th style="width:175px;">Actions</th>
+                    </tr>
+                </thead>
             </table>
         </div>
     </div>
 </div>
 
 <script>
+
     //let count = 0;
 
     //const createCard = (index) => {
@@ -188,21 +208,37 @@
     //}
 
     function cancelEntry() {
-        var element = document.getElementById("form")
-        element.parentNode.removeChild(element);
+        //var element = document.getElementById("form")
+        //element.parentNode.removeChild(element);
+        document.getElementById("entries").style.display = "none";
     }
     function addEntry() {
         document.getElementById("entries").style.display = "block";
     }
-     function deleteUser(userId) {
+    function deleteEntry(patientdetailsId) {
+        console.log("works")
         $.ajax({
-            url: 'https://localhost:44311/api/User/' + userId,
+            url: 'https://localhost:44311/api/PatientDetails/' + patientdetailsId,
             type: 'DELETE',
             success: function (result) {
                 console.log("Item delete successfully")
+                 $('#detailstable').DataTable().ajax.reload();
+                $('.fade').removeClass("show");
             }
         });
     }
+    function editEntry(patientdetailsId) {
+        $.ajax({
+            method: "PUT",
+            data: $("editDetails").serialize(),
+            url: 'https://localhost:44311/api/PatientDetails/' + patientdetailsId,
+            success: function (result) {
+                console.log("Item edited successfully")
+                $('#detailstable').DataTable().ajax.reload();
+            }
+        })
+    }
+
 
 </script>
 
@@ -243,11 +279,11 @@
         background: none;
     }
 
-    .card {
+    /*.card {
         background-color: rgb(250, 238, 231) !important;
         border-color: rgb(50, 82, 136) !important;
         margin: 20px 12px !important;
-    }
+    }*/
 
     input {
         width: 90%;
@@ -261,6 +297,7 @@
     #counter {
         font-size: 36px;
     }
+
     a {
         color: white;
         text-decoration: none;

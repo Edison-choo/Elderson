@@ -42,6 +42,23 @@ namespace Elderson.Api
             }
         }
 
+        // Update api/<controller>/5
+        [HttpPut ("{id}")]
+        public ActionResult Update(string Id, PatientDetails details)
+        {
+            try
+            {
+                var updateDetails= _svc.GetEntryById(Id);
+                
+                _svc.UpdateEntry(updateDetails);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("PatientDetailsController.UpdateDetails", ex);
+            }
+            return Ok();
+        }
+
 
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
