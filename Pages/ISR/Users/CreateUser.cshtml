@@ -40,8 +40,8 @@
 
                             </div>
                             <div style="width:70%;">
-                                <input asp-for="pwd" type="password" class="form-control" id="password" placeholder="PASSWORD">
-                                <span asp-validation-for="pwd" class="text-danger"></span>
+                                <input asp-for="viewModel.pwd" type="password" class="form-control" id="password" placeholder="PASSWORD">
+                                <span asp-validation-for="viewModel.pwd" class="text-danger"></span>
                             </div>
 
                         </div>
@@ -51,8 +51,8 @@
 
                             </div>
                             <div style="width:70%;">
-                                <input asp-for="confirmPwd" type="password" class="form-control" id="confirmPassword" placeholder="CONFIRM PASSWORD">
-                                <span asp-validation-for="confirmPwd" class="text-danger"></span>
+                                <input asp-for="viewModel.confirmPwd" type="password" class="form-control" id="confirmPassword" placeholder="CONFIRM PASSWORD">
+                                <span asp-validation-for="viewModel.confirmPwd" class="text-danger"></span>
                             </div>
 
                         </div>

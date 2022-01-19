@@ -16,7 +16,7 @@ namespace Elderson.Pages.ISR.Users
         [BindProperty]
         public User SelectedUser { get; set; }
         [BindProperty]
-        public Administrator AdminRole { get; set; }
+        public Elderson.Models.Administrator AdminRole { get; set; }
         [BindProperty]
         public Doctor DoctorRole { get; set; }
         [BindProperty]
@@ -24,7 +24,7 @@ namespace Elderson.Pages.ISR.Users
         [BindProperty]
         public string Birthdate { get; set; }
         public User UpdatedUser { get; set; }
-        public Administrator UpdatedAdmin { get; set; }
+        public Elderson.Models.Administrator UpdatedAdmin { get; set; }
         public Doctor UpdatedDoctor { get; set; }
         public Patient UpdatedPatient { get; set; }
         private UserService _svc;

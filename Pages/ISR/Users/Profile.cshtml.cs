@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Elderson.Models;
 using Elderson.Services;
+using System.Globalization;
 
 namespace Elderson.Pages.ISR.Users
 {
@@ -14,11 +15,13 @@ namespace Elderson.Pages.ISR.Users
         [BindProperty]
         public User SelectedUser { get; set; }
         [BindProperty]
-        public Administrator AdminRole { get; set; }
+        public Elderson.Models.Administrator AdminRole { get; set; }
         [BindProperty]
         public Doctor DoctorRole { get; set; }
         [BindProperty]
         public Patient PatientRole { get; set; }
+        [BindProperty]
+        public string Birthdate { get; set; }
         private UserService _svc;
         public ProfileModel(UserService service)
         {
@@ -30,6 +33,7 @@ namespace Elderson.Pages.ISR.Users
             PatientRole = _svc.GetPatientById(id);
             AdminRole = _svc.GetAdministratorById(id);
             DoctorRole = _svc.GetDoctorById(id);
+            Birthdate = SelectedUser.Birthdate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
         }
     }
 }

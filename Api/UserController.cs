@@ -99,8 +99,9 @@ namespace Elderson
             catch (Exception ex)
             {
                 Console.WriteLine("UserController.DeleteUser", ex);
+                return BadRequest("Error");
             }
-            return Ok();
+            return Ok("Success");
         }
 
     }

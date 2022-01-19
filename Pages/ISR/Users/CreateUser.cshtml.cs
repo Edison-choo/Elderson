@@ -18,17 +18,28 @@ namespace Elderson.Pages.Users
         [BindProperty]
         public User newUser { get; set; }
         [BindProperty]
-        public Administrator AdminRole { get; set; }
+        public Elderson.Models.Administrator AdminRole { get; set; }
         [BindProperty]
         public Doctor DoctorRole { get; set; }
         [BindProperty]
         public Patient PatientRole { get; set; }
+        //[BindProperty]
+        //[Required]
+        //public string pwd { get; set; }
+        //[BindProperty]
+        //[Required, Compare(nameof(pwd), ErrorMessage ="Passwords do not match")]
+        //public string confirmPwd { get; set; }
         [BindProperty]
-        [Required]
-        public string pwd { get; set; }
-        [BindProperty]
-        [Required]
-        public string confirmPwd { get; set; }
+        public ViewModel viewModel { get; set; }
+        public class ViewModel
+        {
+            [Required]
+            public string pwd { get; set; }
+
+            [Required]
+            [Compare(nameof(pwd), ErrorMessage = "Passwords do not match.")]
+            public string confirmPwd { get; set; }
+        }
         private UserService _svc;
         private readonly ILogger<CreateUserModel> _logger;
         public CreateUserModel(ILogger<CreateUserModel> logger, UserService service)
@@ -47,7 +58,7 @@ namespace Elderson.Pages.Users
             {
                 //HttpContext.Session.SetString("SSName", MyEmployee.Name);
                 //HttpContext.Session.SetString("SSDept", MyEmployee.Department);
-                newUser.Password = pwd;
+                newUser.Password = viewModel.pwd;
 
                 // Hash Password
                 RandomNumberGenerator rng = RandomNumberGenerator.Create();
