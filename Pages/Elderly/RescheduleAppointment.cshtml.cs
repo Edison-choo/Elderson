@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Elderson.Models;
@@ -15,7 +14,6 @@ namespace Elderson.Pages.Elderly
         [BindProperty]
         public Booking myBooking { get; set; }
         [BindProperty]
-        [Required, DataType(DataType.DateTime)]
         public DateTime myDateTime { get; set; }
         private BookingService _svc;
         public RescheduleAppointmentModel(BookingService service)

@@ -45,7 +45,7 @@ namespace Elderson.Services
             return user;
         }
 
-        public bool UserExists(string id)
+        private bool UserExists(string id)
         {
             return _context.Users.Any(e => e.Id == id);
         }

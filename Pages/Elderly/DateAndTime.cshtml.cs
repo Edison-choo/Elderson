@@ -34,11 +34,9 @@ namespace Elderson.Pages.Shared
         [Required]
         public string myTime { get; set; }
         private UserService _svc;
-        private ScheduleService _sSvc;
-        public DateAndTimeModel(UserService service, ScheduleService sService)
+        public DateAndTimeModel(UserService service)
         {
             _svc = service;
-            _sSvc = sService;
         }
         public void OnGet(string doctor)
         {
@@ -72,12 +70,28 @@ namespace Elderson.Pages.Shared
         {
             if (ModelState.IsValid)
             {
+<<<<<<< HEAD
                 HttpContext.Session.SetString("myClinic", myClinic);
                 HttpContext.Session.SetString("myDoctor", myDoctor);
                 HttpContext.Session.SetString("myDate", myDate);
                 HttpContext.Session.SetString("myTime", myTime);
                 HttpContext.Session.SetString("myDateTime", myDateTime.ToString());
                 return RedirectToPage("Symptoms");
+=======
+                if (myDateTime > DateTime.Now)
+                {
+                    HttpContext.Session.SetString("myClinic", myClinic);
+                    HttpContext.Session.SetString("myDoctor", myDoctor);
+                    HttpContext.Session.SetString("myDate", myDate);
+                    HttpContext.Session.SetString("myTime", myTime);
+                    HttpContext.Session.SetString("myDateTime", myDateTime.ToString());
+                    return RedirectToPage("Symptoms");
+                }
+                else
+                {
+                    return Page();
+                }
+>>>>>>> parent of 2bf0c8e (validation)
             }
             return Page();
         }
