@@ -2,38 +2,37 @@
 @model Elderson.Pages.CartModel
 @{
 }
-<script>document.getElementById("navItemCart").classList.add("usingIcon")</script>
 <div style="margin:100px;"></div>
 <div class="container">
     <table class="table">
         <thead>
             <tr>
-                <th style="font-weight:bold; background-color:#F4F3FF;">Product</th>
-                <th style="font-weight:bold; background-color:#F4F3FF;">Price</th>
-                <th style="font-weight:bold; background-color:#F4F3FF;">Quantity</th>
-                <th style="font-weight:bold; background-color:#F4F3FF;">Subtotal</th>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
             </tr>
         </thead>
-        <tbody>
-            
-                    @if (Model.myCart != null)
-                    {
-                        @foreach (var item in Model.myCart)
-                        {<tr>
-        <td>
-            <h5>@item.ItemName</h5>
-            <div>@Convert.ToDateTime(item.BookDateTime).ToString("dd MMMM yyyy HH:mm tt")</div>
-            <div>Clinic: @item.Clinic</div>
-        </td>
-        <td>$@item.Price</td>
-        <td>@item.Quantity</td>
-        <td>$@(item.Price * item.Quantity)</td>
-    </tr>
-        }
-        }
-
-        </tbody>
-        
+        <tr>
+            @if (Model.myCart != null)
+            {
+                @foreach (var item in Model.myCart)
+                {
+                    <td>
+                        <div>@item.ItemName</div>
+                        <div>@Convert.ToDateTime(item.BookDateTime).ToString("dd MMMM yyyy HH:mm tt")</div>
+                        <div>Clinic: @item.Clinic</div>
+                    </td>
+                    <td>$@item.Price</td>
+                    <td>@item.Quantity</td>
+                    <td>$@(item.Price * item.Quantity)</td>
+                }
+            }
+        </tr>
+        <tr>
+            <td colspan="3">Total</td>
+            <td>$@Model.myTotal</td>
+        </tr>
     </table>
     <br />
     <form method="post">

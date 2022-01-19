@@ -74,13 +74,14 @@ namespace Elderson.Services
         public List<Schedule> GetOneDoctorSchedule(string doctorID)
         {
             List<Schedule> mySchedules = new List<Schedule>();
-            mySchedules = _context.Schedule.Where(d => (d.DoctorId == doctorID) && (d.StartDateTime > DateTime.Now)).OrderBy(d => d.StartDateTime).ToList();
+            mySchedules = _context.Schedule.Where(d => d.DoctorId == doctorID).OrderBy(d => d.StartDateTime).ToList();
             return mySchedules;
         }
         public bool DoctorScheduleExists(string doctorID)
         {
             return _context.Schedule.Any(e => e.DoctorId == doctorID);
         }
+<<<<<<< HEAD
         public Schedule GetScheduleByDateTime(DateTime datetime)
         {
             Schedule schedule = new Schedule();
@@ -106,5 +107,7 @@ namespace Elderson.Services
         {
             return _context.Schedule.Any(s => (s.DoctorId == doctorID) && (s.StartDateTime == datetime) && (s.Availability == "A"));
         }
+=======
+>>>>>>> parent of 321024f (finally)
     }
 }

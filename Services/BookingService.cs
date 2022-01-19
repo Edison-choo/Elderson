@@ -18,12 +18,12 @@ namespace Elderson.Services
         public List<Booking> GetBookingOfUser(string id)
         {
             List<Booking> AllUserBookings = new List<Booking>();
-            AllUserBookings = _context.Booking.Where(b => (b.PatientID == id) && (b.BookDateTime > DateTime.Now)).ToList();
+            AllUserBookings = _context.Booking.Where(b => b.PatientID == id).ToList();
             return AllUserBookings;
         }
         public Booking GetBookingById(string id)
         {
-            Booking book = _context.Booking.Where(b => (b.Id == id) && (b.BookDateTime > DateTime.Now)).FirstOrDefault();
+            Booking book = _context.Booking.Where(b => b.Id == id).FirstOrDefault();
             return book;
         }
         public bool AddBooking(Booking booking)

@@ -19,7 +19,7 @@ namespace Elderson.Pages.Elderly
         [BindProperty]
         public List<Doctor> myDoctorList { get; set; }
         [BindProperty]
-        public List<DoctorDetail> myDetailList { get; set; }
+        public List<User> myUserList { get; set; }
         private UserService _svc;
         public DoctorModel(UserService service)
         {
@@ -30,18 +30,12 @@ namespace Elderson.Pages.Elderly
         {
             if (clinic != null)
             {
-                myDetailList = new List<DoctorDetail>();
+                myUserList = new List<User>();
                 myClinic = "HealthWerkz Clinic";
                 myDoctorList = _svc.GetDoctorsByClinic(myClinic);
                 foreach (Doctor doc in myDoctorList)
                 {
-                    DoctorDetail dd = new DoctorDetail();
-                    User user = _svc.GetUserById(doc.UserId);
-                    dd.id = doc.UserId;
-                    dd.name = user.Fullname;
-                    dd.experience = doc.WorkExp;
-                    dd.language = doc.Language;
-                    myDetailList.Add(dd);
+                    myUserList.Add(_svc.GetUserById(doc.UserId));
                 }
             }
             else
@@ -49,12 +43,5 @@ namespace Elderson.Pages.Elderly
                 Redirect("/Clinic");
             }
         }
-    }
-    public class DoctorDetail
-    {
-        public string id { get; set; }
-        public string name { get; set; }
-        public string experience { get; set; }
-        public string language { get; set; }
     }
 }

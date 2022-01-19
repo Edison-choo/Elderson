@@ -2,7 +2,6 @@
 @model Elderson.Pages.ClinicModel
 @{
 }
-<script>document.getElementById("navItem2").classList.add("using")</script>
 <link rel="stylesheet" href="~/css/bookingStyle.css" />
 <nav aria-label="breadcrumb" style="margin:35px;">
     <ol class="breadcrumb">
@@ -25,29 +24,31 @@
     </div>
     <div class="input-group rounded" style="margin-bottom: 50px;">
         <input type="text" value="" placeholder="Search by clinic name, location, ..." class="form-control rounded" />
-        <span style="margin-left:10px;"><button class="btn btn-primary" style="background-color: #6C63FF;" type="button">SEARCH</button></span>
+        <span style="margin-left:10px;"><button class="btn btn-primary" type="button">SEARCH</button></span>
     </div>
-    <div class="">
+    <div class="tableStyle">
         <table class="table">
             <thead class="table-light">
                 <tr>
-                    <th colspan="5" style="font-weight:bold; background-color:#F4F3FF;">Clinic</th>
-                    <th style="font-weight:bold; background-color:#F4F3FF;">Number of Doctors</th>
-                    <th style="font-weight:bold; background-color:#F4F3FF;">Phone</th>
-                    <th style="font-weight:bold; background-color:#F4F3FF;">Booking Hours</th>
-                    <th style="font-weight:bold; background-color:#F4F3FF;"></th>
+                    <th>Clinic</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th>Phone</th>
+                    <th>Booking Hours</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td colspan="5">
-                        <div style="font-weight:bolder">Healthwerkz Medical Centre</div>
+                        <div>Healthwerkz Medical Centre</div>
                         <div>240 River Valley Road, S23897</div>
                     </td>
-                    <td>3</td>
                     <td>68366986</td>
                     <td>7:00 AM - 1:00PM</td>
-                    <td style="text-align: right;"><a asp-page="/Elderly/Doctor" asp-route-clinic="Healthwerkz Medical Centre"  style="background-color: #6C63FF;" class="btn btn-primary">Select</a></td>
+                    <td><a asp-page="/Elderly/Doctor" asp-route-clinic="Healthwerkz Medical Centre" class="btn btn-primary btn-sm px-3">Select</a></td>
                 </tr>
             </tbody>
         </table>
