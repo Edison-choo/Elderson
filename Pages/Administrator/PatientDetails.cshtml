@@ -7,33 +7,122 @@
     ViewData["Breadcrumb"] = "Patients > Patient Details";
 }
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
 
-    <body>
-        <form class="form-inline" style="float:right; margin-bottom: 10px;">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
 
+<form class="form-inline" style="float:right; margin-bottom: 10px;">
+    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+</form>
+
+<div class="table-responsive">
+    <button class="btn btn-primary btn-l text-white mb-0 me-0" type="button" style="float:right" id="add-entry" onclick="addEntry()"><i class="mdi mdi-account-plus"></i>Add new Entry</a> </button>
+</div>
+<div id="counter" class="mb-2"></div>
+
+<div class="center"></div>
+<div id="entries" style="display: none">
+    <form method="post" id="form">
+        <div class="card">
+            <div class="card-header">Entry<button class="delete-cross" onclick="cancelEntry()">x</button></div>
+            <div class="card-body">
+                <input placeholder="Title" asp-for="NewEntry.Title">
+                <textarea placeholder="Description" rows="4" asp-for="NewEntry.DetailsofVisit"></textarea>
+                <button class="submit-btn" type="submit">Submit Entry</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<style>
+
+</style>
+
+
+<script>
+    $(document).ready(function () {
+        console.log("Loading webpage...")
+        $.ajax({
+            url: 'https://localhost:44311/api/PatientDetails',
+            type: 'GET',
+            success: function (result) {
+                console.log("Items retrieve successfully")
+                console.log(JSON.parse(result));
+
+            }
+        });
+        $('#detailstable').DataTable(
+            {
+                "ajax": {
+                    'url': 'https://localhost:44311/api/PatientDetails',
+                    'type': 'GET',
+                    "dataSrc": function (json) {
+                        return JSON.parse(JSON.stringify(json));
+                    }
+                },
+                "columns": [
+                    { "data": "Title" },
+                    { "data": "DetailsofVisit" },
+                    {
+                        "data": function (data, type, full) {
+                            return `<div class="btn-group">
+                                            <button type="button" class="btn dropdown-toggle dropdown-toggle-split" id=${"dropdownMenuSplitButton" + data.Id} data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i style="font-size:1.5em;" class="mdi mdi-dots-vertical"></i>
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby=${"dropdownMenuSplitButton" + data.Id}>
+                                                <a class="dropdown-item" href="/ISR/Users/Edit?id=${data.Id}">Edit</a>
+                                                <a class="dropdown-item" data-toggle="modal" data-targe=${"#staticBackdrop" + data.Id}>Delete</a>
+                                                </div>
+                                            </div>
+<div class="modal fade" id=${"staticBackdrop" + data.Id} data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <div class="text-center">
+                                                    <h4>
+                                                        Are you sure you want to delete this detail?
+
+                                                    </h4>
+                                                </div>
+                                                <div class="d-flex justify-content-between" style="margin-top:30px;">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="button" onclick=${"deleteUser(" + "'" + data.Id + "'" + ")"} class="btn btn-danger">Delete</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>`;
+                        }
+                    }
+                ],
+                "info": true,
+                "ordering": true,
+                "search": true,
+                "processing": true,
+                'autoWidth': false,
+                'lengthChange': false,
+                'paging': true,
+                'pagingType': 'numbers',
+                'ordering': false,
+                'dom': "fltip",
+                'pageLength': 5
+            }
+        );
+    });
+</script>
+
+<div class="card">
+    <div class="card-body">
         <div class="table-responsive">
-            <button class="btn btn-primary btn-l text-white mb-0 me-0" type="button" style="float:right" id="add-entry" onclick="addEntry()"><i class="mdi mdi-account-plus"></i>Add new Entry</a> </button>
+            <table class="table table-hover" id="detailstable" style="width:100%">
+               
+            </table>
         </div>
-        <div id="counter" class="mb-2"></div>
-
-        <div class="center"></div>
-        <div id="entries" style="display: none">
-            <form method="post" id="form">
-                <div class="card">
-                    <div class="card-header">Entry<button class="delete-cross" onclick="cancelEntry()">x</button></div>
-                    <div class="card-body">
-                        <input placeholder="Title" asp-for="NewEntry.Title">
-                        <textarea placeholder="Description" rows="4" asp-for="NewEntry.DetailsofVisit"></textarea>
-                        <button class="submit-btn" type="submit">Submit Entry</button>
-                    </div>
-                </div>
-            </form>;
-        </div>
-    </body>
+    </div>
+</div>
 
 <script>
     //let count = 0;
@@ -105,63 +194,79 @@
     function addEntry() {
         document.getElementById("entries").style.display = "block";
     }
-    
+     function deleteUser(userId) {
+        $.ajax({
+            url: 'https://localhost:44311/api/User/' + userId,
+            type: 'DELETE',
+            success: function (result) {
+                console.log("Item delete successfully")
+            }
+        });
+    }
+
 </script>
 
 <style>
 
     .center {
-      width: 800px;
-      margin: 0 auto;
-      text-align: center;
+        width: 800px;
+        margin: 0 auto;
+        text-align: center;
     }
 
     .input-text {
-      font-size: large;
+        font-size: large;
     }
 
     .primary {
-      border-color: rgb(36, 161, 156);
+        border-color: rgb(36, 161, 156);
     }
 
     .delete-cross {
-      background: none;
-      border: none;
-      font-size: 16px;
-      color: red;
-      float: right;
+        background: none;
+        border: none;
+        font-size: 16px;
+        color: red;
+        float: right;
     }
 
     .submit-btn {
-      background-color: #17e8af;
-      margin-top: 8px;
-      width: 15%;
-      height: 20%;
-      border-radius: 5px;
-      float: right;
+        background-color: #17e8af;
+        margin-top: 8px;
+        width: 15%;
+        height: 20%;
+        border-radius: 5px;
+        float: right;
     }
 
     .blank {
-      background: none;
+        background: none;
     }
 
     .card {
-      background-color: rgb(250, 238, 231) !important;
-      border-color: rgb(50, 82, 136) !important;
-      margin: 20px 12px !important;
+        background-color: rgb(250, 238, 231) !important;
+        border-color: rgb(50, 82, 136) !important;
+        margin: 20px 12px !important;
     }
 
     input {
-      width: 90%;
-      margin-bottom: 16px !important;
+        width: 90%;
+        margin-bottom: 16px !important;
     }
 
     textarea {
-      width: 90%;
+        width: 90%;
     }
 
     #counter {
-      font-size: 36px;
+        font-size: 36px;
+    }
+    a {
+        color: white;
+        text-decoration: none;
     }
 
+    .dropdown-toggle::after {
+        display: none;
+    }
 </style>

@@ -68,5 +68,29 @@ namespace Elderson.Services
 
 
         }
+        public bool DeleteEntry(PatientDetails deleteEntry)
+        {
+            bool deleted = true;
+            _context.Attach(deleteEntry).State = EntityState.Modified;
+
+            try
+            {
+                _context.Remove(deleteEntry);
+                _context.SaveChanges();
+                deleted = true;
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!EntryExists(deleteEntry.Id))
+                {
+                    deleted = false;
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return deleted;
+        }
     }
 }
