@@ -20,7 +20,7 @@
                                 <label for="name">Medication Name:</label>
 
                             </div>
-                            <div style="width:0%;">
+                            <div style="width:40%;">
                                 <input asp-for="newMedication.MedName" type="text" class="form-control" id="name">
                                 <span asp-validation-for="newMedication.MedName" class="text-danger"></span>
                             </div>
@@ -32,18 +32,18 @@
 
                             </div>
                             <div style="width:10%;">
-                                <input asp-for="newMedication.MedAbbreviation" rows="6" class="form-control" id="abbr">
+                                <input asp-for="newMedication.MedAbbreviation" type="text" class="form-control" id="abbr">
                                 <span asp-validation-for="newMedication.MedAbbreviation" class="text-danger"></span>
                             </div>
 
                         </div>
                         <div class="form-group d-flex">
                             <div style="width:20%;">
-                                <label for="type">Medication Type:</label>
+                                <label for="medType">Medication Type:</label>
 
                             </div>
                             <div style="width:20%;">
-                                <input asp-for="newMedication.MedType" rows="6" class="form-control" id="type">
+                                @Html.DropDownList("newMedication.MedType", new SelectList(Enum.GetValues(typeof(Models.MedTypes))), "--Select an option--", new { @class = "form-control medType", @id = "medType" })
                                 <span asp-validation-for="newMedication.MedType" class="text-danger"></span>
                             </div>
 
@@ -54,7 +54,7 @@
 
                             </div>
                             <div style="width:20%;">
-                                <input asp-for="newInventory.Price" rows="6" class="form-control" id="price">
+                                <input asp-for="newInventory.Price" type="number" class="form-control" id="price">
                                 <span asp-validation-for="newInventory.Price" class="text-danger"></span>
                             </div>
 
@@ -65,7 +65,7 @@
 
                             </div>
                             <div style="width:10%;">
-                                <input asp-for="newInventory.CurrentAmt" rows="6" class="form-control" id="currAmt">
+                                <input asp-for="newInventory.CurrentAmt" type="number" class="form-control" id="currAmt">
                                 <span asp-validation-for="newInventory.CurrentAmt" class="text-danger"></span>
                             </div>
 
@@ -76,7 +76,7 @@
 
                             </div>
                             <div style="width:10%;">
-                                <input asp-for="newInventory.MinimumAmt" rows="6" class="form-control" id="minAmt">
+                                <input asp-for="newInventory.MinimumAmt" type="number" class="form-control" id="minAmt">
                                 <span asp-validation-for="newInventory.MinimumAmt" class="text-danger"></span>
                             </div>
 
@@ -98,7 +98,7 @@
 
                             </div>
                             <div style="width:10%;">
-                                <input asp-for="newMedication.MedSupplierAbb" rows="6" class="form-control" id="supAbbr">
+                                <input asp-for="newMedication.MedSupplierAbb" type="text" class="form-control" id="supAbbr">
                                 <span asp-validation-for="newMedication.MedSupplierAbb" class="text-danger"></span>
                             </div>
 

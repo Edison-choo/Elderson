@@ -10,10 +10,13 @@ namespace Elderson.Models
     {
         public string Id { get; set; }
         public string MedicationId { get; set; }
+
         [Required(ErrorMessage = "Please enter Medication's Current Amount")]
         public int CurrentAmt { get; set; }
+
         [Required(ErrorMessage = "Please enter Medication's Minimum Amount")]
         public int MinimumAmt { get; set; }
+
         [Required(ErrorMessage = "Please enter Medication's Price")]
         public double Price { get; set; }
 
