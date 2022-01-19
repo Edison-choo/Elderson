@@ -25,18 +25,18 @@ namespace Elderson.Api
 
         // GET: api/<InventoryController>
         [HttpGet]
-        public ActionResult<List<MedInventory>> Get()
+        public ActionResult<List<Medication>> Get()
         {
             List<MedInventory> allinventory = new List<MedInventory>();
-            //List<Medication> allmedications = new List<Medication>();
+            List<Medication> allmedications = new List<Medication>();
 
             try
             {
                 allinventory = _svc.GetAllInventories();
-                //allmedications = _svc.GetAllMedications();
+                allmedications = _svc.GetAllMedications();
                 var jsonStr = JsonSerializer.Serialize(allinventory.Select(x => new { x.Id, x.MinimumAmt, x.CurrentAmt, x.Price}));
-                //var jsonString = JsonSerializer.Serialize(allmedications.Select(y => new { y.MedName, y.MedAbbreviation, y.MedType, y.MedSupplierAbb, y.MedDescription }));
-                return Ok(jsonStr);
+                var jsonString = JsonSerializer.Serialize(allmedications.Select(y => new {y.Id, y.MedName, y.MedAbbreviation, y.MedType, y.MedSupplierAbb, y.MedDescription }));
+                return Ok(jsonString);
             }
             catch (Exception ex)
             {
@@ -45,7 +45,7 @@ namespace Elderson.Api
             }
 
         }
-        
+
 
         //// GET api/<UserController>/5
         //[HttpGet("{id}")]
@@ -66,34 +66,23 @@ namespace Elderson.Api
         //{
         //}
 
-        // DELETE api/<UserController>/5
-        //[HttpDelete("{userId}")]
-        //public ActionResult Delete(string userId)
-        //{
-        //    try
-        //    {
-        //        var deleteUser = _svc.GetUserById(userId);
-        //        _svc.DeleteUser(deleteUser);
-
-        //        switch (deleteUser.UserType)
-        //        {
-        //            case "Patient":
-        //                _svc.DeletePatient(_svc.GetPatientById(userId));
-        //                break;
-        //            case "Doctor":
-        //                _svc.DeleteDoctor(_svc.GetDoctorById(userId));
-        //                break;
-        //            case "Administrator":
-        //                _svc.DeleteAdministrator(_svc.GetAdministratorById(userId));
-        //                break;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine("UserController.DeleteUser", ex);
-        //    }
-        //    return Ok();
-        //}
+        [HttpDelete("{userId}")]
+        public ActionResult Delete(string Id)
+        {
+            try
+            {
+                var deleteInventory = _svc.GetInvMedicationById(Id);
+                var deleteMedication = _svc.GetMedicationById(Id);
+                _svc.DeleteInventory(deleteInventory);
+                _svc.DeleteMedication(deleteMedication);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("UserController.DeleteUser", ex);
+                return BadRequest("Error");
+            }
+            return Ok("Success");
+        }
 
     }
 }

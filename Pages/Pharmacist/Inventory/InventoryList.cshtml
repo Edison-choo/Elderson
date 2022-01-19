@@ -44,42 +44,37 @@
                     }
                 },
                 "columns": [
-                    { "data": "Id"  },
-                    { "data": "MinimumAmt" },
-                    { "data": "CurrentAmt" },
-                    { "data": "Price" },
+                    { "data": "MedName"  },
+                    { "data": "MedAbbreviation" },
+                    { "data": "MedType" },
+                    { "data": "MedSupplierAbb" },
                     {
                         "data": function (data, type, full) {
                             return `<div class="btn-group">
-                                            <button type="button" class="btn dropdown-toggle dropdown-toggle-split" id=${"dropdownMenuSplitButton" + data.Id} data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i style="font-size:1.5em;" class="mdi mdi-dots-vertical"></i>
-                                            </button>
-                                            <div class="dropdown-menu" aria-labelledby=${"dropdownMenuSplitButton" + data.Id}>
-                                                <a class="dropdown-item" href="/ISR/Users/Profile?id=${data.Id}">View</a>
-                                                <a class="dropdown-item" href="/ISR/Users/Edit?id=${data.Id}">Edit</a>
-                                                <a class="dropdown-item" href="/ISR/Users/Lock?id=${data.Id}">Lock</a>
-                                                <a class="dropdown-item" href="/ISR/Users/ChangePwd?id=${data.Id}">Change password</a>
-                                                <a class="dropdown-item" data-toggle="modal" data-targe=${"#staticBackdrop" + data.Id}>Delete</a>
-                                                </div>
-                                            </div>
-<div class="modal fade" id=${"staticBackdrop" + data.Id} data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-body">
-                                                <div class="text-center">
-                                                    <h4>
-                                                        Are you sure you want to delete this user?
-
-                                                    </h4>
-                                                </div>
+                                        <button type="button" class="btn dropdown-toggle dropdown-toggle-split" id=${"dropdownMenuSplitButton" + data.Id} data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i style="font-size:1.5em;" class="mdi mdi-dots-vertical"></i>
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby=${"dropdownMenuSplitButton" + data.Id}>
+                                            <a class="dropdown-item" href="/Pharmacist/Inventory/ViewInventoryObj?id=${data.Id}">View</a>
+                                            <a class="dropdown-item" href="/Pharmacist/Inventory/EditInventory?id=${data.Id}">Edit</a>
+                                            <a class="dropdown-item" data-toggle="modal" data-target=${"#staticBackdrop" + data.Id}>Delete</a>
+                                        </div>
+                                    </div>
+                                    <div class="modal fade" id=${"staticBackdrop" + data.Id} data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <div class="text-center">
+                                                        <h4>Are you sure you want to delete this medication?</h4>
+                                                    </div>
                                                 <div class="d-flex justify-content-between" style="margin-top:30px;">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <button type="button" onclick=${"deleteUser(" + "'" + data.Id + "'" + ")"} class="btn btn-danger">Delete</button>
+                                                    <button style="height:44px;" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button style="height:44px;" type="button" onclick=${"deleteMedication(" + "'" + data.Id + "'" + ")"} class="btn btn-danger">Delete</button>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>`;
+                                        </div>
+                                    </div>`;
                             }
                         }
                     ],
@@ -111,11 +106,11 @@
             <table class="table table-hover" id="inventorytable" style="width:100%">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Name</th>
+                        <th>Medication Name</th>
+                        <th>Abbreviation</th>
                         <th>Type</th>
-                        <th>Current Amt</th>
-                        <th>Price</th>
+                        <th>Supplier</th>
+                        <th>Options</th>
                     </tr>
                 </thead>
             </table>
@@ -124,6 +119,25 @@
     </div>
 
 </div>
+
+<script>
+
+    function deleteMedication(Id) {
+        $.ajax({
+            url: 'https://localhost:44311/api/Inventory/' + Id,
+            type: 'DELETE',
+            success: function (result) {
+
+                console.log(result);
+                console.log("Item delete successfully");
+                $('#inventoryTable').DataTable().ajax.reload();
+                $('.fade').removeClass("show");
+
+
+            }
+        });
+    }
+</script>
 
 
 

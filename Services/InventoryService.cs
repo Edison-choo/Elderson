@@ -1,4 +1,5 @@
 ﻿using Elderson.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,17 +30,21 @@ namespace Elderson.Services
             return AllMedications;
         }
 
-        
+        public Medication GetMedicationById(string id)
+        {
+            Medication medication = _context.Medications.Where(e => e.Id == id).FirstOrDefault();
+            return medication;
+        }
 
-        public MedInventory GetMedicationById(string id)
+        public MedInventory GetInvMedicationById(string id)
         {
             MedInventory inventory = _context.Inventory.Where(e => e.Id == id).FirstOrDefault();
             return inventory;
         }
 
-        public Medication GetMedicationByName(string id)
+        public Medication GetMedicationByName(string name)
         {
-            Medication medication = _context.Medications.Where(e => e.MedName == id).FirstOrDefault();
+            Medication medication = _context.Medications.Where(e => e.MedName == name).FirstOrDefault();
             return medication;
         }
 
@@ -67,6 +72,104 @@ namespace Elderson.Services
             _context.Add(medication);
             _context.SaveChanges();
             return true;
+        }
+
+        public bool UpdateMedication(Medication medication)
+        {
+            bool updated = true;
+            _context.Attach(medication).State = EntityState.Modified;
+
+            try
+            {
+                _context.SaveChanges();
+                updated = true;
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!MedicationExists(medication.Id))
+                {
+                    updated = false;
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return updated;
+        }
+
+        public bool UpdateInventory(MedInventory inventory)
+        {
+            bool updated = true;
+            _context.Attach(inventory).State = EntityState.Modified;
+
+            try
+            {
+                _context.SaveChanges();
+                updated = true;
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!MedicationExists(inventory.Id))
+                {
+                    updated = false;
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return updated;
+        }
+
+        public bool DeleteInventory(MedInventory theInventory)
+        {
+            bool deleted = true;
+            _context.Attach(theInventory).State = EntityState.Modified;
+
+            try
+            {
+                _context.Remove(theInventory);
+                _context.SaveChanges();
+                deleted = true;
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!MedicationExists(theInventory.Id))
+                {
+                    deleted = false;
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return deleted;
+        }
+
+        public bool DeleteMedication(Medication theMedication)
+        {
+            bool deleted = true;
+            _context.Attach(theMedication).State = EntityState.Modified;
+
+            try
+            {
+                _context.Remove(theMedication);
+                _context.SaveChanges();
+                deleted = true;
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!MedicationExists(theMedication.Id))
+                {
+                    deleted = false;
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return deleted;
         }
     }
 }

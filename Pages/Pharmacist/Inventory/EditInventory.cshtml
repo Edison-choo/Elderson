@@ -6,3 +6,118 @@
     ViewData["Header"] = "EDIT MEDICATION";
     ViewData["Breadcrumb"] = "Inventory > Edit";
 }
+
+<div class="row">
+    <form class="forms-sample" method="post" asp-action="">
+        <input type="hidden" asp-for="@Model.selectedMedication.Id" value="@Model.selectedMedication.Id" />
+        <input type="hidden" asp-for="@Model.selectedInv.Id" value="@Model.selectedInv.Id" />
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Incident Information</h4>
+                        <hr />
+                        <div class="form-group d-flex">
+                            <div style="width:20%;">
+                                <label for="name">Medication Name:</label>
+
+                            </div>
+                            <div style="width:40%;">
+                                <input asp-for="selectedMedication.MedName" value="@Model.selectedMedication.MedName" type="text" class="form-control" id="name">
+                                <span asp-validation-for="selectedMedication.MedName" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="form-group d-flex">
+                            <div style="width:20%;">
+                                <label for="abbr">Medication Abbreviation:</label>
+
+                            </div>
+                            <div style="width:10%;">
+                                <input asp-for="selectedMedication.MedAbbreviation" value="@Model.selectedMedication.MedAbbreviation" type="text" class="form-control" id="abbr">
+                                <span asp-validation-for="selectedMedication.MedAbbreviation" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="form-group d-flex">
+                            <div style="width:20%;">
+                                <label for="medType">Medication Type:</label>
+
+                            </div>
+                            <div style="width:20%;">
+                                @Html.DropDownList("selectedMedication.MedType", new SelectList(Enum.GetValues(typeof(Models.MedTypes))), "--Select an option--", new { @class = "form-control medType", @id = "medType" })
+                                <span asp-validation-for="selectedMedication.MedType" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="form-group d-flex">
+                            <div style="width:20%;">
+                                <label for="price">Medication Price:</label>
+
+                            </div>
+                            <div style="width:20%;">
+                                <input asp-for="selectedInv.Price" value="@Model.selectedInv.Price" type="number" class="form-control" id="price">
+                                <span asp-validation-for="selectedInv.Price" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="form-group d-flex">
+                            <div style="width:20%;">
+                                <label for="currAmt">Current Amount:</label>
+
+                            </div>
+                            <div style="width:10%;">
+                                <input asp-for="selectedInv.CurrentAmt" value="@Model.selectedInv.CurrentAmt" type="number" class="form-control" id="currAmt">
+                                <span asp-validation-for="selectedInv.CurrentAmt" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="form-group d-flex">
+                            <div style="width:20%;">
+                                <label for="minAmt">Minimum Amount:</label>
+
+                            </div>
+                            <div style="width:10%;">
+                                <input asp-for="selectedInv.MinimumAmt" value="@Model.selectedInv.MinimumAmt" type="number" class="form-control" id="minAmt">
+                                <span asp-validation-for="selectedInv.MinimumAmt" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="form-group d-flex">
+                            <div style="width:20%;">
+                                <label for="descript">Medication Description:</label>
+
+                            </div>
+                            <div style="width:80%;">
+                                <textarea asp-for="selectedMedication.MedDescription" value="@Model.selectedMedication.MedDescription" rows="6" class="form-control" id="descript"></textarea>
+                                <span asp-validation-for="selectedMedication.MedDescription" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="form-group d-flex">
+                            <div style="width:20%;">
+                                <label for="supAbbr">Medical Supplier Abbreviation:</label>
+
+                            </div>
+                            <div style="width:10%;">
+                                <input asp-for="selectedMedication.MedSupplierAbb" value="@Model.selectedMedication.MedSupplierAbb" type="text" class="form-control" id="supAbbr">
+                                <span asp-validation-for="selectedMedication.MedSupplierAbb" class="text-danger"></span>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <button type="button" class="btn btn-primary me-2">Cancel</button>
+
+                <button type="submit" class="btn btn-primary me-2">Edit</button>
+
+            </div>
+
+        </div>
+    </form>
+</div>
