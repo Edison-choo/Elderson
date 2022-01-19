@@ -22,9 +22,10 @@ namespace Elderson.Pages.Shared
         [Required]
         public string myDoctor { get; set; }
         [BindProperty]
+        [Required]
         public string myDoctorName { get; set; }
         [BindProperty]
-        [Required(ErrorMessage = "Please enter date and time of booking!"), DataType(DataType.DateTime)]
+        [Required]
         public DateTime myDateTime { get; set; }
         [BindProperty]
         [Required]
@@ -71,28 +72,12 @@ namespace Elderson.Pages.Shared
         {
             if (ModelState.IsValid)
             {
-                if (myDateTime > DateTime.Now)
-                {
-                    bool valid = true;
-                    if (!(_svc.UserExists(myDoctor)))
-                    {
-                        valid = false;
-                    }
-                    if (!(_sSvc.ScheduleAvaliable(myDoctor, myDateTime)))
-                    {
-                        valid = false;
-                    }
-                    HttpContext.Session.SetString("myClinic", myClinic);
-                    HttpContext.Session.SetString("myDoctor", myDoctor);
-                    HttpContext.Session.SetString("myDate", myDate);
-                    HttpContext.Session.SetString("myTime", myTime);
-                    HttpContext.Session.SetString("myDateTime", myDateTime.ToString());
-                    return RedirectToPage("Symptoms");
-                }
-                else
-                {
-                    return Page();
-                }
+                HttpContext.Session.SetString("myClinic", myClinic);
+                HttpContext.Session.SetString("myDoctor", myDoctor);
+                HttpContext.Session.SetString("myDate", myDate);
+                HttpContext.Session.SetString("myTime", myTime);
+                HttpContext.Session.SetString("myDateTime", myDateTime.ToString());
+                return RedirectToPage("Symptoms");
             }
             return Page();
         }
