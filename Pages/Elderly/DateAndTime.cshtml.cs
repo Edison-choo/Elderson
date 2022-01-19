@@ -33,9 +33,11 @@ namespace Elderson.Pages.Shared
         [Required]
         public string myTime { get; set; }
         private UserService _svc;
-        public DateAndTimeModel(UserService service)
+        private ScheduleService _sSvc;
+        public DateAndTimeModel(UserService service, ScheduleService sService)
         {
             _svc = service;
+            _sSvc = sService;
         }
         public void OnGet(string doctor)
         {
@@ -71,6 +73,15 @@ namespace Elderson.Pages.Shared
             {
                 if (myDateTime > DateTime.Now)
                 {
+                    bool valid = true;
+                    if (!(_svc.UserExists(myDoctor)))
+                    {
+                        valid = false;
+                    }
+                    if (!(_sSvc.ScheduleAvaliable(myDoctor, myDateTime)))
+                    {
+                        valid = false;
+                    }
                     HttpContext.Session.SetString("myClinic", myClinic);
                     HttpContext.Session.SetString("myDoctor", myDoctor);
                     HttpContext.Session.SetString("myDate", myDate);

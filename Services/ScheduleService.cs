@@ -102,5 +102,9 @@ namespace Elderson.Services
             }
             return updated;
         }
+        public bool ScheduleAvaliable(string doctorID, DateTime datetime)
+        {
+            return _context.Schedule.Any(s => (s.DoctorId == doctorID) && (s.StartDateTime == datetime) && (s.Availability == "A"));
+        }
     }
 }
