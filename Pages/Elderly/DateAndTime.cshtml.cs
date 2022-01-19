@@ -83,6 +83,7 @@ namespace Elderson.Pages.Shared
 =======
                 if (myDateTime > DateTime.Now)
                 {
+<<<<<<< HEAD
                     bool valid = true;
                     if (!(_svc.UserExists(myDoctor)))
                     {
@@ -93,6 +94,8 @@ namespace Elderson.Pages.Shared
                         valid = false;
                     }
 >>>>>>> parent of e8257f9 (done)
+=======
+>>>>>>> parent of 2bf0c8e (validation)
                     HttpContext.Session.SetString("myClinic", myClinic);
                     HttpContext.Session.SetString("myDoctor", myDoctor);
                     HttpContext.Session.SetString("myDate", myDate);
