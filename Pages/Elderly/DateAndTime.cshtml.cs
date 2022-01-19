@@ -69,50 +69,43 @@ namespace Elderson.Pages.Shared
         {
             if (ModelState.IsValid)
             {
-<<<<<<< HEAD
-<<<<<<< HEAD
+
                 HttpContext.Session.SetString("myClinic", myClinic);
                 HttpContext.Session.SetString("myDoctor", myDoctor);
                 HttpContext.Session.SetString("myDate", myDate);
                 HttpContext.Session.SetString("myTime", myTime);
                 HttpContext.Session.SetString("myDateTime", myDateTime.ToString());
                 return RedirectToPage("Symptoms");
-=======
+
                 if (myDateTime > DateTime.Now)
                 {
-=======
-                if (myDateTime > DateTime.Now)
-                {
-<<<<<<< HEAD
-                    bool valid = true;
-                    if (!(_svc.UserExists(myDoctor)))
+
+                    if (myDateTime > DateTime.Now)
                     {
-                        valid = false;
+
+                        bool valid = true;
+                        if (!(_svc.UserExists(myDoctor)))
+                        {
+                            valid = false;
+                        }
+                        if (!(_sSvc.ScheduleAvaliable(myDoctor, myDateTime)))
+                        {
+                            valid = false;
+                        }
+                        HttpContext.Session.SetString("myClinic", myClinic);
+                        HttpContext.Session.SetString("myDoctor", myDoctor);
+                        HttpContext.Session.SetString("myDate", myDate);
+                        HttpContext.Session.SetString("myTime", myTime);
+                        HttpContext.Session.SetString("myDateTime", myDateTime.ToString());
+                        return RedirectToPage("Symptoms");
                     }
-                    if (!(_sSvc.ScheduleAvaliable(myDoctor, myDateTime)))
+                    else
                     {
-                        valid = false;
+                        return Page();
                     }
->>>>>>> parent of e8257f9 (done)
-=======
->>>>>>> parent of 2bf0c8e (validation)
-                    HttpContext.Session.SetString("myClinic", myClinic);
-                    HttpContext.Session.SetString("myDoctor", myDoctor);
-                    HttpContext.Session.SetString("myDate", myDate);
-                    HttpContext.Session.SetString("myTime", myTime);
-                    HttpContext.Session.SetString("myDateTime", myDateTime.ToString());
-                    return RedirectToPage("Symptoms");
                 }
-                else
-                {
-                    return Page();
-                }
-<<<<<<< HEAD
->>>>>>> parent of 2bf0c8e (validation)
-=======
->>>>>>> parent of e8257f9 (done)
+                return Page();
             }
-            return Page();
         }
     }
 }
