@@ -11,6 +11,6 @@ namespace Elderson.Models
         public string MedicationId { get; set; }
         public int CurrentAmt { get; set; }
         public int MinimumAmt { get; set; }
-        public double Price { get; set }
+        public double Price { get; set; }
     }
 }
