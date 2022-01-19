@@ -30,22 +30,30 @@ namespace Elderson.Pages
         public string mySymptoms { get; set; }
         public void OnGet()
         {
-            if (HttpContext.Session.GetCart("Cart") != null)
+            if (HttpContext.Session.GetString("LoginUser") != null)
             {
-                myCart = HttpContext.Session.GetCart("Cart");
-            }
-            if (HttpContext.Session.GetString("myDateTime") != null)
-            {
-                myClinic = HttpContext.Session.GetString("myClinic");
-                myDoctor = HttpContext.Session.GetString("myDoctor");
-                myDate = HttpContext.Session.GetString("myDate");
-                myTime = HttpContext.Session.GetString("myTime");
-                myDateTime = HttpContext.Session.GetString("myDateTime");
+                if (HttpContext.Session.GetCart("Cart") != null)
+                {
+                    myCart = HttpContext.Session.GetCart("Cart");
+                }
+                if (HttpContext.Session.GetString("myDateTime") != null)
+                {
+                    myClinic = HttpContext.Session.GetString("myClinic");
+                    myDoctor = HttpContext.Session.GetString("myDoctor");
+                    myDate = HttpContext.Session.GetString("myDate");
+                    myTime = HttpContext.Session.GetString("myTime");
+                    myDateTime = HttpContext.Session.GetString("myDateTime");
+                }
+                else
+                {
+                    Response.Redirect("DateAndTime");
+                }
             }
             else
             {
-                Response.Redirect("DateAndTime");
+                Redirect("~/");
             }
+            
         }
         public IActionResult OnPost()
         {
@@ -57,7 +65,7 @@ namespace Elderson.Pages
                 cartItem.Clinic = HttpContext.Session.GetString("myClinic");
                 cartItem.BookDateTime = HttpContext.Session.GetString("myDateTime");
                 cartItem.Symptoms = mySymptoms;
-                cartItem.DoctorID = "1";
+                cartItem.DoctorID = HttpContext.Session.GetString("myDoctor");
                 myCart.Add(cartItem);
                 HttpContext.Session.SetCart("Cart", myCart);
                 return RedirectToPage("Cart");

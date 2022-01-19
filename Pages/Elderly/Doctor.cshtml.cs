@@ -28,12 +28,19 @@ namespace Elderson.Pages.Elderly
 
         public void OnGet(string clinic)
         {
-            myUserList = new List<User>();
-            myClinic = "HealthWerkz Clinic";
-            myDoctorList = _svc.GetDoctorsByClinic(myClinic);
-            foreach (Doctor doc in myDoctorList)
+            if (clinic != null)
             {
-                myUserList.Add(_svc.GetUserById(doc.UserId));
+                myUserList = new List<User>();
+                myClinic = "HealthWerkz Clinic";
+                myDoctorList = _svc.GetDoctorsByClinic(myClinic);
+                foreach (Doctor doc in myDoctorList)
+                {
+                    myUserList.Add(_svc.GetUserById(doc.UserId));
+                }
+            }
+            else
+            {
+                Redirect("/Clinic");
             }
         }
     }

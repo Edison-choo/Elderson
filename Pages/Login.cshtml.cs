@@ -53,7 +53,7 @@ namespace Elderson.Pages.Users
                         HttpContext.Session.SetString("LoginUserType", user.UserType);
                         
                         _logger.LogInformation("{actionStatus} User {userId} {userAction}.", "Successful", user.Id, "login");
-                        return Redirect("~/Elderly/Index");
+                        return Redirect("/");
                     } else
                     {
                         _logger.LogInformation("{actionStatus} User {userId} {userAction}. Password is incorrect.", "Unsuccessful", user.Id, "login");

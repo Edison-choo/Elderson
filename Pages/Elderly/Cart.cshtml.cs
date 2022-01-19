@@ -27,14 +27,22 @@ namespace Elderson.Pages
         }
         public void OnGet()
         {
-            if (HttpContext.Session.GetCart("Cart") != null)
+            if (HttpContext.Session.GetString("LoginUser") != null)
             {
-                myCart = HttpContext.Session.GetCart("Cart");
-                foreach(CartItem item in myCart)
+                if (HttpContext.Session.GetCart("Cart") != null)
                 {
-                    myTotal += item.Price;
+                    myCart = HttpContext.Session.GetCart("Cart");
+                    foreach (CartItem item in myCart)
+                    {
+                        myTotal += item.Price;
+                    }
                 }
             }
+            else
+            {
+                Redirect("~/");
+            }
+            
         }
         public IActionResult OnPost()
         {
@@ -50,8 +58,8 @@ namespace Elderson.Pages
                     book.Clinic = item.Clinic;
                     book.BookDateTime = Convert.ToDateTime(item.BookDateTime);
                     book.Symptoms = item.Symptoms;
-                    book.PatientID = "1";
-                    book.DoctorID = "2";
+                    book.PatientID = HttpContext.Session.GetString("LoginUser");
+                    book.DoctorID = item.DoctorID;
                     book.CallUUID = callUUID;
                     _svc.AddBooking(book);
                 }
