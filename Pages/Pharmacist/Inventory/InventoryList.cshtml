@@ -26,7 +26,7 @@
     $(document).ready(function () {
         console.log("Loading webpage...")
         $.ajax({
-            url: 'https://localhost:44311/api/MedInventory',
+            url: 'https://localhost:44311/api/Inventory',
             type: 'GET',
             success: function (result) {
                 console.log("Items retrieve successfully")
@@ -37,16 +37,15 @@
         $('#inventorytable').DataTable(
             {
                 "ajax": {
-                    'url': 'https://localhost:44311/api/MedInventory',
+                    'url': 'https://localhost:44311/api/Inventory',
                     'type': 'GET',
                     "dataSrc": function (json) {
                         return JSON.parse(JSON.stringify(json));
                     }
                 },
                 "columns": [
-                    { "data": "Id" },
-                    { "data": "MedName" },
-                    { "data": "MedType" },
+                    { "data": "Id"  },
+                    { "data": "MinimumAmt" },
                     { "data": "CurrentAmt" },
                     { "data": "Price" },
                     {
@@ -103,7 +102,7 @@
 <div class="card">
     <div class="card-body">
         <div class="d-flex justify-content-between align-items-start">
-            <h4 class="card-title">All User Table</h4>
+            <h4 class="card-title">Inventory Table</h4>
             <button class="btn btn-primary btn-l text-white mb-0 me-0" type="button"><a asp-page="CreateInventory">Add New Medication</a> </button>
 
         </div>

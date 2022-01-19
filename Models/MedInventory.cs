@@ -20,6 +20,7 @@ namespace Elderson.Models
         [Required(ErrorMessage = "Please enter Medication's Price")]
         public double Price { get; set; }
 
+
         
     }
 
