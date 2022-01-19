@@ -2,6 +2,7 @@
 @model Elderson.Pages.Elderly.DoctorModel
 @{
 }
+<script>document.getElementById("navItem2").classList.add("using")</script>
 <link rel="stylesheet" href="~/css/bookingStyle.css" />
 <nav aria-label="breadcrumb" style="margin:35px;">
     <ol class="breadcrumb">
@@ -24,29 +25,29 @@
         </ol>
     </div>
     <h3 style="margin-top:40px;margin-bottom:40px;">Doctors in "@Model.myClinic"</h3>
-    @{ 
-        foreach(var doctor in Model.myUserList)
-            {
-        <div>
-            <div class="card" style="width:300px; margin:10px;">
-                <img src="https://thumbs.dreamstime.com/z/smiling-female-doctors-working-office-asian-76064205.jpg"
-                     class="card-img-top" style="border-radius: 50%; width:150px; height:150px; margin-left:auto; margin-right:auto; margin-top:40px;" />
-                <div class="card-body">
-                    <h5 class="card-title" style="text-align:center;">@doctor.Fullname</h5>
-                    <h6 style="text-align:center;">General Practitioner</h6>
-                    <br />
-                    <p class="card-text" style="text-align:center;">
-                        Experience: 4 Years
+    @{
+        foreach (var doctor in Model.myDetailList)
+        {
+            <div>
+                <div class="card" style="width: 300px; margin: 10px; background-color: #F4F3FF; ">
+                    <img src="https://thumbs.dreamstime.com/z/smiling-female-doctors-working-office-asian-76064205.jpg"
+                         class="card-img-top" style="border-radius: 50%; width:150px; height:150px; margin-left:auto; margin-right:auto; margin-top:40px;" />
+                    <div class="card-body">
+                        <h5 class="card-title" style="text-align:center;">@doctor.name</h5>
+                        <h6 style="text-align:center;">General Practitioner</h6>
                         <br />
-                        Languages: English, Chinese
-                        <br />
-                    </p>
-                    <a asp-page="/Elderly/DateAndTime" asp-route-doctor="@doctor.Id" style="text-align: center; display: block;" class="btn btn-primary">SELECT DOCTOR</a>
+                        <p class="card-text" style="text-align:center;">
+                            Experience: @doctor.experience years
+                            <br />
+                            Languages: @doctor.language
+                            <br />
+                        </p>
+                        <a asp-page="/Elderly/DateAndTime" asp-route-doctor="@doctor.id" style="text-align: center; display: block; background-color: #6C63FF;" class="btn btn-primary">SELECT DOCTOR</a>
+                    </div>
                 </div>
             </div>
-        </div>
-            }
+        }
     }
-    
-    <a asp-page="/Elderly/Clinic" class="btn btn-primary">BACK</a>
+<br />
+    <a asp-page="/Elderly/Clinic" style="background-color: #6C63FF;" class="btn btn-primary">BACK</a>
 </div>

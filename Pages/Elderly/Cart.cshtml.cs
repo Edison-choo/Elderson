@@ -20,10 +20,13 @@ namespace Elderson.Pages
         public int myTotal { get; set; } = 0;
         private BookingService _svc;
         private readonly ILogger<CartModel> _logger;
-        public CartModel(ILogger<CartModel> logger, BookingService service)
+        private ScheduleService _sSvc;
+
+        public CartModel(ILogger<CartModel> logger, BookingService service, ScheduleService sService)
         {
             _svc = service;
             _logger = logger;
+            _sSvc = sService;
         }
         public void OnGet()
         {
@@ -40,7 +43,7 @@ namespace Elderson.Pages
             }
             else
             {
-                Redirect("~/");
+                Redirect("Index");
             }
             
         }
@@ -62,9 +65,17 @@ namespace Elderson.Pages
                     book.DoctorID = item.DoctorID;
                     book.CallUUID = callUUID;
                     _svc.AddBooking(book);
+                    Schedule schedule = _sSvc.GetScheduleByDateTime(Convert.ToDateTime(item.BookDateTime));
+                    schedule.Availability = "B";
+                    _sSvc.UpdateScheduleStatus(schedule);
+                    HttpContext.Session.Remove("Cart");
                 }
             }
-            return RedirectToPage("/");
+            else
+            {
+                return Page();
+            }
+            return RedirectToPage("Index");
         }
     }
     public static class SessionExtensions

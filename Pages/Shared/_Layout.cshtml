@@ -35,95 +35,108 @@
           rel="stylesheet" />
 </head>
 <body>
-
     <!-- ======= Header ======= -->
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <!-- Container wrapper -->
-        <div class="container-fluid">
-            <!-- Toggle button -->
-            <button class="navbar-toggler"
-                    type="button"
-                    data-mdb-toggle="collapse"
-                    data-mdb-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation">
-                <i class="fas fa-bars"></i>
-            </button>
-
-            <!-- Collapsible wrapper -->
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- Navbar brand -->
-                <a class="navbar-brand mt-2 mt-lg-0" href="#">
-                    <img src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp"
-                         height="15"
-                         alt="MDB Logo"
-                         loading="lazy" />
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+        <div class="container-fluid justify-content-between">
+            <!-- Left elements -->
+            <div class="d-flex">
+                <!-- Brand -->
+                <a class="navbar-brand me-2 mb-1 d-flex align-items-center" href="~/">
+                    <img src="https://png.pngtree.com/png-clipart/20200709/original/pngtree-e-logo-png-image_3611500.jpg"
+                         height="50"
+                         loading="lazy"
+                         style="margin-top: 2px;" />
                 </a>
-                <!-- Left links -->
-                <div class="collapse navbar-collapse justify-content-center"
-                     id="navbarCenteredExample">
-                    <!-- Left links -->
-                    <ul class="navbar-nav mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
-                        </li>
-                        @{ if (Context.Session.GetString("LoginUser") != null)
-                            {
-                                if (Context.Session.GetString("LoginUserType") == "Patient")
-                                {
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="/Elderly/Clinic">Book</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="/Elderly/Appointments">Appointment</a>
-                                    </li>
-                                }
-                            }
-                            else
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/Elderly/Clinic">Book</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link disabled" href="/Elderly/Appointments">Appointments</a>
-                                </li>
-                            }
-                        }
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">FAQ</a>
-                        </li>
-                    </ul>
-                    <!-- Left links -->
-                </div>
-                <!-- Left links -->
+
+                <!-- Search form -->
+                <form class="input-group w-auto my-auto d-none d-sm-flex">
+                    <input autocomplete="off"
+                           type="search"
+                           class="form-control rounded"
+                           placeholder="Search"
+                           style="min-width: 125px;" />
+                    <span class="input-group-text border-0 d-none d-lg-flex">
+                        <i class="fas fa-search"></i>
+                    </span>
+                </form>
             </div>
-            <!-- Collapsible wrapper -->
+            <!-- Left elements -->
+            <!-- Center elements -->
+            <ul class="navbar-nav flex-row d-none d-md-flex justify-content-center">
+                <li class="nav-item me-3 me-lg-1" id="navItem1">
+                    <div>
+                        <a class="nav-link" href="~/">
+                            <h5>Home</h5>
+                        </a>
+                    </div>
+                </li>
+
+                <li class="nav-item me-3 me-lg-1" id="navItem2">
+                    <div>
+                        <a class="nav-link" href="~/Elderly/Clinic">
+                            <h5>Book</h5>
+                        </a>
+                    </div>
+                </li>
+                @{
+                    if (Context.Session.GetString("LoginUser") != null)
+                    {
+                        if (Context.Session.GetString("LoginUserType") == "Patient")
+                        {
+                            <li class="nav-item me-3 me-lg-1" id="navItem3">
+                                <div>
+                                    <a class="nav-link" href="~/Elderly/Appointments">
+                                        <h5>My Appointments</h5>
+                                    </a>
+                                </div>
+                            </li>
+                        }
+                    }
+                    else
+                    {
+                        <li class="nav-item me-3 me-lg-1" id="navItem3">
+                            <div>
+                                <a class="nav-link disabled" href="~/Elderly/Appointments">
+                                    <h5>My Appointments</h5>
+                                </a>
+                            </div>
+                        </li>
+                    }
+                }
+                <li class="nav-item me-3 me-lg-1" id="navItem4">
+                    <div>
+                        <a class="nav-link" href="#">
+                            <h5>FAQ</h5>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <!-- Center elements -->
             <!-- Right elements -->
-            @{ if (Context.Session.GetString("LoginUser") != null)
+            @{
+                if (Context.Session.GetString("LoginUser") != null)
                 {
                     if (Context.Session.GetString("LoginUserType") == "Patient")
                     {
-                        <div class="d-flex align-items-center">
-                            <!-- Icon -->
-                            <a class="text-reset me-3" href="#">
-                                <i class="fas fa-shopping-cart"></i>
-                            </a>
-
-                            <!-- Notifications -->
-                            <div class="dropdown">
-                                <a class="text-reset me-3 dropdown-toggle hidden-arrow"
+                        <ul class="navbar-nav flex-row" style="margin-left:175px;">
+                            <li class="nav-item dropdown me-3 me-lg-1">
+                                <a class="nav-link" href="~/Elderly/Cart">
+                                    <h5><i class="fas fa-shopping-cart" id="navItemCart"></i></h5>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown me-3 me-lg-1">
+                                <a class="nav-link dropdown-toggle hidden-arrow"
                                    href="#"
                                    id="navbarDropdownMenuLink"
                                    role="button"
                                    data-mdb-toggle="dropdown"
                                    aria-expanded="false">
-                                    <i class="fas fa-bell"></i>
-                                    <span class="badge rounded-pill badge-notification bg-danger">1</span>
+                                    <i class="fas fa-bell fa-lg"></i>
+                                    <span class="badge rounded-pill badge-notification bg-danger">12</span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end"
-                                    aria-labelledby="navbarDropdownMenuLink" style="left:-150px !important">
+                                    aria-labelledby="navbarDropdownMenuLink">
                                     <li>
                                         <a class="dropdown-item" href="#">Some news</a>
                                     </li>
@@ -134,74 +147,69 @@
                                         <a class="dropdown-item" href="#">Something else here</a>
                                     </li>
                                 </ul>
-                            </div>
-                            <!-- Avatar -->
-
-                            <div class="dropdown">
-                                <a class="dropdown-toggle d-flex align-items-center hidden-arrow"
+                            </li>
+                            <li class="nav-item dropdown me-3 me-lg-1">
+                                <a class="nav-link dropdown-toggle hidden-arrow"
                                    href="#"
-                                   id="navbarDropdownMenuAvatar"
+                                   id="navbarDropdownMenuLink"
                                    role="button"
                                    data-mdb-toggle="dropdown"
                                    aria-expanded="false">
-                                    <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
-                                         class="rounded-circle"
-                                         height="25"
-                                         alt="Black and White Portrait of a Man"
-                                         loading="lazy" />
+                                    <i class="fas fa-chevron-circle-down fa-lg"></i>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end"
-                                    aria-labelledby="navbarDropdownMenuAvatar" style="left:-170px !important">
+                                    aria-labelledby="navbarDropdownMenuLink">
                                     <li>
-                                        <a class="dropdown-item" href="#">My profile</a>
+                                        <a class="dropdown-item" href="#">Profile</a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="#">Settings</a>
+                                        <a class="dropdown-item" href="#">View MC</a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="#">Logout</a>
+                                        <a class="dropdown-item" href="#">Prescription</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">Help & Support</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="#">Log Out</a>
                                     </li>
                                 </ul>
-                            </div>
-                        </div>
+                            </li>
+                        </ul>
                     }
                 }
                 else
                 {
                     <div class="d-flex align-items-center">
-                        <a href="/Login" class="btn btn-link">
+                        <a href="~/Login" class="btn btn-link px-3 me-2">
                             Login
                         </a>
-                        <a href="/Register" class="btn btn-primary">
+                        <a href="~/Register" class="btn btn-primary me-3">
                             Sign up for free
                         </a>
                     </div>
+                }
             }
-            }
-
             <!-- Right elements -->
-            </div>
-            <!-- Container wrapper -->
-        </nav>
+        </div>
+    </nav>
+    <!-- Navbar -->
     <!-- Navbar -->
     <main id="main">
         @RenderBody()
     </main>
     <!-- ======= Footer ======= -->
     <footer id="footer" style="margin-top:100px;">
-
-        <div class="footer-top">
+        <div class="footer-top" style="background-color:#F4F3FF">
             <div class="container">
                 <div class="row">
 
                     <div class="col-lg-3 col-md-6 footer-contact">
-                        <h3>Medilab @Context.Session.GetString("LoginUserType")</h3>
+                        <h3>Elderson @Context.Session.GetString("LoginUserType")</h3>
                         <p>
-                            A108 Adam Street <br>
-                            New York, NY 535022<br>
-                            United States <br><br>
-                            <strong>Phone:</strong> +1 5589 55488 55<br>
-                            <strong>Email:</strong> info@example.com<br>
+                            Elderson Pte Ltd
+                            <strong>Contact:</strong> elderson@gmail.com<br>
                         </p>
                     </div>
 
@@ -209,56 +217,25 @@
                         <h4>Useful Links</h4>
                         <ul>
                             <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Book</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Search</a></li>
                         </ul>
                     </div>
 
                     <div class="col-lg-3 col-md-6 footer-links">
-                        <h4>Our Services</h4>
+                        <h4>Support</h4>
                         <ul>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Help & Support</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">FAQ Page</a></li>
                         </ul>
                     </div>
 
                     <div class="col-lg-4 col-md-6 footer-newsletter">
-                        <h4>Join Our Newsletter</h4>
-                        <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
-                        <form action="" method="post">
-                            <input type="email" name="email"><input type="submit" value="Subscribe">
-                        </form>
+                        <h4>Enterprise Login</h4>
+                        <a asp-page="OrganizationLogin" class="btn btn-primary btn-lg" style="width:125px;">Login</a>
                     </div>
 
                 </div>
-            </div>
-        </div>
-
-        <div class="container d-md-flex py-4">
-
-            <div class="me-md-auto text-center text-md-start">
-                <div class="copyright">
-                    &copy; Copyright <strong><span>Medilab</span></strong>. All Rights Reserved
-                </div>
-                <div class="credits">
-                    <!-- All the links in the footer should remain intact. -->
-                    <!-- You can delete the links only if you purchased the pro version. -->
-                    <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                    <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/medilab-free-medical-bootstrap-theme/ -->
-                    Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-                </div>
-            </div>
-            <div class="social-links text-center text-md-right pt-3 pt-md-0">
-                <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-                <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-                <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-                <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-                <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
             </div>
         </div>
     </footer><!-- End Footer -->

@@ -2,6 +2,7 @@
 @model Elderson.Pages.Shared.DateAndTimeModel
 @{
 }
+<script>document.getElementById("navItem2").classList.add("using")</script>
 <link rel="stylesheet" href="~/css/bookingStyle.css" />
 <nav aria-label="breadcrumb" style="margin:35px;">
     <ol class="breadcrumb">
@@ -13,6 +14,7 @@
     <h3>Clinic</h3>
 </nav>
 <div class="container">
+    <div asp-validation-summary="All" class="text-danger"></div>
     <div>
         <ol class="stepper">
             <li class="stepperItem"><div class="stepperItemDiv stepComplete"><i class="fas fa-check"></i></div><div class="stepperDivText">Select Clinic</div></li>
@@ -91,9 +93,10 @@
         </div>
         <div id="timePicker">
         </div>
-        <div style="display:inline-block">
-            <div style="float:left"><a asp-page="/Elderly/Doctor" asp-route-clinic="@Model.myClinic" class="btn btn-primary">Back</a></div>
-            <div style="float:right"><button class="btn btn-primary">Continue</button></div>
+        <br />
+        <div class="d-flex justify-content-between">
+            <a style="background-color: #6C63FF" asp-page="/Elderly/Doctor" asp-route-clinic="@Model.myClinic" class="btn btn-primary">Back</a>
+            <button style="background-color: #6C63FF" class="btn btn-primary">Continue</button>
         </div>
     </form>
 </div>
@@ -168,6 +171,7 @@
         return montharr[month]
     }
     function setCal(month, year) {
+        $("#timePicker").html("");
         var firstDay = new Date(year, month, 1);
         $("#month").text(months[month]);
         var monthDays = getDays(month, year);
@@ -219,6 +223,7 @@
                 date = `${this_year}-${padZero(this_month + 1)}-${padZero(parseInt($(this).text()))}`
                 $("#dateSelect").val(date)
                 $("#dateTimeSelect").val("");
+                $("#timeSelect").val('-');
                 $(this).css("border", "3px solid #1977CC");
                 setTime(parseInt($(this).text()));
             })

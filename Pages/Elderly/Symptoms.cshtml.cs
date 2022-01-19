@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Elderson.Models;
+using Elderson.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -20,6 +21,8 @@ namespace Elderson.Pages
         [BindProperty]
         public string myDoctor { get; set; }
         [BindProperty]
+        public string myDoctorName { get; set; }
+        [BindProperty]
         public string myDate { get; set; }
         [BindProperty]
         public string myTime { get; set; }
@@ -28,18 +31,20 @@ namespace Elderson.Pages
         [BindProperty]
         [Required]
         public string mySymptoms { get; set; }
+        private UserService _svc;
+        public SymptomsModel(UserService service)
+        {
+            _svc = service;
+        }
         public void OnGet()
         {
             if (HttpContext.Session.GetString("LoginUser") != null)
             {
-                if (HttpContext.Session.GetCart("Cart") != null)
-                {
-                    myCart = HttpContext.Session.GetCart("Cart");
-                }
                 if (HttpContext.Session.GetString("myDateTime") != null)
                 {
                     myClinic = HttpContext.Session.GetString("myClinic");
                     myDoctor = HttpContext.Session.GetString("myDoctor");
+                    myDoctorName = _svc.GetUserById(myDoctor).Fullname;
                     myDate = HttpContext.Session.GetString("myDate");
                     myTime = HttpContext.Session.GetString("myTime");
                     myDateTime = HttpContext.Session.GetString("myDateTime");
@@ -51,7 +56,7 @@ namespace Elderson.Pages
             }
             else
             {
-                Redirect("~/");
+                Redirect("~/Login");
             }
             
         }
@@ -59,6 +64,10 @@ namespace Elderson.Pages
         {
             if (ModelState.IsValid)
             {
+                if (HttpContext.Session.GetCart("Cart") != null)
+                {
+                    myCart = HttpContext.Session.GetCart("Cart");
+                }
                 cartItem.ItemName = "Online Consultation";
                 cartItem.Price = 20;
                 cartItem.Quantity = 1;

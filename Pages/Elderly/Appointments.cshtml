@@ -2,6 +2,7 @@
 @model Elderson.Pages.Elderly.AppointmentModel
 @{
 }
+<script>document.getElementById("navItem3").classList.add("using")</script>
 <link rel="stylesheet" href="~/css/bookingStyle.css" />
 <nav aria-label="breadcrumb" style="margin:35px;">
     <ol class="breadcrumb">
@@ -11,43 +12,66 @@
     <h3>Appointments</h3>
 </nav>
 <div class="container">
-    <div class="tableStyle">
+    <div class="">
         <table class="table">
             <thead class="table-light">
                 <tr>
-                    <th scope="col">Clinic</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Time</th>
-                    <th scope="col">Join Call</th>
+                    <th style="font-weight:bold; background-color:#F4F3FF;">Clinic</th>
+                    <th style="font-weight:bold; background-color:#F4F3FF;">Date & Time</th>
+                    <th style="font-weight:bold; background-color:#F4F3FF;">Join Call</th>
+                    <th style="font-weight:bold; background-color:#F4F3FF;"></th>
                 </tr>
             </thead>
             <tbody>
                 @if (Model.myBookings != null)
                 {
-                @foreach (var item in Model.myBookings)
-                {
-                <tr>
-                    <td>@item.Clinic</td>
-                    <td>@item.BookDateTime</td>
-                    <td><a href="#" class="btn btn-primary">Join Call</a></td>
-                    <td>
-                        <div class="dropdown">
-                            <button class="btn btn-primary dropdown-toggle"
-                                    type="button"
-                                    id="bookingDropdown"
-                                    data-mdb-toggle="dropdown"
-                                    aria-expanded="false">
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li><a class="dropdown-item" asp-page="/Elderly/RescheduleAppointment" asp-route-id="@item.Id">Reschedule</a></li>
-                                <li><a class="dropdown-item" href="#">Cancel</a></li>
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
+                    @foreach (var item in Model.myBookings)
+                    {
+                        <tr>
+                            <td><div>@item.Clinic</div></td>
+                            <td>@item.BookDateTime.ToString("dd MMMM yyyy HH:mm tt")</td>
+                            <td><a href="#" class="btn btn-primary">Join Call</a></td>
+                            <td style="text-align: right;">
+                                <div class="dropdown">
+                                    <button class="btn btn-primary dropdown-toggle"
+                                            type="button"
+                                            id="bookingDropdown"
+                                            data-mdb-toggle="dropdown"
+                                            aria-expanded="false">
+                                    </button>
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Delete Booking</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    You are about to delete a booking.
+                                                    Are you sure?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <a asp-page="/Elderly/DeleteAppointment" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <li><a class="dropdown-item" asp-page="/Elderly/RescheduleAppointment" asp-route-id="@item.Id">Reschedule</a></li>
+                                        <li>
+                                            <button type="button" class="dropdown-item" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
+                                                Cancel
+                                            </button>
+                                            <!-- Modal -->
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    }
                 }
-            } 
-                
+
             </tbody>
         </table>
     </div>

@@ -22,10 +22,9 @@ namespace Elderson.Pages.Shared
         [Required]
         public string myDoctor { get; set; }
         [BindProperty]
-        [Required]
         public string myDoctorName { get; set; }
         [BindProperty]
-        [Required]
+        [Required(ErrorMessage = "Please enter date and time of booking!"), DataType(DataType.DateTime)]
         public DateTime myDateTime { get; set; }
         [BindProperty]
         [Required]
@@ -70,12 +69,19 @@ namespace Elderson.Pages.Shared
         {
             if (ModelState.IsValid)
             {
-                HttpContext.Session.SetString("myClinic", myClinic);
-                HttpContext.Session.SetString("myDoctor", myDoctor);
-                HttpContext.Session.SetString("myDate", myDate);
-                HttpContext.Session.SetString("myTime", myTime);
-                HttpContext.Session.SetString("myDateTime", myDateTime.ToString());
-                return RedirectToPage("Symptoms");
+                if (myDateTime > DateTime.Now)
+                {
+                    HttpContext.Session.SetString("myClinic", myClinic);
+                    HttpContext.Session.SetString("myDoctor", myDoctor);
+                    HttpContext.Session.SetString("myDate", myDate);
+                    HttpContext.Session.SetString("myTime", myTime);
+                    HttpContext.Session.SetString("myDateTime", myDateTime.ToString());
+                    return RedirectToPage("Symptoms");
+                }
+                else
+                {
+                    return Page();
+                }
             }
             return Page();
         }
