@@ -4,6 +4,166 @@
     Layout = "Shared/_LayoutPharmacist";
     ViewData["Title"] = "View Inventory Listing Page";
     ViewData["Header"] = "VIEW MEDICATION";
-    ViewData["Breadcrumb"] = "Inventory > Create";
+    ViewData["Breadcrumb"] = "Inventory > View";
 
 }
+
+<style>
+    a {
+        color: white;
+        text-decoration: none;
+    }
+</style>
+
+<div class="row">
+    <form class="forms-sample" method="post" asp-action="">
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div class="d-flex">
+                                <div style="margin-left:20px; margin-top:20px;">
+                                    <h3>@Model.SelectedMedication.MedName</h3>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="btn-group" style="margin-top:30px;">
+                                    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id="dropdownMenuSplitButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        ACTION
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuSplitButton1">
+                                        <a class="dropdown-item" asp-page="EditInventory" asp-route-id="@Model.SelectedInventoryItem.Id">Edit</a>
+                                        <a class="dropdown-item" data-toggle="modal" data-target=@("#staticBackdrop" + Model.SelectedInventoryItem.Id)>Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Medication Information</h4>
+                        <hr />
+                        <div>
+                            <p class="form-group d-flex">
+                                ID:
+                            </p>
+                            <div class="profileData">
+                                @Model.SelectedMedication.Id
+                            </div>
+                        </div>
+                        <div>
+                            <p class="form-group d-flex">
+                                Abbreviation:
+                            </p>
+                            <div class="profileData">
+                                @Model.SelectedMedication.MedAbbreviation
+                            </div>
+                        </div>
+                        <div>
+                            <p class="form-group d-flex">
+                                Medication Type:
+                            </p>
+                            <div class="profileData">
+                                @Model.SelectedMedication.MedType
+                            </div>
+                        </div>
+                        <div>
+                            <p class="form-group d-flex">
+                                Medication Supplier:
+                            </p>
+                            <div class="profileData">
+                                @if (Model.SelectedMedication.MedSupplierAbb == null) { 
+                                    @:NA (Not Applicable)
+                                }
+                                else
+                                {
+                                    @Model.SelectedMedication.MedSupplierAbb
+                                }
+                            </div>
+                        </div>
+                        <div>
+                            <p class="form-group d-flex">
+                                Price of Medication:
+                            </p>
+                            <div class="profileData">
+                                $@Model.SelectedInventoryItem.Price
+                            </div>
+                        </div>
+                        <div>
+                            <div class="form-group d-flex">
+                                Current Amount of Medication:
+                            </div>
+                            <div class="profileData">
+                                @Model.SelectedInventoryItem.CurrentAmt
+                            </div>
+                        </div>
+                        <div>
+                            <div class="form-group d-flex">
+                                Minimum Amount of Medication:
+                            </div>
+                            <div class="profileData">
+                                @Model.SelectedInventoryItem.MinimumAmt
+                            </div>
+                        </div>
+                        <div>
+                            <div class="form-group d-flex">
+                                Medication Description:
+                            </div>
+                            <div class="profileData">
+                                @Model.SelectedMedication.MedDescription
+                            </div>
+                        </div>
+                        
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal fade" id=@("staticBackdrop"+@Model.SelectedInventoryItem.Id) data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="text-center">
+                    <h4>
+                        Are you sure you want to delete this incident?
+
+                    </h4>
+                </div>
+                <div class="d-flex justify-content-between" style="margin-top:30px;">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" onclick=@("deleteMedication("+"'"+@Model.SelectedInventoryItem.Id+"'"+")") class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function deleteMedication(Id) {
+        $.ajax({
+            url: 'https://localhost:44311/api/Inventory/' + Id,
+            type: 'DELETE',
+            success: function (result) {
+
+                console.log(result);
+                window.location.href = "/Pharmacist/Inventory/InventoryList";
+
+
+            }
+        });
+    }
+</script>
