@@ -6,3 +6,72 @@
     ViewData["Header"] = "CREATE MEDICATION";
     ViewData["Breadcrumb"] = "Inventory > Create";
 }
+
+<div class="row">
+    <form class="forms-sample" method="post" asp-action="">
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Incident Information</h4>
+                        <hr />
+                        <div class="form-group d-flex">
+                            <div style="width:20%;">
+                                <label for="exampleInputEmail3">Title:</label>
+
+                            </div>
+                            <div style="width:80%;">
+                                <input asp-for="newIncident.Title" type="text" class="form-control" id="exampleInputEmail3">
+                                <span asp-validation-for="newIncident.Title" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="form-group d-flex">
+                            <div style="width:20%;">
+                                <label for="password">Description:</label>
+
+                            </div>
+                            <div style="width:80%;">
+                                <textarea asp-for="newIncident.Description" rows="6" class="form-control" id="body"></textarea>
+                                <span asp-validation-for="newIncident.Description" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="form-group d-flex">
+                            <div style="width:20%;">
+                                <label for="confirmPassword">Reason:</label>
+
+                            </div>
+                            <div style="width:80%;">
+                                <textarea asp-for="newIncident.Reason" rows="6" class="form-control" id="body"></textarea>
+                                <span asp-validation-for="newIncident.Reason" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="form-group d-flex">
+                            <div style="width:20%;">
+                                <label for="confirmPassword">Recommendation:</label>
+
+                            </div>
+                            <div style="width:80%;">
+                                <textarea asp-for="newIncident.Recommendation" rows="6" class="form-control" id="body"></textarea>
+                                <span asp-validation-for="newIncident.Recommendation" class="text-danger"></span>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <button type="button" class="btn btn-primary me-2">Cancel</button>
+
+                <button type="submit" class="btn btn-primary me-2">Submit</button>
+
+            </div>
+
+        </div>
+    </form>
+</div>

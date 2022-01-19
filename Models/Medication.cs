@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Elderson.Models
 {
-    public class Medications
+    public class Medication
     {
         public string Id { get; set; }
         [Required]

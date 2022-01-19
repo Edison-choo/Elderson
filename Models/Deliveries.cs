@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Elderson.Models
 {
-    public class Delivery
+    public class Deliveries
     {
         public string Id { get; set; }
         public string PatientId { get; set; }

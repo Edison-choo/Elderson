@@ -34,5 +34,11 @@ namespace Elderson.Models
         public DbSet<Schedule> Schedule { get; set; }
         public DbSet<Booking> Booking { get; set; }
 
+        public DbSet<MedInventory> Inventory { get; set; }
+        public DbSet<Medication> Medications { get; set; }
+
+        public DbSet<Deliveries> Delivery { get; set; }
+        public DbSet<Supplier> Supplier { get; set; }
+
     }
 }
