@@ -43,24 +43,24 @@ namespace Elderson
             
         }
 
-        [HttpGet("{apiname}", Name = "GetPatients")]
-        public ActionResult<List<User>> GetPatients()
-        {
-            List<User> alluser = new List<User>();
+        //[HttpGet("{apiPatientname}", Name = "GetPatients")]
+        //public ActionResult<List<User>> GetPatients()
+        //{
+        //    List<User> alluser = new List<User>();
 
-            try
-            {
-                alluser = _svc.GetAllUsers();
-                var jsonStr = JsonSerializer.Serialize(alluser.Where(x=> x.UserType == "Patient").Select(x => new { x.Id, x.Fullname, x.Email }));
-                return Ok(jsonStr);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("instalmentController.getCarLoan", ex);
-                return BadRequest();
-            }
+        //    try
+        //    {
+        //        alluser = _svc.GetAllUsers();
+        //        var jsonStr = JsonSerializer.Serialize(alluser.Where(x=> x.UserType == "Patient").Select(x => new { x.Id, x.Fullname, x.Email }));
+        //        return Ok(jsonStr);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine("instalmentController.getCarLoan", ex);
+        //        return BadRequest();
+        //    }
 
-        }
+        //}
 
         [HttpGet("{apiname}", Name = "Signout")]
         public ActionResult Signout()
@@ -69,9 +69,12 @@ namespace Elderson
             {
                 HttpContext.Session.Remove("LoginUser");
                 HttpContext.Session.Remove("LoginUserType");
-                
+                return Ok();
+
+            } else
+            {
+                return BadRequest();
             }
-            return Ok();
         }
 
         //// GET api/<UserController>/5

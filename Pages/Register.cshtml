@@ -153,12 +153,12 @@
                                             <span asp-validation-for="newUser.Email" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" asp-for="pwd" class="form-control form-control-lg" id="Password" placeholder="PASSWORD">
-                                            <span asp-validation-for="pwd" class="text-danger"></span>
+                                            <input type="password" asp-for="viewModel.pwd" class="form-control form-control-lg" id="Password" placeholder="PASSWORD">
+                                            <span asp-validation-for="viewModel.pwd" class="text-danger"></span>
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" asp-for="confirmPwd" class="form-control form-control-lg" id="ConPassword" placeholder="CONFIRM PASSWORD">
-                                            <span asp-validation-for="confirmPwd" class="text-danger"></span>
+                                            <input type="password" asp-for="viewModel.confirmPwd" class="form-control form-control-lg" id="ConPassword" placeholder="CONFIRM PASSWORD">
+                                            <span asp-validation-for="viewModel.confirmPwd" class="text-danger"></span>
                                         </div>
 
                                         <span style="color:red;"></span>

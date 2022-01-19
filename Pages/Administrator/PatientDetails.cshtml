@@ -222,8 +222,8 @@
             type: 'DELETE',
             success: function (result) {
                 console.log("Item delete successfully")
-                 $('#detailstable').DataTable().ajax.reload();
-                $('.fade').removeClass("show");
+                $('#detailstable').DataTable().ajax.reload();
+                $('.fade').hide();
             }
         });
     }

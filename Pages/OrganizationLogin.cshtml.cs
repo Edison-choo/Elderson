@@ -60,12 +60,12 @@ namespace Elderson.Pages
                             return Redirect("~/ISR/Users");
                         } else if (user.UserType == "Administrator")
                         {
-                            return Redirect("~/Administrator");
+                            return Redirect("~/Administrator/AdminHomePage");
                         } else if (user.UserType == "Pharmacist")
                         {
                             return Redirect("~/Pharmacist");
                         }
-                        return Redirect("~/Index");
+                        return Redirect("~/");
                     }
                     else
                     {

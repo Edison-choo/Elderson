@@ -21,12 +21,23 @@ namespace Elderson.Pages
         public User newUser { get; set; }
         [BindProperty]
         public Patient PatientRole { get; set; }
+        //[BindProperty]
+        //[Required]
+        //public string pwd { get; set; }
+        //[BindProperty]
+        //[Required]
+        //public string confirmPwd { get; set; }
         [BindProperty]
-        [Required]
-        public string pwd { get; set; }
-        [BindProperty]
-        [Required]
-        public string confirmPwd { get; set; }
+        public ViewModel viewModel { get; set; }
+        public class ViewModel
+        {
+            [Required]
+            public string pwd { get; set; }
+
+            [Required]
+            [Compare(nameof(pwd), ErrorMessage = "Passwords do not match.")]
+            public string confirmPwd { get; set; }
+        }
         private UserService _svc;
         private readonly ILogger<RegisterModel> _logger;
         public RegisterModel(ILogger<RegisterModel> logger,UserService service)
@@ -45,7 +56,7 @@ namespace Elderson.Pages
             {
                 //HttpContext.Session.SetString("SSName", MyEmployee.Name);
                 //HttpContext.Session.SetString("SSDept", MyEmployee.Department);
-                newUser.Password = pwd;
+                newUser.Password = viewModel.pwd;
 
                 // Hash Password
                 RandomNumberGenerator rng = RandomNumberGenerator.Create();
