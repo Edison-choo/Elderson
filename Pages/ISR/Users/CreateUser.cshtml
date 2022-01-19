@@ -174,8 +174,31 @@
                                 <span asp-validation-for="DoctorRole.Clinic" class="text-danger"></span>
                             </div>
 
-                        </div>
 
+                        </div>
+                        <div class="form-group  d-flex">
+                            <div style="width:30%;">
+                                <label>Select Relationship</label>
+
+                            </div>
+                            <div style="width:70%;">
+                                @Html.DropDownList("DoctorRole.Language", new SelectList(Enum.GetValues(typeof(Models.LanguageType))), "--Select language--", new { @class = "form-control" })
+                                <span asp-validation-for="DoctorRole.Language" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="form-group  d-flex">
+                            <div style="width:30%;">
+                                <label for="workExp">Work Experience (In Year)</label>
+
+                            </div>
+                            <div style="width:70%;">
+                                <input asp-for="DoctorRole.WorkExp" type="text" class="form-control" id="workExp" placeholder="WORK EXPERIENCE">
+                                <span asp-validation-for="DoctorRole.WorkExp" class="text-danger"></span>
+                            </div>
+
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -259,7 +282,7 @@
             <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Doctor Related Information</h4>
+                        <h4 class="card-title">Administrator Related Information</h4>
                         <hr />
                         <div class="form-group  d-flex">
                             <div style="width:30%;">

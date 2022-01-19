@@ -79,6 +79,8 @@ namespace Elderson.Pages.ISR.Users
                 case "Doctor":
                     UpdatedDoctor = _svc.GetDoctorById(UpdatedUser.Id);
                     UpdatedDoctor.Clinic = DoctorRole.Clinic;
+                    UpdatedDoctor.Language = DoctorRole.Language;
+                    UpdatedDoctor.WorkExp = DoctorRole.WorkExp;
                     _svc.UpdateDoctor(UpdatedDoctor);
                     break;
                 case "Administrator":
