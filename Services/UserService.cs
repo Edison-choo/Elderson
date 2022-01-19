@@ -326,5 +326,20 @@ namespace Elderson.Services
             return updated;
         }
 
+        //Wye Keong Services :)
+        public List<Doctor> GetDoctorsByClinic(string clinic)
+        {
+            List<Doctor> doctors = new List<Doctor>();
+            try
+            {
+                doctors = _context.Doctors.Where(d => d.Clinic == clinic).ToList();
+            }
+            catch
+            {
+                throw;
+            }
+            return doctors;
+        }
+
     }
 }

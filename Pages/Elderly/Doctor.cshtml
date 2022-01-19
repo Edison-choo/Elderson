@@ -24,23 +24,29 @@
         </ol>
     </div>
     <h3 style="margin-top:40px;margin-bottom:40px;">Doctors in "@Model.myClinic"</h3>
-    <div>
-        <div class="card" style="width:300px; margin:10px;">
-            <img src="https://thumbs.dreamstime.com/z/smiling-female-doctors-working-office-asian-76064205.jpg"
-                 class="card-img-top" style="border-radius: 50%; width:150px; height:150px; margin-left:auto; margin-right:auto; margin-top:40px;" />
-            <div class="card-body">
-                <h5 class="card-title" style="text-align:center;">Koh Hui Wen</h5>
-                <h6 style="text-align:center;">General Practitioner</h6>
-                <br />
-                <p class="card-text" style="text-align:center;">
-                    Experience: 4 Years
+    @{ 
+        foreach(var doctor in Model.myUserList)
+            {
+        <div>
+            <div class="card" style="width:300px; margin:10px;">
+                <img src="https://thumbs.dreamstime.com/z/smiling-female-doctors-working-office-asian-76064205.jpg"
+                     class="card-img-top" style="border-radius: 50%; width:150px; height:150px; margin-left:auto; margin-right:auto; margin-top:40px;" />
+                <div class="card-body">
+                    <h5 class="card-title" style="text-align:center;">@doctor.Fullname</h5>
+                    <h6 style="text-align:center;">General Practitioner</h6>
                     <br />
-                    Languages: English, Chinese
-                    <br />
-                </p>
-                <a asp-page="/Elderly/DateAndTime" asp-route-clinic="@Model.myClinic" asp-route-doctor="Koh Hui Wen" style="text-align: center; display: block;" class="btn btn-primary">SELECT DOCTOR</a>
+                    <p class="card-text" style="text-align:center;">
+                        Experience: 4 Years
+                        <br />
+                        Languages: English, Chinese
+                        <br />
+                    </p>
+                    <a asp-page="/Elderly/DateAndTime" asp-route-doctor="@doctor.Id" style="text-align: center; display: block;" class="btn btn-primary">SELECT DOCTOR</a>
+                </div>
             </div>
         </div>
-    </div>
+            }
+    }
+    
     <a asp-page="/Elderly/Clinic" class="btn btn-primary">BACK</a>
 </div>

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using Elderson.Services;
 
 namespace Elderson.Pages.Elderly
 {
@@ -16,11 +17,24 @@ namespace Elderson.Pages.Elderly
         [BindProperty]
         public string myClinic { get; set; }
         [BindProperty]
-        public string myDoctor { get; set; }
+        public List<Doctor> myDoctorList { get; set; }
+        [BindProperty]
+        public List<User> myUserList { get; set; }
+        private UserService _svc;
+        public DoctorModel(UserService service)
+        {
+            _svc = service;
+        }
 
         public void OnGet(string clinic)
         {
-            myClinic = clinic;
+            myUserList = new List<User>();
+            myClinic = "HealthWerkz Clinic";
+            myDoctorList = _svc.GetDoctorsByClinic(myClinic);
+            foreach (Doctor doc in myDoctorList)
+            {
+                myUserList.Add(_svc.GetUserById(doc.UserId));
+            }
         }
     }
 }

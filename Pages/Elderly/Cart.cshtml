@@ -20,7 +20,7 @@
                 {
                     <td>
                         <div>@item.ItemName</div>
-                        <div>@item.BookDateTime</div>
+                        <div>@Convert.ToDateTime(item.BookDateTime).ToString("dd MMMM yyyy HH:mm tt")</div>
                         <div>Clinic: @item.Clinic</div>
                     </td>
                     <td>$@item.Price</td>

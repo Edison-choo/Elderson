@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
+using Elderson.Services;
 
 namespace Elderson.Pages.Shared
 {
@@ -22,6 +23,9 @@ namespace Elderson.Pages.Shared
         public string myDoctor { get; set; }
         [BindProperty]
         [Required]
+        public string myDoctorName { get; set; }
+        [BindProperty]
+        [Required]
         public DateTime myDateTime { get; set; }
         [BindProperty]
         [Required]
@@ -29,7 +33,12 @@ namespace Elderson.Pages.Shared
         [BindProperty]
         [Required]
         public string myTime { get; set; }
-        public void OnGet(string clinic, string doctor)
+        private UserService _svc;
+        public DateAndTimeModel(UserService service)
+        {
+            _svc = service;
+        }
+        public void OnGet(string doctor)
         {
             if (HttpContext.Session.GetString("myClinic") != null)
             {
@@ -44,8 +53,16 @@ namespace Elderson.Pages.Shared
                 }
                 else
                 {
-                    myClinic = clinic;
                     myDoctor = doctor;
+                    try
+                    {
+                        myDoctorName = _svc.GetUserById(doctor).Fullname;
+                        myClinic = _svc.GetDoctorById(doctor).Clinic;
+                    }
+                    catch
+                    {
+                        Response.Redirect("Clinic");
+                    }
                 }
             }
         }
@@ -57,7 +74,7 @@ namespace Elderson.Pages.Shared
                 HttpContext.Session.SetString("myDoctor", myDoctor);
                 HttpContext.Session.SetString("myDate", myDate);
                 HttpContext.Session.SetString("myTime", myTime);
-                HttpContext.Session.SetString("myDateTime", myDateTime.ToString("dd MMMM yyyy HH:MM tt"));
+                HttpContext.Session.SetString("myDateTime", myDateTime.ToString());
                 return RedirectToPage("Symptoms");
             }
             return Page();

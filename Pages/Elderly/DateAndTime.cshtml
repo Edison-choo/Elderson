@@ -31,7 +31,7 @@
                     <input class="form-control"
                            id="formControlDoctor"
                            type="text"
-                           value="@Model.myDoctor (@Model.myClinic)"
+                           value="@Model.myDoctorName (@Model.myClinic)"
                            aria-label="readonly input example"
                            readonly />
                     <label class="form-label" for="formControlDoctor">Doctor</label>
@@ -98,4 +98,142 @@
     </form>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="~/js/datepicker.js"></script>
+<script>
+
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    let dates;
+    var tdy = new Date();
+    let this_month = tdy.getMonth();
+    let this_year = tdy.getFullYear();
+    getSchedule("@Model.myDoctor");
+    async function getSchedule(doctorID) {
+        var response1 = await fetch(`https://localhost:44311/api/DA/GetDoctorDate/${doctorID}/${this_month}/${this_year}`);
+        dates = await response1.json();
+        callCalFun()
+    }
+    async function getScheduleTime(doctorID, this_date) {
+        var response2 = await fetch(`https://localhost:44311/api/DA/GetDoctorTime/${doctorID}/${this_date}/${this_month}/${this_year}`);
+        times = await response2.json();
+        return times;
+    }
+    function callCalFun() {
+        setCal(this_month, this_year);
+        setDateavailability();
+        setDateClick();
+    }
+
+    $("#prevMonth").click(function () {
+        $("#calBody").html("")
+        if (this_month == 0) {
+            this_year -= 1;
+            this_month = 11;
+        }
+        else {
+            this_month -= 1;
+        }
+        getSchedule("@Model.myDoctor");
+    })
+    $("#nextMonth").click(function () {
+        $("#calBody").html("")
+        if (this_month == 11) {
+            this_year += 1;
+            this_month = 0;
+        }
+        else {
+            this_month += 1;
+        }
+        console.log(this_month + ":" + this_year);
+        getSchedule("@Model.myDoctor");
+    })
+    function leapYear(year) {
+        if (year % 4 == 0)
+            return true
+        else
+            return false
+    }
+    function getDays(month, year) {
+        var montharr = Array(12)
+        montharr[0] = 31
+        montharr[1] = (leapYear(year)) ? 29 : 28
+        montharr[2] = 31
+        montharr[3] = 30
+        montharr[4] = 31
+        montharr[5] = 30
+        montharr[6] = 31
+        montharr[7] = 31
+        montharr[8] = 30
+        montharr[9] = 31
+        montharr[10] = 30
+        montharr[11] = 31
+        return montharr[month]
+    }
+    function setCal(month, year) {
+        var firstDay = new Date(year, month, 1);
+        $("#month").text(months[month]);
+        var monthDays = getDays(month, year);
+        var dateCount = 0
+        var date = 1
+        for (let i = 0; i < 6; i++) {
+            $("#calBody").append("<tr>");
+            for (let j = 0; j < 7; j++) {
+                if (firstDay.getDay() > dateCount || date > monthDays) {
+                    $("#calBody").append("<td></td>");
+                }
+                else {
+                    $("#calBody").append(`<td id="d${date}m${month}">${date}</td>`);
+                    date += 1;
+                }
+                dateCount += 1
+            }
+            $("#calBody").append("</tr>")
+        }
+    }
+    function setDateavailability() {
+        for (var i = 0; i < dates.length; i++) {
+            var obj = dates[i];
+            $(`#d${obj.date}m${this_month}`).addClass(obj.availability);
+        }
+    }
+    async function setTime(date) {
+        let times = await getScheduleTime("@Model.myDoctor", date)
+        $("#timePicker").html("");
+        for (var i = 0; i < times.length; i++) {
+            obj = times[i]
+            var objTime = new Date("1970-01-01 " + times[i].time);
+            var objTime30 = new Date(objTime.getTime() + (30 * 60000));
+            var timeString = `${objTime.toLocaleTimeString()} - ${objTime30.toLocaleTimeString()}`
+            $("#timePicker").append(`<div class="${obj.availability}" data-value="${obj.time}">${timeString}</div>`);
+        }
+        setTimeClick(date);
+    }
+    function padZero(val) {
+        if (val >= 10)
+            return val
+        else
+            return '0' + val;
+    }
+    function setDateClick() {
+        $("#calBody .a").each(function () {
+            $(this).click(function () {
+                $("#calBody .a").css("border", "1px solid #B8B8B8")
+                date = `${this_year}-${padZero(this_month + 1)}-${padZero(parseInt($(this).text()))}`
+                $("#dateSelect").val(date)
+                $("#dateTimeSelect").val("");
+                $(this).css("border", "3px solid #1977CC");
+                setTime(parseInt($(this).text()));
+            })
+        })
+    }
+    function setTimeClick(date) {
+        $("#timePicker .a").each(function () {
+            $(this).click(function () {
+                $("#timePicker").children().css("border", "1px solid #B8B8B8");
+                $("#timeSelect").val($(this).data("value"));
+                datetime = `${this_year}-${padZero(this_month + 1)}-${padZero(parseInt(date))}T${$(this).data("value")}`
+                $("#dateTimeSelect").val(datetime)
+                $(this).css("border", "3px solid #1977CC");
+            })
+        })
+    }
+
+</script>

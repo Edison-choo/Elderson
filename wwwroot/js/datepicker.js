@@ -8,48 +8,40 @@ let dateStr = `{
 "24": "a",
 "25": "a"
                 }`
-let dates = [
-{
-    "date": "1",
-"avail": "a"
-    },
-{
-    "date": "2",
-"avail": "b"
-    },
-{
-    "date": "3",
-"avail": "a"
-    },
-{
-    "date": "4",
-"avail": "a"
-    },
-]
+let dates;
 let times = [
 {
     "time": "11:00",
-"avail": "a"
+"availability": "a"
     },
 {
     "time": "11:30",
-"avail": "b"
+"availability": "b"
     },
 {
     "time": "12:00",
-"avail": "a"
+"availability": "a"
     },
 {
     "time": "12:30",
-"avail": "a"
+"availability": "a"
     },
 ]
 var tdy = new Date();
 let this_month = tdy.getMonth();
 let this_year = tdy.getFullYear();
-setCal(this_month, this_year);
-setDateAvail();
-setDateClick();
+getSchedule();
+async function getSchedule(doctorID) {
+    const response = await fetch(`https://localhost:44311/api/DA/GetDoctorDate/${doctorID}/${this_month}/${this_year}`);
+    dates = await response.json();
+    callCalFun()
+}
+function callCalFun() {
+    setCal(this_month, this_year);
+    setDateavailability();
+    setDateClick();
+}
+
 $("#prevMonth").click(function () {
     $("#calBody").html("")
     if (this_month == 0) {
@@ -59,9 +51,7 @@ this_month = 11;
 else {
     this_month -= 1;
     }
-setCal(this_month, this_year);
-setDateAvail();
-setDateClick();
+    callCalFun()
 })
 $("#nextMonth").click(function () {
     $("#calBody").html("")
@@ -72,10 +62,8 @@ this_month = 0;
 else {
     this_month += 1;
     }
-console.log(this_month + ":" + this_year);
-setCal(this_month, this_year);
-setDateAvail();
-setDateClick();
+    console.log(this_month + ":" + this_year);
+    callCalFun()
 })
 function leapYear(year) {
     if (year % 4 == 0)
@@ -120,10 +108,10 @@ function setCal(month, year) {
     $("#calBody").append("</tr>")
         }
 }
-function setDateAvail() {
+function setDateavailability() {
 for (var i = 0; i < dates.length; i++) {
     var obj = dates[i];
-    $(`#d${obj.date}m${this_month}`).addClass(obj.avail);
+    $(`#d${obj.date}m${this_month}`).addClass(obj.availability);
 }
 }
 function setTime(date) {
