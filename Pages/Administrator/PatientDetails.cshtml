@@ -16,12 +16,22 @@
         </form>
 
         <div class="table-responsive">
-            <button class="btn btn-primary btn-l text-white mb-0 me-0" type="button" style="float:right" id="add-entry"><i class="mdi mdi-account-plus"></i>Add new Entry</a> </button>
+            <button class="btn btn-primary btn-l text-white mb-0 me-0" type="button" style="float:right" id="add-entry" onclick="addEntry()"><i class="mdi mdi-account-plus"></i>Add new Entry</a> </button>
         </div>
         <div id="counter" class="mb-2"></div>
-        <div class="center"></div>
-        <div id="entries">
 
+        <div class="center"></div>
+        <div id="entries" style="display: none">
+            <form method="post" id="form">
+                <div class="card">
+                    <div class="card-header">Entry<button class="delete-cross" onclick="cancelEntry()">x</button></div>
+                    <div class="card-body">
+                        <input placeholder="Title" asp-for="NewEntry.Title">
+                        <textarea placeholder="Description" rows="4" asp-for="NewEntry.DetailsofVisit"></textarea>
+                        <button class="submit-btn" type="submit">Submit Entry</button>
+                    </div>
+                </div>
+            </form>;
         </div>
     </body>
 
@@ -72,14 +82,30 @@
 
     //document.getElementById("counter").textContent = "Number of entries: " + count
 
-    html = `<div class="card">
-                <div class="card-header">Entry 1<button class="delete-cross">x</button></div>
-                    <div class="card-body">
-                        <input placeholder="Title" asp-for="newEntry.Title">
-                        <textarea placeholder="Description" rows="4" asp-for="newEntry.DetailsofVisit"></textarea>
-                        <button class="submit-btn">Submit Entry</button>
-                </div>`;
-    document.getElementById('center').append(html)
+
+    //function addEntry() {
+    //    var html = '';
+
+    //    html = `<form method="post" id="form">
+    //                <div class="card" id="card">
+    //                    <div class="card-header">Entry<button class="delete-cross" onclick="cancelEntry()">x</button></div>
+    //                        <div class="card-body">
+    //                            <input placeholder="Title" asp-for="NewEntry.Title">
+    //                            <textarea placeholder="Description" rows="4" asp-for="NewEntry.DetailsofVisit"></textarea>
+    //                            <button class="submit-btn" type="submit">Submit Entry</button>
+    //                </div>
+    //            </form>`;
+    //    document.getElementById("entries").innerHTML += html;
+    //}
+
+    function cancelEntry() {
+        var element = document.getElementById("form")
+        element.parentNode.removeChild(element);
+    }
+    function addEntry() {
+        document.getElementById("entries").style.display = "block";
+    }
+    
 </script>
 
 <style>
