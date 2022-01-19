@@ -17,45 +17,89 @@
                         <hr />
                         <div class="form-group d-flex">
                             <div style="width:20%;">
-                                <label for="exampleInputEmail3">Title:</label>
+                                <label for="name">Medication Name:</label>
 
                             </div>
-                            <div style="width:80%;">
-                                <input asp-for="newIncident.Title" type="text" class="form-control" id="exampleInputEmail3">
-                                <span asp-validation-for="newIncident.Title" class="text-danger"></span>
-                            </div>
-
-                        </div>
-                        <div class="form-group d-flex">
-                            <div style="width:20%;">
-                                <label for="password">Description:</label>
-
-                            </div>
-                            <div style="width:80%;">
-                                <textarea asp-for="newIncident.Description" rows="6" class="form-control" id="body"></textarea>
-                                <span asp-validation-for="newIncident.Description" class="text-danger"></span>
+                            <div style="width:0%;">
+                                <input asp-for="newMedication.MedName" type="text" class="form-control" id="name">
+                                <span asp-validation-for="newMedication.MedName" class="text-danger"></span>
                             </div>
 
                         </div>
                         <div class="form-group d-flex">
                             <div style="width:20%;">
-                                <label for="confirmPassword">Reason:</label>
+                                <label for="abbr">Medication Abbreviation:</label>
 
                             </div>
-                            <div style="width:80%;">
-                                <textarea asp-for="newIncident.Reason" rows="6" class="form-control" id="body"></textarea>
-                                <span asp-validation-for="newIncident.Reason" class="text-danger"></span>
+                            <div style="width:10%;">
+                                <input asp-for="newMedication.MedAbbreviation" rows="6" class="form-control" id="abbr">
+                                <span asp-validation-for="newMedication.MedAbbreviation" class="text-danger"></span>
                             </div>
 
                         </div>
                         <div class="form-group d-flex">
                             <div style="width:20%;">
-                                <label for="confirmPassword">Recommendation:</label>
+                                <label for="type">Medication Type:</label>
+
+                            </div>
+                            <div style="width:20%;">
+                                <input asp-for="newMedication.MedType" rows="6" class="form-control" id="type">
+                                <span asp-validation-for="newMedication.MedType" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="form-group d-flex">
+                            <div style="width:20%;">
+                                <label for="price">Medication Price:</label>
+
+                            </div>
+                            <div style="width:20%;">
+                                <input asp-for="newInventory.Price" rows="6" class="form-control" id="price">
+                                <span asp-validation-for="newInventory.Price" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="form-group d-flex">
+                            <div style="width:20%;">
+                                <label for="currAmt">Current Amount:</label>
+
+                            </div>
+                            <div style="width:10%;">
+                                <input asp-for="newInventory.CurrentAmt" rows="6" class="form-control" id="currAmt">
+                                <span asp-validation-for="newInventory.CurrentAmt" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="form-group d-flex">
+                            <div style="width:20%;">
+                                <label for="minAmt">Minimum Amount:</label>
+
+                            </div>
+                            <div style="width:10%;">
+                                <input asp-for="newInventory.MinimumAmt" rows="6" class="form-control" id="minAmt">
+                                <span asp-validation-for="newInventory.MinimumAmt" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="form-group d-flex">
+                            <div style="width:20%;">
+                                <label for="descript">Medication Description:</label>
 
                             </div>
                             <div style="width:80%;">
-                                <textarea asp-for="newIncident.Recommendation" rows="6" class="form-control" id="body"></textarea>
-                                <span asp-validation-for="newIncident.Recommendation" class="text-danger"></span>
+                                <textarea asp-for="newMedication.MedDescription" rows="6" class="form-control" id="descript"></textarea>
+                                <span asp-validation-for="newMedication.MedDescription" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="form-group d-flex">
+                            <div style="width:20%;">
+                                <label for="supAbbr">Medical Supplier Abbreviation:</label>
+
+                            </div>
+                            <div style="width:10%;">
+                                <input asp-for="newMedication.MedSupplierAbb" rows="6" class="form-control" id="supAbbr">
+                                <span asp-validation-for="newMedication.MedSupplierAbb" class="text-danger"></span>
                             </div>
 
                         </div>

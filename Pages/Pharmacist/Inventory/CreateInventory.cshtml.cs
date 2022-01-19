@@ -14,7 +14,9 @@ namespace Elderson.Pages.Pharmacist.Inventory
     {
         [BindProperty]
         public MedInventory newInventory { get; set; }
-        
+        [BindProperty]
+        public Medication newMedication { get; set; }
+
         private InventoryService _svc;
         private readonly ILogger<CreateInventoryModel> _logger;
         public CreateInventoryModel(ILogger<CreateInventoryModel> logger, InventoryService service)

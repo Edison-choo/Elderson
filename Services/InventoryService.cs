@@ -22,7 +22,7 @@ namespace Elderson.Services
             return AllMedInventories;
         }
 
-        public MedInventory GetMediationById(string id)
+        public MedInventory GetMedicationById(string id)
         {
             MedInventory inventory = _context.Inventory.Where(e => e.Id == id).FirstOrDefault();
             return inventory;

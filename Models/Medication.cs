@@ -9,10 +9,13 @@ namespace Elderson.Models
     public class Medication
     {
         public string Id { get; set; }
-        [Required]
+        [Required (ErrorMessage ="Please enter Medication Name")]
         public string MedName { get; set; }
+        [Required(ErrorMessage = "Please enter Medication Abbreviation")]
         public string MedAbbreviation { get; set; }
+        [Required(ErrorMessage = "Please select Medication Type")]
         public string MedType { get; set; }
+        [Required(ErrorMessage = "Please enter Medication Description")]
         public string MedDescription { get; set; }
         public string MedSupplierAbb { get; set; }
     }
