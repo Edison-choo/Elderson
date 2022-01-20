@@ -32,7 +32,7 @@ namespace Elderson
             try
             {
                 alluser = _svc.GetAllUsers();
-                var jsonStr = JsonSerializer.Serialize(alluser.Select(x => new { x.Id, x.Fullname, x.UserType}));
+                var jsonStr = JsonSerializer.Serialize(alluser.Select(x => new { x.Id, x.Fullname, x.UserType, x.Phone}));
                 return Ok(jsonStr);
             }
             catch (Exception ex)

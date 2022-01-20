@@ -42,6 +42,24 @@ namespace Elderson.Api
             }
         }
 
+        [HttpGet("{apiname}/{userId}", Name = "GetDetails")]
+        public ActionResult<List<PatientDetails>> GetDetails(string userId)
+        {
+            List<PatientDetails> allDetails = new List<PatientDetails>();
+
+            try
+            {
+                allDetails = _svc.GetAllEntries();
+                var jsonStr = JsonSerializer.Serialize(allDetails.Where(e => e.PatientID == userId).Select(x => new { x.Id, x.Title, x.DetailsofVisit }));
+                return Ok(jsonStr);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("instalmentController.getCarLoan", ex);
+                return BadRequest();
+            }
+        }
+
         // Update api/<controller>/5
         [HttpPut ("{id}")]
         public ActionResult Update(string Id, PatientDetails details)

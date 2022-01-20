@@ -15,6 +15,8 @@ namespace Elderson
 
         [BindProperty]
         public PatientDetails NewEntry { get; set; }
+        [BindProperty]
+        public string Id { get; set; }
         private AdministratorService _svc;
         private readonly ILogger<PatientDetailsModel> _logger;
         public PatientDetailsModel(ILogger<PatientDetailsModel> logger, AdministratorService service)
@@ -23,9 +25,9 @@ namespace Elderson
             _logger = logger;
         }
 
-        public void OnGet()
+        public void OnGet(string id)
         {
-
+            Id = id;
         }
 
         public IActionResult OnPost()
@@ -34,10 +36,11 @@ namespace Elderson
             {
                 string guid = Guid.NewGuid().ToString();
                 NewEntry.Id = guid;
+                NewEntry.PatientID = "8d96eb8d-fdc9-45f9-bf11-bc69bf93ef39";
                 NewEntry.DateofVisit = DateTime.Now;
                 _svc.AddEntry(NewEntry);
             }
-            return RedirectToPage("PatientDetails");
+            return Page();
         }
     }
 }

@@ -46,11 +46,11 @@
                 },
                 "columns": [
                     { "data": "Fullname" },
-                    { "data": "Email" },
+                    { "data": "Phone" },
                     {
                         "data": function (data, type, full) {
                             return `<div class="btn-group">
-                                            <button type="button" class="btn btn-primary btn-l text-white mb-0 me-0" href="/Administrator/PatientsDetails/?id=${data.Id}">Edit></button>
+                                            <button type="button" style="height: 35px;" class="btn btn-primary btn-l text-white mb-0 me-0" ><a href="/Administrator/PatientDetails?id=${data.Id}">Edit</a></button>
                                             </div>`;
                             }
                         }
@@ -82,7 +82,7 @@
                 <thead>
                     <tr>
                         <th>NAME</th>
-                        <th style="width:20%;">EMAIL</th>
+                        <th style="width:20%;">Phone</th>
                         <th style="width:175px;">ACTION</th>
                     </tr>
                 </thead>

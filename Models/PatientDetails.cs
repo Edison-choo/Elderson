@@ -15,6 +15,6 @@ namespace Elderson.Models
         
         public DateTime DateofVisit { get; set; }
 
-        public int PatientID { get; set; }
+        public string PatientID { get; set; }
     }
 }
