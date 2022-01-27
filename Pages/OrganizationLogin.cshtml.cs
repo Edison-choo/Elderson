@@ -64,8 +64,10 @@ namespace Elderson.Pages
                         } else if (user.UserType == "Pharmacist")
                         {
                             return Redirect("~/Pharmacist");
+                        } else
+                        {
+                            return Redirect("~/");
                         }
-                        return Redirect("~/");
                     }
                     else
                     {
