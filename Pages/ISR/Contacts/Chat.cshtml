@@ -360,7 +360,7 @@
         <div class="body-section">
             <div class="left-section mCustomScrollbar" data-mcs-theme="minimal-dark">
                 <ul id="chatUser">
-                    @{ if (HttpContext.Session.GetString("LoginUser") == "8d96eb8d-fdc9-45f9-bf11-bc69bf93ef39")
+                    @{ if (HttpContext.Session.GetString("LoginUserType") == "ITSupport")
                         {
                             @*<li id="test" class="active chatActive" onclick="changeChat(this, 'test')">
                     <div class="chatList">
@@ -392,7 +392,7 @@
                         </div>
                     </div>
                 </li>*@
-                            <li id="8d96eb8d-fdc9-45f9-bf11-bc69bf93ef39" onclick="changeChat(this, '8d96eb8d-fdc9-45f9-bf11-bc69bf93ef39')">
+                            <li id="12345" onclick="changeChat(this, '12345')">
                                 <div class="chatList">
                                     <div class="img">
                                         <i class="fa fa-circle"></i>
@@ -430,11 +430,11 @@
 
                         } }
 
-                    @{ if (Model.allmessages.Count == 0 || !Model.allmessages.ContainsKey(HttpContext.Session.GetString("chatUser")))
+                    @{ if (HttpContext.Session.GetString("ChatUser") != null)
                         {
-                            if (HttpContext.Session.GetString("chatUser") != null)
+                            if (!Model.allmessages.ContainsKey(HttpContext.Session.GetString("ChatUser")))
                             {
-                                <li id="@HttpContext.Session.GetString("chatUser")" onclick="changeChat(this, '@HttpContext.Session.GetString("chatUser")')">
+                                <li id="@HttpContext.Session.GetString("ChatUser")" onclick="changeChat(this, '@HttpContext.Session.GetString("ChatUser")')">
                                     <div class="chatList">
                                         <div class="img">
                                             <i class="fa fa-circle"></i>
@@ -442,7 +442,7 @@
                                         </div>
                                         <div class="desc">
                                             <small class="time">05:30 am</small>
-                                            <h5>@HttpContext.Session.GetString("chatUser")</h5>
+                                            <h5>@HttpContext.Session.GetString("ChatUser")</h5>
                                             <small>...</small>
                                         </div>
                                     </div>
@@ -467,12 +467,12 @@
         <div class="body-section">
             <div class="right-section">
                 <div class="message wholeChat" data-mcs-theme="minimal-dark">
-                    @{ if (HttpContext.Session.GetString("LoginUser") != "8d96eb8d-fdc9-45f9-bf11-bc69bf93ef39")
+                    @{ if (HttpContext.Session.GetString("LoginUserType") != "ITSupport")
                         {
                             <ul id="messageList" class="8d96eb8d-fdc9-45f9-bf11-bc69bf93ef39" style="display:none;">
-                                @{ if (Model.allmessages.ContainsKey("8d96eb8d-fdc9-45f9-bf11-bc69bf93ef39"))
+                                @{ if (Model.allmessages.ContainsKey("12345"))
                                     {
-                                        foreach (var msg in Model.allmessages["8d96eb8d-fdc9-45f9-bf11-bc69bf93ef39"])
+                                        foreach (var msg in Model.allmessages["12345"])
                                         {
                                             if (msg.ToUserId == HttpContext.Session.GetString("LoginUser"))
                                             {
@@ -505,30 +505,27 @@
                     }
 
 
-                    @*<ul id="messageList" class="test showActive" style="visibility:hidden;">
-            <li class="msg-left">
-                <div class="msg-left-sub">
-                    <div class="msg-desc">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua.
-                    </div>
-                    <small>05:25 am</small>
-                </div>
-            </li>
+                    <ul id="messageList" class="test showActive" style="visibility:hidden;">
+                        <li class="msg-left">
+                            <div class="msg-left-sub">
+                                <div class="msg-desc">
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                    tempor incididunt ut labore et dolore magna aliqua.
+                                </div>
+                                <small>05:25 am</small>
+                            </div>
+                        </li>
 
-            <li class="msg-right">
-                <div class="msg-right-sub">
-                    <div class="msg-desc">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua.
-                    </div>
-                    <small>05:25 am</small>
-                </div>
-            </li>
-
-
-
-        </ul>*@
+                        <li class="msg-right">
+                            <div class="msg-right-sub">
+                                <div class="msg-desc">
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                    tempor incididunt ut labore et dolore magna aliqua.
+                                </div>
+                                <small>05:25 am</small>
+                            </div>
+                        </li>
+                    </ul>
 
                     @{ foreach (var user in Model.allmessages)
                         {
@@ -560,40 +557,14 @@
                                     } }
                             </ul> } }
 
-                    @{ if (Model.allmessages.Count == 0 || !Model.allmessages.ContainsKey(HttpContext.Session.GetString("chatUser")))
+                    @{ if (HttpContext.Session.GetString("ChatUser") != null)
                         {
-                            if (HttpContext.Session.GetString("chatUser") != null)
+                            if (!Model.allmessages.ContainsKey(HttpContext.Session.GetString("ChatUser")))
                             {
-                                <ul id="messageList" class="@HttpContext.Session.GetString("chatUser") showActive">
+                                <ul id="messageList" class="@HttpContext.Session.GetString("ChatUser")">
                                 </ul>
                             }
-                            else
-                            {
-                                <ul id="messageList" class="test showActive" style="visibility:hidden;">
-                                    <li class="msg-left">
-                                        <div class="msg-left-sub">
-                                            <div class="msg-desc">
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                                tempor incididunt ut labore et dolore magna aliqua.
-                                            </div>
-                                            <small>05:25 am</small>
-                                        </div>
-                                    </li>
 
-                                    <li class="msg-right">
-                                        <div class="msg-right-sub">
-                                            <div class="msg-desc">
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                                tempor incididunt ut labore et dolore magna aliqua.
-                                            </div>
-                                            <small>05:25 am</small>
-                                        </div>
-                                    </li>
-
-
-
-                                </ul>
-                            }
                         }
 
                     }
@@ -627,7 +598,7 @@
     <script src="~/js/chat.js"></script>*@
 
 <script>
-    var toUserId = "8d96eb8d-fdc9-45f9-bf11-bc69bf93ef39";
+    var toUserId = "12345";
     var connectId = "";
 
     class Message {

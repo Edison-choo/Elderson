@@ -72,6 +72,7 @@ namespace Elderson
             {
                 HttpContext.Session.Remove("LoginUser");
                 HttpContext.Session.Remove("LoginUserType");
+                HttpContext.Session.Remove("ChatUser");
                 _notfy.Success("Signout Successfully");
                 return Ok();
 
