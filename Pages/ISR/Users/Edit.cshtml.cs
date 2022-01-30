@@ -8,6 +8,7 @@ using Elderson.Models;
 using Elderson.Services;
 using System.Globalization;
 using Microsoft.Extensions.Logging;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace Elderson.Pages.ISR.Users
 {
@@ -29,10 +30,12 @@ namespace Elderson.Pages.ISR.Users
         public Patient UpdatedPatient { get; set; }
         private UserService _svc;
         private readonly ILogger<EditModel> _logger;
-        public EditModel(ILogger<EditModel> logger, UserService service)
+        private readonly INotyfService _notfy;
+        public EditModel(ILogger<EditModel> logger, UserService service, INotyfService notyf)
         {
             _logger = logger;
             _svc = service;
+            _notfy = notyf;
         }
         public void OnGet(string id)
         {
@@ -47,6 +50,7 @@ namespace Elderson.Pages.ISR.Users
         {
             if (!(ModelState.IsValid))
             {
+                _notfy.Error("Error");
                 return Page();
             }
 
@@ -54,6 +58,7 @@ namespace Elderson.Pages.ISR.Users
             if (_svc.GetUserByEmail(SelectedUser.Email) != null && SelectedUser.Email != UpdatedUser.Email)
             {
                 _logger.LogInformation("{actionStatus} User {userId} {userAction}. Email is already being used.", "Unsuccessful", SelectedUser.Id, "edit user");
+                _notfy.Error("Email is already used");
                 return Page();
             }
             UpdatedUser.Fullname = SelectedUser.Fullname;
@@ -94,6 +99,7 @@ namespace Elderson.Pages.ISR.Users
             if (valid)
             {
                 _logger.LogInformation("{actionStatus} User {userId} {userAction}.", "Successful", SelectedUser.Id, "edit user");
+                _notfy.Success("Edit User Successfully");
                 return RedirectToPage("Index");
             }
 

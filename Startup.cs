@@ -12,6 +12,8 @@ using Elderson.Services;
 using Elderson.Models;
 using Serilog;
 using Elderson.Hubs;
+using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification.Extensions;
 
 namespace Elderson
 {
@@ -38,6 +40,7 @@ namespace Elderson
             services.AddTransient<ScheduleService>();
             services.AddTransient<BookingService>();
             services.AddTransient<InventoryService>();
+            services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.TopCenter; });
             services.AddControllers();
         }
 
@@ -64,7 +67,9 @@ namespace Elderson
 
             app.UseAuthorization();
 
-            app.UseSession(); 
+            app.UseSession();
+
+            app.UseNotyf();
 
             app.UseEndpoints(endpoints =>
             {

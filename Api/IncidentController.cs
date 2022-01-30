@@ -1,4 +1,5 @@
-﻿using Elderson.Models;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Elderson.Models;
 using Elderson.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -16,12 +17,14 @@ namespace Elderson.Api
         private readonly EldersonContext _context;
         private IncidentService _svc;
         private UserService _u_svc;
+        private readonly INotyfService _notfy;
 
-        public IncidentController(EldersonContext context, IncidentService service, UserService userService)
+        public IncidentController(EldersonContext context, IncidentService service, UserService userService, INotyfService notyf)
         {
             _context = context;
             _svc = service;
             _u_svc = userService;
+            _notfy = notyf;
         }
 
         // GET: api/<UserController>
@@ -71,6 +74,7 @@ namespace Elderson.Api
             {
                 var deleteUser = _svc.GetIncidentById(incidentId);
                 _svc.DeleteIncident(deleteUser);
+                _notfy.Success("Delete User Successfully");
             }
             catch (Exception ex)
             {

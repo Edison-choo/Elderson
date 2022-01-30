@@ -9,6 +9,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace Elderson.Pages
 {
@@ -25,10 +26,12 @@ namespace Elderson.Pages
 
         private UserService _svc;
         private readonly ILogger<OrganizationLoginModel> _logger;
-        public OrganizationLoginModel(ILogger<OrganizationLoginModel> logger, UserService service)
+        private readonly INotyfService _notfy;
+        public OrganizationLoginModel(ILogger<OrganizationLoginModel> logger, UserService service, INotyfService notyf)
         {
             _logger = logger;
             _svc = service;
+            _notfy = notyf;
         }
         public void OnGet()
         {
@@ -52,6 +55,8 @@ namespace Elderson.Pages
                         HttpContext.Session.SetString("LoginUserType", user.UserType);
                         _logger.LogInformation("{actionStatus} {userType} User {userId} {userAction}.", "Successful", user.UserType, user.Id, "login");
 
+                        _notfy.Success("Login Successfully");
+
                         if (user.UserType == "Doctor")
                         {
                             return Redirect("~/DRR");
@@ -72,14 +77,16 @@ namespace Elderson.Pages
                     else
                     {
                         _logger.LogInformation("{actionStatus} Organization User {userId} {userAction}. Password is incorrect.", "Unsuccessful", user.Id, "login");
-                        ErrorMsg = "Login Information is incorrect";
+                        //ErrorMsg = "Login Information is incorrect";
+                        _notfy.Error("Login Information is incorrect");
                         return Page();
                     }
                 }
                 else
                 {
                     _logger.LogInformation("{actionStatus} Organization User {userAction}. Login information is incorrect.", "Unsuccessful", "login");
-                    ErrorMsg = "Login Information is incorrect";
+                    //ErrorMsg = "Login Information is incorrect";
+                    _notfy.Error("Login Information is incorrect");
                     return Page();
                 }
             }

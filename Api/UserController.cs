@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Elderson.Models;
 using Elderson.Services;
 using System.Text.Json;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace Elderson
 {
@@ -16,11 +17,13 @@ namespace Elderson
     {
         private readonly EldersonContext _context;
         private UserService _svc;
+        private readonly INotyfService _notfy;
 
-        public UserController(EldersonContext context, UserService service)
+        public UserController(EldersonContext context, UserService service, INotyfService notyf)
         {
             _context = context;
             _svc = service;
+            _notfy = notyf;
         }
 
         // GET: api/<UserController>
@@ -69,12 +72,20 @@ namespace Elderson
             {
                 HttpContext.Session.Remove("LoginUser");
                 HttpContext.Session.Remove("LoginUserType");
+                _notfy.Success("Signout Successfully");
                 return Ok();
 
             } else
             {
                 return BadRequest();
             }
+        }
+
+        [HttpGet("{apiname}/{userId}", Name = "Message")]
+        public ActionResult Message(string userId)
+        {
+            HttpContext.Session.SetString("ChatUser", userId);
+            return Ok();
         }
 
         //// GET api/<UserController>/5
@@ -118,6 +129,7 @@ namespace Elderson
                 }
 
                 _svc.DeleteUser(deleteUser);
+                _notfy.Success("Delete User Successfully");
             }
             catch (Exception ex)
             {

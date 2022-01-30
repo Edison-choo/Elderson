@@ -12,6 +12,7 @@ using System.ComponentModel.DataAnnotations;
 using MailKit.Net.Smtp;
 using MimeKit;
 using Microsoft.Extensions.Logging;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace Elderson.Pages
 {
@@ -40,10 +41,12 @@ namespace Elderson.Pages
         }
         private UserService _svc;
         private readonly ILogger<RegisterModel> _logger;
-        public RegisterModel(ILogger<RegisterModel> logger,UserService service)
+        private readonly INotyfService _notfy;
+        public RegisterModel(ILogger<RegisterModel> logger,UserService service, INotyfService notyf)
         {
             _svc = service;
             _logger = logger;
+            _notfy = notyf;
         }
         public void OnGet()
         {
@@ -73,6 +76,7 @@ namespace Elderson.Pages
                 if (_svc.GetUserByEmail(newUser.Email) != null)
                 {
                     _logger.LogInformation("{actionStatus} User {userAction}. Email is already being used.", "Unsuccessful", "register");
+                    _notfy.Success("Email is already used");
                     return Page();
                 }
 
@@ -92,6 +96,7 @@ namespace Elderson.Pages
                 _svc.AddPatient(PatientRole);
 
                 _logger.LogInformation("{actionStatus} User {userId} {userAction}.", "Successful", newUser.Id, "register");
+                _notfy.Success("Register Successfully");
 
                 return RedirectToPage("Login");
             } else
@@ -100,6 +105,7 @@ namespace Elderson.Pages
                                         .SelectMany(x => x.Errors)
                                         .Select(x => x.ErrorMessage));
                 Console.WriteLine(messages);
+                _notfy.Error("Error");
             }
 
             return Page();

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNetCoreHero.ToastNotification.Abstractions;
 using Elderson.Models;
 using Elderson.Pages.Users;
 using Elderson.Services;
@@ -17,10 +18,12 @@ namespace Elderson.Pages.ISR.Incidents
         public Incident newIncident { get; set; }
         private IncidentService _svc;
         private readonly ILogger<CreateModel> _logger;
-        public CreateModel(ILogger<CreateModel> logger, IncidentService service)
+        private readonly INotyfService _notfy;
+        public CreateModel(ILogger<CreateModel> logger, IncidentService service, INotyfService notyf)
         {
             _svc = service;
             _logger = logger;
+            _notfy = notyf;
         }
         public void OnGet()
         {
@@ -31,6 +34,7 @@ namespace Elderson.Pages.ISR.Incidents
             if (!(ModelState.IsValid))
             {
                 _logger.LogInformation("{actionStatus} {userAction}. Model state is invalid.", "Unsuccessful", "create incident");
+                _notfy.Error("Error");
                 return Page();
             }
 
@@ -41,6 +45,7 @@ namespace Elderson.Pages.ISR.Incidents
             _svc.AddIncident(newIncident);
 
             _logger.LogInformation("{actionStatus} {userAction} {incidentId} by User {userId}.", "Successful", "create incident", newIncident.Id, newIncident.UserId);
+            _notfy.Success("Create Incident Successfully");
             return RedirectToPage("Index");
         }
     }

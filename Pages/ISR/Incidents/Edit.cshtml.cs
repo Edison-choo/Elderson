@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNetCoreHero.ToastNotification.Abstractions;
 using Elderson.Models;
 using Elderson.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -17,10 +18,12 @@ namespace Elderson.Pages.ISR.Incidents
         public Incident UpdatedIncident { get; set; }
         private IncidentService _svc;
         private readonly ILogger<EditModel> _logger;
-        public EditModel(ILogger<EditModel> logger, IncidentService service)
+        private readonly INotyfService _notfy;
+        public EditModel(ILogger<EditModel> logger, IncidentService service, INotyfService notyf)
         {
             _logger = logger;
             _svc = service;
+            _notfy = notyf;
         }
         public void OnGet(string id)
         {
@@ -31,6 +34,7 @@ namespace Elderson.Pages.ISR.Incidents
             if (!(ModelState.IsValid))
             {
                 _logger.LogInformation("{actionStatus} {userAction}.", "Unsuccessful", "edit incident");
+                _notfy.Error("Error");
                 return Page();
             }
 
@@ -44,6 +48,7 @@ namespace Elderson.Pages.ISR.Incidents
             if (valid)
             {
                 _logger.LogInformation("{actionStatus} {userAction} {incidentId} of User {userId}.", "Successful", "edit incident", SelectedIncident.Id, SelectedIncident.UserId);
+                _notfy.Success("Edit Incident Successfully");
                 return RedirectToPage("Index");
             }
 

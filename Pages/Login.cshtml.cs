@@ -10,6 +10,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace Elderson.Pages.Users
 {
@@ -26,10 +27,12 @@ namespace Elderson.Pages.Users
 
         private UserService _svc;
         private readonly ILogger<LoginModel> _logger;
-        public LoginModel(ILogger<LoginModel> logger, UserService service)
+        private readonly INotyfService _notfy;
+        public LoginModel(ILogger<LoginModel> logger, UserService service, INotyfService notyf)
         {
             _logger = logger;
             _svc = service;
+            _notfy = notyf;
         }
         public void OnGet()
         {
@@ -53,17 +56,20 @@ namespace Elderson.Pages.Users
                         HttpContext.Session.SetString("LoginUserType", user.UserType);
                         
                         _logger.LogInformation("{actionStatus} User {userId} {userAction}.", "Successful", user.Id, "login");
+                        _notfy.Success("Login Successfully");
                         return Redirect("/");
                     } else
                     {
                         _logger.LogInformation("{actionStatus} User {userId} {userAction}. Password is incorrect.", "Unsuccessful", user.Id, "login");
-                        ErrorMsg = "Login Information is incorrect";
+                        //ErrorMsg = "Login Information is incorrect";
+                        _notfy.Error("Login Information is incorrect");
                         return Page();
                     }
                 } else
                 {
                     _logger.LogInformation("{actionStatus} User {userId} {userAction}. Login information is incorrect.", "unsuccessful", user.Id, "login");
-                    ErrorMsg = "Login Information is incorrect";
+                    //ErrorMsg = "Login Information is incorrect";
+                    _notfy.Error("Login Information is incorrect");
                     return Page();
                 }
             } catch

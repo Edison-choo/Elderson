@@ -57,6 +57,7 @@
                                                 <a class="dropdown-item" href="/ISR/Users/Edit?id=${data.Id}">Edit</a>
                                                 <a class="dropdown-item" href="/ISR/Users/Lock?id=${data.Id}">Lock</a>
                                                 <a class="dropdown-item" href="/ISR/Users/ChangePwd?id=${data.Id}">Change password</a>
+                                                <a class="dropdown-item" href='#' onclick="return message('${data.Id}')">Message</a>
                                                 <a class="dropdown-item" data-toggle="modal" data-target=${"#staticBackdrop" + data.Id}>Delete</a>
                                                 </div>
                                             </div>
@@ -232,6 +233,20 @@
                 console.log("Item delete successfully");
                 $('#userstable').DataTable().ajax.reload();
                 $('.fade').hide();
+
+
+            }
+        });
+    }
+
+    function message(userId) {
+        $.ajax({
+            url: 'https://localhost:44311/api/User/ChatUser/' + userId,
+            type: 'GET',
+            success: function (result) {
+
+                console.log(result);
+                window.location.href = "/ISR/Contacts/Chat";
 
 
             }

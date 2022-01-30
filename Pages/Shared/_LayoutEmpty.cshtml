@@ -52,6 +52,7 @@
     <script src="~/js/Chart.roundedBarCharts.js"></script>
     <!-- End custom js for this page-->
 
+    @await Component.InvokeAsync("Notyf")
     @RenderSection("Scripts", required: false)
 </body>
 </html>

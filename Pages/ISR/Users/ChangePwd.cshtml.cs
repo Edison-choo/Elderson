@@ -10,6 +10,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.Extensions.Logging;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace Elderson.Pages.ISR.Users
 {
@@ -43,10 +44,12 @@ namespace Elderson.Pages.ISR.Users
 
         private UserService _svc;
         private readonly ILogger<ChangePwdModel> _logger;
-        public ChangePwdModel(ILogger<ChangePwdModel> logger, UserService service)
+        private readonly INotyfService _notfy;
+        public ChangePwdModel(ILogger<ChangePwdModel> logger, UserService service, INotyfService notyf)
         {
             _logger = logger;
             _svc = service;
+            _notfy = notyf;
         }
         public void OnGet(string id)
         {
@@ -80,20 +83,23 @@ namespace Elderson.Pages.ISR.Users
                         if (valid)
                         {
                             _logger.LogInformation("{actionStatus} User {userId} {userAction}.", "Successful", user.Id, "update user");
+                            _notfy.Success("Change password Successfully");
                             return RedirectToPage("Index");
                         }
                     }
                     else
                     {
                         _logger.LogInformation("{actionStatus} User {userId} {userAction}. The passwords do not match.", "Unsuccessful", user.Id, "update user");
-                        ErrorMsg = "New password does not match";
+                        _notfy.Error("New passwords do not match");
+                        //ErrorMsg = "New password does not match";
                     }
 
                 }
                 else
                 {
                     _logger.LogInformation("{actionStatus} User {userId} {userAction}. Password is incorrect.", "Unsuccessful", user.Id, "update user");
-                    ErrorMsg = "Current password is incorrect";
+                    _notfy.Error("Current password is incorrect");
+                    //ErrorMsg = "Current password is incorrect";
                 }
                 return Page();
             }

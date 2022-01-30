@@ -10,6 +10,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.Extensions.Logging;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace Elderson.Pages.Users
 {
@@ -42,10 +43,12 @@ namespace Elderson.Pages.Users
         }
         private UserService _svc;
         private readonly ILogger<CreateUserModel> _logger;
-        public CreateUserModel(ILogger<CreateUserModel> logger, UserService service)
+        private readonly INotyfService _notfy;
+        public CreateUserModel(ILogger<CreateUserModel> logger, UserService service, INotyfService notyf)
         {
             _svc = service;
             _logger = logger;
+            _notfy = notyf;
         }
         public void OnGet()
         {
@@ -74,6 +77,7 @@ namespace Elderson.Pages.Users
                 if (_svc.GetUserByEmail(newUser.Email) != null)
                 {
                     _logger.LogInformation("{actionStatus} User {userId} {userAction}. Email is already being used.", "Unsuccessful", newUser.Id, "create user");
+                    _notfy.Error("Email is already used");
                     return Page();
                 }
 
@@ -112,7 +116,11 @@ namespace Elderson.Pages.Users
                 }
 
                 _logger.LogInformation("{actionStatus} User {userId} {userAction}.", "Successful", newUser.Id, "create user");
+                _notfy.Success("Create User Successfully");
                 return RedirectToPage("Index");
+            } else
+            {
+                _notfy.Error("Error");
             }
             //var error = ModelState.Values.SelectMany(v => v.Errors.Select(b => b.Exception));
             //foreach (var i in error)
