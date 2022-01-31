@@ -61,6 +61,10 @@ namespace Elderson.Hubs
         {
             //string userId = Context.GetHttpContext().Request.Query["userId"];
             string userId = Context.GetHttpContext().Session.GetString("LoginUser");
+            if (Context.GetHttpContext().Session.GetString("LoginUserType") == "ITSupport")
+            {
+                Groups.AddToGroupAsync(Context.ConnectionId, "ISRChat");
+            }
             Console.WriteLine(userId);
             Groups.AddToGroupAsync(Context.ConnectionId, userId);
             return base.OnConnectedAsync();
@@ -75,6 +79,13 @@ namespace Elderson.Hubs
             message.When = DateTime.Now;
             _svc.AddChat(message);
             return Clients.Group(receiver).SendAsync("ReceiveMessage", message);
+        }
+
+        public Task SendNotiToGroup(string userId)
+        {
+            Console.WriteLine(userId);
+
+            return Clients.Group("ISRChat").SendAsync("ReceiveNoti", userId);
         }
     }
 }

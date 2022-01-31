@@ -52,6 +52,7 @@ namespace Elderson.Pages
                     if (user.Password.Equals(Convert.ToBase64String(hashWithSalt)))
                     {
                         HttpContext.Session.SetString("LoginUser", user.Id);
+                        HttpContext.Session.SetString("LoginUserName", user.Fullname);
                         HttpContext.Session.SetString("LoginUserType", user.UserType);
                         _logger.LogInformation("{actionStatus} {userType} User {userId} {userAction}.", "Successful", user.UserType, user.Id, "login");
 

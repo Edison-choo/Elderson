@@ -360,58 +360,25 @@
         <div class="body-section">
             <div class="left-section mCustomScrollbar" data-mcs-theme="minimal-dark">
                 <ul id="chatUser">
-                    @{ if (HttpContext.Session.GetString("LoginUserType") == "ITSupport")
-                        {
-                            @*<li id="test" class="active chatActive" onclick="changeChat(this, 'test')">
-                    <div class="chatList">
-                        <div class="img">
-                            <i class="fa fa-circle"></i>
-                            <img src="/demo/man02.png">
-                        </div>
-                        <div class="desc">
-                            <small class="time">3 day</small>
-                            <h5>Test user</h5>
-                            <small>Lorem ipsum dolor sit amet...</small>
-                        </div>
-                    </div>
-                </li>*@
-
-                        }
-                        else
-                        {
-                            @*<li id="test" class="active chatActive" onclick="changeChat(this, 'test')">
-                    <div class="chatList">
-                        <div class="img">
-                            <i class="fa fa-circle"></i>
-                            <img src="/demo/man02.png">
-                        </div>
-                        <div class="desc">
-                            <small class="time">3 day</small>
-                            <h5>Test user</h5>
-                            <small>Lorem ipsum dolor sit amet...</small>
-                        </div>
-                    </div>
-                </li>*@
-                            <li id="12345" onclick="changeChat(this, '12345')">
-                                <div class="chatList">
-                                    <div class="img">
-                                        <i class="fa fa-circle"></i>
-                                        <img src="/demo/man01.png">
-                                    </div>
-                                    <div class="desc">
-                                        <small class="time">05:30 am</small>
-                                        <h5>IT Support</h5>
-                                        <small></small>
-                                    </div>
-                                </div>
-                            </li>
-
-                        }
-                    }
-
                     @{ foreach (var user in Model.allmessages)
                         {
-                            if (user.Key != "8d96eb8d-fdc9-45f9-bf11-bc69bf93ef39")
+                            if (user.Key == "ISRChat")
+                            {
+                                <li id="ISRChat" onclick="changeChat(this, 'ISRChat')">
+                                    <div class="chatList">
+                                        <div class="img">
+                                            <i class="fa fa-circle"></i>
+                                            <img src="/demo/man01.png">
+                                        </div>
+                                        <div class="desc">
+                                            <small class="time">05:30 am</small>
+                                            <h5>IT Support</h5>
+                                            <small>...</small>
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                            else
                             {
                                 <li id="@user.Key" onclick="changeChat(this, '@user.Key')">
                                     <div class="chatList">
@@ -442,7 +409,7 @@
                                         </div>
                                         <div class="desc">
                                             <small class="time">05:30 am</small>
-                                            <h5>@HttpContext.Session.GetString("ChatUser")</h5>
+                                            <h5>@HttpContext.Session.GetString("ChatUserName")</h5>
                                             <small>...</small>
                                         </div>
                                     </div>
@@ -467,63 +434,16 @@
         <div class="body-section">
             <div class="right-section">
                 <div class="message wholeChat" data-mcs-theme="minimal-dark">
-                    @{ if (HttpContext.Session.GetString("LoginUserType") != "ITSupport")
-                        {
-                            <ul id="messageList" class="8d96eb8d-fdc9-45f9-bf11-bc69bf93ef39" style="display:none;">
-                                @{ if (Model.allmessages.ContainsKey("12345"))
+                    <ul id="messageList" class="test showActive ">
+                        <li style="height: 100%; width: 100%;">
+                            @{ if (HttpContext.Session.GetString("LoginUserType") != "ITSupport")
+                                {
+                                    if (!Model.allmessages.ContainsKey("ISRChat") && HttpContext.Session.GetString("ChatUser") != "ISRChat")
                                     {
-                                        foreach (var msg in Model.allmessages["12345"])
-                                        {
-                                            if (msg.ToUserId == HttpContext.Session.GetString("LoginUser"))
-                                            {
-                                                <li class="msg-left">
-                                                    <div class="msg-left-sub">
-                                                        <div class="msg-desc">
-                                                            @msg.Text
-                                                        </div>
-                                                        <small>@msg.When</small>
-                                                    </div>
-                                                </li>
-                                            }
-                                            else
-                                            {
-                                                <li class="msg-right">
-                                                    <div class="msg-right-sub">
-                                                        <div class="msg-desc">
-                                                            @msg.Text
-                                                        </div>
-                                                        <small>@msg.When</small>
-                                                    </div>
-                                                </li>
-                                            }
-                                        }
+                                        <button class="btn btn-primary startISRChat">Start talking to IT Support</button>
                                     }
                                 }
-
-                            </ul>
-                        }
-                    }
-
-
-                    <ul id="messageList" class="test showActive" style="visibility:hidden;">
-                        <li class="msg-left">
-                            <div class="msg-left-sub">
-                                <div class="msg-desc">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                    tempor incididunt ut labore et dolore magna aliqua.
-                                </div>
-                                <small>05:25 am</small>
-                            </div>
-                        </li>
-
-                        <li class="msg-right">
-                            <div class="msg-right-sub">
-                                <div class="msg-desc">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                    tempor incididunt ut labore et dolore magna aliqua.
-                                </div>
-                                <small>05:25 am</small>
-                            </div>
+                            }
                         </li>
                     </ul>
 
@@ -598,7 +518,7 @@
     <script src="~/js/chat.js"></script>*@
 
 <script>
-    var toUserId = "12345";
+    var toUserId = "ISRChat";
     var connectId = "";
 
     class Message {
@@ -616,7 +536,7 @@
 
     //Disable the send button until connection is established.
     document.getElementById("sendButton").disabled = true;
-    connection.qs = { "userId": "test" };
+
     connection.start().then(function () {
         document.getElementById("sendButton").disabled = false;
 
@@ -630,7 +550,7 @@
     });
 
     document.getElementById("sendButton").addEventListener("click", function (event) {
-        var user = "user";
+        var user = '@HttpContext.Session.GetString("LoginUserName")';
         var text = document.getElementById("messageInput").value;
         var userId = '@HttpContext.Session.GetString("LoginUser")';
 
@@ -735,10 +655,40 @@
 
         var chatHeader = document.querySelector(".headRight-sub h3");
         chatHeader.textContent = document.querySelector(".chatActive h5").textContent;
-        
+
         toUserId = userId;
         console.log(toUserId);
 
-        
+
     }
+
+    $(".startISRChat").on("click", function () {
+        $.ajax({
+            url: 'https://localhost:44311/api/User/ChatUser/ISRChat',
+            type: 'GET',
+            success: function (result) {
+                console.log(result);
+                location.reload();
+            }
+        });
+    });
+
+    @*$(document).ready(function () {
+        var userId = @HttpContext.Session.GetString("ChatUser");
+        if (userId != null) {
+            $.ajax({
+                url: 'https://localhost:44311/api/User/GetName/' + userId,
+                type: 'GET',
+                success: function (result) {
+                    console.log("Items retrieve successfully")
+                    console.log(JSON.parse(result));
+
+                    $(`.${userId} `)
+                }
+            });
+        }
+
+    });*@
+
+
 </script>

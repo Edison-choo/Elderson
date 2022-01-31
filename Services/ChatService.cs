@@ -71,6 +71,30 @@ namespace Elderson.Services
             return true;
         }
 
+        public bool UpdateChat(Message Chat)
+        {
+            bool updated = true;
+            _context.Attach(Chat).State = EntityState.Modified;
+
+            try
+            {
+                _context.SaveChanges();
+                updated = true;
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ChatExists(Chat.Id))
+                {
+                    updated = false;
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return updated;
+        }
+
         public bool DeleteChat(Message theChat)
         {
             bool deleted = true;

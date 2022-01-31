@@ -1,0 +1,161 @@
+﻿@page
+@model Elderson.Pages.ISR.Contacts.PendingChatModel
+@using Microsoft.AspNetCore.Http;
+@{
+    Layout = "Shared/_LayoutITSupport";
+    ViewData["Title"] = "Pending Chat page";
+    ViewData["Header"] = "PENDING CHAT";
+    ViewData["Breadcrumb"] = "Contact";
+}
+
+<style>
+    .leaderboard {
+        max-width: 1400px;
+        width: 90%;
+        border-radius: 12px;
+        margin: 0 auto;
+    }
+
+    .leaderboard__profiles {
+        border-radius: 0 0 12px 12px;
+        padding: 15px 15px 20px;
+        display: grid;
+        row-gap: 12px;
+    }
+
+    .leaderboard__profile {
+        display: grid;
+        grid-template-columns: 1fr 3fr 1fr;
+        align-items: center;
+        padding: 10px 30px 10px 10px;
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0 5px 7px -1px rgba(51, 51, 51, 0.23);
+        cursor: pointer;
+        transition: transform 0.25s cubic-bezier(0.7, 0.98, 0.86, 0.98), box-shadow 0.25s cubic-bezier(0.7, 0.98, 0.86, 0.98);
+        background-color: #fff;
+    }
+
+        .leaderboard__profile:hover {
+            transform: scale(1.2);
+            box-shadow: 0 9px 47px 11px rgba(51, 51, 51, 0.18);
+        }
+
+    .leaderboard__picture {
+        max-width: 100%;
+        width: 60px;
+        border-radius: 50%;
+        box-shadow: 0 0 0 10px #ebeef3, 0 0 0 22px #f3f4f6;
+    }
+
+    .leaderboard__name {
+        color: #979cb0;
+        font-weight: 600;
+        font-size: 20px;
+        letter-spacing: 0.64px;
+        margin-left: 12px;
+    }
+
+    .leaderboard__value {
+        color: #35d8ac;
+        font-weight: 700;
+        font-size: 34px;
+        text-align: right;
+    }
+
+    body {
+        margin: 0;
+        background-color: #eaeaea;
+        place-items: center;
+    }
+</style>
+
+
+<div class="leaderboard">
+
+    <main class="leaderboard__profiles">
+        @{ foreach (var user in Model.allmessages)
+            {
+                <article class="leaderboard__profile" id="@user.Key">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Mark Zuckerberg" class="leaderboard__picture">
+                    <span class="leaderboard__name">@Model.allusers[user.Key].Fullname</span>
+                    <span class="leaderboard__value"><button class="btn btn-primary" onclick="message('@user.Key')">Chat</button></span>
+                </article>
+            }
+        }
+    </main>
+</div>
+
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<!-- custom scrollbar plugin -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+<script>
+    var toUserId = "";
+    var connectId = "";
+
+    class Message {
+        constructor(username, text, when, userId, toUserId) {
+            this.userName = username;
+            this.text = text;
+            this.when = when;
+            this.Id = "";
+            this.UserId = userId;
+            this.ToUserId = toUserId;
+        }
+    }
+
+    var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+
+    connection.start().then(function () {
+
+        connection.invoke("getConnectionId")
+            .then(function (connectionId) {
+                connectId = connectionId;
+            }).catch(err => console.error(err.toString()));
+    }).catch(function (err) {
+        return console.error(err.toString());
+    });
+
+    connection.on("ReceiveNoti", function (userId) {
+        console.log(userId)
+
+        $(`#${userId}`).remove();
+    });
+
+    connection.on("ReceiveMessage", function (message) {
+        console.log(message)
+        console.log(`${message.userId} sends to ${message.toUserId}`);
+
+        if (document.getElementById(message.userId) == null) {
+            $(".leaderboard__profiles").append(`<article class="leaderboard__profile" id="${message.userId}">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Mark Zuckerberg" class="leaderboard__picture">
+                    <span class="leaderboard__name">${message.username}</span>
+                    <span class="leaderboard__value"><button class="btn btn-primary" onclick="message('${message.userId}')">Chat</button></span>
+                </article>`);
+        }
+    });
+</script>
+
+<script>
+    function message(userId) {
+        $(`${userId}`).remove();
+        connection.invoke("SendNotiToGroup", userId).catch(function (err) {
+            return console.error(err.toString());
+        });
+        $.ajax({
+            url: 'https://localhost:44311/api/User/PendingChatUser/' + userId,
+            type: 'GET',
+            success: function (result) {
+
+                console.log(result);
+                window.location.href = "/ISR/Contacts/Chat";
+
+
+            }
+        });
+    }
+</script>
