@@ -1,0 +1,29 @@
+﻿@page
+@model Elderson.Pages.DRR.AppointmentsModel
+@{
+}
+<div class="table-responsive">
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Patient</th>
+                <th style="width:20%;">Date & Time</th>
+                <th style="width:175px;">ACTION</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.myBookings != null)
+            {
+                @foreach (var item in Model.myBookings)
+                {
+                    <tr>
+                        <td>@item.PatientID</td>
+                        <td>@item.BookDateTime</td>
+                        <td><a asp-page="/DRR/Call" asp-route-callId="@item.CallUUID" class="btn btn-primary">Join Call</a></td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

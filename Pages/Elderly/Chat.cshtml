@@ -2,22 +2,3 @@
 @model Elderson.Pages.Elderly.ChatModel
 @{
 }
-<div class="container">
-    <div>
-        <ul id="messageList" class="chat">
-        </ul>
-    </div>
-    <div class="row">
-        <div class="col-sm-6">
-            <input type="text" id="userName" class="form-control" />
-        </div>
-        <div class="col-sm-6">
-            <input type="text" id="userMessage" class="form-control" />
-        </div>
-        <span>
-            <input type="button" id="sendMessage" value="send" class="btn btn-primary"/>
-        </span>
-    </div>
-</div>
-<script src="~/js/signalr/dist/browser/signalr.js"></script>
-<script src="~/js/ChatApp.js"></script>

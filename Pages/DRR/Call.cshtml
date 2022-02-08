@@ -1,0 +1,48 @@
+﻿@page
+@model Elderson.Pages.DRR.CallModel
+@{
+}
+<div class="container">
+    <div>
+        <ul id="messageList" class="chat">
+        </ul>
+    </div>
+    <div class="row">
+        <div class="">
+            <input type="text" id="userMessage" class="form-control" />
+        </div>
+        <span>
+            <input type="button" id="sendMessage" value="send" class="btn btn-primary" />
+        </span>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script>
+    const connection = new signalR.HubConnectionBuilder().withUrl("/chatAppHub").build();
+    connection.start()
+        .catch(err => alert(err.toString()));
+    $(document).ready(function () {
+
+    });
+    $("#sendMessage").on("click", function () {
+        connection.invoke("JoinGroup", "@Model.myCallID").catch(err => console.error(err.toString()));
+        const user = "@Model.myUserID";
+        const message = $("#userMessage").val();
+        console.log(message)
+        connection.invoke("SendMessageToGroup", "@Model.myCallID", user, message).catch(err => console.error(err.toString()));
+        event.preventDefault();
+    })
+
+    connection.on("ReceiveMessage", (user, message) => {
+        const li = document.createElement("li");
+        if (user == "@Model.myUserID") {
+            li.style.color = "blue";
+            user = "Me"
+        }
+        const rec_msg = user + ": " + message;
+        li.textContent = rec_msg;
+
+        document.getElementById("messageList").appendChild(li);
+    })
+</script>
