@@ -2,47 +2,148 @@
 @model Elderson.Pages.DRR.CallModel
 @{
 }
-<div class="container">
+<style>
+    .chatHeader {
+        padding: 20px;
+        background: #F4F3FF;
+    }
+
+    .chatImg {
+        height: 60px;
+        width: 60px;
+        border-radius: 50%;
+        border: 3px solid grey;
+    }
+
+    .chatBody {
+        padding: 20px;
+        overflow-y: scroll;
+        height: 575px;
+    }
+
+    .mychatBubble {
+        border-radius: 5px;
+        margin: 10px auto;
+        background: #00bfb6;
+        padding: 20px;
+        text-align: right;
+        color: #fff;
+        position: relative;
+        width: fit-content;
+        margin-left: auto;
+        margin-right: 0px;
+    }
+
+    .yourchatBubble {
+        border-radius: 5px;
+        margin: 30px auto;
+        margin-right: 40px;
+        background: #1977CC;
+        padding: 20px;
+        text-align: left;
+        color: #fff;
+        position: relative;
+        width: fit-content;
+        margin-right: auto;
+        margin-left: 0px;
+    }
+
+    .myChat:before {
+        content: "";
+        width: 0px;
+        height: 0px;
+        position: absolute;
+        border-left: 10px solid #00bfb6;
+        border-right: 10px solid transparent;
+        border-top: 10px solid #00bfb6;
+        border-bottom: 10px solid transparent;
+        right: -20px;
+        top: 6px;
+    }
+
+    .yourChat:before {
+        content: "";
+        width: 0px;
+        height: 0px;
+        position: absolute;
+        border-left: 10px solid transparent;
+        border-right: 10px solid #1977CC;
+        border-top: 10px solid #1977CC;
+        border-bottom: 10px solid transparent;
+        left: -20px;
+        top: 6px;
+    }
+
+    .chatInput {
+        padding: 20px;
+        background: #F4F3FF;
+    }
+</style>
+<div class="container" style="padding:20px;">
     <div>
-        <ul id="messageList" class="chat">
-        </ul>
-    </div>
-    <div class="row">
-        <div class="">
-            <input type="text" id="userMessage" class="form-control" />
+        <div class="chatHeader row">
+            <div class="col-sm-1">
+                <img src="https://thumbs.dreamstime.com/z/smiling-female-doctors-working-office-asian-76064205.jpg" class="chatImg" />
+            </div>
+            <div class="col-sm-11">
+                <h4>Doctor Low Hui Wen</h4>
+                <div id="status">Offline</div>
+            </div>
         </div>
-        <span>
-            <input type="button" id="sendMessage" value="send" class="btn btn-primary" />
-        </span>
+        <div class="chatBody row">
+            <div class="col-md-12" id="messageList">
+            </div>
+        </div>
+        <div class="chatInput row">
+            <div class="col-md-11">
+                <input type="text" id="userMessage" class="form-control" placeholder="Type your message here..." />
+            </div>
+            <div class="col-md-1" style="text-align:center;">
+                <div><i class="fas fa-paper-plane"></i></div>
+            </div>
+        </div>
     </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script>
     const connection = new signalR.HubConnectionBuilder().withUrl("/chatAppHub").build();
-    connection.start()
-        .catch(err => alert(err.toString()));
-    $(document).ready(function () {
-
-    });
-    $("#sendMessage").on("click", function () {
-        connection.invoke("JoinGroup", "@Model.myCallID").catch(err => console.error(err.toString()));
-        const user = "@Model.myUserID";
-        const message = $("#userMessage").val();
-        console.log(message)
-        connection.invoke("SendMessageToGroup", "@Model.myCallID", user, message).catch(err => console.error(err.toString()));
-        event.preventDefault();
-    })
-
-    connection.on("ReceiveMessage", (user, message) => {
-        const li = document.createElement("li");
-        if (user == "@Model.myUserID") {
-            li.style.color = "blue";
-            user = "Me"
+    connection.start().catch(err => alert(err.toString()));
+    $("#userMessage").on("keypress", function (e) {
+        if (e.which == 13) {
+            const message = $("#userMessage").val();
+            if (message.length != 0) {
+                const user = "@Model.myUserID";
+                $("#userMessage").val("");
+                console.log(message)
+                connection.invoke("SendMessageToGroup", "@Model.myCallID", user, message).catch(err => console.error(err.toString()));
+                event.preventDefault();
+            }
         }
-        const rec_msg = user + ": " + message;
-        li.textContent = rec_msg;
-
-        document.getElementById("messageList").appendChild(li);
+    })
+    connection.on("ReceiveMessage", (user, message) => {
+        const div = document.createElement("div");
+        if (user == "system") {
+            if (message == "@Model.myPatientID" + "0") {
+                $("#status").text("Online")
+                $(".chatImg").css("border", "3px solid green")
+            }
+            else if (message == "@Model.myPatientID" + "1") {
+                $("#status").text("Offline")
+                $(".chatImg").css("border", "3px solid grey")
+            }
+        }
+        else {
+            if (user == "@Model.myUserID") {
+            div.className = "mychatBubble myChat";
+            }
+            else {
+                div.className = "yourchatBubble yourChat";
+            }
+            div.textContent = message
+            var messageBody = document.getElementById("messageList")
+            messageBody.appendChild(div);
+            $(".chatBody").scrollTop($(".chatBody")[0].scrollHeight);
+        }
     })
 </script>

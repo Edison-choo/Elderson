@@ -69,5 +69,9 @@ namespace Elderson.Services
             }
             return deleted;
         }
+        public string getCallIDbyID(string id)
+        {
+            return _context.Booking.FirstOrDefault(b => b.Id == id).CallUUID;
+        }
     }
 }

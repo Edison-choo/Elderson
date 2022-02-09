@@ -30,9 +30,9 @@
                         <tr>
                             <td><div>@item.Clinic</div></td>
                             <td>@item.BookDateTime.ToString("dd MMMM yyyy HH:mm tt")</td>
-                            <td><a asp-page="/Elderly/Call" asp-route-callId="@item.CallUUID" class="btn btn-primary">Join Call</a></td>
+                            <td><a asp-page="/Elderly/Call" asp-route-id="@item.Id" class="btn btn-primary">Join Call</a></td>
                             <td style="text-align: right;">
-                                <div class="dropdown">
+                                <div class="dropdown">  
                                     <button class="btn btn-primary dropdown-toggle"
                                             type="button"
                                             id="bookingDropdown"

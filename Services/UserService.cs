@@ -340,6 +340,16 @@ namespace Elderson.Services
             }
             return doctors;
         }
-
+        public string GetNameById(string id)
+        {
+            try
+            {
+                return _context.Users.Where(u => u.Id == id).FirstOrDefault().Fullname;
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }
