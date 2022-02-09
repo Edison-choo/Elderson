@@ -16,6 +16,8 @@ namespace Elderson.Pages.ISR.Incidents
     {
         [BindProperty]
         public Incident newIncident { get; set; }
+        [BindProperty]
+        public string Select { get; set; }
         private IncidentService _svc;
         private readonly ILogger<CreateModel> _logger;
         private readonly INotyfService _notfy;
@@ -37,6 +39,8 @@ namespace Elderson.Pages.ISR.Incidents
                 _notfy.Error("Error");
                 return Page();
             }
+
+            Console.WriteLine(newIncident.Category, newIncident.Level);
 
             string guid = Guid.NewGuid().ToString();
             newIncident.Id = guid;

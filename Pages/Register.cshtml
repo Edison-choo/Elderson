@@ -11,12 +11,55 @@
         padding: 0;
         box-sizing: border-box;
     }
-    .multisteps-form__progress {
+/*    .multisteps-form__progress {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+    }*/
+
+    .stepCircle {
+        height: 50px;
+        width: 50px;
+        background-color: lightgray;
+        border-radius:45px;
+        margin-right:20px;
+        padding:13px 20px;
+        color:white;
     }
 
+    .multisteps-form__progress {
+        margin-top:150px;
+    }
+
+
+    .multisteps-form__progress div {
+        display: flex;
+        justify-content: start;
+        margin-bottom:24px;
+    }
+
+        .multisteps-form__progress span {
+            opacity:40%;
+            font-size:0.8em;
+        }
+
     .multisteps-form__progress-btn {
+        border: none;
+        background-color: transparent;
+        outline: none !important;
+        opacity:60%;
+        display:block;
+    }
+
+        .multisteps-form__progress-btn.js-active {
+            color: yellowgreen;
+        }
+
+        .stepCircle.js-active {
+            background-color: yellowgreen;
+        }
+
+
+    /*    .multisteps-form__progress-btn {
         transition-property: all;
         transition-duration: 0.15s;
         transition-timing-function: linear;
@@ -76,16 +119,21 @@
     .multisteps-form__progress-btn.js-active:before {
         transform: translateX(-50%) scale(1.2);
         background-color: currentColor;
-    }
+    }*/
+
 
     .multisteps-form__panel {
         position: absolute;
         top: 0;
         left: 0;
-        width: 100%;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        width: 90%;
         height: 0;
         opacity: 0;
         visibility: hidden;
+        max-width:730px;
     }
 
     .multisteps-form__panel.js-active {
@@ -116,162 +164,189 @@
 <div class="container-scroller">
     <div class="container-fluid page-body-wrapper full-page-wrapper">
         <div class="content-wrapper d-flex align-items-center auth px-0">
-            <div class="row w-100 mx-0">
-                <div class="col-lg-6 mx-auto">
-                    <div class="row d-flex justify-content-center">
-                        <div class="col-lg-8">
-                            <div class="row " style="margin-bottom:30px;">
-                                <div class="p-4 rounded bg-white">
-                                    <div class="col-12 col-lg-8 ml-auto mr-auto mb-4">
+            <div class="row w-100 mx-0  d-flex justify-content-center">
+                <div class="col-lg-8">
+                    <div class="row d-flex justify-content-between">
+                        <div class="col-lg-4">
+                            <div class="row " style="margin-bottom:30px; margin-right:10px;">
+                                <div class="card"  style="height:700px;">
+                                    <div class="card-body">
                                         <div class="multisteps-form__progress">
-                                            <button class="multisteps-form__progress-btn js-active" type="button" title="User Info">Login Information</button>
-                                            <button class="multisteps-form__progress-btn" type="button" title="Address">Personal Information</button>
-                                            <button class="multisteps-form__progress-btn" type="button" title="Order Info">Credit Card Information</button>
+                                            <div>
+                                                <div class="stepCircle js-active">1</div>
+                                                <div class="d-block">
+                                                    <button class="multisteps-form__progress-btn js-active" type="button" title="User Info">Login Information</button>
+                                                    <span>Use email and password to login</span>
+                                                </div>
+                                                
+                                            </div>
+                                            <div>
+                                                <div class="stepCircle">2</div>
+                                                <div class="d-block">
+                                                    <button class="multisteps-form__progress-btn" type="button" title="Address">Personal Information</button>
+                                                    <span>Information about you</span>
+                                                </div>
+                                                
+                                            </div>
+                                            <div>
+                                                <div class="stepCircle">3</div>
+                                                <div class="d-block">
+                                                    <button class="multisteps-form__progress-btn" type="button" title="Order Info">Credit Card Information</button>
+                                                    <span>Card details to use for payment</span>
+                                                </div>
+                                                
+                                            </div>
+
+                                            
+                                            
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row d-flex justify-content-center">
-                        
                         <div class="col-lg-8">
-                            <div class="">
-                                <form class="pt-3 .#msform multisteps-form__form" method="post">
-                                    <input type="hidden" asp-for="newUser.UserType" value="Patient">
-                                    <fieldset class="multisteps-form__panel p-4 rounded bg-white js-active" data-animation="scaleIn">
-                                        <h4>Register Page</h4>
-                                        <h6 class="fw-light">Create an account</h6>
+                            <div class="card"  style="height: 700px;">
+                                <div class="card-body">
+                                    <form class="pt-3 .#msform multisteps-form__form" method="post">
+                                        <input type="hidden" asp-for="newUser.UserType" value="Patient">
+                                        <fieldset class="multisteps-form__panel p-4 rounded bg-white js-active" data-animation="scaleIn">
+                                            <h4>Register Page</h4>
+                                            <h6 class="fw-light">Create an account</h6>
 
-                                        <div class="form-group">
-                                            <input type="text" asp-for="newUser.Fullname" class="form-control form-control-lg" id="Fullname" placeholder="FULL NAME">
-                                            <span asp-validation-for="newUser.Fullname" class="text-danger"></span>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <input type="email" asp-for="newUser.Email" class="form-control form-control-lg" id="Email" placeholder="EMAIL">
-                                            <span asp-validation-for="newUser.Email" class="text-danger"></span>
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" asp-for="viewModel.pwd" class="form-control form-control-lg" id="Password" placeholder="PASSWORD">
-                                            <span asp-validation-for="viewModel.pwd" class="text-danger"></span>
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" asp-for="viewModel.confirmPwd" class="form-control form-control-lg" id="ConPassword" placeholder="CONFIRM PASSWORD">
-                                            <span asp-validation-for="viewModel.confirmPwd" class="text-danger"></span>
-                                        </div>
-
-                                        <span style="color:red;"></span>
-                                        <div class="my-2 d-flex justify-content-between align-items-center">
-                                            <div class="form-check">
-                                                <label class="form-check-label text-muted">
-                                                    By signing up, you are creating a Elderson account, and you agree to Elderson's Terms of Use and Privacy Policy'
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="mt-3">
-                                            <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn js-btn-next" type="button">Next</button>
-                                        </div>
-
-                                        <div class="text-center mt-4 fw-light">
-                                            Already have an account? <a href="/Login" class="text-primary">Login here</a>
-                                        </div>
-                                        <hr />
-                                        <div class="mb-2">
-                                            <button type="button" class="btn btn-block btn-facebook auth-form-btn">
-                                                <i class="ti-facebook me-2"></i>Connect using facebook
-                                            </button>
-                                        </div>
-                                    </fieldset>
-
-                                    <fieldset class="multisteps-form__panel p-4 rounded bg-white" data-animation="scaleIn">
-                                        <h4>Personal Details</h4>
-                                        <div class="form-group" style="width:48%;">
-                                            <input type="date" asp-for="newUser.Birthdate" class="form-control form-control-lg" id="Birthdate" placeholder="BIRTH DATE">
-                                            <span asp-validation-for="newUser.Birthdate" class="text-danger"></span>
-                                        </div>
-                                        <div class="d-flex justify-content-between">
-                                            <div class="form-group" style="width:20%;">
-                                                <input type="text" class="form-control form-control-lg" id="phoneCode" asp-for="newUser.CountryCode" value="65">
-                                                <span asp-validation-for="newUser.CountryCode" class="text-danger"></span>
-                                            </div>
-                                            <div class="form-group" style="width:78%;">
-                                                <input type="text" asp-for="newUser.Phone" class="form-control form-control-lg" id="Phone" placeholder="PHONE NUMBER">
-                                                <span asp-validation-for="newUser.Phone" class="text-danger"></span>
+                                            <div class="form-group">
+                                                <input type="text" asp-for="newUser.Fullname" class="form-control form-control-lg" id="Fullname" placeholder="FULL NAME">
+                                                <span asp-validation-for="newUser.Fullname" class="text-danger"></span>
                                             </div>
 
-                                        </div>
-                                        <div class="form-group">
-                                            @Html.RadioButton("newUser.Gender", "Male", new { style = "margin-right:10px;" }) <span>Male</span>
-                                            @Html.RadioButton("newUser.Gender", "Female", new { style = "margin:0 10px;" }) <span>Female</span>
-                                            <span asp-validation-for="newUser.Gender" class="text-danger"></span>
-
-                                        </div>
-                                        <div class="form-group">
-                                            <input asp-for="PatientRole.Nric" type="text" class="form-control form-control-lg" id="nric" placeholder="NRIC">
-                                            <span asp-validation-for="PatientRole.Nric" class="text-danger"></span>
-                                        </div>
-                                        <div class="form-group">
-                                            <input asp-for="PatientRole.EmergencyName" type="text" class="form-control form-control-lg" id="emergencyName" placeholder="EMERGENCY NAME">
-                                            <span asp-validation-for="PatientRole.EmergencyName" class="text-danger"></span>
-                                        </div>
-                                        <div class="d-flex justify-content-between">
-                                            <div class="form-group" style="width:20%;">
-                                                <input type="text" class="form-control form-control-lg" id="phoneCode" asp-for="PatientRole.CountryCode" value="65">
-                                                <span asp-validation-for="PatientRole.CountryCode" class="text-danger"></span>
+                                            <div class="form-group">
+                                                <input type="email" asp-for="newUser.Email" class="form-control form-control-lg" id="Email" placeholder="EMAIL">
+                                                <span asp-validation-for="newUser.Email" class="text-danger"></span>
                                             </div>
-                                            <div class="form-group" style="width:76%;">
-                                                <input type="text" asp-for="PatientRole.EmergencyNum" class="form-control form-control-lg" id="Phone" placeholder="EMERGENCY PHONE NUMBER">
-                                                <span asp-validation-for="PatientRole.EmergencyNum" class="text-danger"></span>
+                                            <div class="form-group">
+                                                <input type="password" asp-for="viewModel.pwd" class="form-control form-control-lg" id="Password" placeholder="PASSWORD">
+                                                <span asp-validation-for="viewModel.pwd" class="text-danger"></span>
                                             </div>
-                                        </div>
-                                        <div class="form-group">
-                                            @Html.DropDownList("PatientRole.Relationship", new SelectList(Enum.GetValues(typeof(Models.RelationshipType))), "--Select Marital Status--", new { @class = "form-control form-control-lg" })
-                                            <span asp-validation-for="PatientRole.Relationship" class="text-danger"></span>
-                                        </div>
-                                        <div class="form-group">
-                                            <textarea asp-for="PatientRole.HomeAddr" class="form-control" id="homeAddress" placeholder="HOME ADDRESS"></textarea>
-                                            <span asp-validation-for="PatientRole.HomeAddr" class="text-danger"></span>
-                                        </div>
-                                        <div class="d-flex justify-content-between">
-                                            <button type="button" class="btn btn-primary me-2 js-btn-prev">Cancel</button>
+                                            <div class="form-group">
+                                                <input type="password" asp-for="viewModel.confirmPwd" class="form-control form-control-lg" id="ConPassword" placeholder="CONFIRM PASSWORD">
+                                                <span asp-validation-for="viewModel.confirmPwd" class="text-danger"></span>
+                                            </div>
 
-                                            <button type="button" class="btn btn-primary me-2 js-btn-next">Next</button>
+                                            <span style="color:red;"></span>
+                                            <div class="my-2 d-flex justify-content-between align-items-center">
+                                                <div class="form-check">
+                                                    <label class="form-check-label text-muted">
+                                                        By signing up, you are creating a Elderson account, and you agree to Elderson's Terms of Use and Privacy Policy'
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="mt-3">
+                                                <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn js-btn-next" type="button">Next</button>
+                                            </div>
 
-                                        </div>
-                                    </fieldset>
+                                            <div class="text-center mt-4 fw-light">
+                                                Already have an account? <a href="/Login" class="text-primary">Login here</a>
+                                            </div>
+                                            <hr />
+                                            <div class="mb-2">
+                                                <button type="button" class="btn btn-block btn-facebook auth-form-btn">
+                                                    <i class="ti-facebook me-2"></i>Connect using facebook
+                                                </button>
+                                            </div>
+                                        </fieldset>
 
-                                    <fieldset class="multisteps-form__panel p-4 rounded bg-white" data-animation="scaleIn">
-                                        <h4>Card Details (Optional)</h4>
-                                        <h6 class="fw-light">Set as your primary payment information</h6>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control form-control-lg" id="CardName" placeholder="NAME ON CARD">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control form-control-lg" id="CardNumber" placeholder="CARD NUMBER">
-                                        </div>
-                                        <div class="d-flex justify-content-between">
+                                        <fieldset class="multisteps-form__panel p-4 rounded bg-white" data-animation="scaleIn">
+                                            <h4>Personal Details</h4>
                                             <div class="form-group" style="width:48%;">
-                                                <input type="text" class="form-control form-control-lg" id="ExpiryDate" placeholder="EXPIRY DATE">
+                                                <input type="date" asp-for="newUser.Birthdate" class="form-control form-control-lg" id="Birthdate" placeholder="BIRTH DATE">
+                                                <span asp-validation-for="newUser.Birthdate" class="text-danger"></span>
                                             </div>
-                                            <div class="form-group" style="width:48%;">
-                                                <input type="text" class="form-control form-control-lg" id="SecurityCode" placeholder="SECURITY CODE">
+                                            <div class="d-flex justify-content-between">
+                                                <div class="form-group" style="width:20%;">
+                                                    <input type="text" class="form-control form-control-lg" id="phoneCode" asp-for="newUser.CountryCode" value="65">
+                                                    <span asp-validation-for="newUser.CountryCode" class="text-danger"></span>
+                                                </div>
+                                                <div class="form-group" style="width:78%;">
+                                                    <input type="text" asp-for="newUser.Phone" class="form-control form-control-lg" id="Phone" placeholder="PHONE NUMBER">
+                                                    <span asp-validation-for="newUser.Phone" class="text-danger"></span>
+                                                </div>
+
                                             </div>
-                                        </div>
-                                        <div class="d-flex justify-content-between">
-                                            <button type="button" class="btn btn-primary me-2 js-btn-prev">Cancel</button>
+                                            <div class="form-group">
+                                                @Html.RadioButton("newUser.Gender", "Male", new { style = "margin-right:10px;" }) <span>Male</span>
+                                                @Html.RadioButton("newUser.Gender", "Female", new { style = "margin:0 10px;" }) <span>Female</span>
+                                                <span asp-validation-for="newUser.Gender" class="text-danger"></span>
 
-                                            <button type="submit" class="btn btn-primary me-2">Submit</button>
+                                            </div>
+                                            <div class="form-group">
+                                                <input asp-for="PatientRole.Nric" type="text" class="form-control form-control-lg" id="nric" placeholder="NRIC">
+                                                <span asp-validation-for="PatientRole.Nric" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <input asp-for="PatientRole.EmergencyName" type="text" class="form-control form-control-lg" id="emergencyName" placeholder="EMERGENCY NAME">
+                                                <span asp-validation-for="PatientRole.EmergencyName" class="text-danger"></span>
+                                            </div>
+                                            <div class="d-flex justify-content-between">
+                                                <div class="form-group" style="width:20%;">
+                                                    <input type="text" class="form-control form-control-lg" id="phoneCode" asp-for="PatientRole.CountryCode" value="65">
+                                                    <span asp-validation-for="PatientRole.CountryCode" class="text-danger"></span>
+                                                </div>
+                                                <div class="form-group" style="width:76%;">
+                                                    <input type="text" asp-for="PatientRole.EmergencyNum" class="form-control form-control-lg" id="Phone" placeholder="EMERGENCY PHONE NUMBER">
+                                                    <span asp-validation-for="PatientRole.EmergencyNum" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                @Html.DropDownList("PatientRole.Relationship", new SelectList(Enum.GetValues(typeof(Models.RelationshipType))), "--Select Marital Status--", new { @class = "form-control form-control-lg" })
+                                                <span asp-validation-for="PatientRole.Relationship" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <textarea asp-for="PatientRole.HomeAddr" class="form-control" id="homeAddress" placeholder="HOME ADDRESS"></textarea>
+                                                <span asp-validation-for="PatientRole.HomeAddr" class="text-danger"></span>
+                                            </div>
+                                            <div class="d-flex justify-content-between">
+                                                <button type="button" class="btn btn-primary me-2 js-btn-prev">Cancel</button>
 
-                                        </div>
-                                    </fieldset>
-                                </form>
+                                                <button type="button" class="btn btn-primary me-2 js-btn-next">Next</button>
+
+                                            </div>
+                                        </fieldset>
+
+                                        <fieldset class="multisteps-form__panel p-4 rounded bg-white" data-animation="scaleIn">
+                                            <h4>Card Details (Optional)</h4>
+                                            <h6 class="fw-light">Set as your primary payment information</h6>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control form-control-lg" id="CardName" placeholder="NAME ON CARD">
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control form-control-lg" id="CardNumber" placeholder="CARD NUMBER">
+                                            </div>
+                                            <div class="d-flex justify-content-between">
+                                                <div class="form-group" style="width:48%;">
+                                                    <input type="text" class="form-control form-control-lg" id="ExpiryDate" placeholder="EXPIRY DATE">
+                                                </div>
+                                                <div class="form-group" style="width:48%;">
+                                                    <input type="text" class="form-control form-control-lg" id="SecurityCode" placeholder="SECURITY CODE">
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-between">
+                                                <button type="button" class="btn btn-primary me-2 js-btn-prev">Cancel</button>
+
+                                                <button type="submit" class="btn btn-primary me-2">Submit</button>
+
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                </div>
+                                
                             </div>
                         </div>
                     </div>
-                    
-                    
                 </div>
+                        
+
+                    
+                    
+
             </div>
         </div>
     </div>
@@ -282,6 +357,7 @@
     const DOMstrings = {
         stepsBtnClass: 'multisteps-form__progress-btn',
         stepsBtns: document.querySelectorAll(`.multisteps-form__progress-btn`),
+        stepsCir: document.querySelectorAll(`.stepCircle`),
         stepsBar: document.querySelector('.multisteps-form__progress'),
         stepsForm: document.querySelector('.multisteps-form__form'),
         stepsFormTextareas: document.querySelectorAll('.multisteps-form__textarea'),
@@ -295,6 +371,7 @@
         elemSet.forEach(elem => {
             elem.classList.remove(className);
         });
+        
     }; //return exect parent node of the element
 
 
@@ -318,7 +395,16 @@
         //remove active state from all the state
         removeClasses(DOMstrings.stepsBtns, 'js-active'); //set picked items to active
 
+        DOMstrings.stepsCir.forEach(elem => {
+            elem.classList.remove('js-active');
+        });
+
         DOMstrings.stepsBtns.forEach((elem, index) => {
+            if (index <= activeStepNum) {
+                elem.classList.add('js-active');
+            }
+        });
+        DOMstrings.stepsCir.forEach((elem, index) => {
             if (index <= activeStepNum) {
                 elem.classList.add('js-active');
             }

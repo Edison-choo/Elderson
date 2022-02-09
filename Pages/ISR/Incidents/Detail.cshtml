@@ -6,9 +6,37 @@
                 ViewData["Breadcrumb"] = "Incident Management > Incidents"; }
 
 <style>
+    :root {
+        --color: blue;
+    }
+
     a {
         color: white;
         text-decoration: none;
+    }
+
+    .incidentBody {
+        border-top: solid 30px var(--color);
+    }
+
+    .bubble {
+        background-color: var(--color);
+        padding: 5px 20px;
+        border-radius: 15px;
+        color: white;
+        font-size: 0.8em;
+    }
+
+
+    .colorCircle {
+        width:24px;
+        height:24px;
+        border-radius:45px;
+    }
+
+    .colorText {
+        margin-left:8px;
+        margin-right:12px;
     }
 </style>
 
@@ -27,7 +55,7 @@
                             </div>
 
                             <div>
-                                <div class="btn-group" style="margin-top:30px;">
+                                <div class="btn-group" style="margin-top:20px;">
                                     <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id="dropdownMenuSplitButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         ACTION
                                     </button>
@@ -47,26 +75,63 @@
         </div>
         <div class="row">
             <div class="col-12 grid-margin stretch-card">
-                <div class="card">
+                <div class="card incidentBody">
                     <div class="card-body">
+                        <div id="cardHead"></div>
                         <h4 class="card-title">Incident Information</h4>
                         <hr />
                         <div>
                             <div class="profileLb">Description:</div>
                             <div class="profileData">
-                                @Model.SelectedIncident.Description
+                                @{ if (Model.SelectedIncident.Description != null)
+                                    {
+                        @Model.SelectedIncident.Description }
+                    else
+                    {
+                    <text>To be updated</text> } }
                             </div>
                         </div>
                         <div>
                             <div class="profileLb">Reason:</div>
                             <div class="profileData">
-                                @Model.SelectedIncident.Reason
+                                @{ if (Model.SelectedIncident.Reason != null)
+                                    {
+                        @Model.SelectedIncident.Reason }
+                    else
+                    {
+                    <text>To be updated</text> } }
                             </div>
                         </div>
                         <div>
                             <div class="profileLb">Recommendation:</div>
                             <div class="profileData">
-                                @Model.SelectedIncident.Recommendation
+                                @{ if (Model.SelectedIncident.Recommendation != null)
+                                    {
+                        @Model.SelectedIncident.Recommendation }
+                    else
+                    {
+                    <text>To be updated</text> } }
+                            </div>
+                        </div>
+                        <div>
+                            <div class="profileLb">Category:</div>
+                            <div class="profileData Category">
+                                @{ if (Model.SelectedIncident.Category != null)
+                                    { }
+                    else
+                    {
+                    <text>To be updated</text> } }
+                            </div>
+                        </div>
+                        <div>
+                            <div class="profileLb">Level:</div>
+                            <div class="profileData">
+                                @{ if (Model.SelectedIncident.Level != null)
+                                    {
+                        @Model.SelectedIncident.Level }
+                                    else
+                                    {
+                        <text>To be updated</text> } }
                             </div>
                         </div>
                         <div>
@@ -81,6 +146,25 @@
             </div>
         </div>
     </form>
+</div>
+
+<div class="colorLabel d-flex justify-content-center">
+    <div class="d-flex">
+        <div class="colorCircle" style="background-color: #D26320;"></div>
+        <span class="colorText">Danger</span>
+    </div>
+    <div class="d-flex">
+        <div class="colorCircle" style="background-color: #F9CB0F;"></div>
+        <span class="colorText">Warning</span>
+    </div>
+    <div class="d-flex">
+        <div class="colorCircle" style="background-color: #3375AF;"></div>
+        <span class="colorText">Moderated</span>
+    </div>
+    <div class="d-flex">
+        <div class="colorCircle" style="background-color: #51AC39;"></div>
+        <span class="colorText">Safe</span>
+    </div>
 </div>
 
 <div class="modal fade" id=@("staticBackdrop"+@Model.SelectedIncident.Id) data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -116,4 +200,33 @@
             }
         });
     }
+
+    $(document).ready(function () {
+        var r = document.querySelector(":root");
+
+        var level = `@Model.SelectedIncident.Level`;
+
+        if (level == "Danger") {
+            r.style.setProperty("--color", "#D26320");
+        } else if (level == "Warning") {
+            r.style.setProperty("--color", "#F9CB0F");
+        } else if (level == "Moderated") {
+            r.style.setProperty("--color", "#3375AF");
+        } else if (level == "Safe") {
+            r.style.setProperty("--color", "#51AC39");
+        }
+        
+
+        var catList = `@Model.SelectedIncident.Category`.replace(" ", "").split(',');
+
+        for (i in catList) {
+            console.log(catList[i]);
+
+            var bubble = `<div style="margin-bottom:14px;"><span class="bubble">${catList[i]}</span></div>`;
+
+            $(".Category").append(bubble);
+        }
+
+
+    });
 </script>

@@ -15,6 +15,8 @@ namespace Elderson.Pages.ISR.Incidents
     {
         [BindProperty]
         public Incident SelectedIncident { get; set; }
+        [BindProperty]
+        public string Select { get; set; }
         public Incident UpdatedIncident { get; set; }
         private IncidentService _svc;
         private readonly ILogger<EditModel> _logger;
@@ -28,6 +30,7 @@ namespace Elderson.Pages.ISR.Incidents
         public void OnGet(string id)
         {
             SelectedIncident = _svc.GetIncidentById(id);
+            Select = SelectedIncident.Category;
         }
         public IActionResult OnPost()
         {
@@ -43,6 +46,8 @@ namespace Elderson.Pages.ISR.Incidents
             UpdatedIncident.Description = SelectedIncident.Description;
             UpdatedIncident.Reason = SelectedIncident.Reason;
             UpdatedIncident.Recommendation = SelectedIncident.Recommendation;
+            UpdatedIncident.Category = SelectedIncident.Category;
+            UpdatedIncident.Level = SelectedIncident.Level;
             Boolean valid = _svc.UpdateIncident(UpdatedIncident);
 
             if (valid)

@@ -12,6 +12,32 @@
         color: white;
         text-decoration: none;
     }
+
+    .subNav {
+        height:600px;
+    }
+
+    .subNavItem {
+        
+        padding:20px 10px;
+        text-align:center;
+        border-bottom: 0.5px solid grey;
+        cursor:pointer;
+        font-weight:bold;
+    }
+
+    .info {
+        border-top: solid 30px #1F3BB3;
+    }
+
+    .subNavItem:hover {
+        background-color:lightgrey;
+    }
+
+        .subNavItem:last-child {
+            border-bottom:none;
+        }
+
 </style>
 
 
@@ -51,91 +77,33 @@
 
         </div>
         <div class="row">
-            <div class="col-6 grid-margin stretch-card">
+            <div class="col-md-2 ">
                 <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Contact Information</h4>
-                        <hr />
-                        <div>
-                            <div class="profileLb">Email Adress</div>
-                            <div class="profileData">@Model.SelectedUser.Email</div>
+                    <div class="card-body subNav">
+                        <div class="subNavItem" onclick="changeDisplay('contactInfo')">
+                            Contact Information</div>
+                        <div class="subNavItem" onclick="changeDisplay('personalInfo')">
+                            Personal Information
                         </div>
-                        <div>
-                            <div class="profileLb">Phone Number</div>
-                            <div class="profileData">
-                                @if (Model.SelectedUser.Email != null)
-                                {@Model.SelectedUser.Phone}
-                            else
-                            { <text>To be updated</text>}
-                            </div>
-                        </div>
-                        @{ if (Model.SelectedUser.UserType == "Patient")
-                            {
-                                <div>
-                                    <div class="profileLb">Emergency Contact Name</div>
-                                    <div class="profileData">
-                                        @if (Model.PatientRole.EmergencyName != null)
-                                        {@Model.PatientRole.EmergencyName}
-                                    else
-                                    {<text>To be updated</text>}
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="profileLb">Emergency Contact Number</div>
-                                    <div class="profileData">
-                                        @if (Model.PatientRole.EmergencyNum != null)
-                                        {@Model.PatientRole.EmergencyNum}
-                                    else
-                                    { <text>To be updated</text>}
-                                    </div>
-                                </div>
-                            }
-                        }
-
                     </div>
                 </div>
             </div>
-            <div class="col-6 grid-margin stretch-card">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Personal Information</h4>
-                        <hr />
-                        <div class="row">
-                            <div class="col-md-6 grid-margin">
+            <div class="col-md-10">
+                <div class="row contactInfo showActive">
+                    <div class="col-12 grid-margin stretch-card">
+                        <div class="card info"  style="height: 600px;">
+                            <div class="card-body">
+                                <h4 class="card-title">Contact Information</h4>
+                                <hr />
                                 <div>
-                                    <div class="profileLb">Age</div>
-                                    <div class="profileData">67</div>
+                                    <div class="profileLb">Email Adress</div>
+                                    <div class="profileData">@Model.SelectedUser.Email</div>
                                 </div>
                                 <div>
-                                    <div class="profileLb">Gender</div>
+                                    <div class="profileLb">Phone Number</div>
                                     <div class="profileData">
-                                        @if (@Model.SelectedUser.Gender != null)
-                                        {@Model.SelectedUser.Gender}
-                                    else
-                                    {<text>To be updated</text>}
-                                    </div>
-                                </div>
-                                @{
-                                    if (Model.SelectedUser.UserType == "Doctor")
-                                    {
-                                        <div>
-                                            <div class="profileLb">Language</div>
-                                            <div class="profileData">
-                                                @if (Model.DoctorRole.Language != null)
-                                                {@Model.DoctorRole.Language}
-                                            else
-                                            { <text>To be updated</text>}
-                                            </div>
-                                        </div>
-                                    }
-                                }
-                            </div>
-                            <div class="col-md-6 grid-margin">
-                                <div>
-                                    <div class="profileLb">Birth Date</div>
-                                    <div class="profileData">
-                                        @if (Model.Birthdate != null)
-                                        {@Model.Birthdate}
+                                        @if (Model.SelectedUser.Email != null)
+                                        {@Model.SelectedUser.Phone}
                                     else
                                     { <text>To be updated</text>}
                                     </div>
@@ -143,70 +111,19 @@
                                 @{ if (Model.SelectedUser.UserType == "Patient")
                                     {
                                         <div>
-                                            <div class="profileLb">NRIC</div>
+                                            <div class="profileLb">Emergency Contact Name</div>
                                             <div class="profileData">
-                                                @if (Model.PatientRole.Nric != null)
-                                                {@Model.PatientRole.Nric}
-                                            else
-                                            { <text>To be updated</text>}
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="profileLb">Relationship</div>
-                                            <div class="profileData">
-                                                @if (Model.PatientRole.Relationship != null)
-                                                {@Model.PatientRole.Relationship}
-                                            else
-                                            { <text>To be updated</text>}
-                                            </div>
-                                        </div>
-                                    }
-                                    else if (Model.SelectedUser.UserType == "Doctor")
-                                    {
-                                        <div>
-                                            <div class="profileLb">Clinic</div>
-                                            <div class="profileData">
-                                                @if (Model.DoctorRole.Clinic != null)
-                                                {@Model.DoctorRole.Clinic}
+                                                @if (Model.PatientRole.EmergencyName != null)
+                                                {@Model.PatientRole.EmergencyName}
                                             else
                                             {<text>To be updated</text>}
                                             </div>
                                         </div>
                                         <div>
-                                            <div class="profileLb">Work Experience</div>
+                                            <div class="profileLb">Emergency Contact Number</div>
                                             <div class="profileData">
-                                                @if (Model.DoctorRole.WorkExp != null)
-                                                {@Model.DoctorRole.WorkExp}
-                                            else
-                                            {<text>To be updated</text>}
-                                            </div>
-                                        </div>
-                                    }
-                                    else if (Model.SelectedUser.UserType == "Administrator")
-                                    {
-                                        <div>
-                                            <div class="profileLb">Clinic</div>
-                                            <div class="profileData">
-                                                @if (Model.AdminRole.Clinic != null)
-                                                {@Model.AdminRole.Clinic}
-                                            else
-                                            { <text>To be updated</text>}
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="profileLb">Opening Hours</div>
-                                            <div class="profileData">
-                                                @if (Model.AdminRole.OpeningHours != null)
-                                                {@Model.AdminRole.OpeningHours}
-                                            else
-                                            {<text>To be updated</text>}
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="profileLb">Closing Hours</div>
-                                            <div class="profileData">
-                                                @if (Model.AdminRole.ClosingHours != null)
-                                                {@Model.AdminRole.ClosingHours}
+                                                @if (Model.PatientRole.EmergencyNum != null)
+                                                {@Model.PatientRole.EmergencyNum}
                                             else
                                             { <text>To be updated</text>}
                                             </div>
@@ -216,26 +133,155 @@
 
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-12 grid-margin">
-                                @{ if (Model.SelectedUser.UserType == "Patient")
-                                    {
+                    </div>
+                </div>
+                <div class="row personalInfo" style="display: none;">
+                    <div class="col-12 grid-margin stretch-card">
+                        <div class="card info"  style="height: 600px;">
+                            <div class="card-body">
+                                <h4 class="card-title">Personal Information</h4>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-md-6 grid-margin">
                                         <div>
-                                            <div class="profileLb">Home Address</div>
+                                            <div class="profileLb">Age</div>
+                                            <div class="profileData">67</div>
+                                        </div>
+                                        <div>
+                                            <div class="profileLb">Gender</div>
                                             <div class="profileData">
-                                                @if (Model.PatientRole.HomeAddr != null)
-                                                {@Model.PatientRole.HomeAddr}
+                                                @if (@Model.SelectedUser.Gender != null)
+                                                {@Model.SelectedUser.Gender}
+                                            else
+                                            {<text>To be updated</text>}
+                                            </div>
+                                        </div>
+                                        @{
+                                            if (Model.SelectedUser.UserType == "Doctor")
+                                            {
+                                                <div>
+                                                    <div class="profileLb">Language</div>
+                                                    <div class="profileData">
+                                                        @if (Model.DoctorRole.Language != null)
+                                                        {@Model.DoctorRole.Language}
+                                                    else
+                                                    { <text>To be updated</text>}
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+                                    <div class="col-md-6 grid-margin">
+                                        <div>
+                                            <div class="profileLb">Birth Date</div>
+                                            <div class="profileData">
+                                                @if (Model.Birthdate != null)
+                                                {@Model.Birthdate}
                                             else
                                             { <text>To be updated</text>}
                                             </div>
                                         </div>
-                                    }
-                                }
+                                        @{ if (Model.SelectedUser.UserType == "Patient")
+                                            {
+                                                <div>
+                                                    <div class="profileLb">NRIC</div>
+                                                    <div class="profileData">
+                                                        @if (Model.PatientRole.Nric != null)
+                                                        {@Model.PatientRole.Nric}
+                                                    else
+                                                    { <text>To be updated</text>}
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div class="profileLb">Relationship</div>
+                                                    <div class="profileData">
+                                                        @if (Model.PatientRole.Relationship != null)
+                                                        {@Model.PatientRole.Relationship}
+                                                    else
+                                                    { <text>To be updated</text>}
+                                                    </div>
+                                                </div>
+                                            }
+                                            else if (Model.SelectedUser.UserType == "Doctor")
+                                            {
+                                                <div>
+                                                    <div class="profileLb">Clinic</div>
+                                                    <div class="profileData">
+                                                        @if (Model.DoctorRole.Clinic != null)
+                                                        {@Model.DoctorRole.Clinic}
+                                                    else
+                                                    {<text>To be updated</text>}
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div class="profileLb">Work Experience</div>
+                                                    <div class="profileData">
+                                                        @if (Model.DoctorRole.WorkExp != null)
+                                                        {@Model.DoctorRole.WorkExp}
+                                                    else
+                                                    {<text>To be updated</text>}
+                                                    </div>
+                                                </div>
+                                            }
+                                            else if (Model.SelectedUser.UserType == "Administrator")
+                                            {
+                                                <div>
+                                                    <div class="profileLb">Clinic</div>
+                                                    <div class="profileData">
+                                                        @if (Model.AdminRole.Clinic != null)
+                                                        {@Model.AdminRole.Clinic}
+                                                    else
+                                                    { <text>To be updated</text>}
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div class="profileLb">Opening Hours</div>
+                                                    <div class="profileData">
+                                                        @if (Model.AdminRole.OpeningHours != null)
+                                                        {@Model.AdminRole.OpeningHours}
+                                                    else
+                                                    {<text>To be updated</text>}
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div class="profileLb">Closing Hours</div>
+                                                    <div class="profileData">
+                                                        @if (Model.AdminRole.ClosingHours != null)
+                                                        {@Model.AdminRole.ClosingHours}
+                                                    else
+                                                    { <text>To be updated</text>}
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 grid-margin">
+                                        @{ if (Model.SelectedUser.UserType == "Patient")
+                                            {
+                                                <div>
+                                                    <div class="profileLb">Home Address</div>
+                                                    <div class="profileData">
+                                                        @if (Model.PatientRole.HomeAddr != null)
+                                                        {@Model.PatientRole.HomeAddr}
+                                                    else
+                                                    { <text>To be updated</text>}
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                
+                
             </div>
+            
         </div>
     </form>
 </div>
@@ -272,5 +318,13 @@
 
             }
         });
+    }
+
+    function changeDisplay(info) {
+        
+        $(".showActive").hide();
+        $(".showActive").removeClass("showActive");
+        $(`.${info}`).show();
+        $(`.${info}`).addClass("showActive");
     }
 </script>

@@ -8,12 +8,13 @@
 
 <style>
     .left {
-        width: 400px;
+        width: 300px;
         height: 700px;
+        margin-right:30px;
     }
 
     .right {
-        width: 1100px;
+        width: 980px;
         height: 700px;
     }
 
@@ -31,7 +32,6 @@
     }
 
     .head-section {
-        border-bottom: 1px solid #E6E6E6;
         clear: both;
         overflow: visible;
         width: 100%;
@@ -46,22 +46,21 @@
 
     .headLeft-sub {
         padding: 15px;
-        text-align: center;
     }
 
-        .headLeft-sub input {
-            width: 60%;
-            border-radius: 0px;
-            border: 1px solid #E6E6E6;
-            padding: 7px;
-        }
+    .left-section input {
+        width: 60%;
+        border-radius: 0px;
+        border: 1px solid #E6E6E6;
+        padding: 7px;
+    }
 
-        .headLeft-sub button {
-            background: #009EF7;
-            color: #fff;
-            border: 1px solid #E6E6E6;
-            padding: 7px 15px;
-        }
+    .left-section button {
+        background: #009EF7;
+        color: #fff;
+        border: 1px solid #E6E6E6;
+        padding: 7px 15px;
+    }
 
     .headRight-section {
         width: 100%;
@@ -69,7 +68,7 @@
     }
 
     .headRight-sub {
-        padding: 10px 15px 0px 15px;
+        padding: 30px 25px 0px 15px;
         height: 75px;
         z-index: 3;
     }
@@ -141,33 +140,12 @@
 
     .left-section .chatList {
         overflow: hidden;
+        height:40px;
     }
-
-        .left-section .chatList .img {
-            width: 60px;
-            float: left;
-            text-align: center;
-            position: relative;
-        }
-
-            .left-section .chatList .img img {
-                width: 30px;
-                border-radius: 50%;
-            }
-
-            .left-section .chatList .img i {
-                position: absolute;
-                font-size: 10px;
-                color: #52E2A7;
-                border: 1px solid #fff;
-                border-radius: 50%;
-                left: 10px;
-            }
 
         .left-section .chatList .desc {
             width: calc(100% - 60px);
-            float: left;
-            position: relative;
+            margin:16px;
         }
 
             .left-section .chatList .desc h5 {
@@ -185,7 +163,7 @@
         width: 100%;
         float: left;
         height: 100%;
-        background-color: #F6F6F6;
+        background-color: #E6EBF0;
         position: relative;
     }
 
@@ -205,8 +183,8 @@
 
             .message ul li {
                 position: relative;
-                width: 100%;
-                padding: 15px 0px;
+                width: auto;
+                padding: 10px 0px 0px;
                 clear: both;
             }
 
@@ -216,24 +194,25 @@
 
                 .message ul li.msg-left {
                     float: left;
-                    max-width: 500px;
+                    max-width: 250px;
                 }
 
                     .message ul li.msg-left .msg-desc {
                         margin-left: 25px;
                         margin-right: 10px;
-                        font-size: 12px;
-                        background: #E8E8E8;
-                        padding: 10px 15px;
+                        font-size: 14px;
+                        background: #F2F2F7;
+                        padding: 10px 60px 10px 15px;
                         border-radius: 5px 5px 5px 0px;
                         position: relative;
+                        line-height:1.3;
                     }
 
                         .message ul li.msg-left .msg-desc:before {
                             position: absolute;
                             content: '';
                             border: 10px solid transparent;
-                            border-bottom-color: #E8E8E8;
+                            border-bottom-color: #F2F2F7;
                             bottom: 0px;
                             left: -10px;
                         }
@@ -241,30 +220,36 @@
                     .message ul li.msg-left small {
                         float: right;
                         color: #c1c1c1;
+                        margin-right: 20px;
+                        position: absolute;
+                        bottom: 4px;
+                        right: 0;
+                        opacity: 80%;
                     }
 
                 .message ul li.msg-right {
                     float: right;
-                    max-width: 500px;
+                    max-width: 250px;
                 }
 
 
                     .message ul li.msg-right .msg-desc {
                         margin-right: 25px;
                         margin-left: 10px;
-                        font-size: 12px;
-                        background: #cce5ff;
-                        color: #004085;
-                        padding: 10px 15px;
+                        font-size: 14px;
+                        background: #007AFF;
+                        color: #fff;
+                        padding: 10px 60px 10px 15px;
                         border-radius: 5px 5px 5px 0px;
                         position: relative;
+                        line-height: 1.3;
                     }
 
                         .message ul li.msg-right .msg-desc:before {
                             position: absolute;
                             content: '';
                             border: 10px solid transparent;
-                            border-bottom-color: #cce5ff;
+                            border-bottom-color: #007AFF;
                             bottom: 0px;
                             right: -10px;
                         }
@@ -272,7 +257,13 @@
                     .message ul li.msg-right small {
                         float: right;
                         color: #c1c1c1;
-                        margin-right: 70px;
+                        margin-right: 35px;
+
+                        position:absolute;
+                        bottom:4px;
+                        right:0;
+                        color:#fff;
+                        opacity:50%;
                     }
 
                 .message ul li.msg-day {
@@ -342,23 +333,48 @@
             top: 0;
             opacity: 0;
         }
+
+    .defaultChat {
+        text-align: center;
+        margin-top: 130px;
+    }
+
+    .defaultChat div {
+        font-size:1.5em;
+        font-weight:300;
+        margin:20px;
+    }
+
+    .defaultChat img {
+        width:250px;
+        height:auto;
+    }
+
+    #messageInput {
+        border-radius:10px;
+        padding-left:10px;
+    }
 </style>
 
 
 
 
-<div class="main-section d-flex justify-content-between" style="background-color:transparent;">
+<div class="main-section d-flex justify-content-center" style="background-color:transparent;">
     <div class="left card">
         <div class="head-section">
             <div class="headLeft-section">
                 <div class="headLeft-sub">
-                    <input type="text" name="search" placeholder="Search...">
-                    <button> <i class="fa fa-search"></i> </button>
+                    <div class="card-title fw-bold" style="margin:10px;">Users</div>
                 </div>
             </div>
         </div>
         <div class="body-section">
             <div class="left-section mCustomScrollbar" data-mcs-theme="minimal-dark">
+                <div style="text-align:center; margin-bottom:10px;">
+                    <input type="text" name="search" placeholder="Search...">
+                    <button> <i class="fa fa-search"></i></button>
+                </div>
+                
                 <ul id="chatUser">
                     @{ foreach (var user in Model.allmessages)
                         {
@@ -366,10 +382,6 @@
                             {
                                 <li id="ISRChat" onclick="changeChat(this, 'ISRChat')">
                                     <div class="chatList">
-                                        <div class="img">
-                                            <i class="fa fa-circle"></i>
-                                            <img src="/demo/man01.png">
-                                        </div>
                                         <div class="desc">
                                             <small class="time">05:30 am</small>
                                             <h5>IT Support</h5>
@@ -382,14 +394,10 @@
                             {
                                 <li id="@user.Key" onclick="changeChat(this, '@user.Key')">
                                     <div class="chatList">
-                                        <div class="img">
-                                            <i class="fa fa-circle"></i>
-                                            <img src="/demo/man01.png">
-                                        </div>
                                         <div class="desc">
                                             <small class="time">05:30 am</small>
                                             <h5>@Model.allusers[user.Key].Fullname</h5>
-                                            <small>...</small>
+                                            <small></small>
                                         </div>
                                     </div>
                                 </li>
@@ -403,14 +411,10 @@
                             {
                                 <li id="@HttpContext.Session.GetString("ChatUser")" onclick="changeChat(this, '@HttpContext.Session.GetString("ChatUser")')">
                                     <div class="chatList">
-                                        <div class="img">
-                                            <i class="fa fa-circle"></i>
-                                            <img src="/demo/man01.png">
-                                        </div>
                                         <div class="desc">
                                             <small class="time">05:30 am</small>
                                             <h5>@HttpContext.Session.GetString("ChatUserName")</h5>
-                                            <small>...</small>
+                                            <small></small>
                                         </div>
                                     </div>
                                 </li>
@@ -427,20 +431,25 @@
             <div class="headRight-section">
                 <div class="headRight-sub">
                     <h3></h3>
-                    <small>...</small>
+                    <small></small>
                 </div>
             </div>
         </div>
         <div class="body-section">
             <div class="right-section">
                 <div class="message wholeChat" data-mcs-theme="minimal-dark">
-                    <ul id="messageList" class="test showActive ">
-                        <li style="height: 100%; width: 100%;">
+                    <ul id="messageList" class="test showActive " style="overflow:hidden;">
+                        <li style="">
                             @{ if (HttpContext.Session.GetString("LoginUserType") != "ITSupport")
                                 {
                                     if (!Model.allmessages.ContainsKey("ISRChat") && HttpContext.Session.GetString("ChatUser") != "ISRChat")
                                     {
-                                        <button class="btn btn-primary startISRChat">Start talking to IT Support</button>
+                                        <div class="defaultChat" style="">
+                                            <img src="~/images/defaultChat.png" alt="Alternate Text" />
+                                            <div>Start talking to IT Support</div>
+                                            <button class="btn btn-primary startISRChat">Chat</button>
+                                        </div>
+
                                     }
                                 }
                             }
@@ -459,7 +468,7 @@
                                                     <div class="msg-desc">
                                                         @msg.Text
                                                     </div>
-                                                    <small>@msg.When</small>
+                                                    <small>@string.Concat( msg.When.ToString().Split(" ")[1].Substring(0, msg.When.ToString().Split(" ")[1].LastIndexOf(":")), msg.When.ToString().Split(" ")[2])</small>
                                                 </div>
                                             </li>
                                         }
@@ -557,8 +566,8 @@
         console.log("sending..." + user);
 
         document.getElementById("messageInput").value = "";
-        let message = new Message(user, text, Date.now, userId, toUserId);
-        console.log(`sending ${message} says ${message.text}`);
+        let message = new Message(user, text, new Date(), userId, toUserId);
+        console.log(`sending ${message} says ${message.text} at ${message.when}`);
 
 
         var li = document.createElement("li");
@@ -576,9 +585,11 @@
         divSecond.appendChild(small);
 
         divThird.textContent = `${message.text}`;
+        small.textContent = `${message.when.toLocaleString().split(" ")[1].slice(0, -3) + message.when.toLocaleString().split(" ")[2]}`;
 
         document.getElementsByClassName(toUserId)[0].appendChild(li);
 
+        console.log(toUserId + message.when);
 
         connection.invoke("SendMessageToGroup", toUserId, message).catch(function (err) {
             return console.error(err.toString());
@@ -588,7 +599,7 @@
 
     connection.on("ReceiveMessage", function (message) {
         console.log(message)
-        console.log(`${message.userId} sends to ${message.toUserId}`);
+        console.log(`${message.userId} sends to ${message.toUserId} at ${message.when}`);
 
         if ('@HttpContext.Session.GetString("LoginUser")' != message.userId && '@HttpContext.Session.GetString("LoginUser")' == message.toUserId) {
             var li = document.createElement("li");
@@ -608,20 +619,17 @@
             divSecond.appendChild(small);
 
             divThird.textContent = `${message.text}`;
+            small.textContent = `${message.when.split(" ")[1].slice(0, -3) + message.when.split(" ")[2]}`;
 
             console.log(typeof document.getElementsByClassName(message.userId)[0]);
 
             if (document.getElementsByClassName(message.userId)[0] == null || typeof document.getElementsByClassName(message.userId)[0] == "undefined") {
                 document.getElementById("chatUser").innerHTML += `<li id="${message.userId}" class="" onclick="changeChat(this, '${message.userId}')">
                                 <div class="chatList">
-                                    <div class="img">
-                                        <i class="fa fa-circle"></i>
-                                        <img src="/demo/man02.png">
-                                    </div>
                                     <div class="desc">
                                         <small class="time">3 day</small>
                                         <h5>${message.username}</h5>
-                                        <small>...</small>
+                                        <small>${message.when}</small>
                                     </div>
                                 </div>
                             </li>`;

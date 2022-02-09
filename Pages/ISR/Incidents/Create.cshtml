@@ -7,8 +7,18 @@
     ViewData["Breadcrumb"] = "Incident Management > Incidents";
 }
 
+<style>
+    .btn-group, .dropdown-menu {
+        width:100%;
+    }
+
+    .form-control {
+        background-color:white;
+    }
+</style>
+
 <div class="row">
-    <form class="forms-sample" method="post" asp-action="">
+    <form class="forms-sample incidentForm" method="post" asp-action="">
         <div class="row">
             <div class="col-12 grid-margin stretch-card">
                 <div class="card">
@@ -59,7 +69,29 @@
                             </div>
 
                         </div>
+                        <div class="form-group d-flex">
+                            <div style="width:20%; padding:10px 0;">
+                                <label for="category">Category:</label>
 
+                            </div>
+                            <div style="width:80%;">
+                                    @Html.DropDownList("Select", new SelectList(Enum.GetValues(typeof(Models.CategoryType))), null, new { @class = "form-control multiple-checkboxes", @id = "multiple-checkboxes", @multiple = "multiple" })
+                                <input asp-for="newIncident.Category" type="hidden" id="category"/>
+                                <span asp-validation-for="newIncident.Category" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="form-group  d-flex">
+                            <div style="width:20%;">
+                                <label>Level</label>
+
+                            </div>
+                            <div style="width:80%;">
+                                @Html.DropDownList("newIncident.Level", new SelectList(Enum.GetValues(typeof(Models.LevelType))), "--Select an level--", new { @class = "form-control", @id = "levelType" })
+                                <span asp-validation-for="newIncident.Level" class="text-danger"></span>
+                            </div>
+
+                        </div>
 
                     </div>
                 </div>
@@ -68,10 +100,22 @@
             <div class="d-flex justify-content-between">
                 <button type="button" class="btn btn-primary me-2">Cancel</button>
 
-                <button type="submit" class="btn btn-primary me-2">Submit</button>
+                <button type="button" class="btn btn-primary me-2 submit">Submit</button>
 
             </div>
 
         </div>
     </form>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('#multiple-checkboxes').multiselect();
+    });
+
+    $(".submit").on("click", function () {
+        $("#category").val($(".multiselect-selected-text").text().replace(" ", ""));
+
+        $(".incidentForm").submit();
+    });
+</script>

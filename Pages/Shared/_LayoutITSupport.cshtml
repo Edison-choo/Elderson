@@ -23,16 +23,28 @@
     <!-- endinject -->
     <link rel="shortcut icon" href="~/images/favicon.png" />
 
+
+
     <link rel="stylesheet" href="~/css/Custom.css" />
 
-    @{
-        if (ViewData["Header"] == "CHAT")
+    @{ if (ViewData["Header"] == "CHAT")
         {
-            <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-            <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.css" >
-        }
-    }
+<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+                <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+                                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.css">
+ } }
+
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0T7Q9PKL96"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-0T7Q9PKL96');
+    </script>
 </head>
 <body>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -58,6 +70,9 @@
     <script src="~/js/dashboard.js"></script>
     <script src="~/js/Chart.roundedBarCharts.js"></script>
     <!-- End custom js for this page-->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
 
     @await Component.InvokeAsync("Notyf")
     @RenderSection("Scripts", required: false)
