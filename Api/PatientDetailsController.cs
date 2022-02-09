@@ -50,7 +50,7 @@ namespace Elderson.Api
             try
             {
                 allDetails = _svc.GetAllEntries();
-                var jsonStr = JsonSerializer.Serialize(allDetails.Where(e => e.PatientID == userId).Select(x => new { x.Id, x.Title, x.DetailsofVisit }));
+                var jsonStr = JsonSerializer.Serialize(allDetails.Where(e => e.PatientID == userId).Select(x => new { x.Id, x.Title, x.DetailsofVisit, x.PatientID }));
                 return Ok(jsonStr);
             }
             catch (Exception ex)
