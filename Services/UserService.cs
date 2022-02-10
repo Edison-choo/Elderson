@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Elderson.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Elderson.Services
@@ -365,6 +366,7 @@ namespace Elderson.Services
             }
         }
 
+
             //Clinic Services
             private bool ClinicExists(string id)
         {
@@ -394,6 +396,10 @@ namespace Elderson.Services
         public List<Clinic> GetAllClinic()
         {
             return _context.Clinics.ToList();
+        }
+        public List<Clinic> GetSearchedClinic(string search)
+        {
+            return _context.Clinics.Where(c => (c.Name!.Contains(search)) || (c.Address!.Contains(search))).ToList();
         }
 
         public Clinic GetClinicById(String id)

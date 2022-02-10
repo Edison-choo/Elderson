@@ -52,9 +52,11 @@ namespace Elderson.Hubs
             ConnectedUser.onlineMembers.Remove(userID);
             await base.OnDisconnectedAsync(exception);
         }
-        public async Task SendMessageToGroup(string groupname, string user, string message)
+        public async Task SendMessageToGroup(string message)
         {
-            await Clients.Group(groupname).SendAsync("ReceiveMessage", user, message);
+            string groupname = Context.GetHttpContext().Session.GetString("CallID");
+            string userID = Context.GetHttpContext().Session.GetString("LoginUser");
+            await Clients.Group(groupname).SendAsync("ReceiveMessage", userID, message);
         }
     }
 }

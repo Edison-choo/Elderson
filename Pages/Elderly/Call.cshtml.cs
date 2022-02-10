@@ -17,6 +17,8 @@ namespace Elderson.Pages.Elderly
         public string myCallID { get; set; }
         [BindProperty]
         public string myDoctorID { get; set; }
+        [BindProperty]
+        public string myDoctorName { get; set; }
         private BookingService _svc;
         private UserService _uSvc;
         public CallModel(BookingService service, UserService uService)
@@ -36,6 +38,7 @@ namespace Elderson.Pages.Elderly
             }
             myCallID = _svc.GetBookingById(id).CallUUID;
             myDoctorID = _svc.GetBookingById(id).DoctorID;
+            myDoctorName = _uSvc.GetNameById(myDoctorID);
             HttpContext.Session.SetString("CallID", myCallID);
         }
     }
