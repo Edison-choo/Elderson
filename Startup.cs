@@ -41,6 +41,7 @@ namespace Elderson
             services.AddTransient<BookingService>();
             services.AddTransient<InventoryService>();
             services.AddTransient<FAQService>();
+            services.AddTransient<FormService>();
             services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.TopCenter; });
             services.AddControllers();
         }

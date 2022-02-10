@@ -10,17 +10,21 @@ namespace Elderson.Pages.DRR
 {
     public class FormModel : PageModel
     {
+        [BindProperty]
+        public string Doctor_Id { get; set; }
         public IActionResult OnGet()
         {
             if (HttpContext.Session.GetString("LoginUser") != null)
             {
                 if (HttpContext.Session.GetString("LoginUserType") == "Doctor")
                 {
+                    Doctor_Id = HttpContext.Session.GetString("LoginUser");
                     return Page();
                 }
             }
 
             return Redirect("~/Elderly");
+
         }
     }
 }

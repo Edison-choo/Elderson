@@ -41,6 +41,7 @@ namespace Elderson.Models
         public DbSet<Supplier> Supplier { get; set; }
 
         public DbSet<FAQ> FAQ { get; set; }
+        public DbSet<Form> Form { get; set; }
 
     }
 }

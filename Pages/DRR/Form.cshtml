@@ -15,14 +15,77 @@
         background-color: grey;
     }
 
-    .form-card:hover {
-        background-color: darkgrey;
+        .form-card:hover {
+            background-color: darkgrey;
+        }
+
+    #Custom-Form {
+        text-align: center;
+        color: white;
+        text-decoration: none;
+        padding-top: 40%;
+    }
+
+    .temp-form {
+        margin-bottom: 3%;
+        display: flex;
     }
 </style>
 
 
+<script>
+    $(document).ready(function () {
+        console.log("Loading webpage...")
+        $.ajax({
+            url: 'https://localhost:44311/api/Form/' + '@Model.Doctor_Id',
+            type: 'GET',
+            success: function (result) {
+                console.log("Items retrieve successfully")
+                console.log(JSON.parse(result));
+                var data = JSON.parse(result);
+                for (i = 0; i < data.length; i++) {
+
+                    $(".temp-form").append(
+                        `
+                        <div style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); width: 180px; margin-right: 2%; text-align: center; font-family: arial; background-color: grey;">
+                        <button type="button" class="close" aria-label="Close" style="margin-right: 2%; margin-top:2%;" onclick=${"deleteForm(" + "'" + data[i].Id + "'" + ")"}>
+                          <span aria-hidden="true" style="color:white;">×</span>
+                        </button>
+                          <p class="title" style="height:225px; color: white; font-size: 18px; margin-top:15%; text-align:center"><strong>${data[i].TemplateName}</strong></p>
+                          <p><a style="border: none; outline: 0; display: inline-block; padding: 8px; color: black; background-color: white; text-align: center; cursor: pointer; width: 100%; font-size: 18px; text-decoration: none;" href="/DRR/EditForm?id=${data[i].Id}">Edit</a></p>
+                        </div>
+                        `
+                    );
+                }
+            }
+        });
+    });
+
+</script>
+
+
+<h1>Template Form</h1>
+<div class="temp-form" id="temp-form">
+    
+</div>
+
 <h1>HM Form</h1>
-<a asp-page="CustomForm">
+<a asp-page="CustomForm" style="text-decoration:none; height: 225px; width: 180px;">
     <div class="form-card">
+        <h3 id="Custom-Form">Add<br /><br />Form</h3>
     </div>
 </a>
+
+<script>
+
+    function deleteForm(formId) {
+        $.ajax({
+            url: 'https://localhost:44311/api/Form/' + formId,
+            type: 'DELETE',
+            success: function (result) {
+                console.log("Item delete successfully")
+                window.location.href = "/DRR/Form";
+            }
+        });
+    }
+</script>
