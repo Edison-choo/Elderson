@@ -9,6 +9,7 @@ namespace Elderson
 {
     public class QueriesModel : PageModel
     {
+        public string FullName { get; set; }
         public void OnGet()
         {
 

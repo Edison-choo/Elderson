@@ -40,5 +40,7 @@ namespace Elderson.Models
         public DbSet<Deliveries> Delivery { get; set; }
         public DbSet<Supplier> Supplier { get; set; }
 
+        public DbSet<FAQ> FAQ { get; set; }
+
     }
 }

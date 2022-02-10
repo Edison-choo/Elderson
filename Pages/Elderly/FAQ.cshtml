@@ -1,5 +1,5 @@
 ﻿@page
-@model IndexModel
+@model Elderson.FAQModel
 @{
     Layout = "Shared/_Layout";
     ViewData["Title"] = "FAQ";
@@ -15,8 +15,9 @@
         border: none;
         text-align: center;
         outline: none;
-        font-size: 15px;
+        font-size: 20px;
         transition: 0.4s;
+        font-weight: bold;
     }
 
         .active, .accordion:hover {
@@ -43,14 +44,36 @@
         transition: max-height 0.2s ease-out;
     }
 
-    .container {
+    .container-accordian {
         width: 50%;
-        border-radius: 8px;
+        margin: 0 auto;
         margin-top: 5%;
+    }
+    .select {
+        width: 90%;
+        height: 30px;
+        margin-bottom: 10px;
+    }
+
+    .question {
+        width: 90%;
+        margin-bottom: 10px;
+
+    }
+    .container-form {
+        width: 50%;
+        margin: 0 auto;
+        background-color: #b0c4de;
+        padding-top: 25px;
+        padding-bottom: 15px;
+        border-radius: 8px;
+    }
+    .contact-us{
+        padding-left: 60px;
     }
 </style>
 
-<div class="container">
+<div class="container-accordian">
     <button class="accordion">Question 1</button>
     <div class="panel">
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
@@ -65,7 +88,47 @@
     <div class="panel">
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
     </div>
+
+    <button class="accordion">Question 4</button>
+    <div class="panel">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+
+    <button class="accordion">Question 5</button>
+    <div class="panel">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
 </div>
+
+
+    <h2 style="text-align: center; margin-top:5%;">Contact Us</h2>
+    <div class="container-form">
+        <form method="post" class="contact-us">
+            <div style="margin: 0 auto;">
+                <select class="select" asp-for="newQuery.Topic">
+                    <option value="" disabled selected>Topic</option>
+                    <option value="Bookings">Bookings</option>
+                    <option value="Payment">Payment</option>
+                    <option value="Account">Account</option>
+                    <option value="Medication">Medication</option>
+                    <option value="Others">Others</option>
+                </select>
+            </div>
+            
+            <!-- Email input -->
+            @*<div class="form-outline mb-4">
+                <input id="form4Example2" class="form-control" asp-for="newQuery.Topic" />
+                <label class="form-label" for="form4Example2">Topic</label>
+            </div>*@
+
+            <!-- Message input -->
+            <div style="margin: 0 auto;">
+                <textarea class="question" rows="4" asp-for="newQuery.Question" placeholder="Question"></textarea>
+            </div>
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary btn-block mb-4" style="width: 90%;">Send</button>
+        </form>
+    </div>
 
 
 
