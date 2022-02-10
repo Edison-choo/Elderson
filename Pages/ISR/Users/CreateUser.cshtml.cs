@@ -11,6 +11,9 @@ using System.Text;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.Extensions.Logging;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Elderson.Pages.Users
 {
@@ -23,7 +26,14 @@ namespace Elderson.Pages.Users
         [BindProperty]
         public Doctor DoctorRole { get; set; }
         [BindProperty]
+        public Doctor Photo { get; set; }
+        [BindProperty]
         public Patient PatientRole { get; set; }
+        [BindProperty]
+        public Clinic newClinic { get; set; }
+        public List<Clinic> allClinic { get; set; }
+        [BindProperty]
+        public List<SelectListItem> clinics { get; set; }
         //[BindProperty]
         //[Required]
         //public string pwd { get; set; }
@@ -44,15 +54,22 @@ namespace Elderson.Pages.Users
         private UserService _svc;
         private readonly ILogger<CreateUserModel> _logger;
         private readonly INotyfService _notfy;
-        public CreateUserModel(ILogger<CreateUserModel> logger, UserService service, INotyfService notyf)
+        private readonly IWebHostEnvironment webHostEnvironment;
+        public CreateUserModel(ILogger<CreateUserModel> logger, UserService service, INotyfService notyf, IWebHostEnvironment hostEnvironment)
         {
             _svc = service;
             _logger = logger;
             _notfy = notyf;
+            webHostEnvironment = hostEnvironment;
         }
         public void OnGet()
         {
-            
+            allClinic = _svc.GetAllClinic();
+            clinics = new List<SelectListItem>();
+            foreach (var i in allClinic)
+            {
+                clinics.Add(new SelectListItem { Text = i.Name, Value = i.Id });
+            }
         }
 
         public IActionResult OnPost()
@@ -100,8 +117,23 @@ namespace Elderson.Pages.Users
                         _svc.AddPatient(PatientRole);
                         break;
                     case "Doctor":
+                        var image = photoUpload();
+                        if (image != "")
+                        {
+                            DoctorRole.Photo = image;
+                        }
+                        if (DoctorRole.ClinicId != null)
+                        {
+                            newClinic.Id = Guid.NewGuid().ToString();
+                            _svc.AddClinic(newClinic);
+                        } else
+                        {
+                            DoctorRole.ClinicId = newClinic.Id;
+                        }
+                        
                         DoctorRole.Id = typeGuid;
                         DoctorRole.UserId = newUser.Id;
+                        
                         _svc.AddDoctor(DoctorRole);
                         break;
                     case "Administrator":
@@ -129,6 +161,26 @@ namespace Elderson.Pages.Users
 
             //}
             return Page();
+        }
+
+        public string photoUpload()
+        {
+            var files = HttpContext.Request.Form.Files;
+            if (files.Count != 0)
+            {
+                var uploads = Path.Combine(webHostEnvironment.WebRootPath, "uploads\\images");
+                var extensions = Path.GetExtension(files[0].FileName);
+
+                var fileName = Guid.NewGuid().ToString().Replace("-", "") + extensions;
+
+                using (var filestream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create))
+                {
+                    files[0].CopyTo(filestream);
+                }
+                Console.WriteLine(DateTime.Now.ToString().Replace(" ", "") + extensions);
+                return fileName;
+            }
+            return "";
         }
     }
 }

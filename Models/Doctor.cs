@@ -8,9 +8,10 @@ namespace Elderson.Models
     public class Doctor
     {
         public string Id { get; set; }
-        public string Clinic { get; set; }
+        public string ClinicId { get; set; }
         public string UserId { get; set; }
         public string Language { get; set; }
         public string WorkExp { get; set; }
+        public string Photo { get; set; }
     }
 }

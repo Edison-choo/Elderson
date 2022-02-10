@@ -21,17 +21,18 @@ namespace Elderson.Pages.Users
         }
         public IActionResult OnGet()
         {
-            if (HttpContext.Session.GetString("LoginUser") != null)
-            {
-                if (HttpContext.Session.GetString("LoginUserType") == "ITSupport")
-                {
+            //if (HttpContext.Session.GetString("LoginUser") != null)
+            //{
+            //    if (HttpContext.Session.GetString("LoginUserType") == "ITSupport")
+            //    {
 
-                    allusers = _svc.GetAllUsers();
-                    return Page();
-                }
-            }
-            
-            return Redirect("~/");
+            //        allusers = _svc.GetAllUsers();
+            //        return Page();
+            //    }
+            //}
+
+            //return Redirect("~/");
+            return Page();
         }
     }
 }

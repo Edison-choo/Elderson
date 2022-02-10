@@ -49,7 +49,13 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
                             <div class="d-flex">
-                                <img style="border-radius:50px; height:85px; width:85px;" src="~/images/faces/face1.jpg" alt="Alternate Text" />
+                                @{ 
+                                    if (Model.DoctorRole != null && Model.DoctorRole.Photo != null)
+            {
+                                                                <img style="border-radius:50px; height:85px; width:85px;" src="~/uploads/images/@Model.DoctorRole.Photo" alt="Alternate Text" />
+            }
+                                }
+                                
                                 <div style="margin-left:20px; margin-top:30px;">
                                     <h3>@Model.SelectedUser.Fullname</h3>
                                     <p>@Model.SelectedUser.UserType</p>
@@ -85,13 +91,20 @@
                         <div class="subNavItem" onclick="changeDisplay('personalInfo')">
                             Personal Information
                         </div>
+                        @{ if (Model.SelectedUser.UserType == "Doctor" && Model.SelectedClinic != null)
+                            {
+                                                <div class="subNavItem" onclick="changeDisplay('clinicInfo')">
+                                                    Clinic Information
+                                                </div>
+                            }
+                        }
                     </div>
                 </div>
             </div>
             <div class="col-md-10">
                 <div class="row contactInfo showActive">
                     <div class="col-12 grid-margin stretch-card">
-                        <div class="card info"  style="height: 600px;">
+                        <div class="card info" style="height: 600px;">
                             <div class="card-body">
                                 <h4 class="card-title">Contact Information</h4>
                                 <hr />
@@ -102,7 +115,7 @@
                                 <div>
                                     <div class="profileLb">Phone Number</div>
                                     <div class="profileData">
-                                        @if (Model.SelectedUser.Email != null)
+                                        @if (Model.SelectedUser.Phone != null)
                                         {@Model.SelectedUser.Phone}
                                     else
                                     { <text>To be updated</text>}
@@ -137,7 +150,7 @@
                 </div>
                 <div class="row personalInfo" style="display: none;">
                     <div class="col-12 grid-margin stretch-card">
-                        <div class="card info"  style="height: 600px;">
+                        <div class="card info" style="height: 600px;">
                             <div class="card-body">
                                 <h4 class="card-title">Personal Information</h4>
                                 <hr />
@@ -205,15 +218,6 @@
                                             else if (Model.SelectedUser.UserType == "Doctor")
                                             {
                                                 <div>
-                                                    <div class="profileLb">Clinic</div>
-                                                    <div class="profileData">
-                                                        @if (Model.DoctorRole.Clinic != null)
-                                                        {@Model.DoctorRole.Clinic}
-                                                    else
-                                                    {<text>To be updated</text>}
-                                                    </div>
-                                                </div>
-                                                <div>
                                                     <div class="profileLb">Work Experience</div>
                                                     <div class="profileData">
                                                         @if (Model.DoctorRole.WorkExp != null)
@@ -257,10 +261,12 @@
 
                                     </div>
                                 </div>
+                                
                                 <div class="row">
                                     <div class="col-12 grid-margin">
                                         @{ if (Model.SelectedUser.UserType == "Patient")
                                             {
+                                                <hr />
                                                 <div>
                                                     <div class="profileLb">Home Address</div>
                                                     <div class="profileData">
@@ -278,8 +284,60 @@
                         </div>
                     </div>
                 </div>
+                @{ if (Model.SelectedUser.UserType == "Doctor" && Model.SelectedClinic != null)
+                    {
+                                <div class="row clinicInfo" style="display: none;">
+                                    <div class="col-12 grid-margin stretch-card">
+                                        <div class="card info" style="height: 600px;">
+                                            <div class="card-body">
+                                                <h4 class="card-title">Personal Information</h4>
+                                                <hr />
+                                                <div class="row">
+                                                    <div class="col-md-6 grid-margin">
+                                                        <div>
+                                                            <div class="profileLb">Name</div>
+                                                            <div class="profileData">
+                                                                @if (@Model.SelectedClinic.Name != null)
+                                                                {@Model.SelectedClinic.Name}
+                                                            else
+                                                            {<text>To be updated</text>}
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <div class="profileLb">Phone</div>
+                                                            <div class="profileData">
+                                                                @if (@Model.SelectedClinic.Phone != null)
+                                                                {@Model.SelectedClinic.Phone}
+                                                            else
+                                                            {<text>To be updated</text>}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="row">
+                                                    <div class="col-12 grid-margin">
+                                                        <hr />
+                                                        <div>
+                                                            <div class="profileLb">Clinic Address</div>
+                                                            <div class="profileData">
+                                                                @if (Model.SelectedClinic.Address != null)
+                                                                {@Model.SelectedClinic.Address}
+                                                            else
+                                                            { <text>To be updated</text>}
+                                                            </div>
+                                                        </div>
+                                                            
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                    } }
                 
-                
+
             </div>
             
         </div>
