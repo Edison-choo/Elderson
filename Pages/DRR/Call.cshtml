@@ -122,6 +122,7 @@
         }
     })
     connection.on("ReceiveMessage", (user, message) => {
+        console.log(user + ":" + message);
         const div = document.createElement("div");
         if (user == "system") {
             if (message == "@Model.myPatientID" + "0") {

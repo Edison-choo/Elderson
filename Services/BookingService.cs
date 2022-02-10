@@ -32,6 +32,11 @@ namespace Elderson.Services
             Booking book = _context.Booking.Where(b => (b.Id == id) && (b.BookDateTime > DateTime.Now)).FirstOrDefault();
             return book;
         }
+        public Booking GetBookingByCallId(string id)
+        {
+            Booking book = _context.Booking.Where(b => b.CallUUID == id).FirstOrDefault();
+            return book;
+        }
         public bool AddBooking(Booking booking)
         {
             _context.Add(booking);

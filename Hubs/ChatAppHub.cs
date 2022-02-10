@@ -8,6 +8,10 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace Elderson.Hubs
 {   
+    public static class ConnectedUser
+    {
+        public static List<string> onlineMembers = new List<string>();
+    }
     public class ChatAppHub : Hub
     {
         private BookingService _svc;
@@ -20,15 +24,32 @@ namespace Elderson.Hubs
         public override async Task OnConnectedAsync()
         {
             string groupname = Context.GetHttpContext().Session.GetString("CallID");
+            string userID = Context.GetHttpContext().Session.GetString("LoginUser");
+            string otherID;
             await Groups.AddToGroupAsync(Context.ConnectionId, groupname);
-            await Clients.Groups(groupname).SendAsync("ReceiveMessage", "system", Context.GetHttpContext().Session.GetString("LoginUser")+"0");
+            if (_uSvc.IsDoctor(userID))
+            {
+                otherID = _svc.GetBookingByCallId(groupname).PatientID;
+            }
+            else
+            {
+                otherID = _svc.GetBookingByCallId(groupname).DoctorID;
+            }
+            ConnectedUser.onlineMembers.Add(userID);
+            await Clients.Groups(groupname).SendAsync("ReceiveMessage", "system", userID+"0");
             await base.OnConnectedAsync();
+            await Clients.Groups(groupname).SendAsync("ReceiveMessage", "system", ConnectedUser.onlineMembers.Count);
+            if (ConnectedUser.onlineMembers.Contains(otherID))
+            {
+                await Clients.Groups(groupname).SendAsync("ReceiveMessage", "system", otherID + "0");
+            }
         }
         public override async Task OnDisconnectedAsync(Exception exception)
         {
             string groupname = Context.GetHttpContext().Session.GetString("CallID");
+            string userID = Context.GetHttpContext().Session.GetString("LoginUser");
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupname);
-            await Clients.Groups(groupname).SendAsync("ReceiveMessage", "system", Context.GetHttpContext().Session.GetString("LoginUser") + "1");
+            await Clients.Groups(groupname).SendAsync("ReceiveMessage", "system", userID + "1");
             await base.OnDisconnectedAsync(exception);
         }
         public async Task SendMessageToGroup(string groupname, string user, string message)

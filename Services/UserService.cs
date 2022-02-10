@@ -183,7 +183,7 @@ namespace Elderson.Services
         }
 
         // Doctor Service
-        private bool DoctorExists(string id)
+        public bool DoctorExists(string id)
         {
             return _context.Doctors.Any(e => e.Id == id);
         }
@@ -345,6 +345,17 @@ namespace Elderson.Services
             try
             {
                 return _context.Users.Where(u => u.Id == id).FirstOrDefault().Fullname;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public bool IsDoctor(string id)
+        {
+            try
+            {
+                return _context.Doctors.Where(u => u.UserId == id).Any();
             }
             catch
             {
