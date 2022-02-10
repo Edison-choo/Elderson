@@ -16,12 +16,14 @@ namespace Elderson
         [BindProperty]
         public FAQ newQuery { get; set; }
         private FAQService _svc;
+        private UserService _usrsvc;
         private readonly ILogger<FAQModel> _logger;
 
-        public FAQModel(ILogger<FAQModel> logger, FAQService service)
+        public FAQModel(ILogger<FAQModel> logger, FAQService service, UserService userService)
         {
             _svc = service;
             _logger = logger;
+            _usrsvc = userService;
         }
         public void OnGet()
         {
@@ -37,10 +39,13 @@ namespace Elderson
                     string guid = Guid.NewGuid().ToString();
                     newQuery.Id = guid;
                     newQuery.UserId = HttpContext.Session.GetString("LoginUser");
+                    var userID = HttpContext.Session.GetString("LoginUser");
+                    newQuery.FullName = _usrsvc.GetUserById(userID).Fullname;
                     _svc.SubmitQuery(newQuery);
+                    return Redirect("/Elderly/FAQ");
                 }
             }
-            return Page();
+            return Redirect("/Elderly/FAQ");
         }
     }
 }

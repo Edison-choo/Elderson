@@ -27,7 +27,7 @@
     $(document).ready(function () {
         console.log("Loading webpage...")
         $.ajax({
-            url: 'https://localhost:44311/api/User',
+            url: 'https://localhost:44311/api/User/GetPatients',
             type: 'GET',
             success: function (result) {
                 console.log("Items retrieve successfully")
@@ -38,7 +38,7 @@
         $('#userstable').DataTable(
             {
                 "ajax": {
-                    'url': 'https://localhost:44311/api/User',
+                    'url': 'https://localhost:44311/api/User/GetPatients',
                     'type': 'GET',
                     "dataSrc": function (json) {
                         return JSON.parse(JSON.stringify(json));

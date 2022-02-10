@@ -36,7 +36,7 @@ namespace Elderson
             {
                 string guid = Guid.NewGuid().ToString();
                 NewEntry.Id = guid;
-                NewEntry.PatientID = "8d96eb8d-fdc9-45f9-bf11-bc69bf93ef39";
+                NewEntry.PatientID = Id;
                 NewEntry.DateofVisit = DateTime.Now;
                 _svc.AddEntry(NewEntry);
             }

@@ -48,24 +48,24 @@ namespace Elderson
             
         }
 
-        //[HttpGet]
-        //public ActionResult<List<User>> GetPatients()
-        //{
-        //    List<User> allpatients = new List<User>();
+        [HttpGet("GetPatients", Name = "GetPatients")]
+        public ActionResult<List<User>> GetPatients()
+        {
+            List<User> allpatients = new List<User>();
 
-        //    try
-        //    {
-        //        allpatients = _svc.GetAllUsers();
-        //        var jsonStr = JsonSerializer.Serialize(allpatients.Where(x => x.UserType == "Patient").Select(x => new { x.Id, x.Fullname, x.UserType, x.Phone }));
-        //        return Ok(jsonStr);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine(ex);
-        //        return BadRequest();
-        //    }
+            try
+            {
+                allpatients = _svc.GetAllUsers();
+                var jsonStr = JsonSerializer.Serialize(allpatients.Where(x => x.UserType == "Patient").Select(x => new { x.Id, x.Fullname, x.UserType, x.Phone }));
+                return Ok(jsonStr);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return BadRequest();
+            }
 
-        //}
+        }
 
         //[HttpGet("{apiPatientname}", Name = "GetPatients")]
         //public ActionResult<List<User>> GetPatients()
