@@ -32,7 +32,7 @@ namespace Elderson.Api
             try
             {
                 allform = _svc.GetAllForm(doctor_id);
-                var jsonStr = JsonSerializer.Serialize(allform.Where(x => x.DoctorId == doctor_id).Select(x => new { x.Id, x.DoctorId, x.BookingId, x.TemplateName }));
+                var jsonStr = JsonSerializer.Serialize(allform.Where(x => x.DoctorId == doctor_id).Select(x => new { x.Id, x.DoctorId, x.TemplateName }));
                 return Ok(jsonStr);
             }
             catch (Exception ex)
