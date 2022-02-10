@@ -21,5 +21,6 @@ namespace Elderson.Models
         public string DoctorID { get; set; }
         [Required]
         public string CallUUID { get; set; }
+        public string FormId { get; set; }
     }
 }
