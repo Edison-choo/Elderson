@@ -353,8 +353,20 @@ namespace Elderson.Services
             }
         }
 
-        //Clinic Services
-        private bool ClinicExists(string id)
+        public bool IsDoctor(string id)
+        {
+            try
+            {
+                return _context.Doctors.Where(u => u.UserId == id).Any();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+            //Clinic Services
+            private bool ClinicExists(string id)
         {
             return _context.Clinics.Any(e => e.Id == id);
         }
