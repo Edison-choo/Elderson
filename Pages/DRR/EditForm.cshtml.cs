@@ -11,25 +11,26 @@ using Microsoft.Extensions.Logging;
 
 namespace Elderson.Pages.DRR
 {
-    public class CustomFormModel : PageModel
+    public class EditFormModel : PageModel
     {
-        [BindProperty]
-        public Form newForm { get; set; }
-
         private FormService _svc;
+        private readonly ILogger<EditFormModel> _logger;
 
-        private readonly ILogger<CustomFormModel> _logger;
-        public CustomFormModel(ILogger<CustomFormModel> logger, FormService service)
+        public EditFormModel(ILogger<EditFormModel> logger, FormService service)
         {
-            _svc = service;
             _logger = logger;
+            _svc = service;
         }
-        public IActionResult OnGet()
+        [BindProperty]
+        public Form editForm { get; set; }
+        public IActionResult OnGet(string id)
         {
             if (HttpContext.Session.GetString("LoginUser") != null)
             {
                 if (HttpContext.Session.GetString("LoginUserType") == "Doctor")
                 {
+                    editForm = _svc.GetFormById(id);
+                    editForm.Id = id;
                     return Page();
                 }
             }
@@ -39,13 +40,13 @@ namespace Elderson.Pages.DRR
 
         public IActionResult OnPost()
         {
-            var id = Guid.NewGuid().ToString();
-            newForm.Id = id;
-            newForm.DoctorId = HttpContext.Session.GetString("LoginUser");
-            newForm.BookingId = "";
-            _svc.AddForm(newForm);
-
-            return RedirectToPage("Index");
+            if (_svc.updateForm(editForm)){
+                return RedirectToPage("Form");
+            }
+            else
+            {
+                return Page();
+            }
         }
     }
 }

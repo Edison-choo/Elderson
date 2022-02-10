@@ -332,7 +332,8 @@ namespace Elderson.Services
             List<Doctor> doctors = new List<Doctor>();
             try
             {
-                doctors = _context.Doctors.Where(d => d.Clinic == clinic).ToList();
+                var clinicId = _context.Clinics.Where(d => d.Name == clinic).Select(d => d.Id).SingleOrDefault();
+                doctors = _context.Doctors.Where(d => d.ClinicId == clinicId).ToList();
             }
             catch
             {
@@ -351,16 +352,97 @@ namespace Elderson.Services
                 throw;
             }
         }
-        public bool IsDoctor(string id)
+
+        //Clinic Services
+        private bool ClinicExists(string id)
         {
+            return _context.Clinics.Any(e => e.Id == id);
+        }
+
+        private bool ClinicExistsByName(string name)
+        {
+            return _context.Clinics.Any(e => e.Name == name);
+        }
+
+        public bool AddClinic(Clinic clinic)
+        {
+            if (ClinicExists(clinic.Id))
+            {
+                return false;
+            }
+            if (ClinicExistsByName(clinic.Name))
+            {
+                return false;
+            }
+            _context.Add(clinic);
+            _context.SaveChanges();
+            return true;
+        }
+
+        public List<Clinic> GetAllClinic()
+        {
+            return _context.Clinics.ToList();
+        }
+
+        public Clinic GetClinicById(String id)
+        {
+            Clinic clinic = _context.Clinics.Where(e => e.Id == id).FirstOrDefault();
+            return clinic;
+        }
+
+        public Clinic GetClinicByDoctorId(String id)
+        {
+            Clinic clinic = _context.Clinics.Where(e => e.Id == id).FirstOrDefault();
+            return clinic;
+        }
+
+        public bool DeleteClinic(Clinic clinic)
+        {
+            bool deleted = true;
+            _context.Attach(clinic).State = EntityState.Modified;
+
             try
             {
-                return _context.Doctors.Where(u => u.UserId == id).Any();
+                _context.Remove(clinic);
+                _context.SaveChanges();
+                deleted = true;
             }
-            catch
+            catch (DbUpdateConcurrencyException)
             {
-                throw;
+                if (!ClinicExists(clinic.Id))
+                {
+                    deleted = false;
+                }
+                else
+                {
+                    throw;
+                }
             }
+            return deleted;
+        }
+
+        public bool UpdateClinic(Clinic clinic)
+        {
+            bool updated = true;
+            _context.Attach(clinic).State = EntityState.Modified;
+
+            try
+            {
+                _context.SaveChanges();
+                updated = true;
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ClinicExists(clinic.Id))
+                {
+                    updated = false;
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return updated;
         }
     }
 }

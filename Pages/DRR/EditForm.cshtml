@@ -1,16 +1,17 @@
 ﻿@page
-@model Elderson.Pages.DRR.CustomFormModel
+@model Elderson.Pages.DRR.EditFormModel
 @{
     Layout = "Shared/_LayoutDoctor";
-    ViewData["Title"] = "Custom HM Form";
-    ViewData["Breadcrumb"] = "Elderson > Form > HM Form";
-    ViewData["Header"] = "Health and Medication (HM) Custom Form";
+    ViewData["Title"] = "Edit Template Form";
+    ViewData["Breadcrumb"] = "Elderson > Form > Edit Form";
+    ViewData["Header"] = "Edit Template Form";
 }
 
 <style>
     .customForm-input {
         width: 100%;
     }
+
     #btnContainer {
         margin-top: 50%;
     }
@@ -23,7 +24,10 @@
 <div class="customForm">
     <form method="post">
         <p>Template Name:</p>
-        <input asp-for="newForm.TemplateName" class="customForm-input" />
+        <input asp-for="editForm.TemplateName" class="customForm-input" />
+        <input asp-for="editForm.Id" type="hidden" />
+        <input asp-for="editForm.DoctorId" type="hidden" />
+        <input asp-for="editForm.BookingId" type="hidden" />
         <br />
         <div id="btnContainer">
             <div><a asp-page="/DRR/Form" class="btn btn-primary">Back</a></div>

@@ -8,15 +8,24 @@
 }
 
 <style>
-    .doctorForm, .adminForm, .patientForm {
+    .doctorForm, .adminForm, .patientForm, .clinicForm {
         display: none;
+    }
+
+    .clinicChoice {
+        display:none;
+    }
+
+    .clinicBtn {
+        border:none;
+        background-color:darkgrey;
     }
 </style>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 
 <div class="row">
-    <form class="forms-sample" method="post" asp-action="">
+    <form class="forms-sample" enctype="multipart/form-data" method="post" asp-action="">
         <div class="row">
             <div class="col-12 grid-margin stretch-card">
                 <div class="card">
@@ -166,18 +175,6 @@
                         <hr />
                         <div class="form-group  d-flex">
                             <div style="width:30%;">
-                                <label for="clinic">Clinic</label>
-
-                            </div>
-                            <div style="width:70%;">
-                                <input asp-for="DoctorRole.Clinic" type="text" class="form-control" id="clinic" placeholder="CLINIC">
-                                <span asp-validation-for="DoctorRole.Clinic" class="text-danger"></span>
-                            </div>
-
-
-                        </div>
-                        <div class="form-group  d-flex">
-                            <div style="width:30%;">
                                 <label>Select Relationship</label>
 
                             </div>
@@ -193,16 +190,27 @@
 
                             </div>
                             <div style="width:70%;">
+                                
                                 <input asp-for="DoctorRole.WorkExp" type="text" class="form-control" id="workExp" placeholder="WORK EXPERIENCE">
                                 <span asp-validation-for="DoctorRole.WorkExp" class="text-danger"></span>
                             </div>
+                        </div>
+                        <div class="form-group  d-flex">
+                            <div style="width:30%;">
+                                <label for="photo">Profile Photo</label>
 
-
+                            </div>
+                            <div style="width:70%;" class="d-flex">
+                                <img id="profilePhoto" alt="Image" width="100" height="100" style="border:1px solid grey; margin-right:10px;"/>
+                                <input asp-for="DoctorRole.Photo" onchange="document.getElementById('profilePhoto').src = window.URL.createObjectURL(this.files[0])" type="file" class="form-control" id="photo" placeholder="Profile Photo">
+                                <span asp-validation-for="DoctorRole.Photo" class="text-danger"></span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
         <div class="row patientForm">
             <div class="col-12 grid-margin stretch-card">
                 <div class="card">
@@ -322,6 +330,84 @@
                 </div>
             </div>
         </div>
+        <div class="row clinicForm">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Clinic Related Information</h4>
+                        <hr />
+                        <div class="form-group  d-flex">
+                            <div style="width:30%;">
+                                <label for="clinic">Clinic</label>
+
+                            </div>
+                            <div style="width: 70%; d-flex">
+                                <button type="button" id="useExist" onclick="clinicChoice('useExist')" class="btn btn-primary me-2 clinicBtn">Use Existing Clinic</button>
+                                <button type="button" id="useNew" onclick="clinicChoice('useNew')" class="btn btn-primary me-2 clinicBtn">Create New Clinic</button>
+                            </div>
+                        </div>
+                        <div class="useExist clinicChoice">
+                            <div class="form-group  d-flex">
+                                <div style="width:30%;">
+                                    <label>Choose Existing Clinic</label>
+
+                                </div>
+                                <div style="width:70%;">
+                                    @Html.DropDownList("DoctorRole.ClinicId", Model.clinics as List<SelectListItem>, "--Select language--", new { @class = "form-control" })
+                                    <span asp-validation-for="DoctorRole.ClinicId" class="text-danger"></span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="useNew clinicChoice">
+                            <div class="form-group  d-flex">
+                                <div style="width:30%;">
+                                    <label for="clinic">Clinic Name</label>
+
+                                </div>
+                                <div style="width:70%;">
+                                    <input asp-for="newClinic.Name" type="text" class="form-control" id="clinic" placeholder="CLINIC">
+                                    <span asp-validation-for="newClinic.Name" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group  d-flex">
+                                <div style="width:30%;">
+                                    <label for="clinic">Address</label>
+
+                                </div>
+                                <div style="width:70%;">
+                                    <textarea asp-for="newClinic.Address" rows="6" class="form-control" id="clinic"></textarea>
+                                    <span asp-validation-for="newClinic.Address" class="text-danger"></span>
+                                </div>
+
+
+                            </div>
+                            <div class="form-group  d-flex">
+                                <div style="width:30%;">
+                                    <label for="clinic">Clinic Phone</label>
+
+                                </div>
+                                <div style="width:70%;height:28px;">
+                                    <div class="d-flex justify-content-between">
+                                        <div class="form-group" style="width:20%;">
+                                            <input type="text" class="form-control" id="code" asp-for="newClinic.CountryCode" value="65">
+                                        </div>
+                                        <div class="form-group" style="width:76%;">
+                                            <input type="text" class="form-control" id="ClinicPhone" asp-for="newClinic.Phone" placeholder="PHONE NUMBER">
+                                        </div>
+                                    </div>
+                                    <span asp-validation-for="newClinic.Phone" class="text-danger"></span>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="d-flex justify-content-between">
             <button type="button" class="btn btn-primary me-2">Cancel</button>
@@ -344,13 +430,17 @@
 
             $(".doctorForm").hide();
             $(".adminForm").hide();
+            $(".clinicForm").hide();
         } else if (document.getElementById("userType").value == "Doctor") {
             $(".doctorForm").show();
+            $(".clinicForm").show();
+            clinicChoice("useNew")
 
             $(".patientForm").hide();
             $(".adminForm").hide();
         } else if (document.getElementById("userType").value == "Administrator") {
             $(".adminForm").show();
+            $(".clinicForm").show();
 
             $(".patientForm").hide();
             $(".doctorForm").hide();
@@ -358,6 +448,15 @@
             $(".adminForm").hide();
             $(".patientForm").hide();
             $(".doctorForm").hide();
+            $(".clinicForm").hide();
         }
     });
+
+    function clinicChoice(choice) {
+        $(".clinicChoice").hide();
+        $(`.${choice}`).show();
+        $(".clinicBtn").css("background-color", "darkgrey");
+        $(`#${choice}`).css("background-color", "#1F3BB3");
+    }
+
 </script>

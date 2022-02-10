@@ -21,6 +21,8 @@ namespace Elderson.Pages.ISR.Users
         [BindProperty]
         public Patient PatientRole { get; set; }
         [BindProperty]
+        public Clinic SelectedClinic { get; set; }
+        [BindProperty]
         public string Birthdate { get; set; }
         private UserService _svc;
         public ProfileModel(UserService service)
@@ -33,6 +35,10 @@ namespace Elderson.Pages.ISR.Users
             PatientRole = _svc.GetPatientById(id);
             AdminRole = _svc.GetAdministratorById(id);
             DoctorRole = _svc.GetDoctorById(id);
+            if (DoctorRole != null && DoctorRole.ClinicId != null)
+            {
+                SelectedClinic = _svc.GetClinicByDoctorId(DoctorRole.ClinicId);
+            }
             Birthdate = SelectedUser.Birthdate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
         }
     }

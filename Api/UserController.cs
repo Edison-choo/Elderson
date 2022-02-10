@@ -104,6 +104,7 @@ namespace Elderson
             }
         }
 
+
         [HttpGet("ChatUser/{userId}", Name = "Message")]
         public ActionResult Message(string userId)
         {

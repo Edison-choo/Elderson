@@ -9,6 +9,7 @@ using Elderson.Services;
 using System.Globalization;
 using Microsoft.Extensions.Logging;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Elderson.Pages.ISR.Users
 {
@@ -24,10 +25,16 @@ namespace Elderson.Pages.ISR.Users
         public Patient PatientRole { get; set; }
         [BindProperty]
         public string Birthdate { get; set; }
+        [BindProperty]
+        public Clinic selectedClinic { get; set; }
+        public List<Clinic> allClinic { get; set; }
+        [BindProperty]
+        public List<SelectListItem> clinics { get; set; }
         public User UpdatedUser { get; set; }
         public Elderson.Models.Administrator UpdatedAdmin { get; set; }
         public Doctor UpdatedDoctor { get; set; }
         public Patient UpdatedPatient { get; set; }
+        public Clinic UpdatedClinic { get; set; }
         private UserService _svc;
         private readonly ILogger<EditModel> _logger;
         private readonly INotyfService _notfy;
@@ -44,6 +51,12 @@ namespace Elderson.Pages.ISR.Users
             PatientRole = _svc.GetPatientById(id);
             AdminRole = _svc.GetAdministratorById(id);
             DoctorRole = _svc.GetDoctorById(id);
+            allClinic = _svc.GetAllClinic();
+            clinics = new List<SelectListItem>();
+            foreach (var i in allClinic)
+            {
+                clinics.Add(new SelectListItem { Text = i.Name, Value = i.Id });
+            }
         }
 
         public IActionResult OnPost()
@@ -83,7 +96,18 @@ namespace Elderson.Pages.ISR.Users
                     break;
                 case "Doctor":
                     UpdatedDoctor = _svc.GetDoctorById(UpdatedUser.Id);
-                    UpdatedDoctor.Clinic = DoctorRole.Clinic;
+                    
+                    //if (UpdatedDoctor.ClinicId == DoctorRole.ClinicId)
+                    //{
+                    //    UpdatedClinic = _svc.GetClinicByDoctorId(UpdatedDoctor.ClinicId);
+                    //    UpdatedClinic.Name = selectedClinic.Name;
+                    //    UpdatedClinic.Address = selectedClinic.Address;
+                    //    UpdatedClinic.CountryCode = selectedClinic.CountryCode;
+                    //    UpdatedClinic.Phone = selectedClinic.Phone;
+                    //    _svc.UpdateClinic(UpdatedClinic);
+                    //}
+
+                    UpdatedDoctor.ClinicId = DoctorRole.ClinicId;
                     UpdatedDoctor.Language = DoctorRole.Language;
                     UpdatedDoctor.WorkExp = DoctorRole.WorkExp;
                     _svc.UpdateDoctor(UpdatedDoctor);
