@@ -42,5 +42,12 @@ namespace Elderson
             }
             return Page();
         }
+
+        public IActionResult OnPostEditDetails()
+        {
+            Console.WriteLine(NewEntry.Title);
+            return Page();
+        }
+        
     }
 }

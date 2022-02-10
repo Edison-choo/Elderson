@@ -49,6 +49,7 @@
         margin: 0 auto;
         margin-top: 5%;
     }
+
     .select {
         width: 90%;
         height: 30px;
@@ -58,8 +59,8 @@
     .question {
         width: 90%;
         margin-bottom: 10px;
-
     }
+
     .container-form {
         width: 50%;
         margin: 0 auto;
@@ -68,7 +69,8 @@
         padding-bottom: 15px;
         border-radius: 8px;
     }
-    .contact-us{
+
+    .contact-us {
         padding-left: 60px;
     }
 </style>
@@ -101,34 +103,34 @@
 </div>
 
 
-    <h2 style="text-align: center; margin-top:5%;">Contact Us</h2>
-    <div class="container-form">
-        <form method="post" class="contact-us">
-            <div style="margin: 0 auto;">
-                <select class="select" asp-for="newQuery.Topic">
-                    <option value="" disabled selected>Topic</option>
-                    <option value="Bookings">Bookings</option>
-                    <option value="Payment">Payment</option>
-                    <option value="Account">Account</option>
-                    <option value="Medication">Medication</option>
-                    <option value="Others">Others</option>
-                </select>
-            </div>
-            
-            <!-- Email input -->
-            @*<div class="form-outline mb-4">
+<h2 style="text-align: center; margin-top:5%;">Contact Us</h2>
+<div class="container-form">
+    <form method="post" class="contact-us">
+        <div style="margin: 0 auto;">
+            <select class="select" asp-for="newQuery.Topic">
+                <option value="" disabled selected>Topic</option>
+                <option value="Bookings">Bookings</option>
+                <option value="Payment">Payment</option>
+                <option value="Account">Account</option>
+                <option value="Medication">Medication</option>
+                <option value="Others">Others</option>
+            </select>
+        </div>
+
+        <!-- Email input -->
+        @*<div class="form-outline mb-4">
                 <input id="form4Example2" class="form-control" asp-for="newQuery.Topic" />
                 <label class="form-label" for="form4Example2">Topic</label>
             </div>*@
 
-            <!-- Message input -->
-            <div style="margin: 0 auto;">
-                <textarea class="question" rows="4" asp-for="newQuery.Question" placeholder="Question"></textarea>
-            </div>
-            <!-- Submit button -->
-            <button type="submit" class="btn btn-primary btn-block mb-4" style="width: 90%;">Send</button>
-        </form>
-    </div>
+        <!-- Message input -->
+        <div style="margin: 0 auto;">
+            <textarea class="question" rows="4" asp-for="newQuery.Question" placeholder="Question"></textarea>
+        </div>
+        <!-- Submit button -->
+        <button type="submit" class="btn btn-primary btn-block mb-4" style="width: 90%;">Send</button>
+    </form>
+</div>
 
 
 
@@ -149,3 +151,17 @@
     }
 </script>
 
+
+<script type="text/javascript">
+    window.__be = window.__be || {};
+    window.__be.id = "62053f46c0185d00077e316a";
+    (function () {
+        var be = document.createElement('script'); be.type = 'text/javascript'; be.async = true;
+        be.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.chatbot.com/widget/plugin.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(be, s);
+    })();
+    window.BE_API = window.BE_API || {};
+window.BE_API.onLoad = function () {
+    window.BE_API.resetSession();
+};
+</script>

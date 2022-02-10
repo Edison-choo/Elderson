@@ -71,25 +71,27 @@
                                                 <a class="dropdown-item" data-toggle="modal" data-target=${"#staticBackdrop" + data.Id}>Delete</a>
                                                 </div>
                                             </div>
-<form id="editDetails">
+
 <div class="modal fade" id=${"editBackdrop" + data.Id} data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
+                                            <form id="editDetails" action="/PatientDetails?handler=EditDetails" method="post">
                                             <div class="modal-body">
                                             <table style="text-align:center; width: 95%;">
-                                                <td><input placeholder="Title" asp-for="NewEntry.Title"></tr>
-                                                <td><textarea placeholder="Description" rows="4" asp-for="NewEntry.DetailsofVisit"></textarea></tr>
-                                            </table>        
+                                                <td><input placeholder="Title" name="NewEntry.Title"></tr>
+                                                <td><textarea placeholder="Description" rows="4" name="NewEntry.DetailsofVisit"></textarea></tr>
+                                            </table>
                                                 </div>
                                                 <div class="d-flex justify-content-between" style="margin-top:30px;">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <button style="height:44px;" type="button" onclick=${"editEntry(" + "'" + data.Id + "'" + ")"} class="btn btn-success">Update</button>
+                                                    <button style="height:44px;" type="submit" onclick=${"editEntry(" + "'" + data.Id + "'" + ")"} class="btn btn-success">Update</button>
                                                 </div>
+                                            </form>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-</form>
+
 <div class="modal fade" id=${"staticBackdrop" + data.Id} data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
