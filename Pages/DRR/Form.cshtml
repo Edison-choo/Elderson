@@ -6,3 +6,23 @@
     ViewData["Breadcrumb"] = "Elderson > Form";
     ViewData["Header"] = "Health and Medication (HM) Form";
 }
+<style>
+    .form-card {
+        height: 225px;
+        width: 180px;
+        border-radius: 6px;
+        margin-top: 2%;
+        background-color: grey;
+    }
+
+    .form-card:hover {
+        background-color: darkgrey;
+    }
+</style>
+
+
+<h1>HM Form</h1>
+<a asp-page="CustomForm">
+    <div class="form-card">
+    </div>
+</a>
