@@ -10,5 +10,6 @@ namespace Elderson.Models
         public string Id { get; set; }
         public string DoctorId { get; set; }
         public string BookingId { get; set; }
+        public string TemplateName { get; set; }
     }
 }

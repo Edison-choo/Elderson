@@ -10,5 +10,6 @@ namespace Elderson.Models
         public string Id { get; set; }
         public string FormId { get; set; }
         public string MedicationId { get; set; }
+        public int Quantity { get; set; }
     }
 }
