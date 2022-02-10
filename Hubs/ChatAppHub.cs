@@ -37,12 +37,11 @@ namespace Elderson.Hubs
             }
             ConnectedUser.onlineMembers.Add(userID);
             await Clients.Groups(groupname).SendAsync("ReceiveMessage", "system", userID+"0");
-            await base.OnConnectedAsync();
-            await Clients.Groups(groupname).SendAsync("ReceiveMessage", "system", ConnectedUser.onlineMembers.Count);
             if (ConnectedUser.onlineMembers.Contains(otherID))
             {
                 await Clients.Groups(groupname).SendAsync("ReceiveMessage", "system", otherID + "0");
             }
+            await base.OnConnectedAsync();
         }
         public override async Task OnDisconnectedAsync(Exception exception)
         {
@@ -50,6 +49,7 @@ namespace Elderson.Hubs
             string userID = Context.GetHttpContext().Session.GetString("LoginUser");
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupname);
             await Clients.Groups(groupname).SendAsync("ReceiveMessage", "system", userID + "1");
+            ConnectedUser.onlineMembers.Remove(userID);
             await base.OnDisconnectedAsync(exception);
         }
         public async Task SendMessageToGroup(string groupname, string user, string message)
