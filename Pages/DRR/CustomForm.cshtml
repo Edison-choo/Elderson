@@ -11,6 +11,7 @@
     .customForm-input {
         width: 100%;
     }
+
     #btnContainer {
         margin-top: 50%;
     }
@@ -18,16 +19,224 @@
     #submitBtn {
         float: right;
     }
+
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
 </style>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+
+<script>
+   
+</script>
 
 <div class="customForm">
     <form method="post">
+        <input type="hidden" asp-for="@Model.uuid" id="uuidVal" />
         <p>Template Name:</p>
         <input asp-for="newForm.TemplateName" class="customForm-input" />
         <br />
+        <div class="addMeds" id="addMeds">
+            <p style="margin-top:1%;">
+                Medication Needed:    <i class="fas fa-plus-circle fa-2x" id="plus" onclick="displayAddMeds()"></i><i class="fas fa-minus-circle fa-2x" id="minus" onclick="closeAddMeds()"></i>
+            </p>
+            <div class="table-responsive" id="allMeds">
+                <table class="table table-hover" id="formtable" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th style="width:20%;">Quantity</th>
+                            <th style="width:175px;">Medicine Type</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+
+            <div class="table-responsive" id="addedMeds">
+                <table class="table table-hover" id="medtable" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th style="width:20%;">Quantity</th>
+                            <th style="width:175px;">Medicine Type</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
         <div id="btnContainer">
             <div><a asp-page="/DRR/Form" class="btn btn-primary">Back</a></div>
             <button id="submitBtn" class="btn btn-primary">Submit</button>
         </div>
     </form>
+
+
+
 </div>
+
+<script>
+    var allMed = document.getElementById("allMeds");
+    allMed.style.display = "none";
+    document.getElementById("minus").style.display = "none";
+
+    $(document).ready(function () {
+        console.log("Loading webpage...")
+        $.ajax({
+            url: 'https://localhost:44311/api/FormMeds',
+            type: 'GET',
+            success: function (result) {
+                console.log("Items retrieve successfully")
+                console.log(JSON.parse(result));
+
+            }
+        });
+        $('#medtable').DataTable(
+            {
+                "ajax": {
+                    'url': 'https://localhost:44311/api/FormMeds',
+                    'type': 'GET',
+                    "dataSrc": function (json) {
+                        return JSON.parse(JSON.stringify(json));
+                    }
+                },
+                "columns": [
+                    { "data": "MedName" },
+                    {
+                        "data": function (data) {
+                            return `
+                               <i class="far fa-minus-square fa-2x" onclick="reduce()"></i> <input type="number" id="quantity" value="0" step="0" min="0" max="20"> <i class="far fa-plus-square fa-2x" onclick="add()"></i>
+                            `;
+
+                        }
+                    },
+                    { "data": "MedType" },
+                    {
+                        "data": function (data) {
+                            return `
+                                <a onclick="addMedication('${data.Id}')" class="btn btn-primary">Add</a>
+                            `;
+                        }
+                    }
+                ],
+                "info": true,
+                "ordering": true,
+                "search": false,
+                "processing": true,
+                'autoWidth': false,
+                'lengthChange': false,
+                'paging': true,
+                'pagingType': 'numbers',
+                'ordering': false,
+                'dom': "fltip",
+                'pageLength': 5
+            }
+        );
+    });
+
+    $(document).ready(function () {
+        console.log("Loading webpage...")
+        $.ajax({
+            url: 'https://localhost:44311/api/Inventory',
+            type: 'GET',
+            success: function (result) {
+                console.log("Items retrieve successfully")
+                console.log(JSON.parse(result));
+
+            }
+        });
+        $('#formtable').DataTable(
+            {
+                "ajax": {
+                    'url': 'https://localhost:44311/api/Inventory',
+                    'type': 'GET',
+                    "dataSrc": function (json) {
+                        return JSON.parse(JSON.stringify(json));
+                    }
+                },
+                "columns": [
+                    { "data": "MedName" },
+                    {
+                        "data": function (data) {
+                            return `
+                               <i class="far fa-minus-square fa-2x" onclick="reduce()"></i> <input type="number" id="quantity" value="0" step="0" min="0" max="20"> <i class="far fa-plus-square fa-2x" onclick="add()"></i>
+                            `;
+
+                        }
+                    },
+                    { "data": "MedType" },
+                    {
+                        "data": function (data) {
+                            return `
+                                <a onclick="addMedication('${data.Id}')" class="btn btn-primary">Add</a>
+                            `;
+                        }
+                    }
+                ],
+                "info": true,
+                "ordering": true,
+                "search": false,
+                "processing": true,
+                'autoWidth': false,
+                'lengthChange': false,
+                'paging': true,
+                'pagingType': 'numbers',
+                'ordering': false,
+                'dom': "fltip",
+                'pageLength': 5
+            }
+        );
+    });
+
+    function displayAddMeds() {
+        allMed.style.display = "block";
+        document.getElementById("minus").style.display = "inline";
+        document.getElementById("plus").style.display = "none";
+
+        
+    }
+
+    function closeAddMeds() {
+        allMed.style.display = "none";
+        document.getElementById("minus").style.display = "none";
+        document.getElementById("plus").style.display = "inline";
+    }
+
+    function add() {
+        document.getElementById("quantity").stepUp();
+    }
+
+    function reduce() {
+        document.getElementById("quantity").stepDown();
+    }
+
+    function addMedication(id) {
+        var uuidVal = document.getElementById("uuidVal").value;
+        var quantity = document.getElementById("quantity").value;
+        if (quantity < 1) {
+            alert("Please add quantity of medicine")
+        }
+        else {
+            $.ajax({
+                url: 'https://localhost:44311/api/FormMeds/' + id + '/' + uuidVal + '/' + quantity,
+                type: 'POST',
+                success: function (result) {
+                    console.log("Item added successfully")
+                }
+            });
+        }
+        
+    }
+</script>

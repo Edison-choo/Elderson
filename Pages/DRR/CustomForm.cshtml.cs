@@ -15,6 +15,8 @@ namespace Elderson.Pages.DRR
     {
         [BindProperty]
         public Form newForm { get; set; }
+        [BindProperty]
+        public string uuid { get; set; }
 
         private FormService _svc;
 
@@ -30,6 +32,7 @@ namespace Elderson.Pages.DRR
             {
                 if (HttpContext.Session.GetString("LoginUserType") == "Doctor")
                 {
+                    uuid = Guid.NewGuid().ToString();
                     return Page();
                 }
             }
@@ -39,12 +42,11 @@ namespace Elderson.Pages.DRR
 
         public IActionResult OnPost()
         {
-            var id = Guid.NewGuid().ToString();
-            newForm.Id = id;
+            newForm.Id = uuid;
             newForm.DoctorId = HttpContext.Session.GetString("LoginUser");
             _svc.AddForm(newForm);
 
-            return RedirectToPage("Index");
+            return RedirectToPage("Form");
         }
     }
 }
