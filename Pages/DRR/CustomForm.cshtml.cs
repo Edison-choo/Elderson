@@ -42,7 +42,6 @@ namespace Elderson.Pages.DRR
             var id = Guid.NewGuid().ToString();
             newForm.Id = id;
             newForm.DoctorId = HttpContext.Session.GetString("LoginUser");
-            newForm.BookingId = "";
             _svc.AddForm(newForm);
 
             return RedirectToPage("Index");
