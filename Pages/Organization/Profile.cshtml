@@ -1,8 +1,8 @@
 ﻿@page
 @model Elderson.Pages.Organization.ProfileModel
 @{ Layout = "Shared/_LayoutITSupport";
-                ViewData["Title"] = "Profile page";
-                ViewData["Header"] = "PROFILE";
+                ViewData["Title"] = "My Profile page";
+                ViewData["Header"] = "MY PROFILE";
                 ViewData["Breadcrumb"] = "Profile"; }
 
 <style>
@@ -57,12 +57,12 @@
 
                             <div>
                                 <div class="btn-group" style="margin-top:30px;">
-                                    <button type="button" class="btn btn-primary"><a asp-page="/ISR/Users/Edit" asp-route-id="@Model.SelectedUser.Id">Edit</a> </button>
+                                    <button type="button" class="btn btn-primary"><a asp-page="Edit">Edit</a> </button>
                                     <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id="dropdownMenuSplitButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuSplitButton1">
-                                        <a class="dropdown-item" asp-page="/ISR/Users/ChangePwd" asp-route-id="@Model.SelectedUser.Id">Change password</a>
-                                        <a class="dropdown-item" data-toggle="modal" data-target=@("#staticBackdrop" + Model.SelectedUser.Id)>Delete Account</a>
+                                        <a class="dropdown-item" asp-page="ChangePwd">Change password</a>
+                                        <a class="dropdown-item" data-toggle="modal" data-target=@("#staticBackdrop" + Model.SelectedUser.Id)>Delete account</a>
                                     </div>
                                 </div>
                             </div>
@@ -84,7 +84,7 @@
                         <div class="subNavItem" onclick="changeDisplay('personalInfo')">
                             Personal Information
                         </div>
-                        @{ if (Model.SelectedUser.UserType == "Doctor" && Model.SelectedClinic != null)
+                        @{ if ((Model.SelectedUser.UserType == "Doctor" || Model.SelectedUser.UserType == "Administrator") && Model.SelectedClinic != null)
                             {
                 <div class="subNavItem" onclick="changeDisplay('clinicInfo')">
                     Clinic Information
@@ -210,8 +210,7 @@
                                                     else
                                                     {<text>To be updated</text>}
                                                     </div>
-                                                </div> }
-                                                           }
+                                                </div> } }
 
                                     </div>
                                 </div>
@@ -236,7 +235,7 @@
                         </div>
                     </div>
                 </div>
-                @{ if (Model.SelectedUser.UserType == "Doctor" && Model.SelectedClinic != null)
+                @{ if ((Model.SelectedUser.UserType == "Doctor" || Model.SelectedUser.UserType == "Administrator") && Model.SelectedClinic != null)
                     {
         <div class="row clinicInfo" style="display: none;">
             <div class="col-12 grid-margin stretch-card">
@@ -262,6 +261,26 @@
                                         {@Model.SelectedClinic.Phone}
                                     else
                                     {<text>To be updated</text>}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 grid-margin">
+                                <div>
+                                    <div class="profileLb">Opening Hours</div>
+                                    <div class="profileData">
+                                        @if (Model.SelectedClinic.OpeningHours != null)
+                                        {@Model.SelectedClinic.OpeningHours}
+                                    else
+                                    {<text>To be updated</text>}
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="profileLb">Closing Hours</div>
+                                    <div class="profileData">
+                                        @if (Model.SelectedClinic.ClosingHours != null)
+                                        {@Model.SelectedClinic.ClosingHours}
+                                    else
+                                    { <text>To be updated</text>}
                                     </div>
                                 </div>
                             </div>
@@ -301,7 +320,7 @@
             <div class="modal-body">
                 <div class="text-center">
                     <h4>
-                        Are you sure you want to delete this user?
+                        Are you sure you want to delete your account?
 
                     </h4>
                 </div>
@@ -314,7 +333,9 @@
     </div>
 </div>
 
-<script>function deleteUser(userId) {
+<script>
+
+    function deleteUser(userId) {
         $.ajax({
             url: 'https://localhost:44311/api/User/' + userId,
             type: 'DELETE',
@@ -333,4 +354,5 @@
         $(".showActive").removeClass("showActive");
         $(`.${info}`).show();
         $(`.${info}`).addClass("showActive");
-    }</script>
+    }
+</script>

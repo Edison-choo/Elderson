@@ -33,6 +33,7 @@ namespace Elderson.Pages.Organization
         public void OnGet()
         {
             var id = HttpContext.Session.GetString("LoginUser");
+            id = "2bf4dd3d-616e-4836-9954-6f12e3e3d8d1";
             SelectedUser = _svc.GetUserById(id);
             PatientRole = _svc.GetPatientById(id);
             AdminRole = _svc.GetAdministratorById(id);
@@ -40,6 +41,10 @@ namespace Elderson.Pages.Organization
             if (DoctorRole != null && DoctorRole.ClinicId != null)
             {
                 SelectedClinic = _svc.GetClinicByDoctorId(DoctorRole.ClinicId);
+            }
+            if ((AdminRole != null && AdminRole.ClinicId != null))
+            {
+                SelectedClinic = _svc.GetClinicByAdminId(AdminRole.ClinicId);
             }
             Birthdate = SelectedUser.Birthdate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
         }

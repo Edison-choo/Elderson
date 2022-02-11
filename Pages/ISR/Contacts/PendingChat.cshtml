@@ -146,7 +146,7 @@
         connection.invoke("SendNotiToGroup", userId).catch(function (err) {
             return console.error(err.toString());
         });
-        connection.invoke("SendNotiToUser", userId, '@HttpContext.Session.GetString("LoginUser")').catch(function (err) {
+        connection.invoke("SendNotiToUser", userId, '@HttpContext.Session.GetString("LoginUser")', '@HttpContext.Session.GetString("LoginUserName")').catch(function (err) {
             return console.error(err.toString());
         });
         $.ajax({

@@ -90,11 +90,11 @@ namespace Elderson.Hubs
             return Clients.Group("ISRChat").SendAsync("ReceiveNoti", userId);
         }
 
-        public Task SendNotiToUser(string userId, string itsId)
+        public Task SendNotiToUser(string userId, string itsId, string name)
         {
-            Console.WriteLine(userId, itsId);
+            Console.WriteLine(userId, itsId, name);
 
-            return Clients.Group(userId).SendAsync("ReceiveNoti", itsId);
+            return Clients.Group(userId).SendAsync("ReceiveNotiUser", itsId, name);
         }
 
         public Task SendDeleteNoti(string userId, string itsId)

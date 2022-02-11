@@ -1,0 +1,278 @@
+﻿@page
+@model Elderson.Pages.Organization.EditModel
+@{ Layout = "Shared/_LayoutITSupport";
+                ViewData["Title"] = "Edit Profile page";
+                ViewData["Header"] = "EDIT PROFILE";
+                ViewData["Breadcrumb"] = "Profile > Edit"; }
+
+
+
+<div class="row">
+    <form class="forms-sample" method="post" asp-action="">
+        <input type="hidden" asp-for="@Model.SelectedUser.Id" value="@Model.SelectedUser.Id" />
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Login Information</h4>
+                        <hr />
+                        <div class="form-group d-flex">
+                            <div style="width:30%;">
+                                <label for="exampleInputEmail3">Email address</label>
+
+                            </div>
+                            <div style="width:70%;">
+                                <input asp-for="SelectedUser.Email" type="email" value="@Model.SelectedUser.Email" class="form-control" id="exampleInputEmail3" placeholder="EMAIL">
+                                <span asp-validation-for="SelectedUser.Email" class="text-danger"></span>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Other Information</h4>
+                        <hr />
+                        <div class="form-group  d-flex">
+                            <div style="width:30%;">
+                                <label for="exampleInputName1">Name</label>
+
+                            </div>
+                            <div style="width:70%;">
+                                <input asp-for="SelectedUser.Fullname" value="@Model.SelectedUser.Fullname" type="text" class="form-control" id="exampleInputName1" placeholder="NAME">
+                                <span asp-validation-for="SelectedUser.Fullname" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="form-group d-flex">
+                            <div style="width:30%;">
+                                <label for="exampleInputEmail3">Birth Date</label>
+
+                            </div>
+                            <div style="width:70%;">
+                                <input asp-for="Birthdate" value="@Model.Birthdate" type="date" class="form-control" id="exampleInputEmail3" placeholder="BIRTHDATE">
+                                <span asp-validation-for="Birthdate" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="form-group d-flex">
+                            <div style="width:30%;">
+                                <label for="exampleInputEmail3">Phone</label>
+
+                            </div>
+                            <div style="width:70%;height:28px;">
+                                <div class="d-flex justify-content-between">
+                                    <div class="form-group" style="width:20%;">
+                                        <input type="text" class="form-control" id="EmergencyPhone" asp-for="SelectedUser.CountryCode" value="@Model.SelectedUser.CountryCode">
+                                    </div>
+                                    <div class="form-group" style="width:76%;">
+                                        <input type="text" class="form-control" id="EmergencyPhone" asp-for="SelectedUser.Phone" value="@Model.SelectedUser.Phone" placeholder="PHONE NUMBER">
+                                    </div>
+                                </div>
+                                <span asp-validation-for="SelectedUser.Phone" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="form-group d-flex">
+                            <div style="width:30%;">
+                                <label for="exampleSelectGender">Gender</label>
+
+                            </div>
+                            <div style="width:70%;">
+                                @Html.RadioButton("SelectedUser.Gender", "Male", new { style = "margin-right:10px;" }) <span>Male</span>
+                                @Html.RadioButton("SelectedUser.Gender", "Female", new { style = "margin:0 10px;" }) <span>Female</span>
+                                <span asp-validation-for="SelectedUser.Gender" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="form-group  d-flex">
+                            <div style="width:30%;">
+                                <label>Select User Type</label>
+
+                            </div>
+                            <div style="width:70%;">
+
+                                <p>@Model.SelectedUser.UserType</p>
+                                <input type="hidden" asp-for="SelectedUser.UserType" value="@Model.SelectedUser.UserType" />
+                                <span asp-validation-for="SelectedUser.UserType" class="text-danger"></span>
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        @{ if (Model.SelectedUser.UserType == "Doctor")
+            {
+<div class="row doctorForm">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Doctor Related Information</h4>
+                <hr />
+                <div class="form-group  d-flex">
+                    <div style="width:30%;">
+                        <label>Select Relationship</label>
+
+                    </div>
+                    <div style="width:70%;">
+                        @Html.DropDownList("DoctorRole.Language", new SelectList(Enum.GetValues(typeof(Models.LanguageType))), "--Select language--", new { @class = "form-control" })
+                        <span asp-validation-for="DoctorRole.Language" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="form-group  d-flex">
+                    <div style="width:30%;">
+                        <label for="workExp">Work Experience (In Year)</label>
+
+                    </div>
+                    <div style="width:70%;">
+                        <input asp-for="DoctorRole.WorkExp" value="@Model.DoctorRole.WorkExp" type="text" class="form-control" id="workExp" placeholder="WORK EXPERIENCE">
+                        <span asp-validation-for="DoctorRole.WorkExp" class="text-danger"></span>
+                    </div>
+
+
+                </div>
+                <div class="useExist clinicChoice">
+                    <div class="form-group  d-flex">
+                        <div style="width:30%;">
+                            <label>Choose Existing Clinic</label>
+
+                        </div>
+                        <div style="width:70%;">
+                            @Html.DropDownList("DoctorRole.ClinicId", Model.clinics as List<SelectListItem>, "--Select language--", new { @class = "form-control" })
+                            <span asp-validation-for="DoctorRole.ClinicId" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div> }
+            else if (Model.SelectedUser.UserType == "Patient")
+            {
+<div class="row patientForm">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Patient Related Information</h4>
+                <hr />
+                <div class="form-group  d-flex">
+                    <div style="width:30%;">
+                        <label for="nric">Nric</label>
+
+                    </div>
+                    <div style="width:70%;">
+                        <input asp-for="PatientRole.Nric" value="@Model.PatientRole.Nric" type="text" class="form-control" id="nric" placeholder="NRIC">
+                        <span asp-validation-for="PatientRole.Nric" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="form-group  d-flex">
+                    <div style="width:30%;">
+                        <label>Select Relationship</label>
+
+                    </div>
+                    <div style="width:70%;">
+                        @Html.DropDownList("PatientRole.Relationship", new SelectList(Enum.GetValues(typeof(Models.RelationshipType))), "--Select Marital Status--", new { @class = "form-control" })
+                        <span asp-validation-for="PatientRole.Relationship" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="form-group d-flex">
+                    <div style="width:30%;">
+                        <label for="emergencyName">Emergency Name</label>
+
+                    </div>
+                    <div style="width:70%;">
+                        <input asp-for="PatientRole.EmergencyName" value="@Model.PatientRole.EmergencyName" type="text" class="form-control" id="emergencyName" placeholder="EMERGENCY NAME">
+                        <span asp-validation-for="PatientRole.EmergencyName" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="form-group d-flex">
+                    <div style="width:30%;">
+                        <label for="emergencyNumber">Emergency Number</label>
+
+                    </div>
+                    <div style="width:70%;height:28px;">
+                        <div class="d-flex justify-content-between">
+                            <div class="form-group" style="width:20%;">
+                                <input type="text" class="form-control" id="EmergencyPhone" asp-for="PatientRole.CountryCode" value="@Model.PatientRole.CountryCode">
+                            </div>
+                            <div class="form-group" style="width:76%;">
+                                <input type="text" class="form-control" value="@Model.PatientRole.EmergencyNum" asp-for="PatientRole.EmergencyNum" id="emergencyNumber" placeholder="EMERGENCY NUMBER">
+                            </div>
+                        </div>
+                        <span asp-validation-for="PatientRole.EmergencyNum" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="form-group d-flex">
+                    <div style="width:30%;">
+                        <label for="homeAddress">Home Address</label>
+
+                    </div>
+                    <div style="width:70%;">
+                        <textarea asp-for="PatientRole.HomeAddr" value="@Model.PatientRole.HomeAddr" class="form-control" id="homeAddress" placeholder="HOME ADDRESS"></textarea>
+                        <span asp-validation-for="PatientRole.HomeAddr" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div> }
+else if (Model.SelectedUser.UserType == "Administrator")
+{
+<div class="row adminForm">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Administrator Related Information</h4>
+                <hr />
+                <div class="form-group  d-flex">
+                    <div style="width:30%;">
+                        <label>Choose Existing Clinic</label>
+
+                    </div>
+                    <div style="width:70%;">
+                        @Html.DropDownList("AdminRole.ClinicId", Model.clinics as List<SelectListItem>, "--Select language--", new { @class = "form-control" })
+                        <span asp-validation-for="AdminRole.ClinicId" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div> } }
+
+
+        <div class="d-flex justify-content-between">
+            <button type="button" onclick="history.back()" class="btn btn-primary me-2">Cancel</button>
+
+            <button type="submit" class="btn btn-primary me-2">Submit</button>
+
+        </div>
+
+    </form>
+</div>

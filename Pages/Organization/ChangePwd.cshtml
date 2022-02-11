@@ -1,10 +1,10 @@
 ﻿@page
-@model Elderson.Pages.ISR.Users.ChangePwdModel
+@model Elderson.Pages.Organization.ChangePwdModel
 @{
     Layout = "Shared/_LayoutITSupport";
     ViewData["Title"] = "Change Password page";
     ViewData["Header"] = "CHANGE PASSWORD";
-    ViewData["Breadcrumb"] = "User Management > Users";
+    ViewData["Breadcrumb"] = "Profile > Change Password";
 }
 
 <div class="row">
@@ -30,7 +30,7 @@
                                 <label for="exampleInputPassword4">Current Password:</label>
                             </div>
                             <div style="width:50%;">
-                                <input asp-for="currentPwd" type="password" class="form-control" id="exampleInputPassword4" >
+                                <input asp-for="currentPwd" type="password" class="form-control" id="exampleInputPassword4">
                                 <span asp-validation-for="currentPwd" class="text-danger"></span>
                             </div>
                         </div>
@@ -39,7 +39,7 @@
                                 <label for="exampleInputPassword4">New Password:</label>
                             </div>
                             <div style="width:50%;">
-                                <input asp-for="viewModel.newPwd" type="password" class="form-control" id="exampleInputPassword4" >
+                                <input asp-for="viewModel.newPwd" type="password" class="form-control" id="exampleInputPassword4">
                                 <span asp-validation-for="viewModel.newPwd" class="text-danger"></span>
                             </div>
                         </div>
@@ -48,7 +48,7 @@
                                 <label for="exampleInputPassword4">Confirm New Password:</label>
                             </div>
                             <div style="width:50%;">
-                                <input asp-for="viewModel.confirmPwd" type="password" class="form-control" id="exampleInputPassword4" >
+                                <input asp-for="viewModel.confirmPwd" type="password" class="form-control" id="exampleInputPassword4">
                                 <span asp-validation-for="viewModel.confirmPwd" class="text-danger"></span>
                             </div>
                         </div>

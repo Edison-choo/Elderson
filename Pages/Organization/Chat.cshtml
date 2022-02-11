@@ -1,16 +1,16 @@
 ﻿@page
-@model Elderson.Pages.ISR.Users.ChatModel
+@model Elderson.Pages.Organization.ChatModel
 @using Microsoft.AspNetCore.Http;
 @{ Layout = "Shared/_LayoutITSupport";
     ViewData["Title"] = "Chat page";
     ViewData["Header"] = "CHAT";
-    ViewData["Breadcrumb"] = "Contact"; }
+    ViewData["Breadcrumb"] = "Chat"; }
 
 <style>
     .left {
         width: 300px;
         height: 700px;
-        margin-right:30px;
+        margin-right: 30px;
     }
 
     .right {
@@ -140,12 +140,12 @@
 
     .left-section .chatList {
         overflow: hidden;
-        height:40px;
+        height: 40px;
     }
 
         .left-section .chatList .desc {
             width: calc(100% - 60px);
-            margin:16px;
+            margin: 16px;
         }
 
             .left-section .chatList .desc h5 {
@@ -171,7 +171,6 @@
         height: calc(100% - 68px);
         font-family: sans-serif;
         padding-bottom: 50px;
-
     }
 
         .message ul {
@@ -206,7 +205,7 @@
                         padding: 10px 60px 10px 15px;
                         border-radius: 5px 5px 5px 0px;
                         position: relative;
-                        line-height:1.3;
+                        line-height: 1.3;
                     }
 
                         .message ul li.msg-left .msg-desc:before {
@@ -259,12 +258,11 @@
                         float: right;
                         color: #c1c1c1;
                         margin-right: 35px;
-
-                        position:absolute;
-                        bottom:4px;
-                        right:0;
-                        color:#fff;
-                        opacity:50%;
+                        position: absolute;
+                        bottom: 4px;
+                        right: 0;
+                        color: #fff;
+                        opacity: 50%;
                     }
 
                 .message ul li.msg-day {
@@ -340,50 +338,49 @@
         margin-top: 130px;
     }
 
-    .defaultChat div {
-        font-size:1.5em;
-        font-weight:300;
-        margin:20px;
-    }
+        .defaultChat div {
+            font-size: 1.5em;
+            font-weight: 300;
+            margin: 20px;
+        }
 
-    .defaultChat img {
-        width:250px;
-        height:auto;
-    }
+        .defaultChat img {
+            width: 250px;
+            height: auto;
+        }
 
     #messageInput {
-        border-radius:10px;
-        padding-left:10px;
+        border-radius: 10px;
+        padding-left: 10px;
     }
 
     .chatSetting {
-        margin:25px 10px;
-        cursor:pointer;
-        position:relative;
-
+        margin: 25px 10px;
+        cursor: pointer;
+        position: relative;
     }
 
     .setting {
-        width:150px;
-        z-index:4;
-        position:absolute;
-        top:60px;
-        right:5px;
-        display:none;
+        width: 150px;
+        z-index: 4;
+        position: absolute;
+        top: 60px;
+        right: 5px;
+        display: none;
     }
 
     .settingItem {
         padding: 20px;
     }
 
-    .settingItem:hover {
-        background-color: #E6EBF0;
-    }
+        .settingItem:hover {
+            background-color: #E6EBF0;
+        }
 
     #pictureIcon {
-        padding:10px;
-        cursor:pointer;
-        display:block;
+        padding: 10px;
+        cursor: pointer;
+        display: block;
     }
 
     .pictureDisplay {
@@ -391,33 +388,33 @@
         background-color: #808080;
         position: absolute;
         z-index: 5;
-        bottom:0;
+        bottom: 0;
         width: 100%;
         height: 630px;
-        text-align:center;
-        display:none;
+        text-align: center;
+        display: none;
     }
 
-    .pictureDisplay button {
-        float:right;
-        z-index:6;
-        height:50px;
-        width:50px;
-        background-color:transparent;
-        border:none;
-        display:block;
-    }
-
-        .pictureDisplay button:last-child {
-            width:auto;
-            margin-right:20px;
-            height:40px;
-            border:solid white 1px;
-            color:white;
+        .pictureDisplay button {
+            float: right;
+            z-index: 6;
+            height: 50px;
+            width: 50px;
+            background-color: transparent;
+            border: none;
+            display: block;
         }
 
+            .pictureDisplay button:last-child {
+                width: auto;
+                margin-right: 20px;
+                height: 40px;
+                border: solid white 1px;
+                color: white;
+            }
+
         .pictureDisplay i {
-            margin-top:20px;
+            margin-top: 20px;
             color: white;
             height: 40px;
             width: 40px;
@@ -428,7 +425,7 @@
             clear: both;
             display: block;
             box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-            object-fit:contain;
+            object-fit: contain;
         }
 </style>
 
@@ -447,7 +444,7 @@
                     <input type="text" name="search" placeholder="Search...">
                     <button> <i class="fa fa-search"></i></button>
                 </div>
-                
+
                 <ul id="chatUser">
                     @{ foreach (var user in Model.allmessages)
                         {
@@ -521,69 +518,80 @@
                 <div class="message wholeChat" data-mcs-theme="minimal-dark">
                     <ul id="messageList" class="test showActive " style="overflow:hidden;">
                         <li>
+                            @{ 
+                                if (!Model.allmessages.ContainsKey("ISRChat") || HttpContext.Session.GetString("ChatUser") != "ISRChat")
+                                {
+                                    <div class="defaultChat" style="">
+                                        <img src="~/images/defaultChat.png" alt="Alternate Text" />
+                                        <div>Start talking to IT Support</div>
+                                        <button class="btn btn-primary startISRChat">Chat</button>
+                                    </div>
 
+                                }
+                                
+                            }
                         </li>
                     </ul>
 
                     @{ foreach (var user in Model.allmessages)
                         {
-                                        <ul id="messageList" class="@user.Key" style="display:none;">
-                                            @{ foreach (var msg in Model.allmessages[user.Key])
-                                                {
-                                                    if (msg.ToUserId == HttpContext.Session.GetString("LoginUser"))
-                                                    {
-                                                        if (msg.Text.Split(" ")[0] != "filen@me")
-                                                        {
-                                                            <li class="msg-left">
-                                                                <div class="msg-left-sub">
-                                                                    <div class="msg-desc">
-                                                                        @msg.Text
-                                                                    </div>
-                                                                    <small>@string.Concat(msg.When.ToString().Split(" ")[1].Substring(0, msg.When.ToString().Split(" ")[1].LastIndexOf(":")), msg.When.ToString().Split(" ")[2])</small>
-                                                                </div>
-                                                            </li>
-                                                        }
-                                                        else
-                                                        {
-                                                            <li class="msg-left">
-                                                                <div class="msg-left-sub">
-                                                                    <div class="msg-desc">
-                                                                        <img src="~/uploads/images/@(msg.Text.Split(" ")[1])" alt="Alternate Text" height="100" width="100" />
-                                                                    </div>
-                                                                    <small>@string.Concat(msg.When.ToString().Split(" ")[1].Substring(0, msg.When.ToString().Split(" ")[1].LastIndexOf(":")), msg.When.ToString().Split(" ")[2])</small>
-                                                                </div>
-                                                            </li>
-                                                        }
+                            <ul id="messageList" class="@user.Key" style="display:none;">
+                                @{ foreach (var msg in Model.allmessages[user.Key])
+                                    {
+                                        if (msg.ToUserId == HttpContext.Session.GetString("LoginUser"))
+                                        {
+                                            if (msg.Text.Split(" ")[0] != "filen@me")
+                                            {
+                                                <li class="msg-left">
+                                                    <div class="msg-left-sub">
+                                                        <div class="msg-desc">
+                                                            @msg.Text
+                                                        </div>
+                                                        <small>@string.Concat(msg.When.ToString().Split(" ")[1].Substring(0, msg.When.ToString().Split(" ")[1].LastIndexOf(":")), msg.When.ToString().Split(" ")[2])</small>
+                                                    </div>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li class="msg-left">
+                                                    <div class="msg-left-sub">
+                                                        <div class="msg-desc">
+                                                            <img src="~/uploads/images/@(msg.Text.Split(" ")[1])" alt="Alternate Text" height="100" width="100" />
+                                                        </div>
+                                                        <small>@string.Concat(msg.When.ToString().Split(" ")[1].Substring(0, msg.When.ToString().Split(" ")[1].LastIndexOf(":")), msg.When.ToString().Split(" ")[2])</small>
+                                                    </div>
+                                                </li>
+                                            }
 
-                                                    }
-                                                    else
-                                                    {
-                                                        if (msg.Text.Split(" ")[0] != "filen@me")
-                                                        {
-                                                            <li class="msg-right">
-                                                                <div class="msg-right-sub">
-                                                                    <div class="msg-desc">
-                                                                        @msg.Text
-                                                                    </div>
-                                                                    <small>@string.Concat(msg.When.ToString().Split(" ")[1].Substring(0, msg.When.ToString().Split(" ")[1].LastIndexOf(":")), msg.When.ToString().Split(" ")[2])</small>
-                                                                </div>
-                                                            </li>
-                                                        }
-                                                        else
-                                                        {
-                                                            <li class="msg-right">
-                                                                <div class="msg-right-sub">
-                                                                    <div class="msg-desc">
-                                                                        <img src="~/uploads/images/@(msg.Text.Split(" ")[1])" alt="Alternate Text" height="100" width="100" />
-                                                                    </div>
-                                                                    <small>@string.Concat(msg.When.ToString().Split(" ")[1].Substring(0, msg.When.ToString().Split(" ")[1].LastIndexOf(":")), msg.When.ToString().Split(" ")[2])</small>
-                                                                </div>
-                                                            </li>
-                                                        }
+                                        }
+                                        else
+                                        {
+                                            if (msg.Text.Split(" ")[0] != "filen@me")
+                                            {
+                                                <li class="msg-right">
+                                                    <div class="msg-right-sub">
+                                                        <div class="msg-desc">
+                                                            @msg.Text
+                                                        </div>
+                                                        <small>@string.Concat(msg.When.ToString().Split(" ")[1].Substring(0, msg.When.ToString().Split(" ")[1].LastIndexOf(":")), msg.When.ToString().Split(" ")[2])</small>
+                                                    </div>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li class="msg-right">
+                                                    <div class="msg-right-sub">
+                                                        <div class="msg-desc">
+                                                            <img src="~/uploads/images/@(msg.Text.Split(" ")[1])" alt="Alternate Text" height="100" width="100" />
+                                                        </div>
+                                                        <small>@string.Concat(msg.When.ToString().Split(" ")[1].Substring(0, msg.When.ToString().Split(" ")[1].LastIndexOf(":")), msg.When.ToString().Split(" ")[2])</small>
+                                                    </div>
+                                                </li>
+                                            }
 
-                                                    }
-                                                } }
-                                        </ul> } }
+                                        }
+                                    } }
+                            </ul> } }
 
                     @{ if (HttpContext.Session.GetString("ChatUser") != null)
                         {
@@ -597,13 +605,13 @@
 
                     }
 
-                <div id="messageList" class="pictureDisplay" style="overflow:hidden;">
-                    <button onclick="closePicture()" style="float:left;" type="button"><i class="fa fa-close fa-lg"></i></button>
-                    <img id="chatPhoto" src="~/images/defaultChat.png" alt="Error" height="350" width="350" />
-                    <button id="photoSend" type="button" class="btn-send btn">Send Image<i style="margin-top:0px;" class="fa fa-send fa-lg"></i></button>
+                    <div id="messageList" class="pictureDisplay" style="overflow:hidden;">
+                        <button onclick="closePicture()" style="float:left;" type="button"><i class="fa fa-close fa-lg"></i></button>
+                        <img id="chatPhoto" src="~/images/defaultChat.png" alt="Error" height="350" width="350" />
+                        <button id="photoSend" type="button" class="btn-send btn">Send Image<i style="margin-top:0px;" class="fa fa-send fa-lg"></i></button>
+                    </div>
                 </div>
-                </div>
-               
+
                 <div class="right-section-bottom">
                     <form id="chatForm" style="display:none;">
                         <div class="upload-btn">
@@ -751,7 +759,7 @@
             } else {
                 divThird.textContent = `${message.text}`;
             }
- 
+
             small.textContent = `${(new Date(message.when)).toLocaleString().split(" ")[1].slice(0, -3) + (new Date(message.when)).toLocaleString().split(" ")[2]}`;
 
             console.log(typeof document.getElementsByClassName(message.userId)[0]);
@@ -776,16 +784,30 @@
 
     });
 
-    connection.on("ReceiveNoti", function (userId) {
-        console.log(userId)
+    connection.on("ReceiveNotiUser", function (userId, name) {
+        console.log(userId, name)
 
-        var userList = $(`#ISRChat`);
-        userList.removeAttr("id");
-        userList.attr("id", userId);
-        userList.removeAttr("onclick");
-        userList.attr("onclick", `changeChat(this, '${userId}')`);
-        $(".ISRChat").addClass(userId);
-        $(`.${userId}`).removeClass("ISRChat");
+        if ($(`#${userId}`)[0] != null) {
+            $(`.${userId}`).append($(".ISRChat")[0].innerHTML);
+            $(".ISRChat").remove();
+            $("#ISRChat").remove();
+            $(`#${userId}`).addClass("chatActive", "active");
+            $(`.${userId}`).addClass("showActive");
+            $(`.${userId}`).show();
+        } else {
+            var userList = $(`#ISRChat`);
+            userList.removeAttr("id");
+            userList.attr("id", userId);
+            userList.removeAttr("onclick");
+            userList.attr("onclick", `changeChat(this, '${userId}')`);
+            $(".ISRChat").addClass(userId);
+            $(`.${userId}`).removeClass("ISRChat");
+            $(`#${userId} h5`)[0].textContent = name;
+        }
+
+        var chatHeader = document.querySelector(".headRight-sub h3");
+        chatHeader.textContent = document.querySelector(".chatActive h5").textContent;
+
         toUserId = userId;
 
         @{
@@ -805,7 +827,15 @@
         $(`.test`).addClass("showActive");
         $('.test').show();
         $("#chatForm").hide();
-        
+
+        console.log($(".test li"));
+
+        //$(".test li").append(`<div class="defaultChat" style="">
+        //                                <img src="~/images/defaultChat.png" alt="Alternate Text" />
+        //                                <div>Start talking to IT Support</div>
+        //                                <button class="btn btn-primary startISRChat">Chat</button>
+        //                            </div>`);
+
 
         var chatHeader = document.querySelector(".headRight-sub h3");
         chatHeader.textContent = "";
@@ -846,24 +876,16 @@
 
     }
 
-    @*$(document).ready(function () {
-        var userId = @HttpContext.Session.GetString("ChatUser");
-        if (userId != null) {
-            $.ajax({
-                url: 'https://localhost:44311/api/User/GetName/' + userId,
-                type: 'GET',
-                success: function (result) {
-                    console.log("Items retrieve successfully")
-                    console.log(JSON.parse(result));
-
-                    $(`.${userId} `)
-                }
-            });
-        }
-
-    });*@
-
-
+    $(".startISRChat").on("click", function () {
+        $.ajax({
+            url: 'https://localhost:44311/api/User/ChatUser/ISRChat',
+            type: 'GET',
+            success: function (result) {
+                console.log(result);
+                location.reload();
+            }
+        });
+    });
 
     function displaySetting() {
         if ($(".setting").css("display") == "none") {
