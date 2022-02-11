@@ -365,10 +365,13 @@ namespace Elderson.Services
                 throw;
             }
         }
+        public DbSet<Clinic> GetAllClinicAsync()
+        {
+            return _context.Clinics;
+        }
 
-
-            //Clinic Services
-            private bool ClinicExists(string id)
+        //Clinic Services
+        private bool ClinicExists(string id)
         {
             return _context.Clinics.Any(e => e.Id == id);
         }

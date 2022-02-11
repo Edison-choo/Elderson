@@ -14,7 +14,7 @@ using Serilog;
 using Elderson.Hubs;
 using AspNetCoreHero.ToastNotification;
 using AspNetCoreHero.ToastNotification.Extensions;
-
+using Microsoft.AspNetCore.Http;
 
 namespace Elderson
 {
@@ -45,7 +45,14 @@ namespace Elderson
             services.AddTransient<FormService>();
             services.AddTransient<FormMedsService>();
             services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.TopCenter; });
-
+            services.AddHttpContextAccessor();
+            services.AddSingleton<IUriService>(o =>
+            {
+                var accessor = o.GetRequiredService<IHttpContextAccessor>();
+                var request = accessor.HttpContext.Request;
+                var uri = string.Concat(request.Scheme, "://", request.Host.ToUriComponent());
+                return new UriServices(uri);
+            });
             services.AddControllers();
         }
 

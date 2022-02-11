@@ -1,6 +1,6 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using Elderson.Models;
-using Elderson.Pages;
+using Elderson.Filter;
 using Elderson.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -8,6 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Elderson.Wrappers;
+using Elderson.Helpers;
 
 namespace Elderson.Api
 {
@@ -18,25 +21,26 @@ namespace Elderson.Api
         private readonly EldersonContext _context;
         private UserService _svc;
         private readonly INotyfService _notfy;
-        public ClinicController(EldersonContext context, UserService service, INotyfService notyf)
+        private readonly IUriService _uriService;
+        public ClinicController(EldersonContext context, UserService service, INotyfService notyf, IUriService uriService)
         {
             _context = context;
             _svc = service;
             _notfy = notyf;
+            _uriService = uriService;
         }
-        [HttpGet("{apiname}/{search}/{page}", Name = "getPage")]
-        public ActionResult<List<Clinic>> Get(string search, int page)
+        [HttpGet]
+        public async Task<IActionResult> GetAll([FromQuery] PaginationFilter filter)
         {
-            List<Clinic> allClinics = _svc.GetAllClinic();
-            try
-            {
-                var jsonStr = JsonSerializer.Serialize(allClinics.Select(c => new { c.Name, c.Address, c.CountryCode, c.Phone, }));
-                return Ok(jsonStr);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
+            var route = Request.Path.Value;
+            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+            var pagedData = await _svc.GetAllClinicAsync()
+                .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+                .Take(validFilter.PageSize)
+                .ToListAsync();
+            var totalRecords = await _svc.GetAllClinicAsync().CountAsync();
+            var pagedResponse = PaginationHelper.CreatePagedReponse<Clinic>(pagedData, validFilter, totalRecords, _uriService, route);
+            return Ok(new PagedResponse<List<Clinic>>(pagedData, validFilter.PageNumber, validFilter.PageSize));
         }
 
         // GET: api/<UserController>
