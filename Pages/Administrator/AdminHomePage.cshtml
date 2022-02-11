@@ -3,12 +3,94 @@
 @{
     ViewData["Title"] = "AdminHomePage";
     Layout = "Shared/_LayoutAdmin";
-    ViewData["Header"] = "Admin"; 
+    ViewData["Header"] = "Admin";
     ViewData["Breadcrumb"] = "Dashboard";
 }
 
-    <body>
-        <div class="card">
-
+<body>
+    <div class="card">
+        <div class="card-body">
+            <canvas id="bookingchart" width="100" height="350">
+            </canvas>
         </div>
-    </body>
+    </div>
+    <div class="mt-3"></div>
+    <div class="row">
+        <div class=" col-4">
+            <div class="card">
+                <div class="card-body">
+                    <p>Total Earnings</p>
+                    <canvas id="earningschart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class=" col-4">
+            <div class="card">
+                <div class="card-body">
+                    <p>Total Bookings</p>
+                </div>
+            </div>
+        </div>
+        <div class=" col-4">
+            <div class="card">
+                <div class="card-body">
+                    <p>Recent Bookings</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    const bookingctx = document.getElementById('bookingchart').getContext('2d');
+    const bookingChart = new Chart(bookingctx, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            datasets: [{
+                label: '# of bookings',
+                data: [12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3],
+                fill: false,
+                borderColor: "#3590F3"
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+
+            }
+            , maintainAspectRatio: false
+        }
+    });
+
+    const donutctx = document.getElementById('earningschart').getContext('2d');
+    const earningsdata = {
+        labels: [
+        'Red',
+        'Blue',
+        'Yellow'
+        ],
+        datasets: [{
+        label: 'My First Dataset',
+        data: [300, 50, 100],
+        backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
+            'rgb(255, 205, 86)'
+        ],
+        hoverOffset: 4
+        }]
+    };
+    const config = {
+        type: 'doughnut',
+        data: earningsdata,
+    };
+    
+    const earningschart = new Chart(donutctx, config)
+</script>
+
+<style>
+    p {text-align: center; font-weight: bold;}
+</style>

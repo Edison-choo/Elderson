@@ -44,6 +44,10 @@ namespace Elderson
                     _svc.SubmitQuery(newQuery);
                     return Redirect("/Elderly/FAQ");
                 }
+                else
+                {
+
+                }
             }
             return Redirect("/Elderly/FAQ");
         }
