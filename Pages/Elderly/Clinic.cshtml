@@ -38,7 +38,7 @@
                     <th style="font-weight:bold; background-color:#F4F3FF;"></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="clinicBody">
                 <tr>
                     <td colspan="5">
                         <div style="font-weight:bolder">Healthwerkz Medical Centre</div>
@@ -72,3 +72,28 @@
         </div>
     </div>
 </div>
+<script>
+    let clinics;
+    getClinic();
+    async function getClinic() {
+        var response = await fetch(`https://localhost:44311/api/Clinic/GetAll`)
+        clinics = await response.json();
+        formatClinicTable();
+        console.log(clinics);
+    }
+    function formatClinicTable() {
+        for (var i = 0; i < clinics.data.length; i++){
+            var obj = clinics.data[i];
+            $("#clinicBody").append(`<tr>
+                    <td colspan="5">
+                        <div style="font-weight:bolder">${obj.name}</div>
+                        <div>${obj.address}</div>
+                    </td>
+                    <td>3</td>
+                    <td>+${obj.countryCode} ${obj.phone}</td>
+                    <td>7:00 AM - 1:00PM</td>
+                    <td style="text-align: right;"><a asp-page="/Elderly/Doctor" asp-route-clinic="${obj.name}"  style="background-color: #6C63FF;" class="btn btn-primary">Select</a></td>`)
+            $("#clinicBody").append("</tr>")
+        }
+    }
+</script>

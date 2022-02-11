@@ -14,16 +14,4 @@ namespace Elderson.Pages
         {
         }
     }
-    public class PaginationFilter
-    {
-        public int PageNumber { get; set; }
-        public PaginationFilter()
-        {
-            this.PageNumber = 1;
-        }
-        public PaginationFilter(int pageNumber)
-        {
-            this.PageNumber = pageNumber < 1 ? 1 : pageNumber;
-        }
-    }
 }
