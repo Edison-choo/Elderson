@@ -35,7 +35,7 @@ namespace Elderson.Api
                 allinventory = _svc.GetAllInventories();
                 allmedications = _svc.GetAllMedications();
                 var jsonStr = JsonSerializer.Serialize(allinventory.Select(x => new { x.Id, x.MinimumAmt, x.CurrentAmt, x.Price}));
-                var jsonString = JsonSerializer.Serialize(allmedications.Select(y => new {y.Id, y.MedName, y.MedAbbreviation, y.MedType, y.MedSupplierAbb, y.MedDescription }));
+                var jsonString = JsonSerializer.Serialize(allmedications.Select(y => new { y.Id, y.MedName, y.MedAbbreviation, y.MedType, y.MedSupplierAbb, CurrentAmt = _svc.GetInvMedicationById(y.Id).CurrentAmt, Price = "$" + _svc.GetInvMedicationById(y.Id).Price }));
                 return Ok(jsonString);
             }
             catch (Exception ex)
