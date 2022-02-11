@@ -47,7 +47,7 @@ namespace Elderson.Pages.Elderly
             }
             else
             {
-                Redirect("/Clinic");
+                Response.Redirect("Clinic");
             }
         }
     }

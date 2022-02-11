@@ -56,7 +56,7 @@ namespace Elderson.Pages.Shared
                     try
                     {
                         myDoctorName = _svc.GetUserById(doctor).Fullname;
-                        //myClinic = _svc.GetDoctorById(doctor).Clinic;
+                        myClinic = _svc.GetClinicByDoctorId(doctor).Name;
                     }
                     catch
                     {

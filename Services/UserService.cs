@@ -413,7 +413,9 @@ namespace Elderson.Services
 
         public Clinic GetClinicByDoctorId(String id)
         {
-            Clinic clinic = _context.Clinics.Where(e => e.Id == id).FirstOrDefault();
+            User user = _context.Users.Where(u => u.Id == id).FirstOrDefault();
+            Doctor doctor = _context.Doctors.Where(d => d.UserId == user.Id).FirstOrDefault();
+            Clinic clinic = _context.Clinics.Where(e => e.Id == doctor.ClinicId).FirstOrDefault();
             return clinic;
         }
 
