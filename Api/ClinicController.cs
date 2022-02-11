@@ -29,7 +29,7 @@ namespace Elderson.Api
             _notfy = notyf;
             _uriService = uriService;
         }
-        [HttpGet]
+        [HttpGet("GetAll", Name = "GetAll")]
         public async Task<IActionResult> GetAll([FromQuery] PaginationFilter filter)
         {
             var route = Request.Path.Value;
@@ -40,7 +40,7 @@ namespace Elderson.Api
                 .ToListAsync();
             var totalRecords = await _svc.GetAllClinicAsync().CountAsync();
             var pagedResponse = PaginationHelper.CreatePagedReponse<Clinic>(pagedData, validFilter, totalRecords, _uriService, route);
-            return Ok(new PagedResponse<List<Clinic>>(pagedData, validFilter.PageNumber, validFilter.PageSize));
+            return Ok(pagedResponse);
         }
 
         // GET: api/<UserController>
