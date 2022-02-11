@@ -1,0 +1,73 @@
+﻿@page
+@model Elderson.Pages.ISR.Clinics.CreateModel
+@{
+    Layout = "Shared/_LayoutITSupport";
+    ViewData["Title"] = "Create Clinic page";
+    ViewData["Header"] = "CREATE CLINIC";
+    ViewData["Breadcrumb"] = "Clinic Management > Clinics";
+}
+
+<div class="row">
+    <form class="forms-sample incidentForm" method="post" asp-action="">
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Clinic Information</h4>
+                        <hr />
+                        <div class="form-group d-flex">
+                            <div style="width:20%;">
+                                <label for="name">Name:</label>
+
+                            </div>
+                            <div style="width:80%;">
+                                <input type="text" asp-for="newClinic.Name" class="form-control" id="name">
+                                <span asp-validation-for="newClinic.Name" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="form-group d-flex">
+                            <div style="width:20%;">
+                                <label for="address">Address:</label>
+
+                            </div>
+                            <div style="width:80%;">
+                                <textarea asp-for="newClinic.Address" rows="6" class="form-control" id="address">
+                                </textarea>
+                                <span asp-validation-for="newClinic.Address" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="form-group d-flex">
+                            <div style="width:20%;">
+                                <label for="phone">Phone:</label>
+
+                            </div>
+                            <div style="width:80%;">
+                                <div class="d-flex justify-content-between">
+                                    <div class="form-group" style="width:20%;">
+                                        <input type="text" class="form-control" id="code" asp-for="newClinic.CountryCode" value="65">
+                                    </div>
+                                    <div class="form-group" style="width:76%;">
+                                        <input type="text" class="form-control" id="EmergencyPhone" asp-for="newClinic.Phone" placeholder="PHONE NUMBER">
+                                    </div>
+                                </div>
+                                <span asp-validation-for="newClinic.CountryCode" class="text-danger"></span>
+                                <span asp-validation-for="newClinic.Phone" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <button type="button" onclick="history.back()" class="btn btn-primary me-2">Cancel</button>
+
+                <button type="submit" class="btn btn-primary me-2 submit">Submit</button>
+
+            </div>
+
+        </div>
+    </form>
+</div>

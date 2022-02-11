@@ -15,6 +15,7 @@ using Elderson.Hubs;
 using AspNetCoreHero.ToastNotification;
 using AspNetCoreHero.ToastNotification.Extensions;
 
+
 namespace Elderson
 {
     public class Startup
@@ -44,6 +45,7 @@ namespace Elderson
             services.AddTransient<FormService>();
             services.AddTransient<FormMedsService>();
             services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.TopCenter; });
+
             services.AddControllers();
         }
 

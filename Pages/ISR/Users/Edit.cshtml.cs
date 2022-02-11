@@ -10,6 +10,7 @@ using System.Globalization;
 using Microsoft.Extensions.Logging;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Http;
 
 namespace Elderson.Pages.ISR.Users
 {
@@ -125,6 +126,7 @@ namespace Elderson.Pages.ISR.Users
                 _logger.LogInformation("{actionStatus} User {userId} {userAction}.", "Successful", SelectedUser.Id, "edit user");
                 _notfy.Success("Edit User Successfully");
                 return RedirectToPage("Index");
+                
             }
 
             return Page();

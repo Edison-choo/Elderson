@@ -29,7 +29,6 @@
 
   <ItemGroup>
     <Folder Include="Database\" />
-    <Folder Include="Pages\ISR\Logs\" />
     <Folder Include="wwwroot\uploads\images\" />
   </ItemGroup>
 

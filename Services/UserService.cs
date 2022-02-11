@@ -462,5 +462,21 @@ namespace Elderson.Services
             }
             return updated;
         }
+
+        public List<User> GetDoctorUsersByClinic(string clinic)
+        {
+            List<User> doctors = new List<User>();
+            try
+            {
+                var clinicId = _context.Clinics.Where(d => d.Name == clinic).Select(d => d.Id).SingleOrDefault();
+                var doctorsList = _context.Doctors.Where(d => d.ClinicId == clinicId).Select(d => d.UserId).ToList();
+                doctors = _context.Users.Where(d => doctorsList.Contains(d.Id)).ToList();
+            }
+            catch
+            {
+                throw;
+            }
+            return doctors;
+        }
     }
 }

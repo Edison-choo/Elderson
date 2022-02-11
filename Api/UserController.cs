@@ -8,6 +8,7 @@ using Elderson.Models;
 using Elderson.Services;
 using System.Text.Json;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.Extensions.Logging;
 
 namespace Elderson
 {
@@ -19,13 +20,15 @@ namespace Elderson
         private UserService _svc;
         private ChatService _chat_svc;
         private readonly INotyfService _notfy;
+        private readonly ILogger<UserController> _logger;
 
-        public UserController(EldersonContext context, UserService service, ChatService chatService, INotyfService notyf)
+        public UserController(EldersonContext context, UserService service, ChatService chatService, INotyfService notyf, ILogger<UserController> logger)
         {
             _context = context;
             _svc = service;
             _notfy = notyf;
             _chat_svc = chatService;
+            _logger = logger;
         }
 
         // GET: api/<UserController>
@@ -163,11 +166,68 @@ namespace Elderson
         //    return "value";
         //}
 
-        //// POST api/<UserController>
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
+        public class CompositeObject
+        {
+            public User user { get; set; }
+            public Patient PatientRole { get; set; }
+            public string BirthDate { get; set; }
+
+        }
+
+        // POST api/<UserController>
+        [HttpPost]
+        public ActionResult<string> Post([FromForm] CompositeObject body)
+        {
+            Console.WriteLine(body.user.Gender+body.PatientRole.Nric+body.BirthDate);
+            Console.WriteLine(ModelState.IsValid);
+
+            if (!(ModelState.IsValid))
+            {
+                _notfy.Error("Error");
+                Console.WriteLine("Test1");
+                return BadRequest("Error");
+            }
+
+            User UpdatedUser;
+            Patient UpdatedPatient;
+
+            UpdatedUser = _svc.GetUserById(body.user.Id);
+            if (_svc.GetUserByEmail(body.user.Email) != null && body.user.Email != UpdatedUser.Email)
+            {
+                _logger.LogInformation("{actionStatus} User {userId} {userAction}. Email is already being used.", "Unsuccessful", body.user.Id, "edit user");
+                _notfy.Error("Email is already used");
+                Console.WriteLine("Test2");
+                return BadRequest("Error");
+            }
+            UpdatedUser.Fullname = body.user.Fullname;
+            UpdatedUser.Email = body.user.Email;
+            UpdatedUser.Phone = body.user.Phone;
+            UpdatedUser.Gender = body.user.Gender;
+            UpdatedUser.CountryCode = body.user.CountryCode;
+            UpdatedUser.Birthdate = Convert.ToDateTime(body.BirthDate);
+            Boolean valid = _svc.UpdateUser(UpdatedUser);
+
+            UpdatedPatient = _svc.GetPatientById(UpdatedUser.Id);
+            UpdatedPatient.Nric = body.PatientRole.Nric;
+            UpdatedPatient.Relationship = body.PatientRole.Relationship;
+            UpdatedPatient.EmergencyName = body.PatientRole.EmergencyName;
+            UpdatedPatient.EmergencyNum = body.PatientRole.EmergencyNum;
+            UpdatedPatient.HomeAddr = body.PatientRole.HomeAddr;
+            UpdatedPatient.CountryCode = body.PatientRole.CountryCode;
+            _svc.UpdatePatient(UpdatedPatient);
+
+            if (valid)
+            {
+                _logger.LogInformation("{actionStatus} User {userId} {userAction}.", "Successful", body.user.Id, "edit user");
+                _notfy.Success("Edit User Successfully");
+                Console.WriteLine("Test3");
+                return Ok("Success");
+
+            }
+            Console.WriteLine("Test4");;
+            return BadRequest("Error");
+
+        }
 
         //// PUT api/<UserController>/5
         //[HttpPut("{id}")]

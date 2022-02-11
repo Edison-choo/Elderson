@@ -1,0 +1,157 @@
+﻿@page
+@model Elderson.Pages.ISR.Clinics.DetailModel
+@{
+    Layout = "Shared/_LayoutITSupport";
+    ViewData["Title"] = "Clinic Detail page";
+    ViewData["Header"] = "CLINIC DETIALS";
+    ViewData["Breadcrumb"] = "Clinic Management > Clinics";
+}
+
+<div class="row">
+    <form class="forms-sample" method="post" asp-action="">
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div class="d-flex">
+                                <div style="margin-left:20px; margin-top:20px;">
+                                    <h3>@Model.SelectedClinic.Name</h3>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="btn-group" style="margin-top:20px;">
+                                    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id="dropdownMenuSplitButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        ACTION
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuSplitButton1">
+                                        <a class="dropdown-item" asp-page="Edit" asp-route-id="@Model.SelectedClinic.Id">Edit</a>
+                                        <a class="dropdown-item" data-toggle="modal" data-target=@("#staticBackdrop" + Model.SelectedClinic.Id)>Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <div class="row">
+                    <div class="col-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Doctors</h4>
+                                <hr/>
+                                @{ 
+                                    if (Model.relatedDoctors.Count != 0)
+            {
+                foreach (var doctor in Model.relatedDoctors)
+                {
+                    <div class="listUser d-flex justify-content-between">
+                                                        <div class="profileData">
+                                                            @doctor.Fullname
+                                                        </div>
+                                                        <div class="profileData">
+                                                            <a href="/ISR/Users/Profile?id=@doctor.Id">View</a>
+                                                        </div>
+                        
+                    </div>
+                }
+            } else
+            {
+                <div class="profileData">No Doctor yet</div>
+            }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Adminstrators</h4>
+                                <hr />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-8 grid-margin stretch-card">
+                <div class="card" style="height: 600px;">
+                    <div class="card-body">
+                        <div id="cardHead"></div>
+                        <h4 class="card-title">Clinic Information</h4>
+                        <hr />
+                        <div>
+                            <div class="profileLb">Address:</div>
+                            <div class="profileData">
+                                @{ if (Model.SelectedClinic.Address != null)
+                                    {
+                                        @Model.SelectedClinic.Address }
+                                    else
+                                    {
+                                        <text>To be updated</text> } }
+                            </div>
+                        </div>
+                        <div>
+                            <div class="profileLb">Reason:</div>
+                            <div class="profileData">
+                                +@{ if (Model.SelectedClinic.CountryCode != null)
+                                    {
+                                        @Model.SelectedClinic.CountryCode } } 
+                                @{ if (Model.SelectedClinic.Phone != null)
+                                    {
+                                        @Model.SelectedClinic.Phone }
+                                    else
+                                    {
+                                        <text>To be updated</text> } }
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+</form>
+</div>
+
+<div class="modal fade" id=@("staticBackdrop"+@Model.SelectedClinic.Id) data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="text-center">
+                    <h4>
+                        Are you sure you want to delete this Clinic?
+
+                    </h4>
+                </div>
+                <div class="d-flex justify-content-between" style="margin-top:30px;">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" onclick=@("deleteClinic("+"'"+@Model.SelectedClinic.Id+"'"+")") class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function deleteClinic(clinicId) {
+        $.ajax({
+            url: 'https://localhost:44311/api/Clinic/' + clinicId,
+            type: 'DELETE',
+            success: function (result) {
+
+                console.log(result);
+                window.location.href = "/ISR/Clinics";
+
+            }
+        });
+    }
+</script>

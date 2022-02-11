@@ -1,0 +1,472 @@
+﻿@page
+@model Elderson.Pages.ProfileModel
+@{ Layout = "Shared/_Layout";
+                ViewData["Title"] = "Profile page"; }
+
+<style>
+    .subNav {
+        border: 1px solid lightgrey;
+        border-radius: 15px;
+    }
+
+    .subNavItem {
+        padding: 20px 20px 5px;
+        height: 60px;
+        cursor: pointer;
+    }
+
+        .subNavItem:hover {
+            background-color: #F4F3FF;
+        }
+
+        .subNavItem.active {
+            background-color: #F4F3FF;
+        }
+
+
+        .subNavItem:last-child {
+            color: red;
+        }
+
+    button {
+        background-color: rgb(108, 99, 255);
+    }
+
+    .divTitle {
+        padding: 20px 15px 10px;
+        background-color: #F4F3FF;
+        width: 100%;
+        color: #444492;
+        font-size: 1.2em;
+    }
+
+    .infoBody {
+        padding: 20px;
+    }
+
+    .profileLb {
+        font-weight: bold;
+        width: 40%;
+    }
+
+    .profileInfo {
+        padding: 10px;
+    }
+
+    .info {
+        display: none;
+    }
+
+    .details {
+        display: block;
+    }
+
+    .modal-body {
+        padding: 40px 20px;
+    }
+</style>
+
+<script>
+
+    //$(".editSubmit").on("click", function () {
+    //    console.log("Submitting form...")
+    //    fetch("https://localhost:44311/api/User", {
+    //        method: "POST",
+    //        body: JSON.stringify($("#editForm").serialize()),
+    //        headers: { "Content-type": "application/json;charset=UTF-8" }
+    //    })
+    //        .then(response => response.json())
+    //        .then(json => console.log(json))
+    //        .catch(err => console.log(err));
+    //});
+</script>
+
+<nav aria-label="breadcrumb" style="margin:35px;">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Elderson</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Profile</li>
+    </ol>
+    <h3>Profile</h3>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-2" style="margin-right:20px;">
+            <div class="subNav">
+                <div class="subNavItem active" id="firstNav" onclick="changeDisplay(this, 'details')">
+                    Details
+                </div>
+                <div class="subNavItem" id="secondNav" onclick="changeDisplay(this, 'changePwd')">
+                    Change Password
+                </div>
+                <hr />
+                <div class="subNavItem" data-toggle="modal" data-target=@("#staticBackdrop" + Model.user.Id)>
+                    Delete Account
+                </div>
+
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="info details">
+                <h3>Details</h3>
+                <div class="divTitle">
+                    Contact Information
+                </div>
+                <div class="infoBody">
+                    <div class="profileInfo d-flex">
+                        <div class="profileLb">
+                            Email Address
+                        </div>
+                        <div class="profileData">
+                            @if (Model.user.Email != null)
+                            {@Model.user.Email}
+                        else
+                        { <text>To be updated</text>}
+
+                        </div>
+                    </div>
+                    <div class="profileInfo d-flex">
+                        <div class="profileLb">
+                            Phone Number
+                        </div>
+                        <div class="profileData">
+                            +@if (Model.user.CountryCode != null)
+                            {@Model.user.CountryCode}
+
+                            @if (Model.user.Phone != null)
+                            {@Model.user.Phone}
+                        else
+                        { <text>To be updated</text>}
+                        </div>
+                    </div>
+                    <div class="profileInfo d-flex">
+                        <div class="profileLb">
+                            Emergency Name
+                        </div>
+                        <div class="profileData">
+                            @if (Model.PatientRole.EmergencyName != null)
+                            {@Model.PatientRole.EmergencyName}
+                        else
+                        { <text>To be updated</text>}
+                        </div>
+                    </div>
+                    <div class="profileInfo d-flex">
+                        <div class="profileLb">
+                            Emergency Number
+                        </div>
+                        <div class="profileData">
+                            +@if (Model.PatientRole.CountryCode != null)
+                            {@Model.user.CountryCode}
+
+                            @if (Model.PatientRole.EmergencyNum != null)
+                            {@Model.PatientRole.EmergencyNum}
+                        else
+                        { <text>To be updated</text>}
+                        </div>
+                    </div>
+                </div>
+                <div class="divTitle">
+                    Personal Information
+                </div>
+                <div class="infoBody">
+                    <div class="profileInfo d-flex">
+                        <div class="profileLb">
+                            BirthDate
+                        </div>
+                        <div class="profileData">
+                            @Model.Birthdate
+                        </div>
+                    </div>
+                    <div class="profileInfo d-flex">
+                        <div class="profileLb">
+                            Gender
+                        </div>
+                        <div class="profileData">
+                            @if (Model.user.Gender != null)
+                            {@Model.user.Gender}
+                        else
+                        { <text>To be updated</text>}
+                        </div>
+                    </div>
+                    <div class="profileInfo d-flex">
+                        <div class="profileLb">
+                            NRIC
+                        </div>
+                        <div class="profileData">
+                            @if (Model.PatientRole.Nric != null)
+                            {@Model.PatientRole.Nric}
+                        else
+                        { <text>To be updated</text>}
+                        </div>
+                    </div>
+                    <div class="profileInfo d-flex">
+                        <div class="profileLb">
+                            Relationship
+                        </div>
+                        <div class="profileData">
+                            @if (Model.PatientRole.Relationship != null)
+                            {@Model.PatientRole.Relationship}
+                        else
+                        { <text>To be updated</text>}
+                        </div>
+                    </div>
+                    <div class="profileInfo d-flex">
+                        <div class="profileLb">
+                            Home Address
+                        </div>
+                        <div class="profileData">
+                            @if (Model.PatientRole.HomeAddr != null)
+                            {@Model.PatientRole.HomeAddr}
+                        else
+                        { <text>To be updated</text>}
+                        </div>
+                    </div>
+                </div>
+                <button onclick="changeDisplay('', 'edit')" class="btn btn-primary">Edit</button>
+            </div>
+            <div class="info changePwd">
+                <h3>Change Password</h3>
+                <h5>In order to protect your account, make sure your password:</h5>
+                <div style="margin-left:50px; margin-bottom:50px;">
+                    <ul>
+                        <li>Is longer than 8 characters</li>
+                        <li>Have at least one A-Z character</li>
+                        <li>Have at least one a-z character</li>
+                        <li>Have at least one 0-9 character</li>
+                        <li>have at least one special character</li>
+                    </ul>
+                </div>
+                <form method="post" asp-page-handler="UpdatePassword">
+                    <div class="form-group d-flex" style="margin-bottom:10px;">
+                        <div style="width:50%;">
+                            <label for="exampleInputPassword4">Current Password:</label>
+                        </div>
+                        <div style="width:50%;">
+                            <input asp-for="viewModel.currentPwd" type="password" class="form-control" id="exampleInputPassword4">
+                            <span asp-validation-for="viewModel.currentPwd" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group d-flex" style="margin-bottom:10px;">
+                        <div style="width:50%;">
+                            <label for="exampleInputPassword4">New Password:</label>
+                        </div>
+                        <div style="width:50%;">
+                            <input asp-for="viewModel.newPwd" type="password" class="form-control" id="exampleInputPassword4">
+                            <span asp-validation-for="viewModel.newPwd" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group d-flex">
+                        <div style="width:50%;">
+                            <label for="exampleInputPassword4">Confirm New Password:</label>
+                        </div>
+                        <div style="width:50%;">
+                            <input asp-for="viewModel.confirmPwd" type="password" class="form-control" id="exampleInputPassword4">
+                            <span asp-validation-for="viewModel.confirmPwd" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <input type="hidden" asp-for="Id" value="@Model.Id" />
+                    <span style="color:red;">@Model.ErrorMsg</span>
+                    <button type="submit" style="float:right;margin-top:10px;" class="btn btn-primary me-2">Submit</button>
+                </form>
+            </div>
+            <div class="info edit">
+                <h3>Details</h3>
+                <form method="post" asp-page-handler="Edit" id="editForm" asp-route-sessioncount="10">
+                    <input type="hidden" asp-for="@Model.user.Id" value="@Model.user.Id" />
+                    <input type="hidden" asp-for="@Model.user.UserType" value="@Model.user.UserType" />
+                    <div class="divTitle">
+                        Contact Information
+                    </div>
+                    <div class="infoBody">
+                        <div class="profileInfo d-flex">
+                            <div class="profileLb">
+                                Full Name
+                            </div>
+                            <div class="profileData">
+                                <input asp-for="user.Fullname" type="text" value="@Model.user.Fullname" class="form-control" id="exampleInputEmail3" placeholder="EMAIL">
+                                <span asp-validation-for="user.Fullname" class="text-danger"></span>
+
+                            </div>
+                        </div>
+                        <div class="profileInfo d-flex">
+                            <div class="profileLb">
+                                Email Address
+                            </div>
+                            <div class="profileData">
+                                <input asp-for="user.Email" type="email" value="@Model.user.Email" class="form-control" id="exampleInputEmail3" placeholder="EMAIL">
+                                <span asp-validation-for="user.Email" class="text-danger"></span>
+
+                            </div>
+                        </div>
+                        <div class="profileInfo d-flex">
+                            <div class="profileLb">
+                                Phone Number
+                            </div>
+                            <div class="profileData">
+                                <div class="d-flex justify-content-between">
+                                    <div class="form-group" style="width:20%;">
+                                        <input type="text" class="form-control" id="EmergencyPhone" asp-for="user.CountryCode" value="@Model.user.CountryCode">
+                                    </div>
+                                    <div class="form-group" style="width:76%;">
+                                        <input type="text" class="form-control" id="EmergencyPhone" asp-for="user.Phone" value="@Model.user.Phone" placeholder="PHONE NUMBER">
+                                    </div>
+                                </div>
+                                <span asp-validation-for="user.Phone" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="profileInfo d-flex">
+                            <div class="profileLb">
+                                Emergency Name
+                            </div>
+                            <div class="profileData">
+                                <input asp-for="PatientRole.EmergencyName" value="@Model.PatientRole.EmergencyName" type="text" class="form-control" id="emergencyName" placeholder="EMERGENCY NAME">
+                                <span asp-validation-for="PatientRole.EmergencyName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="profileInfo d-flex">
+                            <div class="profileLb">
+                                Emergency Number
+                            </div>
+                            <div class="profileData">
+                                <div class="d-flex justify-content-between">
+                                    <div class="form-group" style="width:20%;">
+                                        <input type="text" class="form-control" id="EmergencyPhone" asp-for="PatientRole.CountryCode" value="@Model.PatientRole.CountryCode">
+                                    </div>
+                                    <div class="form-group" style="width:76%;">
+                                        <input type="text" class="form-control" value="@Model.PatientRole.EmergencyNum" asp-for="PatientRole.EmergencyNum" id="emergencyNumber" placeholder="EMERGENCY NUMBER">
+                                    </div>
+                                </div>
+                                <span asp-validation-for="PatientRole.EmergencyNum" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divTitle">
+                        Personal Information
+                    </div>
+                    <div class="infoBody">
+                        <div class="profileInfo d-flex">
+                            <div class="profileLb">
+                                BirthDate
+                            </div>
+                            <div class="profileData">
+                                <input asp-for="Birthdate" value="@Model.Birthdate" type="date" class="form-control" id="exampleInputEmail3" placeholder="BIRTHDATE">
+                                <span asp-validation-for="Birthdate" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="profileInfo d-flex">
+                            <div class="profileLb">
+                                Gender
+                            </div>
+                            <div class="profileData">
+                                @Html.RadioButton("user.Gender", "Male", new { style = "margin-right:10px;" }) <span>Male</span>
+                                @Html.RadioButton("user.Gender", "Female", new { style = "margin:0 10px;" }) <span>Female</span>
+                                <span asp-validation-for="user.Gender" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="profileInfo d-flex">
+                            <div class="profileLb">
+                                NRIC
+                            </div>
+                            <div class="profileData">
+                                <input asp-for="PatientRole.Nric" value="@Model.PatientRole.Nric" type="text" class="form-control" id="nric" placeholder="NRIC">
+                                <span asp-validation-for="PatientRole.Nric" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="profileInfo d-flex">
+                            <div class="profileLb">
+                                Relationship
+                            </div>
+                            <div class="profileData">
+                                @Html.DropDownList("PatientRole.Relationship", new SelectList(Enum.GetValues(typeof(Models.RelationshipType))), "--Select Marital Status--", new { @class = "form-control" })
+                                <span asp-validation-for="PatientRole.Relationship" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="profileInfo d-flex">
+                            <div class="profileLb">
+                                Home Address
+                            </div>
+                            <div class="profileData">
+                                <textarea asp-for="PatientRole.HomeAddr" value="@Model.PatientRole.HomeAddr" class="form-control" id="homeAddress" placeholder="HOME ADDRESS"></textarea>
+                                <span asp-validation-for="PatientRole.HomeAddr" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" style="float:right;margin-top:10px;" class="btn btn-primary editSubmit" id="editSubmit">Submit</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<div class="modal fade" id=@("staticBackdrop"+@Model.user.Id) data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="text-center">
+                    <h4>
+                        Are you sure you want to delete this your account?
+
+                    </h4>
+                </div>
+                <div class="d-flex justify-content-between" style="margin-top:30px;">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" onclick=@("deleteUser("+"'"+@Model.user.Id+"'"+")") class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function changeDisplay(nav, className) {
+        $(".info").hide()
+        $(`.${className}`).show();
+
+        if (nav != "") {
+            $(".subNavItem").removeClass("active");
+            $(nav).addClass("active")
+        }
+
+    }
+
+    function deleteUser(userId) {
+        $.ajax({
+            url: 'https://localhost:44311/api/User/' + userId,
+            type: 'DELETE',
+            success: function (result) {
+
+                console.log(result);
+                window.location.href = "/";
+
+            }
+        });
+    }
+
+    
+    document.getElementById("editSubmit").onclick = function () {
+        console.log("Submitting form...")
+        console.log($("#editForm").serialize());
+        $.ajax({
+            type: "POST",
+            url: "https://localhost:44311/api/User",
+            headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
+            data: $('#editForm').serialize(),
+            success: function (response) {
+                if (response == "Success")
+                    window.location.href = "/Profile";
+                else {
+                    alert();
+                }
+            },
+            error: function (e) {
+                alert(e.responseText);
+            }
+        });
+    };
+    
+</script>

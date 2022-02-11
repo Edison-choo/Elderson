@@ -1,0 +1,135 @@
+﻿@page
+@model Elderson.Pages.ISR.Clinics.IndexModel
+@{
+    Layout = "Shared/_LayoutITSupport";
+    ViewData["Title"] = "Clinics management page";
+    ViewData["Header"] = "CLINICS";
+    ViewData["Breadcrumb"] = "Clinics Management";
+}
+
+<style>
+    a {
+        color: white;
+        text-decoration: none;
+    }
+
+    .dropdown-toggle::after {
+        display: none;
+    }
+</style>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+
+<script>$(document).ready(function () {
+        console.log("Loading webpage...")
+        $.ajax({
+            url: 'https://localhost:44311/api/Clinic',
+            type: 'GET',
+            success: function (result) {
+                console.log("Items retrieve successfully")
+                console.log(JSON.parse(result));
+
+            }
+        });
+    $('#clinicstable').DataTable(
+            {
+                "ajax": {
+                    'url': 'https://localhost:44311/api/Clinic',
+                    'type': 'GET',
+                    "dataSrc": function (json) {
+                        return JSON.parse(JSON.stringify(json));
+                    }
+                },
+                "columns": [
+                    { "data": "Name" },
+                    { "data": "Phone"  },
+                    {
+                        "data": function (data, type, full) {
+                            return `<div class="btn-group">
+                                            <button type="button" class="btn dropdown-toggle dropdown-toggle-split" id=${"dropdownMenuSplitButton" + data.Id} data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i style="font-size:1.5em;" class="mdi mdi-dots-vertical"></i>
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby=${"dropdownMenuSplitButton" + data.Id}>
+                                                <a class="dropdown-item" href="/ISR/Clinics/Detail?id=${data.Id}">View</a>
+                                                <a class="dropdown-item" href="/ISR/Clinics/Edit?id=${data.Id}">Edit</a>
+                                                <a class="dropdown-item" data-toggle="modal" data-target=${"#staticBackdrop" + data.Id}>Delete</a>
+                                                </div>
+                                            </div>
+<div class="modal fade" id=${"staticBackdrop" + data.Id} data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <div class="text-center">
+                                                    <h4>
+                                                        Are you sure you want to delete this clinic?
+
+                                                    </h4>
+                                                </div>
+                                                <div class="d-flex justify-content-between" style="margin-top:30px;">
+                                                    <button style="height:44px;" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button style="height:44px;" type="button" onclick=${"deleteClinic(" + "'" + data.Id + "'" + ")"} class="btn btn-danger">Delete</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>`;
+                            }
+                        }
+                    ],
+                    "info": true,
+                    "ordering": true,
+                    "search": true,
+                    "processing": true,
+                    'autoWidth': false,
+                    'lengthChange': false,
+                    'paging': true,
+                    'pagingType':'numbers',
+                    'ordering': false,
+                    'dom': "fltip",
+                    'pageLength': 5
+                }
+            );
+        });</script>
+
+<div class="card" style="padding-left:10px;">
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start">
+            <h4 class="card-title">All Clinics Table</h4>
+            <button class="btn btn-primary btn-l text-white mb-0 me-0" type="button"><a asp-page="Create"><i class="mdi mdi-account-plus"></i>Add new clinic</a> </button>
+
+        </div>
+        <div class="table-responsive" style="width:100%; padding-bottom:30px;">
+
+            <table class="table table-hover" id="clinicstable">
+                <thead>
+                    <tr>
+                        <th>NAME</th>
+                        <th style="width:175px;">PHONE</th>
+                        <th style="width:175px;">ACTION</th>
+                        <th style="width:5px;"></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
+    </div>
+
+</div>
+
+<script>function deleteClinic(clinicId) {
+        $.ajax({
+            url: 'https://localhost:44311/api/Clinic/' + clinicId,
+            type: 'DELETE',
+            success: function (result) {
+
+                console.log(result);
+                console.log("Item delete successfully");
+                $('#clinicstable').DataTable().ajax.reload();
+                $('.fade').hide();
+
+
+            }
+        });
+    }</script>
