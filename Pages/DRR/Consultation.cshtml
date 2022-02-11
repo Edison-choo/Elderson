@@ -45,8 +45,8 @@
                 },
                 "columns": [
                     { "data": "PatientName" },
-                    { "data": "BookDateTime" },
-                    { "data": "BookDateTime" },
+                    { "data": "date" },
+                    { "data": "time" },
                     {
                         "data": function (data, type, full) {
                             var formDD = '<a class="dropdown-item" href="/ISR/Users/Form?id=${data.Id}">Form</a>';
@@ -110,7 +110,7 @@
                 <thead>
                     <tr>
                         <th>Patient</th>
-                        <th>Day</th>
+                        <th>Date</th>
                         <th style="width:20%;">Time</th>
                         <th style="width:175px;">ACTION</th>
 

@@ -56,7 +56,7 @@ namespace Elderson.Api
             try
             {
                 allbookings = _bksvc.GetBookingOfDoctor(doctor_id);
-                var jsonStr = JsonSerializer.Serialize(allbookings.Select(x => new { x.Id, x.Clinic, x.BookDateTime, x.Symptoms, x.PatientID, x.DoctorID, x.CallUUID, x.FormId, PatientName = _usrsvc.GetUserById(x.PatientID).Fullname }));
+                var jsonStr = JsonSerializer.Serialize(allbookings.Select(x => new { x.Id, x.Clinic, x.BookDateTime, x.Symptoms, x.PatientID, x.DoctorID, x.CallUUID, x.FormId, PatientName = _usrsvc.GetUserById(x.PatientID).Fullname, date = x.BookDateTime.Date.ToShortDateString(), time = x.BookDateTime.ToLongTimeString() }));
                 return Ok(jsonStr);
             }
             catch (Exception ex)
