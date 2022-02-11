@@ -70,13 +70,14 @@
         }
     }
     $("#btnSearch").click(function () {
-        if ($("#textSearch").val() != null) {
+        if ($("#textSearch").val().length != 0) {
             searchString = $("#textSearch").val();
+            getClinicSpecific(`${clinics.firstPage}&searchFilter=${searchString}`);
         }
         else {
-            searchString = ""
+            getClinicSpecific(`${clinics.firstPage}`);
         }
-        getClinicSpecific(`${clinics.firstPage}&searchFilter=${searchString}`);
+        
     })
     function formatClinicTable() {
         $("#clinicBody").html("");

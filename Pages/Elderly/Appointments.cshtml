@@ -27,48 +27,55 @@
                 {
                     @foreach (var item in Model.myBookings)
                     {
-                        <tr>
-                            <td><div>@item.Clinic</div></td>
-                            <td>@item.BookDateTime.ToString("dd MMMM yyyy HH:mm tt")</td>
-                            <td><a asp-page="/Elderly/Call" asp-route-id="@item.Id" class="btn btn-primary">Join Call</a></td>
-                            <td style="text-align: right;">
-                                <div class="dropdown">  
-                                    <button class="btn btn-primary dropdown-toggle"
-                                            type="button"
-                                            id="bookingDropdown"
-                                            data-mdb-toggle="dropdown"
-                                            aria-expanded="false">
-                                    </button>
-                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Delete Booking</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    You are about to delete a booking.
-                                                    Are you sure?
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    <a asp-page="/Elderly/DeleteAppointment" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
-                                                </div>
-                                            </div>
+                <tr>
+                    <td><div>@item.Clinic</div></td>
+                    <td>@item.BookDateTime.ToString("dd MMMM yyyy HH:mm tt")</td>
+                    @if (DateTime.Now < item.BookDateTime && item.BookDateTime < DateTime.Now.AddMinutes(30))
+                    {
+                        <td><a asp-page="/Elderly/Call" asp-route-id="@item.Id" class="btn btn-primary">Join Call</a></td>
+                    }
+                    else
+                    {
+                        <td><button class="btn btn-primary" disabled>Join Call</button></td>
+                    }
+                    <td style="text-align: right;">
+                        <div class="dropdown">
+                            <button class="btn dropdown-toggle"
+                                    type="button"
+                                    id="bookingDropdown"
+                                    data-mdb-toggle="dropdown"
+                                    aria-expanded="false">
+                            </button>
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Delete Booking</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            You are about to delete a booking.
+                                            Are you sure?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <a asp-page="/Elderly/DeleteAppointment" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
                                         </div>
                                     </div>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <li><a class="dropdown-item" asp-page="/Elderly/RescheduleAppointment" asp-route-id="@item.Id">Reschedule</a></li>
-                                        <li>
-                                            <button type="button" class="dropdown-item" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
-                                                Cancel
-                                            </button>
-                                            <!-- Modal -->
-                                        </li>
-                                    </ul>
                                 </div>
-                            </td>
-                        </tr>
+                            </div>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <li><a class="dropdown-item" asp-page="/Elderly/RescheduleAppointment" asp-route-id="@item.Id">Reschedule</a></li>
+                                <li>
+                                    <button type="button" class="dropdown-item" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
+                                        Cancel
+                                    </button>
+                                    <!-- Modal -->
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
                     }
                 }
 

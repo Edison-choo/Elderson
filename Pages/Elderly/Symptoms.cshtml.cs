@@ -79,7 +79,7 @@ namespace Elderson.Pages
                 HttpContext.Session.SetCart("Cart", myCart);
                 return RedirectToPage("Cart");
             }
-            return Page();
+            return RedirectToPage("/");
         }
     }
 }
