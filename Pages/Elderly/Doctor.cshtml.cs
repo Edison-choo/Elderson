@@ -28,7 +28,7 @@ namespace Elderson.Pages.Elderly
 
         public void OnGet(string clinic)
         {
-            if (clinic != null)
+            try
             {
                 myDetailList = new List<DoctorDetail>();
                 myClinic = clinic;
@@ -45,7 +45,7 @@ namespace Elderson.Pages.Elderly
                     myDetailList.Add(dd);
                 }
             }
-            else
+            catch
             {
                 Response.Redirect("Clinic");
             }

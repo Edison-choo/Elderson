@@ -27,7 +27,7 @@ namespace Elderson.Pages.Elderly
             }
             else
             {
-                Redirect("~/Login");
+                Response.Redirect("../Login");
             }
         }
     }

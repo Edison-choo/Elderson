@@ -39,34 +39,11 @@
                 </tr>
             </thead>
             <tbody id="clinicBody">
-                <tr>
-                    <td colspan="5">
-                        <div style="font-weight:bolder">Healthwerkz Medical Centre</div>
-                        <div>240 River Valley Road, S23897</div>
-                    </td>
-                    <td>3</td>
-                    <td>68366986</td>
-                    <td>7:00 AM - 1:00PM</td>
-                    <td style="text-align: right;"><a asp-page="/Elderly/Doctor" asp-route-clinic="Healthwerkz Medical Centre"  style="background-color: #6C63FF;" class="btn btn-primary">Select</a></td>
-                </tr>
             </tbody>
         </table>
         <div>
-            <div aria-label="Page navigation example" style="margin-left:auto;margin-right:auto;">
-                <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
+            <div>
+                <ul class="pagination" id="paginator">
                 </ul>
             </div>
         </div>
@@ -79,9 +56,20 @@
         var response = await fetch(`https://localhost:44311/api/Clinic/GetAll`)
         clinics = await response.json();
         formatClinicTable();
+        formatPage();
         console.log(clinics);
     }
+    async function getClinicSpecific(url) {
+        if (url) {
+            var response = await fetch(url)
+            clinics = await response.json();
+            formatClinicTable();
+            formatPage();
+            console.log(clinics);
+        }
+    }
     function formatClinicTable() {
+        $("#clinicBody").html("");
         for (var i = 0; i < clinics.data.length; i++){
             var obj = clinics.data[i];
             $("#clinicBody").append(`<tr>
@@ -95,5 +83,19 @@
                     <td style="text-align: right;"><a href="/Elderly/Doctor?clinic=${encodeURIComponent(obj.name)}" style="background-color: #6C63FF;" class="btn btn-primary">Select</a></td>`)
             $("#clinicBody").append("</tr>")
         }
+    }
+    function formatPage() {
+        $("#paginator").html("");
+        $("#paginator").append(`<li class="page-item "><button onclick="getClinicSpecific(${clinics.previousPage})" class="page-link"><span aria-hidden="true">&laquo;</span></button></li>`)
+        for (var i = 0; i < clinics.totalPages; i++) {
+            if (i + 1 == clinics.pageNumber) {
+                $("#paginator").append(`<li class="page-item active"><button onclick="getClinicSpecific('https://localhost:44311/api/Clinic/GetAll?pageNumber=1&pageSize=10')" class="page-link">${i + 1}</button></li>`)
+            }
+            else {
+                $("#paginator").append(`<li class="page-item"><button class="page-link">${i + 1}</button></li>`)
+            }
+            
+        }
+        $("#paginator").append(`<li class="page-item"><button onclick="getClinicSpecific(${clinics.nextPage})" class="page-link"><span aria-hidden="true">&raquo;</span></button></li>`)
     }
 </script>
