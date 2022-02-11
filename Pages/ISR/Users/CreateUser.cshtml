@@ -288,7 +288,7 @@
         </div>
         <div class="row adminForm">
             <div class="col-12 grid-margin stretch-card">
-                <div class="card">
+                @*<div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Administrator Related Information</h4>
                         <hr />
@@ -303,31 +303,10 @@
                             </div>
 
                         </div>
-                        <div class="form-group d-flex">
-                            <div style="width:30%;">
-                                <label for="openingHours">Opening Hours</label>
-
-                            </div>
-                            <div style="width:70%;">
-                                <input asp-for="AdminRole.OpeningHours" type="time" value="00:00:00" class="form-control" id="openingHours" placeholder="OPENING HOURS">
-                                <span asp-validation-for="AdminRole.OpeningHours" class="text-danger"></span>
-                            </div>
-
-                        </div>
-                        <div class="form-group d-flex">
-                            <div style="width:30%;">
-                                <label for="closingHours">Closing Hours</label>
-
-                            </div>
-                            <div style="width:70%;">
-                                <input asp-for="AdminRole.ClosingHours" type="time" value="00:00:00" class="form-control" id="closingHours" placeholder="CLOSING HOURS">
-                                <span asp-validation-for="AdminRole.ClosingHours" class="text-danger"></span>
-                            </div>
-
-                        </div>
+                        
 
                     </div>
-                </div>
+                </div>*@
             </div>
         </div>
         <div class="row clinicForm">
@@ -353,8 +332,8 @@
 
                                 </div>
                                 <div style="width:70%;">
-                                    @Html.DropDownList("DoctorRole.ClinicId", Model.clinics as List<SelectListItem>, "--Select language--", new { @class = "form-control" })
-                                    <span asp-validation-for="DoctorRole.ClinicId" class="text-danger"></span>
+                                    @Html.DropDownList("newClinic.Id", Model.clinics as List<SelectListItem>, "--Select language--", new { @class = "form-control" })
+                                    <span asp-validation-for="newClinic.Id" class="text-danger"></span>
                                 </div>
 
                             </div>
@@ -380,6 +359,28 @@
                                     <span asp-validation-for="newClinic.Address" class="text-danger"></span>
                                 </div>
 
+
+                            </div>
+                            <div class="form-group d-flex">
+                                <div style="width:30%;">
+                                    <label for="openingHours">Opening Hours</label>
+
+                                </div>
+                                <div style="width:70%;">
+                                    <input asp-for="newClinic.OpeningHours" type="time" value="00:00:00" class="form-control" id="openingHours" placeholder="OPENING HOURS">
+                                    <span asp-validation-for="newClinic.OpeningHours" class="text-danger"></span>
+                                </div>
+
+                            </div>
+                            <div class="form-group d-flex">
+                                <div style="width:30%;">
+                                    <label for="closingHours">Closing Hours</label>
+
+                                </div>
+                                <div style="width:70%;">
+                                    <input asp-for="newClinic.ClosingHours" type="time" value="00:00:00" class="form-control" id="closingHours" placeholder="CLOSING HOURS">
+                                    <span asp-validation-for="newClinic.ClosingHours" class="text-danger"></span>
+                                </div>
 
                             </div>
                             <div class="form-group  d-flex">

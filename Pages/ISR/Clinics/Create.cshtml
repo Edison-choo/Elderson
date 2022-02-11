@@ -40,6 +40,28 @@
                         </div>
                         <div class="form-group d-flex">
                             <div style="width:20%;">
+                                <label for="openingHours">Opening Hours</label>
+
+                            </div>
+                            <div style="width:80%;">
+                                <input asp-for="newClinic.OpeningHours" type="time" value="00:00:00" class="form-control" id="openingHours" placeholder="OPENING HOURS">
+                                <span asp-validation-for="newClinic.OpeningHours" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="form-group d-flex">
+                            <div style="width:20%;">
+                                <label for="closingHours">Closing Hours</label>
+
+                            </div>
+                            <div style="width:80%;">
+                                <input asp-for="newClinic.ClosingHours" type="time" value="00:00:00" class="form-control" id="closingHours" placeholder="CLOSING HOURS">
+                                <span asp-validation-for="newClinic.ClosingHours" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="form-group d-flex">
+                            <div style="width:20%;">
                                 <label for="phone">Phone:</label>
 
                             </div>

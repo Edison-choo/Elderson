@@ -398,8 +398,11 @@ namespace Elderson.Services
 
         public List<Clinic> GetAllClinic()
         {
-            return _context.Clinics.ToList();
+            List<Clinic> AllClinics = new List<Clinic>();
+            AllClinics = _context.Clinics.ToList();
+            return AllClinics;
         }
+
         public List<Clinic> GetSearchedClinic(string search)
         {
             return _context.Clinics.Where(c => (c.Name!.Contains(search)) || (c.Address!.Contains(search))).ToList();
@@ -413,9 +416,18 @@ namespace Elderson.Services
 
         public Clinic GetClinicByDoctorId(String id)
         {
-            User user = _context.Users.Where(u => u.Id == id).FirstOrDefault();
-            Doctor doctor = _context.Doctors.Where(d => d.UserId == user.Id).FirstOrDefault();
-            Clinic clinic = _context.Clinics.Where(e => e.Id == doctor.ClinicId).FirstOrDefault();
+            Clinic clinic = new Clinic();
+            clinic = _context.Clinics.Where(e => e.Id == id).FirstOrDefault();
+            
+            return clinic;
+        }
+
+        public Clinic GetClinicByAdminId(String id)
+        {
+            Clinic clinic = new Clinic();
+            clinic = _context.Clinics.Where(e => e.Id == id).FirstOrDefault();
+
+            
             return clinic;
         }
 
@@ -482,6 +494,22 @@ namespace Elderson.Services
                 throw;
             }
             return doctors;
+        }
+
+        public List<User> GetAdminUsersByClinic(string clinic)
+        {
+            List<User> admins = new List<User>();
+            try
+            {
+                var clinicId = _context.Clinics.Where(d => d.Name == clinic).Select(d => d.Id).SingleOrDefault();
+                var adminsList = _context.Administrators.Where(d => d.ClinicId == clinicId).Select(d => d.UserId).ToList();
+                admins = _context.Users.Where(d => adminsList.Contains(d.Id)).ToList();
+            }
+            catch
+            {
+                throw;
+            }
+            return admins;
         }
     }
 }

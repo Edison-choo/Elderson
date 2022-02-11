@@ -115,9 +115,7 @@ namespace Elderson.Pages.ISR.Users
                     break;
                 case "Administrator":
                     UpdatedAdmin = _svc.GetAdministratorById(UpdatedUser.Id);
-                    UpdatedAdmin.Clinic = AdminRole.Clinic;
-                    UpdatedAdmin.OpeningHours = AdminRole.OpeningHours;                                                                                                                                                                                                                                                                                                                                                                             
-                    UpdatedAdmin.ClosingHours = AdminRole.ClosingHours;
+                    UpdatedAdmin.ClinicId = AdminRole.ClinicId;
                     _svc.UpdateAdministrator(UpdatedAdmin);
                     break;
             }
