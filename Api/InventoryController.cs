@@ -78,7 +78,7 @@ namespace Elderson.Api
             }
             catch (Exception ex)
             {
-                Console.WriteLine("UserController.DeleteUser", ex);
+                Console.WriteLine("InventoryController.DeleteMedication", ex);
                 return BadRequest("Error");
             }
             return Ok("Success");

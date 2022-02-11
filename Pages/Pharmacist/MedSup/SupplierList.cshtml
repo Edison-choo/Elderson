@@ -6,3 +6,139 @@
     ViewData["Header"] = "MEDICAL SUPPLIERS";
     ViewData["Breadcrumb"] = "Medical Suppiers";
 }
+
+<style>
+    a {
+        color: white;
+        text-decoration: none;
+    }
+
+    .dropdown-toggle::after {
+        display: none;
+    }
+</style>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        console.log("Loading webpage...")
+        $.ajax({
+            url: 'https://localhost:44311/api/Supplier',
+            type: 'GET',
+            success: function (result) {
+                console.log("Items retrieve successfully")
+                console.log(JSON.parse(result));
+
+            }
+        });
+        $('#suppliertable').DataTable(
+            {
+                "ajax": {
+                    'url': 'https://localhost:44311/api/Supplier',
+                    'type': 'GET',
+                    "dataSrc": function (json) {
+                        return JSON.parse(JSON.stringify(json));
+                    }
+                },
+                "columns": [
+                    { "data": "SupplierName"  },
+                    { "data": "SupplierAbbreviation" },
+                    { "data": "SupplierPhone" },
+                    { "data": "SupplierEmail" },
+                    { "data": "SuppplierWebsite" },
+                    {
+                        "data": function (data, type, full) {
+                            return `<div class="btn-group">
+                                        <button type="button" class="btn dropdown-toggle dropdown-toggle-split" id=${"dropdownMenuSplitButton" + data.Id} data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i style="font-size:1.5em;" class="mdi mdi-dots-vertical"></i>
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby=${"dropdownMenuSplitButton" + data.Id}>
+                                            <a class="dropdown-item" href="/Pharmacist/MedSup/ViewSupplierObj?id=${data.Id}">View</a>
+                                            <a class="dropdown-item" href="/Pharmacist/MedSup/EditSupplier?id=${data.Id}">Edit</a>
+                                            <a class="dropdown-item" data-toggle="modal" data-target=${"#staticBackdrop" + data.Id}>Delete</a>
+                                        </div>
+                                    </div>
+                                    <div class="modal fade" id=${"staticBackdrop" + data.Id} data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <div class="text-center">
+                                                        <h4>Are you sure you want to delete this Supplier entry?</h4>
+                                                    </div>
+                                                    <div class="d-flex justify-content-between" style="margin-top:30px;">
+                                                        <button style="height:44px;" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        <button style="height:44px;" type="button" onclick=${"deleteSupplier(" + "'" + data.Id + "'" + ")"} class="btn btn-danger">Delete</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>`;
+                            }
+                        }
+                    ],
+                    "info": true,
+                    "ordering": true,
+                    "search": true,
+                    "processing": true,
+                    'autoWidth': false,
+                    'lengthChange': false,
+                    'paging': true,
+                    'pagingType':'numbers',
+                    'ordering': false,
+                    'dom': "fltip",
+                    'pageLength': 5
+                }
+            );
+        });
+</script>
+
+<div class="card">
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start">
+            <h4 class="card-title">Inventory Table</h4>
+            <button class="btn btn-primary btn-l text-white mb-0 me-0" type="button"><a asp-page="CreateInventory">Add New Medication</a> </button>
+
+        </div>
+        <div class="table-responsive">
+
+            <table class="table table-hover" id="suppliertable" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Supplier Name</th>
+                        <th>Abbreviation</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th>Website</th>
+                        
+                        <th>Options</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+    function deleteSupplier(Id) {
+        $.ajax({
+            url: 'https://localhost:44311/api/Supplier/' + Id,
+            type: 'DELETE',
+            success: function (result) {
+
+                console.log(result);
+                console.log("Item deleted successfully");
+                $('#suppliertable').DataTable().ajax.reload();
+                $('.fade').removeClass("show");
+
+
+            }
+        });
+    }
+
+</script>
