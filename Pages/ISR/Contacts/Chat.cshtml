@@ -171,6 +171,7 @@
         height: calc(100% - 68px);
         font-family: sans-serif;
         padding-bottom: 50px;
+
     }
 
         .message ul {
@@ -354,6 +355,81 @@
         border-radius:10px;
         padding-left:10px;
     }
+
+    .chatSetting {
+        margin:25px 10px;
+        cursor:pointer;
+        position:relative;
+
+    }
+
+    .setting {
+        width:150px;
+        z-index:4;
+        position:absolute;
+        top:60px;
+        right:5px;
+        display:none;
+    }
+
+    .settingItem {
+        padding: 20px;
+    }
+
+    .settingItem:hover {
+        background-color: #E6EBF0;
+    }
+
+    #pictureIcon {
+        padding:10px;
+        cursor:pointer;
+        display:block;
+    }
+
+    .pictureDisplay {
+        overflow: hidden;
+        background-color: #808080;
+        position: absolute;
+        z-index: 5;
+        bottom:0;
+        width: 100%;
+        height: 630px;
+        text-align:center;
+        display:none;
+    }
+
+    .pictureDisplay button {
+        float:right;
+        z-index:6;
+        height:50px;
+        width:50px;
+        background-color:transparent;
+        border:none;
+        display:block;
+    }
+
+        .pictureDisplay button:last-child {
+            width:auto;
+            margin-right:20px;
+            height:40px;
+            border:solid white 1px;
+            color:white;
+        }
+
+        .pictureDisplay i {
+            margin-top:20px;
+            color: white;
+            height: 40px;
+            width: 40px;
+        }
+
+        .pictureDisplay img {
+            margin: 80px auto;
+            clear: both;
+            display: block;
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+            object-fit:contain;
+        }
 </style>
 
 
@@ -428,10 +504,18 @@
     </div>
     <div class="right card d-flex align-content-between">
         <div class="head-section">
-            <div class="headRight-section">
+            <div class="headRight-section d-flex justify-content-between">
                 <div class="headRight-sub">
                     <h3></h3>
                     <small></small>
+                </div>
+                <div class="chatSetting">
+                    <i onclick="displaySetting()" style="font-size:1.5em;" class="mdi mdi-dots-vertical"></i>
+                    <div class="setting card">
+                        <div class="settingItem" data-toggle="modal" data-target="#deleteChat">
+                            Delete Chat
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -439,7 +523,7 @@
             <div class="right-section">
                 <div class="message wholeChat" data-mcs-theme="minimal-dark">
                     <ul id="messageList" class="test showActive " style="overflow:hidden;">
-                        <li style="">
+                        <li>
                             @{ if (HttpContext.Session.GetString("LoginUserType") != "ITSupport")
                                 {
                                     if (!Model.allmessages.ContainsKey("ISRChat") && HttpContext.Session.GetString("ChatUser") != "ISRChat")
@@ -458,33 +542,63 @@
 
                     @{ foreach (var user in Model.allmessages)
                         {
-                            <ul id="messageList" class="@user.Key" style="display:none;">
-                                @{ foreach (var msg in Model.allmessages[user.Key])
-                                    {
-                                        if (msg.ToUserId == HttpContext.Session.GetString("LoginUser"))
-                                        {
-                                            <li class="msg-left">
-                                                <div class="msg-left-sub">
-                                                    <div class="msg-desc">
-                                                        @msg.Text
-                                                    </div>
-                                                    <small>@string.Concat( msg.When.ToString().Split(" ")[1].Substring(0, msg.When.ToString().Split(" ")[1].LastIndexOf(":")), msg.When.ToString().Split(" ")[2])</small>
-                                                </div>
-                                            </li>
-                                        }
-                                        else
-                                        {
-                                            <li class="msg-right">
-                                                <div class="msg-right-sub">
-                                                    <div class="msg-desc">
-                                                        @msg.Text
-                                                    </div>
-                                                    <small>@msg.When</small>
-                                                </div>
-                                            </li>
-                                        }
-                                    } }
-                            </ul> } }
+                                        <ul id="messageList" class="@user.Key" style="display:none;">
+                                            @{ foreach (var msg in Model.allmessages[user.Key])
+                                                {
+                                                    if (msg.ToUserId == HttpContext.Session.GetString("LoginUser"))
+                                                    {
+                                                        if (msg.Text.Split(" ")[0] != "filen@me")
+                                                        {
+                                                            <li class="msg-left">
+                                                                <div class="msg-left-sub">
+                                                                    <div class="msg-desc">
+                                                                        @msg.Text
+                                                                    </div>
+                                                                    <small>@string.Concat(msg.When.ToString().Split(" ")[1].Substring(0, msg.When.ToString().Split(" ")[1].LastIndexOf(":")), msg.When.ToString().Split(" ")[2])</small>
+                                                                </div>
+                                                            </li>
+                                                        }
+                                                        else
+                                                        {
+                                                            <li class="msg-left">
+                                                                <div class="msg-left-sub">
+                                                                    <div class="msg-desc">
+                                                                        <img src="~/uploads/images/@(msg.Text.Split(" ")[1])" alt="Alternate Text" height="100" width="100" />
+                                                                    </div>
+                                                                    <small>@string.Concat(msg.When.ToString().Split(" ")[1].Substring(0, msg.When.ToString().Split(" ")[1].LastIndexOf(":")), msg.When.ToString().Split(" ")[2])</small>
+                                                                </div>
+                                                            </li>
+                                                        }
+
+                                                    }
+                                                    else
+                                                    {
+                                                        if (msg.Text.Split(" ")[0] != "filen@me")
+                                                        {
+                                                            <li class="msg-right">
+                                                                <div class="msg-right-sub">
+                                                                    <div class="msg-desc">
+                                                                        @msg.Text
+                                                                    </div>
+                                                                    <small>@string.Concat(msg.When.ToString().Split(" ")[1].Substring(0, msg.When.ToString().Split(" ")[1].LastIndexOf(":")), msg.When.ToString().Split(" ")[2])</small>
+                                                                </div>
+                                                            </li>
+                                                        }
+                                                        else
+                                                        {
+                                                            <li class="msg-right">
+                                                                <div class="msg-right-sub">
+                                                                    <div class="msg-desc">
+                                                                        <img src="~/uploads/images/@(msg.Text.Split(" ")[1])" alt="Alternate Text" height="100" width="100" />
+                                                                    </div>
+                                                                    <small>@string.Concat(msg.When.ToString().Split(" ")[1].Substring(0, msg.When.ToString().Split(" ")[1].LastIndexOf(":")), msg.When.ToString().Split(" ")[2])</small>
+                                                                </div>
+                                                            </li>
+                                                        }
+
+                                                    }
+                                                } }
+                                        </ul> } }
 
                     @{ if (HttpContext.Session.GetString("ChatUser") != null)
                         {
@@ -497,13 +611,21 @@
                         }
 
                     }
+
+                <div id="messageList" class="pictureDisplay" style="overflow:hidden;">
+                    <button onclick="closePicture()" style="float:left;" type="button"><i class="fa fa-close fa-lg"></i></button>
+                    <img id="chatPhoto" src="~/images/defaultChat.png" alt="Error" height="350" width="350" />
+                    <button id="photoSend" type="button" class="btn-send btn">Send Image<i style="margin-top:0px;" class="fa fa-send fa-lg"></i></button>
+                </div>
                 </div>
                
                 <div class="right-section-bottom">
                     <form id="chatForm" style="display:none;">
                         <div class="upload-btn">
-                            <button class="btn"><i class="fa fa-photo"></i></button>
-                            <input type="file" name="myfile" />
+                            <label id="pictureIcon" for="fileInput">
+                                <i class="fa fa-photo"></i>
+                            </label>
+                            <input id="fileInput" type="file" name="myfile" />
                         </div>
                         <input id="messageInput" type="text" name="" placeholder="type here...">
                         <button id="sendButton" type="button" class="btn-send"><i class="fa fa-send"></i></button>
@@ -512,6 +634,25 @@
             </div>
         </div>
 
+    </div>
+</div>
+
+<div class="modal fade" id="deleteChat" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="text-center">
+                    <h4>
+                        Are you sure you want to permanently delete the chat?
+
+                    </h4>
+                </div>
+                <div class="d-flex justify-content-between" style="margin-top:30px;">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" onclick="deleteChat()" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -600,6 +741,8 @@
     connection.on("ReceiveMessage", function (message) {
         console.log(message)
         console.log(`${message.userId} sends to ${message.toUserId} at ${message.when}`);
+        console.log(message.when)
+        console.log((new Date(message.when)).toLocaleString())
 
         if ('@HttpContext.Session.GetString("LoginUser")' != message.userId && '@HttpContext.Session.GetString("LoginUser")' == message.toUserId) {
             var li = document.createElement("li");
@@ -618,8 +761,13 @@
             divSecond.appendChild(divThird);
             divSecond.appendChild(small);
 
-            divThird.textContent = `${message.text}`;
-            small.textContent = `${message.when.split(" ")[1].slice(0, -3) + message.when.split(" ")[2]}`;
+            if (message.text.indexOf("filen@me") != -1) {
+                divThird.innerHTML = `<img src="/uploads/images/${message.text.split(" ")[1]}" alt="ChatImage" height="100" width="100" />`;
+            } else {
+                divThird.textContent = `${message.text}`;
+            }
+ 
+            small.textContent = `${(new Date(message.when)).toLocaleString().split(" ")[1].slice(0, -3) + (new Date(message.when)).toLocaleString().split(" ")[2]}`;
 
             console.log(typeof document.getElementsByClassName(message.userId)[0]);
 
@@ -641,6 +789,57 @@
             }
         }
 
+    });
+
+    connection.on("ReceiveNoti", function (userId) {
+        console.log(userId)
+
+        var userList = $(`#ISRChat`);
+        userList.removeAttr("id");
+        userList.attr("id", userId);
+        userList.removeAttr("onclick");
+        userList.attr("onclick", `changeChat(this, '${userId}')`);
+        $(".ISRChat").addClass(userId);
+        $(`.${userId}`).removeClass("ISRChat");
+        toUserId = userId;
+
+        @{
+            if (HttpContext.Session.GetString("ChatUser") != null)
+            {
+                HttpContext.Session.Remove("ChatUser");
+            }
+
+        }
+    });
+
+    connection.on("ReceiveDeleteNoti", function (userId) {
+        console.log(userId)
+
+        $(`#${userId}`).remove();
+        $(`.${userId}`).remove();
+        $(`.test`).addClass("showActive");
+        $('.test').show();
+        $("#chatForm").hide();
+
+        console.log($(".test li"));
+
+        //$(".test li").append(`<div class="defaultChat" style="">
+        //                                <img src="~/images/defaultChat.png" alt="Alternate Text" />
+        //                                <div>Start talking to IT Support</div>
+        //                                <button class="btn btn-primary startISRChat">Chat</button>
+        //                            </div>`);
+        
+
+        var chatHeader = document.querySelector(".headRight-sub h3");
+        chatHeader.textContent = "";
+
+        @{
+            if (HttpContext.Session.GetString("ChatUser") != null)
+            {
+                HttpContext.Session.Remove("ChatUser");
+            }
+
+        }
     });
 </script>
 
@@ -699,4 +898,110 @@
     });*@
 
 
+
+    function displaySetting() {
+        if ($(".setting").css("display") == "none") {
+            $(".setting").show();
+        } else {
+            $(".setting").hide();
+        }
+    }
+
+    function closePicture() {
+        $(".pictureDisplay").hide();
+        $("#fileInput").val("");
+    }
+
+    function deleteChat() {
+        var userId = '@HttpContext.Session.GetString("LoginUser")';
+        $.ajax({
+            url: 'https://localhost:44311/api/Chat/' + userId + "/" + toUserId,
+            type: 'DELETE',
+            success: function (result) {
+                console.log(result);
+
+                connection.invoke("SendDeleteNoti", toUserId, userId).catch(function (err) {
+                    return console.error(err.toString());
+                });
+
+                location.reload();
+            }
+        });
+    }
+
+    $("#fileInput").on("change", function () {
+        document.getElementById('chatPhoto').src = window.URL.createObjectURL(this.files[0]);
+
+        $(".pictureDisplay").show();
+    });
+
+    $("#photoSend").on("click", function () {
+        var fileUpload = $("#fileInput").get(0);
+        var files = fileUpload.files;
+
+        var fileData = new FormData();
+
+        for (var i = 0; i < files.length; i++) {
+            fileData.append(files[i].name, files[i]);
+        }
+
+        $.ajax({
+            url: 'https://localhost:44311/api/Chat',
+            data: fileData,
+            contentType: false,
+            processData: false,
+            type: 'post',
+            success: function (message) {
+                console.log(message);
+                sendPicture(message);
+                closePicture();
+            },
+            error: function (err) {
+                console.log(err.statusText)
+            }
+        });
+    });
+
+    $("document").ready(function () {
+        console.log(document.forms[3]);
+        console.log(document.forms[4]);
+    });
+
+    function sendPicture(filename) {
+       var user = '@HttpContext.Session.GetString("LoginUserName")';
+        var text = `filen@me ${filename}`;
+        var userId = '@HttpContext.Session.GetString("LoginUser")';
+
+        console.log("sending..." + user);
+
+
+        let message = new Message(user, text, new Date(), userId, toUserId);
+        console.log(`sending ${message} says ${message.text} at ${message.when}`);
+
+
+        var li = document.createElement("li");
+        var divFirst = document.createElement("div");
+        var divSecond = document.createElement("div");
+        var divThird = document.createElement("div");
+        var small = document.createElement("small");
+        li.setAttribute("class", "msg-right")
+        divFirst.setAttribute("class", "msg-right")
+        divSecond.setAttribute("class", "msg-right-sub")
+        divThird.setAttribute("class", "msg-desc")
+        li.appendChild(divFirst);
+        divFirst.appendChild(divSecond);
+        divSecond.appendChild(divThird);
+        divSecond.appendChild(small);
+
+        divThird.innerHTML = `<img src="/uploads/images/${filename}" alt="ChatImage" height="100" width="100" />`;
+        small.textContent = `${message.when.toLocaleString().split(" ")[1].slice(0, -3) + message.when.toLocaleString().split(" ")[2]}`;
+
+        document.getElementsByClassName(toUserId)[0].appendChild(li);
+
+        console.log(toUserId + message.when);
+
+        connection.invoke("SendMessageToGroup", toUserId, message).catch(function (err) {
+            return console.error(err.toString());
+        });
+    }
 </script>

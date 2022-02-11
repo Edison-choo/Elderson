@@ -122,14 +122,13 @@ namespace Elderson.Pages.Users
                         {
                             DoctorRole.Photo = image;
                         }
-                        if (DoctorRole.ClinicId != null)
+                        if (newClinic.Id == null)
                         {
                             newClinic.Id = Guid.NewGuid().ToString();
                             _svc.AddClinic(newClinic);
-                        } else
-                        {
-                            DoctorRole.ClinicId = newClinic.Id;
                         }
+                        DoctorRole.ClinicId = newClinic.Id;
+
                         
                         DoctorRole.Id = typeGuid;
                         DoctorRole.UserId = newUser.Id;
@@ -137,6 +136,14 @@ namespace Elderson.Pages.Users
                         _svc.AddDoctor(DoctorRole);
                         break;
                     case "Administrator":
+                        if (newClinic.Id == null)
+                        {
+                            newClinic.Id = Guid.NewGuid().ToString();
+                            _svc.AddClinic(newClinic);
+                        }
+                        AdminRole.ClinicId = newClinic.Id;
+
+
                         AdminRole.Id = typeGuid;
                         AdminRole.UserId = newUser.Id;
                         _svc.AddAdministrator(AdminRole);

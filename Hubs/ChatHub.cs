@@ -23,6 +23,7 @@ namespace Elderson.Hubs
         public async Task SendMessage(Message message)
         {
             Console.WriteLine(message.UserId + message.Text + message.ToUserId);
+            Console.WriteLine(DateTime.Now);
 
             string guid = Guid.NewGuid().ToString();
             message.Id = guid;
@@ -73,6 +74,7 @@ namespace Elderson.Hubs
         public Task SendMessageToGroup(string receiver, Message message)
         {
             Console.WriteLine(message.UserId + message.Text + message.ToUserId);
+            Console.WriteLine(DateTime.Now);
 
             string guid = Guid.NewGuid().ToString();
             message.Id = guid;
@@ -86,6 +88,20 @@ namespace Elderson.Hubs
             Console.WriteLine(userId);
 
             return Clients.Group("ISRChat").SendAsync("ReceiveNoti", userId);
+        }
+
+        public Task SendNotiToUser(string userId, string itsId)
+        {
+            Console.WriteLine(userId, itsId);
+
+            return Clients.Group(userId).SendAsync("ReceiveNoti", itsId);
+        }
+
+        public Task SendDeleteNoti(string userId, string itsId)
+        {
+            Console.WriteLine(userId, itsId);
+
+            return Clients.Group(userId).SendAsync("ReceiveDeleteNoti", itsId);
         }
     }
 }

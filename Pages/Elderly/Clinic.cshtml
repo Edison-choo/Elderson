@@ -24,15 +24,14 @@
         </ol>
     </div>
     <div class="input-group rounded" style="margin-bottom: 50px;">
-        <input type="text" value="" placeholder="Search by clinic name, location, ..." class="form-control rounded" />
-        <span style="margin-left:10px;"><button class="btn btn-primary" style="background-color: #6C63FF;" type="button">SEARCH</button></span>
+        <input type="text" id="textSearch" value="" placeholder="Search by clinic name, location, ..." class="form-control rounded" />
+        <span style="margin-left:10px;"><button class="btn btn-primary" id="btnSearch" style="background-color: #6C63FF;" type="button">SEARCH</button></span>
     </div>
     <div class="">
         <table class="table">
             <thead class="table-light">
                 <tr>
                     <th colspan="5" style="font-weight:bold; background-color:#F4F3FF;">Clinic</th>
-                    <th style="font-weight:bold; background-color:#F4F3FF;">Number of Doctors</th>
                     <th style="font-weight:bold; background-color:#F4F3FF;">Phone</th>
                     <th style="font-weight:bold; background-color:#F4F3FF;">Booking Hours</th>
                     <th style="font-weight:bold; background-color:#F4F3FF;"></th>
@@ -49,8 +48,10 @@
         </div>
     </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     let clinics;
+    let searchString = "";
     getClinic();
     async function getClinic() {
         var response = await fetch(`https://localhost:44311/api/Clinic/GetAll`)
@@ -68,6 +69,15 @@
             console.log(clinics);
         }
     }
+    $("#btnSearch").click(function () {
+        if ($("#textSearch").val() != null) {
+            searchString = $("#textSearch").val();
+        }
+        else {
+            searchString = ""
+        }
+        getClinicSpecific(`${clinics.firstPage}&searchFilter=${searchString}`);
+    })
     function formatClinicTable() {
         $("#clinicBody").html("");
         for (var i = 0; i < clinics.data.length; i++){
@@ -77,7 +87,6 @@
                         <div style="font-weight:bolder">${obj.name}</div>
                         <div>${obj.address}</div>
                     </td>
-                    <td>3</td>
                     <td>+${obj.countryCode} ${obj.phone}</td>
                     <td>7:00 AM - 1:00PM</td>
                     <td style="text-align: right;"><a href="/Elderly/Doctor?clinic=${encodeURIComponent(obj.name)}" style="background-color: #6C63FF;" class="btn btn-primary">Select</a></td>`)
@@ -86,16 +95,16 @@
     }
     function formatPage() {
         $("#paginator").html("");
-        $("#paginator").append(`<li class="page-item "><button onclick="getClinicSpecific(${clinics.previousPage})" class="page-link"><span aria-hidden="true">&laquo;</span></button></li>`)
+        $("#paginator").append(`<li class="page-item "><button onclick="getClinicSpecific(${clinics.previousPage}&searchFilter=${searchString})" class="page-link"><span aria-hidden="true">&laquo;</span></button></li>`)
         for (var i = 0; i < clinics.totalPages; i++) {
             if (i + 1 == clinics.pageNumber) {
-                $("#paginator").append(`<li class="page-item active"><button onclick="getClinicSpecific('https://localhost:44311/api/Clinic/GetAll?pageNumber=1&pageSize=10')" class="page-link">${i + 1}</button></li>`)
+                $("#paginator").append(`<li class="page-item active"><button onclick="getClinicSpecific('https://localhost:44311/api/Clinic/GetAll?pageNumber=${i + 1}&pageSize=10&searchFilter=${searchString}')" class="page-link">${i + 1}</button></li>`)
             }
             else {
                 $("#paginator").append(`<li class="page-item"><button class="page-link">${i + 1}</button></li>`)
             }
             
         }
-        $("#paginator").append(`<li class="page-item"><button onclick="getClinicSpecific(${clinics.nextPage})" class="page-link"><span aria-hidden="true">&raquo;</span></button></li>`)
+        $("#paginator").append(`<li class="page-item"><button onclick="getClinicSpecific(${clinics.nextPage}&searchFilter=${searchString})" class="page-link"><span aria-hidden="true">&raquo;</span></button></li>`)
     }
 </script>

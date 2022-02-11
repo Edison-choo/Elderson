@@ -9,15 +9,18 @@ namespace Elderson.Filter
     {
         public int PageNumber { get; set; }
         public int PageSize { get; set; }
+        public string searchFilter { get; set; }
         public PaginationFilter()
         {
             this.PageNumber = 1;
             this.PageSize = 10;
+            this.searchFilter = "";
         }
-        public PaginationFilter(int pageNumber, int pageSize)
+        public PaginationFilter(int pageNumber, int pageSize, string searchFilter)
         {
             this.PageNumber = pageNumber < 1 ? 1 : pageNumber;
             this.PageSize = pageSize > 10 ? 10 : pageSize;
+            this.searchFilter = searchFilter;
         }
     }
 }

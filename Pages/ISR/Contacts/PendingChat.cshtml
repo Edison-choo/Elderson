@@ -146,6 +146,9 @@
         connection.invoke("SendNotiToGroup", userId).catch(function (err) {
             return console.error(err.toString());
         });
+        connection.invoke("SendNotiToUser", userId, '@HttpContext.Session.GetString("LoginUser")').catch(function (err) {
+            return console.error(err.toString());
+        });
         $.ajax({
             url: 'https://localhost:44311/api/User/PendingChatUser/' + userId,
             type: 'GET',

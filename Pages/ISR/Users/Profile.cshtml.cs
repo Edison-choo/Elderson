@@ -35,9 +35,13 @@ namespace Elderson.Pages.ISR.Users
             PatientRole = _svc.GetPatientById(id);
             AdminRole = _svc.GetAdministratorById(id);
             DoctorRole = _svc.GetDoctorById(id);
-            if (DoctorRole != null && DoctorRole.ClinicId != null)
+            if ((DoctorRole != null && DoctorRole.ClinicId != null))
             {
                 SelectedClinic = _svc.GetClinicByDoctorId(DoctorRole.ClinicId);
+            }
+            if ((AdminRole != null && AdminRole.ClinicId != null))
+            {
+                SelectedClinic = _svc.GetClinicByAdminId(AdminRole.ClinicId);
             }
             Birthdate = SelectedUser.Birthdate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
         }

@@ -33,10 +33,11 @@ namespace Elderson.Api
         public async Task<IActionResult> GetAll([FromQuery] PaginationFilter filter)
         {
             var route = Request.Path.Value;
-            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize, filter.searchFilter);
             var pagedData = await _svc.GetAllClinicAsync()
                 .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
                 .Take(validFilter.PageSize)
+                .Where(c => c.Name!.Contains(validFilter.searchFilter) || c.Address!.Contains(validFilter.searchFilter))
                 .ToListAsync();
             var totalRecords = await _svc.GetAllClinicAsync().CountAsync();
             var pagedResponse = PaginationHelper.CreatePagedReponse<Clinic>(pagedData, validFilter, totalRecords, _uriService, route);

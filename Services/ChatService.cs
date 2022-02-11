@@ -34,7 +34,7 @@ namespace Elderson.Services
                     {
                         SeparatedMessages[msg.UserId] = new List<Message>() { msg };
                     }
-                    SeparatedMessages[msg.UserId].OrderBy(e => e.When);
+                    SeparatedMessages[msg.UserId] = SeparatedMessages[msg.UserId].OrderBy(e => e.When).ToList();
                 } 
                 else
                 {
@@ -46,7 +46,7 @@ namespace Elderson.Services
                     {
                         SeparatedMessages[msg.ToUserId] = new List<Message>() { msg };
                     }
-                    SeparatedMessages[msg.ToUserId].OrderBy(e => e.When);
+                    SeparatedMessages[msg.ToUserId] = SeparatedMessages[msg.ToUserId].OrderBy(e => e.When).ToList();
                 }
                 
                 
