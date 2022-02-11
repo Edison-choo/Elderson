@@ -51,7 +51,7 @@
                         <button type="button" class="close" aria-label="Close" style="margin-right: 2%; margin-top:2%;" onclick=${"deleteForm(" + "'" + data[i].Id + "'" + ")"}>
                           <span aria-hidden="true" style="color:white;">×</span>
                         </button>
-                          <p class="title" style="height:225px; color: white; font-size: 18px; margin-top:15%; text-align:center"><strong>${data[i].TemplateName}</strong></p>
+                          <p class="title" style="height:200px; color: white; font-size: 18px; margin-top:15%; text-align:center"><strong>${data[i].TemplateName}</strong></p>
                           <p><a style="border: none; outline: 0; display: inline-block; padding: 8px; color: black; background-color: white; text-align: center; cursor: pointer; width: 100%; font-size: 18px; text-decoration: none;" href="/DRR/EditForm?id=${data[i].Id}">Edit</a></p>
                         </div>
                         `
@@ -84,7 +84,7 @@
             type: 'DELETE',
             success: function (result) {
                 console.log("Item delete successfully")
-                window.location.href = "/DRR/Form";
+                location.reload();
             }
         });
     }

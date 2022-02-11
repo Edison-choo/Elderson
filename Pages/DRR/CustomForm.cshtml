@@ -13,7 +13,7 @@
     }
 
     #btnContainer {
-        margin-top: 50%;
+        margin-top: 20%;
     }
 
     #submitBtn {
@@ -31,6 +31,28 @@
     input[type=number] {
         -moz-appearance: textfield;
     }
+
+    #formtable_wrapper {
+        width: 70%;
+        margin: 0 auto;
+        border: 1px solid black;
+        padding: 5%;
+        background-color: seashell;
+    }
+
+    #formtable {
+        width: 70%;
+        margin: 0 auto;
+    }
+
+    #medtable_filter {
+        display:none;
+    }
+
+    .medBtn {
+        cursor: pointer;
+    }
+    
 </style>
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -44,15 +66,15 @@
 <div class="customForm">
     <form method="post">
         <input type="hidden" asp-for="@Model.uuid" id="uuidVal" />
-        <p>Template Name:</p>
+        <p><h3>Template Name:</h3></p>
         <input asp-for="newForm.TemplateName" class="customForm-input" />
         <br />
         <div class="addMeds" id="addMeds">
             <p style="margin-top:1%;">
-                Medication Needed:    <i class="fas fa-plus-circle fa-2x" id="plus" onclick="displayAddMeds()"></i><i class="fas fa-minus-circle fa-2x" id="minus" onclick="closeAddMeds()"></i>
+                <h3>Medication Needed:    <i class="medBtn fas fa-plus-circle fa-lg" id="plus" onclick="displayAddMeds()"></i><i class="medBtn fas fa-minus-circle fa-lg" id="minus" onclick="closeAddMeds()"></i></h3>
             </p>
             <div class="table-responsive" id="allMeds">
-                <table class="table table-hover" id="formtable" style="width:100%">
+                <table class="table table-hover" id="formtable" style="width:100%;">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -78,7 +100,7 @@
             </div>
         </div>
         <div id="btnContainer">
-            <div><a asp-page="/DRR/Form" class="btn btn-primary">Back</a></div>
+            <div><a asp-page="/DRR/Form" class="btn btn-danger">Back</a></div>
             <button id="submitBtn" class="btn btn-primary">Submit</button>
         </div>
     </form>
@@ -92,59 +114,56 @@
     allMed.style.display = "none";
     document.getElementById("minus").style.display = "none";
 
-    $(document).ready(function () {
-        console.log("Loading webpage...")
-        $.ajax({
-            url: 'https://localhost:44311/api/FormMeds',
-            type: 'GET',
-            success: function (result) {
-                console.log("Items retrieve successfully")
-                console.log(JSON.parse(result));
+    callMedsTable();
 
-            }
-        });
-        $('#medtable').DataTable(
-            {
-                "ajax": {
-                    'url': 'https://localhost:44311/api/FormMeds',
-                    'type': 'GET',
-                    "dataSrc": function (json) {
-                        return JSON.parse(JSON.stringify(json));
-                    }
-                },
-                "columns": [
-                    { "data": "MedName" },
-                    {
-                        "data": function (data) {
-                            return `
-                               <i class="far fa-minus-square fa-2x" onclick="reduce()"></i> <input type="number" id="quantity" value="0" step="0" min="0" max="20"> <i class="far fa-plus-square fa-2x" onclick="add()"></i>
-                            `;
+    function callMedsTable() {
+        $(document).ready(function () {
+            console.log("Loading webpage...")
+            $.ajax({
+                url: 'https://localhost:44311/api/FormMeds',
+                type: 'GET',
+                success: function (result) {
+                    console.log("Items retrieve successfully")
+                    console.log(JSON.parse(result));
 
+                }
+            });
+            $('#medtable').DataTable(
+                {
+                    "ajax": {
+                        'url': 'https://localhost:44311/api/FormMeds/' + document.getElementById("uuidVal").value,
+                        'type': 'GET',
+                        "dataSrc": function (json) {
+                            return JSON.parse(JSON.stringify(json));
                         }
                     },
-                    { "data": "MedType" },
-                    {
-                        "data": function (data) {
-                            return `
-                                <a onclick="addMedication('${data.Id}')" class="btn btn-primary">Add</a>
+                    "columns": [
+                        { "data": "MedName" },
+                        { "data": "Quantity" },
+                        { "data": "MedType" },
+                        {
+                            "data": function (data) {
+                                return `
+                                <a onclick="deleteMedication('${data.Id}')" class="btn btn-danger">Delete</a>
                             `;
+                            }
                         }
-                    }
-                ],
-                "info": true,
-                "ordering": true,
-                "search": false,
-                "processing": true,
-                'autoWidth': false,
-                'lengthChange': false,
-                'paging': true,
-                'pagingType': 'numbers',
-                'ordering': false,
-                'dom': "fltip",
-                'pageLength': 5
-            }
-        );
-    });
+                    ],
+                    "info": true,
+                    "ordering": true,
+                    "search": false,
+                    "processing": true,
+                    'autoWidth': false,
+                    'lengthChange': false,
+                    'paging': true,
+                    'pagingType': 'numbers',
+                    'ordering': false,
+                    'dom': "fltip",
+                    'pageLength': 5
+                }
+            );
+        });
+    }
 
     $(document).ready(function () {
         console.log("Loading webpage...")
@@ -171,8 +190,10 @@
                     {
                         "data": function (data) {
                             return `
-                               <i class="far fa-minus-square fa-2x" onclick="reduce()"></i> <input type="number" id="quantity" value="0" step="0" min="0" max="20"> <i class="far fa-plus-square fa-2x" onclick="add()"></i>
-                            `;
+                                <div class="input-group">
+                               <i class="medBtn far fa-minus-square fa-2x" onclick="reduce()"></i> <input type="number" id="quantity" value="0" step="0" min="0" max="20" readonly style="width:35%;text-align:center"> <i class="medBtn far fa-plus-square fa-2x" onclick="add()"></i>
+                                 </div>
+                                `;
 
                         }
                     },
@@ -180,7 +201,7 @@
                     {
                         "data": function (data) {
                             return `
-                                <a onclick="addMedication('${data.Id}')" class="btn btn-primary">Add</a>
+                                <a onclick="addMedication('${data.Id}')" class="btn btn-primary" style="color:white">Add</a>
                             `;
                         }
                     }
@@ -233,10 +254,21 @@
                 url: 'https://localhost:44311/api/FormMeds/' + id + '/' + uuidVal + '/' + quantity,
                 type: 'POST',
                 success: function (result) {
-                    console.log("Item added successfully")
+                    console.log("Item added successfully");
+                    $('#medtable').DataTable().ajax.reload();
                 }
             });
         }
-        
+    }
+
+    function deleteMedication(id) {
+        $.ajax({
+            url: 'https://localhost:44311/api/FormMeds/' + id,
+            type: 'DELETE',
+            success: function (result) {
+                console.log("Item deleted successfully");
+                $('#medtable').DataTable().ajax.reload();
+            }
+        });
     }
 </script>
