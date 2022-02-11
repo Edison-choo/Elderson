@@ -18,10 +18,8 @@ namespace Elderson.Models
         [Required(ErrorMessage = "Please enter Medication Description")]
         public string MedDescription { get; set; }
 
-        [Required(ErrorMessage = "Please enter Medication Supplier")]
         public string MedSupplierAbb { get; set; }
 
-        [Required(ErrorMessage = "Please enter Medication Allergy Ingredients")]
         public string MedAllergyIngredients { get; set; }
     }
 }
