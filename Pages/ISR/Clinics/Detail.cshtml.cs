@@ -17,6 +17,8 @@ namespace Elderson.Pages.ISR.Clinics
         public Clinic SelectedUser { get; set; }
         [BindProperty]
         public List<User> relatedDoctors { get; set; }
+        [BindProperty]
+        public List<User> relatedAdmins { get; set; }
         private UserService _svc;
         public DetailModel(UserService service)
         {
@@ -26,6 +28,7 @@ namespace Elderson.Pages.ISR.Clinics
         {
             SelectedClinic = _svc.GetClinicById(id);
             relatedDoctors = _svc.GetDoctorUsersByClinic(SelectedClinic.Name);
+            relatedAdmins = _svc.GetAdminUsersByClinic(SelectedClinic.Name);
         }
     }
 }

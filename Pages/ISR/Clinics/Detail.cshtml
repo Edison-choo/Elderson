@@ -77,6 +77,23 @@
                             <div class="card-body">
                                 <h4 class="card-title">Adminstrators</h4>
                                 <hr />
+                                @{ if (Model.relatedAdmins.Count != 0)
+                                                {
+                                                    foreach (var admin in Model.relatedAdmins)
+                                                    {
+                                    <div class="listUser d-flex justify-content-between">
+                                        <div class="profileData">
+                                            @admin.Fullname
+                                        </div>
+                                        <div class="profileData">
+                                            <a href="/ISR/Users/Profile?id=@admin.Id">View</a>
+                                        </div>
+
+                                    </div> }
+                                                }
+                                                else
+                                                {
+                                    <div class="profileData">No Administrator yet</div> } }
                             </div>
                         </div>
                     </div>
@@ -88,29 +105,53 @@
                         <div id="cardHead"></div>
                         <h4 class="card-title">Clinic Information</h4>
                         <hr />
-                        <div>
-                            <div class="profileLb">Address:</div>
-                            <div class="profileData">
-                                @{ if (Model.SelectedClinic.Address != null)
-                                    {
-                                        @Model.SelectedClinic.Address }
-                                    else
-                                    {
-                                        <text>To be updated</text> } }
+                        <div class="row">
+                            <div class="col-md-6 grid-margin">
+                                <div>
+                                    <div class="profileLb">Address:</div>
+                                    <div class="profileData">
+                                        @{ if (Model.SelectedClinic.Address != null)
+                                            {
+                                @Model.SelectedClinic.Address }
+                            else
+                            {
+                            <text>To be updated</text> } }
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="profileLb">Reason:</div>
+                                    <div class="profileData">
+                                        +@{ if (Model.SelectedClinic.CountryCode != null)
+                                            {
+                                @Model.SelectedClinic.CountryCode } }
+                                        @{ if (Model.SelectedClinic.Phone != null)
+                                            {
+                                @Model.SelectedClinic.Phone }
+                            else
+                            {
+                            <text>To be updated</text> } }
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div>
-                            <div class="profileLb">Reason:</div>
-                            <div class="profileData">
-                                +@{ if (Model.SelectedClinic.CountryCode != null)
-                                    {
-                                        @Model.SelectedClinic.CountryCode } } 
-                                @{ if (Model.SelectedClinic.Phone != null)
-                                    {
-                                        @Model.SelectedClinic.Phone }
+                            <div class="col-md-6 grid-margin">
+                                <div>
+                                    <div class="profileLb">Opening Hours</div>
+                                    <div class="profileData">
+                                        @if (Model.SelectedClinic.OpeningHours != null)
+                                        {@Model.SelectedClinic.OpeningHours}
                                     else
-                                    {
-                                        <text>To be updated</text> } }
+                                    {<text>To be updated</text>}
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="profileLb">Closing Hours</div>
+                                    <div class="profileData">
+                                        @if (Model.SelectedClinic.ClosingHours != null)
+                                        {@Model.SelectedClinic.ClosingHours}
+                                    else
+                                    { <text>To be updated</text>}
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

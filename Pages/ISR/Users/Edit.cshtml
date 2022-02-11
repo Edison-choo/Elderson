@@ -249,41 +249,20 @@ else if (Model.SelectedUser.UserType == "Administrator")
         <div class="col-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Doctor Related Information</h4>
+                    <h4 class="card-title">Administrator Related Information</h4>
                     <hr />
                     <div class="form-group  d-flex">
                         <div style="width:30%;">
-                            <label for="clinic">Clinic</label>
+                            <label>Choose Existing Clinic</label>
 
                         </div>
                         <div style="width:70%;">
-                            <input asp-for="AdminRole.Clinic" value="@Model.AdminRole.Clinic" type="text" class="form-control" id="nric" placeholder="CLINIC">
-                            <span asp-validation-for="AdminRole.Clinic" class="text-danger"></span>
+                            @Html.DropDownList("AdminRole.ClinicId", Model.clinics as List<SelectListItem>, "--Select language--", new { @class = "form-control" })
+                            <span asp-validation-for="AdminRole.ClinicId" class="text-danger"></span>
                         </div>
 
                     </div>
-                    <div class="form-group d-flex">
-                        <div style="width:30%;">
-                            <label for="openingHours">Opening Hours</label>
-
-                        </div>
-                        <div style="width:70%;">
-                            <input asp-for="AdminRole.OpeningHours" type="time" value="@Model.AdminRole.OpeningHours" class="form-control" id="openingHours" placeholder="OPENING HOURS">
-                            <span asp-validation-for="AdminRole.OpeningHours" class="text-danger"></span>
-                        </div>
-
-                    </div>
-                    <div class="form-group d-flex">
-                        <div style="width:30%;">
-                            <label for="closingHours">Closing Hours</label>
-
-                        </div>
-                        <div style="width:70%;">
-                            <input asp-for="AdminRole.ClosingHours" type="time" value="@Model.AdminRole.ClosingHours" class="form-control" id="closingHours" placeholder="CLOSING HOURS">
-                            <span asp-validation-for="AdminRole.ClosingHours" class="text-danger"></span>
-                        </div>
-
-                    </div>
+                    
 
                 </div>
             </div>

@@ -44,6 +44,8 @@ namespace Elderson.Pages.ISR.Clinics
             UpdatedClinic = _svc.GetClinicById(SelectedClinic.Id);
             UpdatedClinic.Name = SelectedClinic.Name;
             UpdatedClinic.Address = SelectedClinic.Address;
+            UpdatedClinic.OpeningHours = SelectedClinic.OpeningHours;
+            UpdatedClinic.ClosingHours = SelectedClinic.ClosingHours;
             UpdatedClinic.CountryCode = SelectedClinic.CountryCode;
             UpdatedClinic.Phone = SelectedClinic.Phone;
             Boolean valid = _svc.UpdateClinic(UpdatedClinic);
