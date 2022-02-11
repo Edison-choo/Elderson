@@ -56,11 +56,11 @@ namespace Elderson.Pages.Shared
                     try
                     {
                         myDoctorName = _svc.GetUserById(doctor).Fullname;
-                        myClinic = _svc.GetClinicByDoctorId(doctor).Name;
+                        myClinic = _svc.GetClinicByDoctorIdWK(doctor).Name;
                     }
-                    catch
+                    catch(Exception e)
                     {
-                        Response.Redirect("Clinic");
+                        throw (e);
                     }
                 }
             }

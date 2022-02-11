@@ -370,6 +370,13 @@ namespace Elderson.Services
             return _context.Clinics;
         }
 
+        public Clinic GetClinicByDoctorIdWK(String id)
+        {
+            string clinicId = _context.Doctors.Where(u => u.UserId == id).FirstOrDefault().ClinicId;
+            Clinic clinic = _context.Clinics.Where(e => e.Id == clinicId).FirstOrDefault();
+            return clinic;
+        }
+
         //Clinic Services
         private bool ClinicExists(string id)
         {

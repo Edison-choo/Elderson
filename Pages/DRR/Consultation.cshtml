@@ -59,6 +59,7 @@
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby=${"dropdownMenuSplitButton" + data.Id}>
                                                 <a class="dropdown-item" href="/DRR/ViewDetails?id=${data.Id}">View</a>
+                                                <a class="dropdown-item" href="/DRR/Call?id=${encodeURIComponent(data.Id)}">Join Call</a>
                                                 </div>
                                             </div>
 <div class="modal fade" id=${"staticBackdrop" + data.Id} data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
