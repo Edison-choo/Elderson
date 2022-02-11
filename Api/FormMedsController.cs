@@ -45,6 +45,26 @@ namespace Elderson.Api
 
         }
 
+        [HttpGet("GetInvMeds", Name = "GetInvMeds")]
+        public ActionResult<List<Medication>> GetInvMeds()
+        {
+            List<Medication> allmedications = new List<Medication>();
+
+            try
+            {
+                allmedications = _invsvc.GetAllMedications();
+                Console.WriteLine(allmedications);
+                var jsonStr = JsonSerializer.Serialize(allmedications.Select(x => new { x.Id, x.MedName, x.MedType, x.MedAllergyIngredients }));
+                return Ok(jsonStr);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("instalmentController.getCarLoan", ex);
+                return BadRequest();
+            }
+
+        }
+
         [HttpPost("{med_id}/{form_id}/{quantity}")]
         public ActionResult<List<FormMeds>> Post(string med_id, string form_id, int quantity)
         {

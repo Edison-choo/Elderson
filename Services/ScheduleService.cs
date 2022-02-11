@@ -38,10 +38,34 @@ namespace Elderson.Services
             return AllSchedule;
         }
 
+        public List<Schedule> GetScheduleByDoctor(string doctor_id)
+        {
+            List<Schedule> AllSchedule = new List<Schedule>();
+            AllSchedule = _context.Schedule.Where(x => x.DoctorId == doctor_id).ToList();
+            return AllSchedule;
+        }
+
         public Schedule GetScheduleById(String id)
         {
             Schedule schedule = _context.Schedule.Where(e => e.Id == id).FirstOrDefault();
             return schedule;
+        }
+        public Booking GetPatientDetails(String id)
+        {
+            Booking booking = _context.Booking.Where(e => e.Id == id).FirstOrDefault();
+            return booking;
+        }
+
+        public User GetUserDetails(String user_id)
+        {
+            User user = _context.Users.Where(e => e.Id == user_id).FirstOrDefault();
+            return user;
+        }
+
+        public Patient GetPatient(String user_id)
+        {
+            Patient patient = _context.Patients.Where(e => e.UserId == user_id).FirstOrDefault();
+            return patient;
         }
 
         public bool DeleteSchedule (Schedule schedule)

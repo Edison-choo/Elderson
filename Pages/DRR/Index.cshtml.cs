@@ -12,13 +12,15 @@ namespace Elderson.Pages.DRR
 {
     public class IndexModel : PageModel
     {
-        
+        [BindProperty]
+        public string doctorid { get; set; }
         public IActionResult OnGet()
         {
             if (HttpContext.Session.GetString("LoginUser") != null)
             {
                 if (HttpContext.Session.GetString("LoginUserType") == "Doctor")
                 {
+                    doctorid = HttpContext.Session.GetString("LoginUser");
                     return Page();
                 }
             }

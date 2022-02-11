@@ -1,0 +1,35 @@
+﻿@page
+@model Elderson.Pages.DRR.ViewDetailsModel
+@{
+    Layout = "Shared/_LayoutDoctor";
+    ViewData["Title"] = "Patient's Details";
+    ViewData["Breadcrumb"] = "Elderson > Consultation > View Details";
+    ViewData["Header"] = "Patient's Details";
+}
+
+<h1>Patient</h1>
+<table style="width:60%" border="1" class="table table-bordered">
+    <tr>
+        <th style="background-color: lightseagreen;">Name</th>
+        <td>@Model.usrdetail.Fullname</td>
+    </tr>
+    <tr>
+        <th style="background-color: lightseagreen;">Birth Date</th>
+        <td>@Model.usrdetail.Birthdate.Date</td>
+    </tr>
+    <tr>
+        <th style="background-color: lightseagreen;">Phone</th>
+        <td>@Model.usrdetail.Phone</td>
+    </tr>
+    <tr>
+        <th style="background-color: lightseagreen;">Emergency Contact Name</th>
+        <td>@Model.patdetail.EmergencyName</td>
+    </tr>
+    <tr>
+        <th width="20%" style="background-color: lightseagreen;">Emergency Contact No.</th>
+        <td>@Model.patdetail.EmergencyNum</td>
+    </tr>
+</table>
+
+<a href="/DRR/Consultation" class="btn btn-danger" style="margin-top: 20%;">Back</a>
+

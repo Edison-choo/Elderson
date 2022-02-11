@@ -80,6 +80,7 @@
                             <th>Name</th>
                             <th style="width:20%;">Quantity</th>
                             <th style="width:175px;">Medicine Type</th>
+                            <th>Allergy</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -168,7 +169,7 @@
     $(document).ready(function () {
         console.log("Loading webpage...")
         $.ajax({
-            url: 'https://localhost:44311/api/Inventory',
+            url: 'https://localhost:44311/api/FormMeds/GetInvMeds',
             type: 'GET',
             success: function (result) {
                 console.log("Items retrieve successfully")
@@ -179,7 +180,7 @@
         $('#formtable').DataTable(
             {
                 "ajax": {
-                    'url': 'https://localhost:44311/api/Inventory',
+                    'url': 'https://localhost:44311/api/FormMeds/GetInvMeds',
                     'type': 'GET',
                     "dataSrc": function (json) {
                         return JSON.parse(JSON.stringify(json));
@@ -198,6 +199,7 @@
                         }
                     },
                     { "data": "MedType" },
+                    { "data": "MedAllergyIngredients" },
                     {
                         "data": function (data) {
                             return `
