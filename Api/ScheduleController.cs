@@ -16,23 +16,47 @@ namespace Elderson.Api
     {
         private readonly EldersonContext _context;
         private ScheduleService _svc;
+        private BookingService _bksvc;
+        private UserService _usrsvc;
 
-        public ScheduleController(EldersonContext context, ScheduleService service)
+        public ScheduleController(EldersonContext context, ScheduleService service, BookingService bookservice, UserService userservice)
         {
             _context = context;
             _svc = service;
+            _bksvc = bookservice;
+            _usrsvc = userservice;
         }
 
         // GET: api/<ScheduleController>
-        [HttpGet]
-        public ActionResult<List<Schedule>> Get()
+        [HttpGet("{doctor_id}")]
+        public ActionResult<List<Schedule>> Get(string doctor_id)
         {
             List<Schedule> allschedule = new List<Schedule>();
 
             try
             {
-                allschedule = _svc.GetAllSchedule();
+                allschedule = _svc.GetScheduleByDoctor(doctor_id);
                 var jsonStr = JsonSerializer.Serialize(allschedule.Select(x => new { x.Id, x.DoctorId, x.StartDateTime }));
+                return Ok(jsonStr);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("instalmentController.getCarLoan", ex);
+                return BadRequest();
+            }
+
+        }
+
+        // GET: api/<ScheduleController>/GetAllBookings/doctor_id
+        [HttpGet("GetAllBookings/{doctor_id}", Name = "GetAllBookings")]
+        public ActionResult<List<Booking>> GetAllBookings(string doctor_id)
+        {
+            List<Booking> allbookings = new List<Booking>();
+
+            try
+            {
+                allbookings = _bksvc.GetBookingOfDoctor(doctor_id);
+                var jsonStr = JsonSerializer.Serialize(allbookings.Select(x => new { x.Id, x.Clinic, x.BookDateTime, x.Symptoms, x.PatientID, x.DoctorID, x.CallUUID, x.FormId, PatientName = _usrsvc.GetUserById(x.PatientID).Fullname }));
                 return Ok(jsonStr);
             }
             catch (Exception ex)

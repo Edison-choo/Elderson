@@ -26,7 +26,7 @@
     $(document).ready(function () {
         console.log("Loading webpage...")
         $.ajax({
-            url: 'https://localhost:44311/api/User',
+            url: 'https://localhost:44311/api/Schedule/GetAllBookings/' + '@Model.doctorid',
             type: 'GET',
             success: function (result) {
                 console.log("Items retrieve successfully")
@@ -34,29 +34,31 @@
 
             }
         });
-        $('#userstable').DataTable(
+        $('#constable').DataTable(
             {
                 "ajax": {
-                    'url': 'https://localhost:44311/api/User',
+                    'url': 'https://localhost:44311/api/Schedule/GetAllBookings/' + '@Model.doctorid',
                     'type': 'GET',
                     "dataSrc": function (json) {
                         return JSON.parse(JSON.stringify(json));
                     }
                 },
                 "columns": [
-                    { "data": "Fullname" },
-                    { "data": "UserType" },
+                    { "data": "PatientName" },
+                    { "data": "BookDateTime" },
+                    { "data": "BookDateTime" },
                     {
                         "data": function (data, type, full) {
+                            var formDD = '<a class="dropdown-item" href="/ISR/Users/Form?id=${data.Id}">Form</a>';
+                            var viewDD = '<a class="dropdown-item" href="/ISR/Users/ViewDetails?id=${data.Id}">View</a>'
+                            var chatDD = '<a class="dropdown-item" href="/ISR/Users/JoinChat?id=${data.Id}">Join Chat</a>'
+
                             return `<div class="btn-group">
                                             <button type="button" class="btn dropdown-toggle dropdown-toggle-split" id=${"dropdownMenuSplitButton" + data.Id} data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <i style="font-size:1.5em;" class="mdi mdi-dots-vertical"></i>
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby=${"dropdownMenuSplitButton" + data.Id}>
-                                                <a class="dropdown-item" href="/ISR/Users/Form?id=${data.Id}">Form</a>
-                                                <a class="dropdown-item" href="/ISR/Users/ViewDetails?id=${data.Id}">View</a>
-                                                <a class="dropdown-item" href="/ISR/Users/JoinCall?id=${data.Id}">Join Call</a>
-                                                <a class="dropdown-item" data-toggle="modal" data-targe=${"#staticBackdrop" + data.Id}>Delete</a>
+                                                <a class="dropdown-item" href="/DRR/ViewDetails?id=${data.Id}">View</a>
                                                 </div>
                                             </div>
 <div class="modal fade" id=${"staticBackdrop" + data.Id} data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -104,9 +106,10 @@
         </div>
         <div class="table-responsive">
 
-            <table class="table table-hover" id="userstable" style="width:100%">
+            <table class="table table-hover" id="constable" style="width:100%">
                 <thead>
                     <tr>
+                        <th>Patient</th>
                         <th>Day</th>
                         <th style="width:20%;">Time</th>
                         <th style="width:175px;">ACTION</th>
