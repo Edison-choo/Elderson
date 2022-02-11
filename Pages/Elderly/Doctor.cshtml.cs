@@ -31,7 +31,7 @@ namespace Elderson.Pages.Elderly
             if (clinic != null)
             {
                 myDetailList = new List<DoctorDetail>();
-                myClinic = "HealthWerkz Clinic";
+                myClinic = clinic;
                 myDoctorList = _svc.GetDoctorsByClinic(myClinic);
                 foreach (Doctor doc in myDoctorList)
                 {
@@ -41,6 +41,7 @@ namespace Elderson.Pages.Elderly
                     dd.name = user.Fullname;
                     dd.experience = doc.WorkExp;
                     dd.language = doc.Language;
+                    dd.photo = doc.Photo;
                     myDetailList.Add(dd);
                 }
             }
@@ -56,5 +57,6 @@ namespace Elderson.Pages.Elderly
         public string name { get; set; }
         public string experience { get; set; }
         public string language { get; set; }
+        public string photo { get; set; }
     }
 }

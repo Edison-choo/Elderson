@@ -92,7 +92,7 @@
                     <td>3</td>
                     <td>+${obj.countryCode} ${obj.phone}</td>
                     <td>7:00 AM - 1:00PM</td>
-                    <td style="text-align: right;"><a asp-page="/Elderly/Doctor" asp-route-clinic="${obj.name}"  style="background-color: #6C63FF;" class="btn btn-primary">Select</a></td>`)
+                    <td style="text-align: right;"><a href="/Elderly/Doctor?clinic=${encodeURIComponent(obj.name)}" style="background-color: #6C63FF;" class="btn btn-primary">Select</a></td>`)
             $("#clinicBody").append("</tr>")
         }
     }
