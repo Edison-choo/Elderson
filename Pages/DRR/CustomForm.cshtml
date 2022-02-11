@@ -59,15 +59,14 @@
 <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
 
-<script>
-   
-</script>
-
 <div class="customForm">
     <form method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
         <input type="hidden" asp-for="@Model.uuid" id="uuidVal" />
         <p><h3>Template Name:</h3></p>
         <input asp-for="newForm.TemplateName" class="customForm-input" />
+        <br />
+        <div class="validate"></div>
         <br />
         <div class="addMeds" id="addMeds">
             <p style="margin-top:1%;">
@@ -105,13 +104,15 @@
             <button id="submitBtn" class="btn btn-primary">Submit</button>
         </div>
     </form>
-
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
 
 
 </div>
 
 <script>
-    var allMed = document.getElementById("allMeds");
+   var allMed = document.getElementById("allMeds");
     allMed.style.display = "none";
     document.getElementById("minus").style.display = "none";
 

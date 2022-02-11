@@ -6,10 +6,25 @@
     ViewData["Breadcrumb"] = "Elderson > My Schedule > Create Schedule";
     ViewData["Header"] = "Schedule For Booking";
 }
+
+@{       if (Model.check)
+            {
+                <script>
+                    alert("This timing have already been scheduled for booking.");
+                </script>
+            }
+}
+
+<style>
+    .montharrow:hover{
+        cursor:not-allowed;
+    }
+</style>
+
 <form method="post">
     <div class="row">
         <div class="col-md-3 form-group mt-3 mt-md-0">
-            <input class="form-control" id="dateSelect" asp-for="datetime" disabled>
+            <input class="form-control" id="dateSelect" value="" asp-for="datetime" disabled>
             <input type="hidden" asp-for="Date" id="Date" />
             <input type="hidden" asp-for="Month" id="Month" />
             <input type="hidden" asp-for="Year" id="Year" />
@@ -21,9 +36,9 @@
         <table id="calendar" class="table table-bordered">
             <thead class="bordered">
                 <tr>
-                    <th class="calClick" id="prevMonth"><</th>
+                    <th class="montharrow"><</th>
                     <th colspan="5" id="month" style="text-align:center;"></th>
-                    <th class="calClick" id="nextMonth">></th>
+                    <th class="montharrow">></th>
                 </tr>
                 <tr id="week">
                     <th>Sun</th>
@@ -119,40 +134,20 @@
 <script>
     $("#continueBtn").css("display", "none")
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    let dateStr = `{
-	                "13": "a",
-	                "14": "a",
-	                "15": "o",
-	                "16": "o",
-	                "17": "a",
-	                "18": "a"
-                    }`
-    let dates = [
-        {
-            "date": "13",
-            "avail":"a"
-        },
-        {
-            "date": "14",
-            "avail": "a"
-        },
-        {
-            "date": "15",
-            "avail": "a"
-        },
-        {
-            "date": "16",
-            "avail": "a"
-        },
-        {
-            "date": "17",
-            "avail": "a"
-        },
-        {
-            "date": "18",
-            "avail": "a"
-        }
-    ]
+
+    let dates = []
+
+    const td = new Date();
+    let tddate = td.getDate();
+    let tdmonth = td.getMonth();
+    let tdyear = td.getFullYear();
+    var ld = new Date(tdyear, tdmonth + 1, 0);
+    for (i = tddate; i <= ld.getDate(); i++) {
+        dates.push({
+            "date": String(i),
+            "avail": "a"})
+    }
+
     let times = [
         {
             "time": "",

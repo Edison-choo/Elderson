@@ -21,6 +21,11 @@ namespace Elderson.Services
             return _context.Schedule.Any(e => e.Id == id);
         }
 
+        public bool ScheduleExistByDateTime(string doctor_id, DateTime datetime)
+        {
+            return _context.Schedule.Where(x => x.StartDateTime == datetime).Any(e => e.DoctorId == doctor_id);
+        }
+
         public bool AddSchedule(Schedule schedule)
         {
             if (ScheduleExist(schedule.Id))

@@ -42,9 +42,12 @@ namespace Elderson.Pages.DRR
 
         public IActionResult OnPost()
         {
-            newForm.Id = uuid;
-            newForm.DoctorId = HttpContext.Session.GetString("LoginUser");
-            _svc.AddForm(newForm);
+            if (ModelState.IsValid)
+            {
+                newForm.Id = uuid;
+                newForm.DoctorId = HttpContext.Session.GetString("LoginUser");
+                _svc.AddForm(newForm);
+            }
 
             return RedirectToPage("Form");
         }

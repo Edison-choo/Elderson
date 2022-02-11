@@ -26,9 +26,12 @@ namespace Elderson.Pages.DRR
         public int hour { get; set; }
         [BindProperty]
         public int min { get; set; }
+        [BindProperty]
+        public bool check { get; set; }
         public DateTime StartDateTime { get; set; }
 
         public Schedule schedule { get; set; }
+        
 
         private ScheduleService _svc;
 
@@ -44,6 +47,7 @@ namespace Elderson.Pages.DRR
             {
                 if (HttpContext.Session.GetString("LoginUserType") == "Doctor")
                 {
+                    check = false;
                     return Page();
                 }
             }
@@ -60,6 +64,11 @@ namespace Elderson.Pages.DRR
                 newschedule.Id = Guid.NewGuid().ToString();
                 newschedule.DoctorId = HttpContext.Session.GetString("LoginUser");
                 StartDateTime = new DateTime(Year, Month, Date, hour, min, 00);
+                if (_svc.ScheduleExistByDateTime(HttpContext.Session.GetString("LoginUser"), StartDateTime))
+                {
+                    check = true;
+                    return Page();
+                }
                 newschedule.StartDateTime = StartDateTime;
                 newschedule.Availability = "A";
                 valid = _svc.AddSchedule(newschedule);

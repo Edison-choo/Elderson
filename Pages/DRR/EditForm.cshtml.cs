@@ -14,12 +14,14 @@ namespace Elderson.Pages.DRR
     public class EditFormModel : PageModel
     {
         private FormService _svc;
+        private InventoryService _invsvc;
         private readonly ILogger<EditFormModel> _logger;
 
-        public EditFormModel(ILogger<EditFormModel> logger, FormService service)
+        public EditFormModel(ILogger<EditFormModel> logger, FormService service, InventoryService invservice)
         {
             _logger = logger;
             _svc = service;
+            _invsvc = invservice;
         }
         [BindProperty]
         public Form editForm { get; set; }
