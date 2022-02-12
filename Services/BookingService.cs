@@ -89,5 +89,9 @@ namespace Elderson.Services
         {
             return _context.Booking.FirstOrDefault(b => b.Id == id).CallUUID;
         }
+        public bool isInCall(string id, string userID)
+        {
+            return _context.Booking.Any(b => (b.Id == id && b.PatientID == userID) || (b.Id == id && b.DoctorID == userID));
+        }
     }
 }

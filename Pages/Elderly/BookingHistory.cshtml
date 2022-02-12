@@ -2,3 +2,33 @@
 @model Elderson.Pages.Elderly.BookingHistoryModel
 @{
 }
+<nav aria-label="breadcrumb" style="margin:35px;">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Elderson</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Booking History</li>
+    </ol>
+    <h3>Booking History</h3>
+</nav>
+<div class="container">
+    <table class="table">
+        <thead class="table-light">
+            <tr>
+                <th style="font-weight:bold; background-color:#F4F3FF;">Clinic</th>
+                <th style="font-weight:bold; background-color:#F4F3FF;">Doctor</th>
+                <th style="font-weight:bold; background-color:#F4F3FF;">Booking Date and Time</th>
+            </tr>
+        </thead>
+        <tbody id="clinicBody">
+            @foreach (var item in Model.bookingHistoryList)
+            {
+            <tr>
+                <td>
+                    @item.clinicName
+                </td> 
+                <td>@item.doctorName</td>
+                <td>@item.BookingDateTime.ToString("dd MMMM yyyy HH:mm tt")</td>
+            </tr>
+        }
+            </tbody>
+        </table>
+</div>

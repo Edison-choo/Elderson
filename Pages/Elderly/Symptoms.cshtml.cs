@@ -51,12 +51,12 @@ namespace Elderson.Pages
                 }
                 else
                 {
-                    Response.Redirect("DateAndTime");
+                    Redirect("DateAndTime");
                 }
             }
             else
             {
-                Redirect("~/Login");
+                Redirect("~/");
             }
             
         }

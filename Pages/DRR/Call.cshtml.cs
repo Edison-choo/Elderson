@@ -29,25 +29,25 @@ namespace Elderson.Pages.DRR
         }
         public void OnGet(string id)
         {
-            if (HttpContext.Session.GetString("LoginUser") != null)
+            if (_svc.isInCall(id, HttpContext.Session.GetString("LoginUser")))
             {
                 myUserID = HttpContext.Session.GetString("LoginUser");
+                myCallID = _svc.GetBookingById(id).CallUUID;
+                myPatientID = _svc.GetBookingById(id).PatientID;
+                myPatientName = _uSvc.GetNameById(myPatientID);
+                HttpContext.Session.SetString("CallID", myCallID);
             }
             else
             {
-                Redirect("~/Login");
+                Redirect("~/DRR");
             }
-            myCallID = _svc.GetBookingById(id).CallUUID;
-            myPatientID = _svc.GetBookingById(id).PatientID;
-            myPatientName = _uSvc.GetNameById(myPatientID);
-            HttpContext.Session.SetString("CallID", myCallID);
         }
         public IActionResult OnPost()
         {
             Booking myBooking = _svc.GetBookingByCallId(HttpContext.Session.GetString("CallID"));
             myBooking.Status = "c";
             _svc.UpdateBooking(myBooking);
-            return RedirectToPage("~/DRR/");
+            return Redirect("~/DRR");
         }
     }
 }

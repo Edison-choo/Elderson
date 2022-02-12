@@ -4,7 +4,7 @@
     Layout = "Shared/_Layout";
     ViewData["Title"] = "FAQ";
 }
-
+<script>document.getElementById("navItem4").classList.add("using")</script>
 <style>
     .accordion {
         background-color: #b0c4de;
@@ -74,7 +74,13 @@
         padding-left: 60px;
     }
 </style>
-
+<nav aria-label="breadcrumb" style="margin:35px;">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Elderson</a></li>
+        <li class="breadcrumb-item active" aria-current="page">FAQ</li>
+    </ol>
+    <h3>FAQ</h3>
+</nav>
 <div class="container-accordian">
     <button class="accordion">How do i book an appointment?</button>
     <div class="panel">

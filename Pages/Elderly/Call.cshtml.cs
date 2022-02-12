@@ -18,6 +18,8 @@ namespace Elderson.Pages.Elderly
         [BindProperty]
         public string myDoctorID { get; set; }
         [BindProperty]
+        public string myDoctorPhoto { get; set; }
+        [BindProperty]
         public string myDoctorName { get; set; }
         private BookingService _svc;
         private UserService _uSvc;
@@ -28,22 +30,24 @@ namespace Elderson.Pages.Elderly
         }
         public void OnGet(string id)
         {
-            if (HttpContext.Session.GetString("LoginUser") != null)
+            if (_svc.isInCall(id, HttpContext.Session.GetString("LoginUser")))
             {
                 myUserID = HttpContext.Session.GetString("LoginUser");
+                myCallID = _svc.GetBookingById(id).CallUUID;
+                myDoctorID = _svc.GetBookingById(id).DoctorID;
+                myDoctorName = _uSvc.GetNameById(myDoctorID);
+                myDoctorPhoto = _uSvc.GetDoctorById(myDoctorID).Photo;
+                HttpContext.Session.SetString("CallID", myCallID);
             }
             else
             {
-                Redirect("~/Login");
+                Redirect("~/");
             }
-            myCallID = _svc.GetBookingById(id).CallUUID;
-            myDoctorID = _svc.GetBookingById(id).DoctorID;
-            myDoctorName = _uSvc.GetNameById(myDoctorID);
-            HttpContext.Session.SetString("CallID", myCallID);
+            
         }
         public IActionResult OnPost()
         {
-            return RedirectToPage("~/");
+            return Redirect("~/");
         }
     }
 }
