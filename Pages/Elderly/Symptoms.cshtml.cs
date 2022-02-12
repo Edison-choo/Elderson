@@ -49,15 +49,9 @@ namespace Elderson.Pages
                     myTime = HttpContext.Session.GetString("myTime");
                     myDateTime = HttpContext.Session.GetString("myDateTime");
                 }
-                else
-                {
-                    Redirect("DateAndTime");
-                }
+                Redirect("DateAndTime");
             }
-            else
-            {
-                Redirect("~/");
-            }
+            Redirect("~/");
             
         }
         public IActionResult OnPost()
