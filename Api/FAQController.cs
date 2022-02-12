@@ -40,5 +40,21 @@ namespace Elderson.Api
             }
 
         }
+
+        // DELETE api/<controller>/5
+        [HttpDelete("{id}")]
+        public ActionResult Delete(string Id)
+        {
+            try
+            {
+                var deleteFAQ = _svc.GetQueryById(Id);
+                _svc.DeleteQuery(deleteFAQ);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("FAQController.DeleteQuery", ex);
+            }
+            return Ok();
+        }
     }
 }

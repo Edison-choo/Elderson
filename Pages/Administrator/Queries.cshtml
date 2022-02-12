@@ -51,9 +51,10 @@
                     { "data": "Question" },
                     {
                         "data": function (data, type, full) {
-                            return `<div class="btn-group">
+                            return `
                                             <button type="button" style="height: 35px;" class="btn btn-primary btn-l text-white mb-0 me-0" onclick="return message('${data.UserId}')">Reply</a></button>
-                                            </div>`;
+                                            <button type="button" style="height: 35px;" class="btn btn-danger" onclick="deleteQuery('${data.Id}')">Delete</button>
+                                            `;
                             }
                         }
                     ],
@@ -107,6 +108,18 @@
                 window.location.href = "/Organization/Chat";
 
 
+            }
+        });
+    }
+        function deleteQuery(patientId) {
+        console.log("works")
+        $.ajax({
+            url: 'https://localhost:44311/api/FAQ/' + patientId,
+            type: 'DELETE',
+            success: function (result) {
+                console.log("Item delete successfully")
+                $('#userstable').DataTable().ajax.reload();
+                $('.fade').hide();
             }
         });
     }
