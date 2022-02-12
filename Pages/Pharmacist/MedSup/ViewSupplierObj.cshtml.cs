@@ -14,7 +14,7 @@ namespace Elderson.Pages.Pharmacist.MedSup
         [BindProperty]
         public Supplier SelectedSupplier { get; set; }
 
-        public ArrayList<string> medAbbreviations { get; set; }
+        public List<string> medAbbreviations { get; set; }
         public List<Medication> Medications { get; set; }
         private SupplierService _svc;
         private InventoryService _med_svc;
