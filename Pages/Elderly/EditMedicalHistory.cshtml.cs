@@ -10,8 +10,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Elderson.Pages.Elderly
 {
-    public class AddMedicalHistoryModel : PageModel
+    public class EditMedicalHistoryModel : PageModel
     {
+        [BindProperty]
+        public MedicalHistory medicalHistory { get; set; }
+        private string m_id { get; set; }
         [BindProperty]
         public string conditionName { get; set; }
         [BindProperty]
@@ -21,34 +24,34 @@ namespace Elderson.Pages.Elderly
         [BindProperty]
         public DateTime EndDate { get; set; }
         private MedicalHistoryService _svc;
-        public AddMedicalHistoryModel(MedicalHistoryService service)
+        public EditMedicalHistoryModel(MedicalHistoryService service)
         {
             _svc = service;
         }
-        public IActionResult OnGet()
+        public IActionResult OnGet(string id)
         {
             if (HttpContext.Session.GetString("LoginUser") != null)
             {
+                m_id = id;
+                medicalHistory = _svc.GetMedicalHistoryById(id);
                 return Page();
             }
             else
             {
                 return Redirect("~/");
             }
-            
+
         }
         public IActionResult OnPost()
         {
             if (ModelState.IsValid)
             {
-                MedicalHistory newMedicalHistory = new MedicalHistory();
-                newMedicalHistory.Id = Guid.NewGuid().ToString();
-                newMedicalHistory.Name = conditionName;
-                newMedicalHistory.Description = conditionDescription;
-                newMedicalHistory.StartDate = StartDate;
-                newMedicalHistory.EndDate = EndDate;
-                newMedicalHistory.PatientID = HttpContext.Session.GetString("LoginUser");
-                _svc.AddMedicalHistory(newMedicalHistory);
+                MedicalHistory newmedicalHistory = _svc.GetMedicalHistoryById(m_id);
+                newmedicalHistory.Name = conditionName;
+                newmedicalHistory.Description = conditionDescription;
+                newmedicalHistory.StartDate = StartDate;
+                newmedicalHistory.EndDate = EndDate;
+                _svc.UpdateMedicalHistory(newmedicalHistory);
                 return Redirect("/Elderly/MedicalHistory");
             }
             return Page();

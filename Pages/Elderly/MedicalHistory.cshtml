@@ -23,8 +23,8 @@
                     <h5 class="card-title">@item.Name</h5>
                     <h6 class="card-subtitle mb-2 text-muted">@item.StartDate.ToString() - @item.StartDate.ToString()</h6>
                     <p class="card-text">@item.Description</p>
-                    <a asp-page="" class="btn btn-danger card-link">Cancel</a>
-                    <a asp-page="" class="btn btn-primary card-link">Button</a>
+                    <a asp-page="/Elderly/DeleteMedicalHistory" asp-route-id="@item.Id" class="btn btn-danger card-link">Delete</a>
+                    <a asp-page="/Elderly/EditMedicalHistory" asp-route-id="@item.Id" class="btn btn-primary card-link">Edit</a>
                 </div>
             </div>
         }

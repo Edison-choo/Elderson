@@ -19,13 +19,17 @@ namespace Elderson.Pages.Elderly
         {
             _svc = service;
         }
-        public void OnGet()
+        public IActionResult OnGet()
         {
             if (HttpContext.Session.GetString("LoginUser") != null)
             {
                 myMedicalHistory = _svc.GetMedicalHistoryOfUser(HttpContext.Session.GetString("LoginUser"));
+                return Page();
             }
-            Redirect("~/");
+            else
+            {
+                return Redirect("~/");
+            }
         }
     }
 }
