@@ -27,13 +27,21 @@ namespace Elderson.Pages.Pharmacist.MedSup
         {
             SelectedSupplier = _svc.GetSupplierbyId(id);
             Medications = _med_svc.GetAllMedications();
+            medAbbreviations = new List<string>();
             foreach (var m in Medications)
             {
-                if (SelectedSupplier.Id.Equals(m.MedSupplierID))
+                if (SelectedSupplier.Id.Equals(m.MedSupplierID) && m.MedAbbreviation != null)
                 {
                     
+                    medAbbreviations.Add(String.Format("<a href=\"/Pharmacist/Inventory/ViewInventoryObj?id={0}\">{1}</a>", m.Id, m.MedAbbreviation));
+                    
+                }
+                else
+                {
+                    medAbbreviations = null;
                 }
             }
+            
         }
     }
 }

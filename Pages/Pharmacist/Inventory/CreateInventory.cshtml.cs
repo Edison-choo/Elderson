@@ -53,7 +53,7 @@ namespace Elderson.Pages.Pharmacist.Inventory
                 newInventory.Id = guid;
                 newInventory.MedicationId = guid;
                 newMedication.Id = guid;
-                newMedication.MedSupplierID = _supplier_svc.GetSupplierbyAbbreviation(newMedication.MedAbbreviation).SupplierAbbreviation;
+                newMedication.MedSupplierID = _supplier_svc.GetSupplierbyAbbreviation(newMedication.MedSupplierAbb).Id;
 
                 if ( _svc.AddMedicationToInventory(newInventory, newMedication))
                 {
