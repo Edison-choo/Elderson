@@ -5,7 +5,39 @@
 <nav aria-label="breadcrumb" style="margin:35px;">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Elderson</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Booking History</li>
+        <li class="breadcrumb-item"><a href="#">Medical History</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Add Medical History</li>
     </ol>
     <h3>Add Medical History</h3>
 </nav>
+<div class="container">
+    <form>
+        <!-- Name input -->
+        <div class="form-outline mb-4">
+            <input type="text" asp-for="@Model.conditionName" id="conditionName" class="form-control" />
+            <label class="form-label" for="conditionName">Name</label>
+        </div>
+
+        <!-- Message input -->
+        <div class="form-outline mb-4">
+            <textarea class="form-control" asp-for="@Model.conditionDescription" id="conditionDescription" rows="4"></textarea>
+            <label class="form-label" for="conditionDescription">Enter a brief description of your condidtion</label>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-outline mb-4">
+                    <input type="date" asp-for="@Model.StartDate" id="startDate" class="form-control" />
+                    <label class="form-label" for="conditionName">Start Date of condition</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-outline mb-4">
+                    <input type="date" asp-for="@Model.EndDate" id="endDate" class="form-control" />
+                    <label class="form-label" for="conditionName">End Date of condition</label>
+                </div>
+            </div>
+        </div>
+        <!-- Submit button -->
+        <button type="submit" class="btn btn-primary btn-block mb-4">Send</button>
+    </form>
+</div>

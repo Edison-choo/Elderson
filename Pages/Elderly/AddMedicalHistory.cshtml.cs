@@ -29,21 +29,22 @@ namespace Elderson.Pages.Elderly
         }
         public void OnGet()
         {
-            if (HttpContext.Session.GetString("LoginUser") != null)
+            if (HttpContext.Session.GetString("LoginUser") == null)
             {
-                myMedicalHistory = _svc.GetMedicalHistoryById(HttpContext.Session.GetString("LoginUser"));
+                Redirect("~/");
             }
-            Redirect("~/");
         }
         public IActionResult OnPost()
         {
             if (ModelState.IsValid)
             {
                 MedicalHistory newMedicalHistory = new MedicalHistory();
+                newMedicalHistory.Id = Guid.NewGuid().ToString();
                 newMedicalHistory.Name = conditionName;
                 newMedicalHistory.Description = conditionDescription;
                 newMedicalHistory.StartDate = StartDate;
                 newMedicalHistory.EndDate = EndDate;
+                newMedicalHistory.PatientID = HttpContext.Session.GetString("LoginUser");
                 _svc.AddMedicalHistory(newMedicalHistory);
             }
             return Redirect("/MedicalHistory");
