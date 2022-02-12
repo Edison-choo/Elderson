@@ -1,4 +1,164 @@
 ﻿@page
 @model Elderson.Pages.Pharmacist.MedSup.ViewSupplierObjModel
 @{
+    Layout = "Shared/_LayoutPharmacist";
+    ViewData["Title"] = "View Inventory Listing Page";
+    ViewData["Header"] = "VIEW MEDICATION";
+    ViewData["Breadcrumb"] = "Inventory > View";
+
 }
+
+<style>
+    a {
+        color: white;
+        text-decoration: none;
+    }
+</style>
+
+<div class="row">
+    <form class="forms-sample" method="post" asp-action="">
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div class="d-flex">
+                                <div style="margin-left:20px; margin-top:20px;">
+                                    <h3>@Model.SelectedSupplier.SupplierName</h3>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="btn-group" style="margin-top:30px;">
+                                    <button type="button" class="btn btn-primary me-2" onClick="history.go(-1); return false;">Back</button>
+                                    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id="dropdownMenuSplitButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        ACTION
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuSplitButton1">
+                                        <a class="dropdown-item" asp-page="EditInventory" asp-route-id="@Model.SelectedSupplier.Id">Edit</a>
+                                        <a class="dropdown-item" data-toggle="modal" data-target=@("#staticBackdrop" + Model.SelectedSupplier.Id)>Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Supplier Information</h4>
+                        <hr />
+                        <div>
+                            <p class="form-group d-flex">
+                                ID:
+                            </p>
+                            <div class="profileData">
+                                @Model.SelectedSupplier.Id
+                            </div>
+                        </div>
+                        <div>
+                            <p class="form-group d-flex">
+                                Abbreviation:
+                            </p>
+                            <div class="profileData">
+                                @Model.SelectedSupplier.SupplierAbbreviation
+                            </div>
+                        </div>
+                        <div>
+                            <p class="form-group d-flex">
+                                Phone:
+                            </p>
+                            <div class="profileData">
+                                @Model.SelectedSupplier.SupplierPhone
+                            </div>
+                        </div>
+                        <div>
+                            <p class="form-group d-flex">
+                                Email:
+                            </p>
+                            <div class="profileData">
+                                @Model.SelectedSupplier.SupplierEmail
+
+                            </div>
+                        </div>
+                        <div>
+                            <p class="form-group d-flex">
+                                Website:
+                            </p>
+                            <div class="profileData">
+                                $@Model.SelectedSupplier.SuppplierWebsite
+                            </div>
+                        </div>
+                        <div>
+                            <div class="form-group d-flex">
+                                Address:
+                            </div>
+                            <div class="profileData">
+                                @Model.SelectedSupplier.SupplierAddress
+                            </div>
+                        </div>
+                        <div>
+                            <div class="form-group d-flex">
+                                Supplied Medications:
+                            </div>
+                            <div class="profileData">
+                                @if (Model.SelectedSupplier.SuppliedMeds == null)
+                                {
+                                    @:NA (Not Applicable)
+                                }
+                                else
+                                {
+                                    @Model.SelectedSupplier.SuppliedMeds
+                                }
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal fade" id=@("staticBackdrop"+@Model.SelectedInventoryItem.Id) data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="text-center">
+                    <h4>
+                        Are you sure you want to delete this incident?
+
+                    </h4>
+                </div>
+                <div class="d-flex justify-content-between" style="margin-top:30px;">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" onclick=@("deleteMedication("+"'"+@Model.SelectedInventoryItem.Id+"'"+")") class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function deleteSupplier(Id) {
+        $.ajax({
+            url: 'https://localhost:44311/api/Supplier/' + Id,
+            type: 'DELETE',
+            success: function (result) {
+
+                console.log(result);
+                window.location.href = "/Pharmacist/Supplier/SupplierList";
+
+
+            }
+        });
+    }
+</script>

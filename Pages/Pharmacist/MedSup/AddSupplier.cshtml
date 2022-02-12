@@ -6,3 +6,95 @@
     ViewData["Header"] = "CREATE MEDICAL SUPPLIER";
     ViewData["Breadcrumb"] = "Medical Suppiers > Create";
 }
+
+
+<div class="row">
+    <form class="forms-sample" method="post" asp-action="">
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Incident Information</h4>
+                        <hr />
+                        <div class="form-group d-flex">
+                            <div style="width:20%;">
+                                <label for="name">Supplier Name:</label>
+
+                            </div>
+                            <div style="width:40%;">
+                                <input asp-for="supplier.SupplierName" type="text" class="form-control" id="name">
+                                <span asp-validation-for="supplier.SupplierName" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="form-group d-flex">
+                            <div style="width:20%;">
+                                <label for="abbr">Supplier Abbreviation:</label>
+
+                            </div>
+                            <div style="width:10%;">
+                                <input asp-for="supplier.SupplierAbbreviation" type="text" class="form-control" id="abbr">
+                                <span asp-validation-for="supplier.SupplierAbbreviation" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="form-group d-flex">
+                            <div style="width:20%;">
+                                <label for="price">Supplier Phone:</label>
+
+                            </div>
+                            <div style="width:20%;">
+                                <input asp-for="supplier.SupplierPhone" type="number" class="form-control" id="price">
+                                <span asp-validation-for="supplier.SupplierPhone" class="text-danger"></span>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group d-flex">
+                            <div style="width:20%;">
+                                <label for="minAmt">Supplier Email:</label>
+
+                            </div>
+                            <div style="width:10%;">
+                                <input asp-for="supplier.SupplierEmail" type="text" class="form-control" id="minAmt">
+                                <span asp-validation-for="supplier.SupplierEmail" class="text-danger"></span>
+                            </div>
+
+                        </div><div class="form-group d-flex">
+                            <div style="width:20%;">
+                                <label for="minAmt">Supplier Address:</label>
+
+                            </div>
+                            <div style="width:10%;">
+                                <input asp-for="supplier.SuppplierWebsite" type="text" class="form-control" id="minAmt">
+                                <span asp-validation-for="supplier.SuppplierWebsite" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="form-group d-flex">
+                            <div style="width:20%;">
+                                <label for="minAmt">Supplier Website:</label>
+
+                            </div>
+                            <div style="width:10%;">
+                                <input asp-for="supplier.SupplierAddress" type="text" class="form-control" id="minAmt">
+                                <span asp-validation-for="supplier.SupplierAddress" class="text-danger"></span>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <button type="button" class="btn btn-primary me-2" onClick="history.go(-1); return false;">Cancel</button>
+
+                <button type="submit" class="btn btn-primary me-2">Submit</button>
+
+            </div>
+
+        </div>
+    </form>
+</div>

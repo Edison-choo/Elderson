@@ -48,14 +48,14 @@ namespace Elderson.Services
             return medication;
         }
 
-        private bool MedicationExists(string id)
+        private bool MedicationExists(string MedName)
         {
-            return _context.Inventory.Any(e => e.Id == id);
+            return _context.Medications.Any(e => e.MedName == MedName);
         }
 
-        public bool AddMedicationToInventory(MedInventory inventory)
+        public bool AddMedicationToInventory(MedInventory inventory, Medication medication)
         {
-            if (MedicationExists(inventory.Id))
+            if (MedicationExists(medication.MedName))
             {
                 return false;
             }
@@ -65,7 +65,7 @@ namespace Elderson.Services
         }
         public bool AddMedication(Medication medication)
         {
-            if (MedicationExists(medication.Id))
+            if (MedicationExists(medication.MedName))
             {
                 return false;
             }
@@ -98,7 +98,7 @@ namespace Elderson.Services
             return updated;
         }
 
-        public bool UpdateInventory(MedInventory inventory)
+        public bool UpdateInventory(MedInventory inventory, Medication medication)
         {
             bool updated = true;
             _context.Attach(inventory).State = EntityState.Modified;
@@ -110,7 +110,7 @@ namespace Elderson.Services
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MedicationExists(inventory.Id))
+                if (!MedicationExists(medication.MedName))
                 {
                     updated = false;
                 }
@@ -122,7 +122,7 @@ namespace Elderson.Services
             return updated;
         }
 
-        public bool DeleteInventory(MedInventory theInventory)
+        public bool DeleteInventory(MedInventory theInventory, Medication medication)
         {
             bool deleted = true;
             _context.Attach(theInventory).State = EntityState.Modified;
@@ -135,7 +135,7 @@ namespace Elderson.Services
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MedicationExists(theInventory.Id))
+                if (!MedicationExists(medication.MedName))
                 {
                     deleted = false;
                 }
@@ -160,7 +160,7 @@ namespace Elderson.Services
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MedicationExists(theMedication.Id))
+                if (!MedicationExists(theMedication.MedName))
                 {
                     deleted = false;
                 }
