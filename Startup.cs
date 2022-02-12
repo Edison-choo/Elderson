@@ -26,11 +26,11 @@ namespace Elderson
         }
 
         public IConfiguration Configuration { get; }
-        //var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             services.AddRazorPages();
             services.AddSignalR();
             services.AddSession();
@@ -49,15 +49,7 @@ namespace Elderson
             services.AddTransient<MedicalHistoryService>();
             services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.TopCenter; });
             services.AddHttpContextAccessor();
-            
-            //services.AddCors(options =>
-            //{
-            //    options.AddPolicy(name: MyAllowSpecificOrigins,
-            //                      builder =>
-            //                      {
-            //                          builder.WithOrigins("http://localhost:8081/");
-            //                      });
-            //});
+
             services.AddSingleton<IUriService>(o =>
             {
                 var accessor = o.GetRequiredService<IHttpContextAccessor>();
@@ -65,12 +57,14 @@ namespace Elderson
                 var uri = string.Concat(request.Scheme, "://", request.Host.ToUriComponent());
                 return new UriServices(uri);
             });
+
             services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            
 
             if (env.IsDevelopment())
             {
@@ -82,9 +76,6 @@ namespace Elderson
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
-            
-            //app.UseCors(MyAllowSpecificOrigins);
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -99,6 +90,7 @@ namespace Elderson
 
             app.UseNotyf();
 
+            
 
             app.UseEndpoints(endpoints =>
             {

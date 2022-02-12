@@ -88,31 +88,27 @@
                         </a>
                     </div>
                 </li>
-                @{
-                    if (Context.Session.GetString("LoginUser") != null)
-                    {
-                        if (Context.Session.GetString("LoginUserType") == "Patient")
-                        {
-                            <li class="nav-item me-3 me-lg-1" id="navItem3">
-                                <div>
-                                    <a class="nav-link" href="~/Elderly/Appointments">
-                                        <h5>My Appointments</h5>
-                                    </a>
-                                </div>
-                            </li>
-                        }
-                    }
-                    else
-                    {
-                        <li class="nav-item me-3 me-lg-1" id="navItem3">
-                            <div>
-                                <a class="nav-link disabled" href="~/Elderly/Appointments">
-                                    <h5>My Appointments</h5>
-                                </a>
-                            </div>
-                        </li>
-                    }
-                }
+                @{ if (Context.Session.GetString("LoginUser") != null)
+                                {
+                                    if (Context.Session.GetString("LoginUserType") == "Patient")
+                                    {
+                    <li class="nav-item me-3 me-lg-1" id="navItem3">
+                        <div>
+                            <a class="nav-link" href="~/Elderly/Appointments">
+                                <h5>My Appointments</h5>
+                            </a>
+                        </div>
+                    </li> }
+                                }
+                                else
+                                {
+                    <li class="nav-item me-3 me-lg-1" id="navItem3">
+                        <div>
+                            <a class="nav-link disabled" href="~/Elderly/Appointments">
+                                <h5>My Appointments</h5>
+                            </a>
+                        </div>
+                    </li> } }
                 <li class="nav-item me-3 me-lg-1" id="navItem4">
                     <div>
                         <a class="nav-link" href="~/Elderly/FAQ">
@@ -123,83 +119,79 @@
             </ul>
             <!-- Center elements -->
             <!-- Right elements -->
-            @{
-                if (Context.Session.GetString("LoginUser") != null)
-                {
-                    if (Context.Session.GetString("LoginUserType") == "Patient")
-                    {
-                        <ul class="navbar-nav flex-row" style="margin-left:175px;">
-                            <li class="nav-item dropdown me-3 me-lg-1">
-                                <a class="nav-link" href="~/Elderly/Cart">
-                                    <h5><i class="fas fa-shopping-cart" id="navItemCart"></i></h5>
-                                </a>
+            @{ if (Context.Session.GetString("LoginUser") != null)
+                            {
+                                if (Context.Session.GetString("LoginUserType") == "Patient")
+                                {
+                <ul class="navbar-nav flex-row" style="margin-left:175px;">
+                    <li class="nav-item dropdown me-3 me-lg-1">
+                        <a class="nav-link" href="~/Elderly/Cart">
+                            <h5><i class="fas fa-shopping-cart" id="navItemCart"></i></h5>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown me-3 me-lg-1">
+                        <a class="nav-link dropdown-toggle hidden-arrow"
+                           href="#"
+                           id="navbarDropdownMenuLink"
+                           role="button"
+                           data-mdb-toggle="dropdown"
+                           aria-expanded="false">
+                            <i class="fas fa-bell fa-lg"></i>
+                            <span class="badge rounded-pill badge-notification bg-danger">12</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end"
+                            aria-labelledby="navbarDropdownMenuLink">
+                            <li>
+                                <a class="dropdown-item" href="#">Some news</a>
                             </li>
-                            <li class="nav-item dropdown me-3 me-lg-1">
-                                <a class="nav-link dropdown-toggle hidden-arrow"
-                                   href="#"
-                                   id="navbarDropdownMenuLink"
-                                   role="button"
-                                   data-mdb-toggle="dropdown"
-                                   aria-expanded="false">
-                                    <i class="fas fa-bell fa-lg"></i>
-                                    <span class="badge rounded-pill badge-notification bg-danger">12</span>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end"
-                                    aria-labelledby="navbarDropdownMenuLink">
-                                    <li>
-                                        <a class="dropdown-item" href="#">Some news</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">Another news</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">Something else here</a>
-                                    </li>
-                                </ul>
+                            <li>
+                                <a class="dropdown-item" href="#">Another news</a>
                             </li>
-                            <li class="nav-item dropdown me-3 me-lg-1">
-                                <a class="nav-link dropdown-toggle hidden-arrow"
-                                   href="#"
-                                   id="navbarDropdownMenuLink"
-                                   role="button"
-                                   data-mdb-toggle="dropdown"
-                                   aria-expanded="false">
-                                    <i class="fas fa-chevron-circle-down fa-lg"></i>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end"
-                                    aria-labelledby="navbarDropdownMenuLink">
-                                    <li>
-                                        <a class="dropdown-item" href="#">Profile</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" asp-page="Elderly/BookingHistory">Booking History</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">Prescription</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">Help & Support</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">Log Out</a>
-                                    </li>
-                                </ul>
+                            <li>
+                                <a class="dropdown-item" href="#">Something else here</a>
                             </li>
                         </ul>
-                    }
-                }
-                else
-                {
-                    <div class="d-flex align-items-center">
-                        <a href="~/Login" class="btn btn-link px-3 me-2">
-                            Login
+                    </li>
+                    <li class="nav-item dropdown me-3 me-lg-1">
+                        <a class="nav-link dropdown-toggle hidden-arrow"
+                           href="#"
+                           id="navbarDropdownMenuLink"
+                           role="button"
+                           data-mdb-toggle="dropdown"
+                           aria-expanded="false">
+                            <i class="fas fa-chevron-circle-down fa-lg"></i>
                         </a>
-                        <a href="~/Register" class="btn btn-primary me-3">
-                            Sign up for free
-                        </a>
-                    </div>
-                }
-            }
+                        <ul class="dropdown-menu dropdown-menu-end"
+                            aria-labelledby="navbarDropdownMenuLink">
+                            <li>
+                                <a class="dropdown-item" asp-page="Profile">Profile</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-page="Elderly/BookingHistory">Booking History</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Prescription</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Help & Support</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" onclick='signout()'>Log Out</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul> }
+                            }
+                            else
+                            {
+                <div class="d-flex align-items-center">
+                    <a href="~/Login" class="btn btn-link px-3 me-2">
+                        Login
+                    </a>
+                    <a href="~/Register" class="btn btn-primary me-3">
+                        Sign up for free
+                    </a>
+                </div> } }
             <!-- Right elements -->
         </div>
     </nav>
@@ -248,6 +240,21 @@
             </div>
         </div>
     </footer><!-- End Footer -->
+
+    <script>
+        function signout() {
+            console.log("signing out...")
+            $.ajax({
+                url: 'https://localhost:44311/api/User/Signout',
+                type: 'GET',
+                success: function (result) {
+                    console.log("sign out successfully")
+                    window.location.href = "/Signout";
+
+                }
+            });
+        }
+    </script>
 
     <div id="preloader"></div>
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>

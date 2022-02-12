@@ -16,6 +16,7 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using MimeKit;
 using MailKit.Net.Smtp;
+using Microsoft.AspNetCore.Http;
 
 namespace Elderson.Pages.Users
 {
@@ -64,14 +65,25 @@ namespace Elderson.Pages.Users
             _notfy = notyf;
             webHostEnvironment = hostEnvironment;
         }
-        public void OnGet()
+        public IActionResult OnGet()
         {
-            allClinic = _svc.GetAllClinic();
-            clinics = new List<SelectListItem>();
-            foreach (var i in allClinic)
+            if (HttpContext.Session.GetString("LoginUser") != null)
             {
-                clinics.Add(new SelectListItem { Text = i.Name, Value = i.Id });
+                if (HttpContext.Session.GetString("LoginUserType") == "ITSupport")
+                {
+
+                    allClinic = _svc.GetAllClinic();
+                    clinics = new List<SelectListItem>();
+                    foreach (var i in allClinic)
+                    {
+                        clinics.Add(new SelectListItem { Text = i.Name, Value = i.Id });
+                    }
+                    return Page();
+                }
             }
+
+            return Redirect("~/");
+            
         }
 
         public IActionResult OnPost()
