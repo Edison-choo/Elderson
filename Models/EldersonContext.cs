@@ -47,5 +47,7 @@ namespace Elderson.Models
         public DbSet<FormMeds> FormMeds { get; set; }
         public DbSet<MedicalHistory> MedicalHistory { get; set; }
 
+        public DbSet<Prescription> Prescription { get; set; }
+
     }
 }

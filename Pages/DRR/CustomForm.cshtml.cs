@@ -17,6 +17,8 @@ namespace Elderson.Pages.DRR
         public Form newForm { get; set; }
         [BindProperty]
         public string uuid { get; set; }
+        [BindProperty]
+        public string ErrMsg { get; set; }
 
         private FormService _svc;
 
@@ -33,6 +35,7 @@ namespace Elderson.Pages.DRR
                 if (HttpContext.Session.GetString("LoginUserType") == "Doctor")
                 {
                     uuid = Guid.NewGuid().ToString();
+                    ErrMsg = "";
                     return Page();
                 }
             }
@@ -42,12 +45,14 @@ namespace Elderson.Pages.DRR
 
         public IActionResult OnPost()
         {
-            if (ModelState.IsValid)
+            if(newForm.TemplateName == "")
             {
-                newForm.Id = uuid;
-                newForm.DoctorId = HttpContext.Session.GetString("LoginUser");
-                _svc.AddForm(newForm);
+                ErrMsg = "Please enter a template name";
+                return Page();
             }
+            newForm.Id = uuid;
+            newForm.DoctorId = HttpContext.Session.GetString("LoginUser");
+            _svc.AddForm(newForm);
 
             return RedirectToPage("Form");
         }

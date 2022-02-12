@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Elderson.Models;
 using Elderson.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -12,6 +13,8 @@ namespace Elderson.Pages.DRR
 {
     public class PrescriptionModel : PageModel
     {
+        [BindProperty]
+        public string currentform_id { get; set; }
         [BindProperty]
         public string booking_id { get; set; }
         [BindProperty]
@@ -27,21 +30,68 @@ namespace Elderson.Pages.DRR
         private FormService _svc { get; set; }
         private UserService _usrsvc { get; set; }
         private BookingService _bksvc { get; set; }
+        private InventoryService _invsvc { get; set; }
+        private FormMedsService _fmsvc { get; set; }
+        private PrescriptionService _pssvc { get; set; }
         private readonly ILogger<PrescriptionModel> _logger;
-        public PrescriptionModel(ILogger<PrescriptionModel> logger, FormService service, UserService userservice, BookingService bookservice)
+        public PrescriptionModel(ILogger<PrescriptionModel> logger, FormService service, UserService userservice, BookingService bookservice, InventoryService invservice, FormMedsService fmservice, PrescriptionService psservice)
         {
             _svc = service;
             _usrsvc = userservice;
             _bksvc = bookservice;
+            _invsvc = invservice;
+            _fmsvc = fmservice;
+            _pssvc = psservice;
             _logger = logger;
         }
-        public void OnGet(string bookingid, string formid)
+        public IActionResult OnGet(string bookingid, string formid)
         {
-            booking_id = bookingid;
-            form_id = formid;
-            check = _svc.TemplateFormExist(formid);
-            booking = _bksvc.GetBookingById(bookingid);
-            patientuser = _usrsvc.GetUserById(booking.PatientID);
+            if (HttpContext.Session.GetString("LoginUser") != null)
+            {
+                if (HttpContext.Session.GetString("LoginUserType") == "Doctor")
+                {
+                    currentform_id = Guid.NewGuid().ToString();
+                    booking_id = bookingid;
+                    form_id = formid;
+                    check = _svc.TemplateFormExist(formid);
+                    List<FormMeds> formmeds = new List<FormMeds>();
+                    Medication meds = new Medication();
+                    if (check)
+                    {
+                        formmeds = _fmsvc.GetFormMedsByFormId(formid);
+                        foreach (FormMeds formmed in formmeds)
+                        {
+                            meds = _invsvc.GetMedicationById(formmed.MedicationId);
+                            FormMeds currentMeds = new FormMeds();
+                            currentMeds.Id = Guid.NewGuid().ToString();
+                            currentMeds.FormId = currentform_id;
+                            currentMeds.MedicationId = meds.Id;
+                            currentMeds.Quantity = formmed.Quantity;
+                            currentMeds.MedName = formmed.MedName;
+                            currentMeds.MedType = formmed.MedType;
+                            _fmsvc.AddFormMeds(currentMeds);
+                        }
+                    }
+                    booking = _bksvc.GetBookingById(bookingid);
+                    patientuser = _usrsvc.GetUserById(booking.PatientID);
+                    return Page();
+                }
+            }
+
+            return Redirect("~/");
+            
+            
+        }
+
+        public IActionResult OnPost()
+        {
+            Prescription prescription = new Prescription();
+            prescription.Id = Guid.NewGuid().ToString();
+            prescription.PatientName = patientuser.Fullname;
+            prescription.PatientId = patientuser.Fullname;
+
+
+            return RedirectToPage("Consultation");
         }
     }
 }

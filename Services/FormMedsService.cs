@@ -17,7 +17,7 @@ namespace Elderson.Services
 
         private bool FormMedExist(string id)
         {
-            return _context.Schedule.Any(e => e.Id == id);
+            return _context.FormMeds.Any(e => e.Id == id);
         }
 
         public List<FormMeds> GetFormMedsByFormId(string form_id)

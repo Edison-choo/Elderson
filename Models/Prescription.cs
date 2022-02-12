@@ -10,11 +10,12 @@ namespace Elderson.Models
         public string Id { get; set; }
         public string PatientName { get; set; }
         public string PatientId { get; set; }
-        public string FormMedsId { get; set; }
+        public string FormId { get; set; }
         public string DoctorName { get; set; }
         public DateTime Date { get; set; }
         public string Status { get; set; }
         public string Symptoms { get; set; }
         public string BookingId { get; set; }
+        public string DoctorId { get; set; }
     }
 }

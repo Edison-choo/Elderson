@@ -61,12 +61,11 @@
 
 <div class="customForm">
     <form method="post">
-        <div asp-validation-summary="All" class="text-danger"></div>
         <input type="hidden" asp-for="@Model.uuid" id="uuidVal" />
         <p><h3>Template Name:</h3></p>
         <input asp-for="newForm.TemplateName" class="customForm-input" />
         <br />
-        <div class="validate"></div>
+        <label>@Model.ErrMsg</label>
         <br />
         <div class="addMeds" id="addMeds">
             <p style="margin-top:1%;">
@@ -104,9 +103,6 @@
             <button id="submitBtn" class="btn btn-primary">Submit</button>
         </div>
     </form>
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }
 
 
 </div>
@@ -193,7 +189,7 @@
                         "data": function (data) {
                             return `
                                 <div class="input-group">
-                               <i class="medBtn far fa-minus-square fa-2x" onclick="reduce()"></i> <input type="number" id="quantity" value="0" step="0" min="0" max="20" readonly style="width:35%;text-align:center"> <i class="medBtn far fa-plus-square fa-2x" onclick="add()"></i>
+                               <i class="medBtn far fa-minus-square fa-2x" onclick="reduce()"></i> <input type="number" class="quantity" id="quantity" value="0" step="0" min="0" max="20" readonly style="width:35%;text-align:center"> <i class="medBtn far fa-plus-square fa-2x" onclick="add()"></i>
                                  </div>
                                 `;
 
