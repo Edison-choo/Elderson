@@ -426,20 +426,31 @@
 
 <script>
     $("#userType").on("change", function () {
-        if (document.getElementById("userType").value == "Patient") {
+        changeType(document.getElementById("userType").value);
+    });
+
+    function clinicChoice(choice) {
+        $(".clinicChoice").hide();
+        $(`.${choice}`).show();
+        $(".clinicBtn").css("background-color", "darkgrey");
+        $(`#${choice}`).css("background-color", "#1F3BB3");
+    }
+
+    function changeType(userType) {
+        if (userType == "Patient") {
             $(".patientForm").show();
 
             $(".doctorForm").hide();
             $(".adminForm").hide();
             $(".clinicForm").hide();
-        } else if (document.getElementById("userType").value == "Doctor") {
+        } else if (userType == "Doctor") {
             $(".doctorForm").show();
             $(".clinicForm").show();
             clinicChoice("useNew")
 
             $(".patientForm").hide();
             $(".adminForm").hide();
-        } else if (document.getElementById("userType").value == "Administrator") {
+        } else if (userType == "Administrator") {
             $(".adminForm").show();
             $(".clinicForm").show();
 
@@ -451,13 +462,10 @@
             $(".doctorForm").hide();
             $(".clinicForm").hide();
         }
-    });
-
-    function clinicChoice(choice) {
-        $(".clinicChoice").hide();
-        $(`.${choice}`).show();
-        $(".clinicBtn").css("background-color", "darkgrey");
-        $(`#${choice}`).css("background-color", "#1F3BB3");
     }
+
+    $(document).ready(function () {
+        changeType($("#userType")[0].value);
+    });
 
 </script>

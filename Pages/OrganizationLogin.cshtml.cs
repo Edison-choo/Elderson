@@ -49,37 +49,52 @@ namespace Elderson.Pages
                     string pwdWithSalt = Password + dbSalt;
                     byte[] hashWithSalt = hashing.ComputeHash(Encoding.UTF8.GetBytes(pwdWithSalt));
 
-                    if (user.Password.Equals(Convert.ToBase64String(hashWithSalt)))
+                    if (user.IsVerified == "1")
                     {
-                        HttpContext.Session.SetString("LoginUser", user.Id);
-                        HttpContext.Session.SetString("LoginUserName", user.Fullname);
-                        HttpContext.Session.SetString("LoginUserType", user.UserType);
-                        _logger.LogInformation("{actionStatus} {userType} User {userId} {userAction}.", "Successful", user.UserType, user.Id, "login");
+                        if (user.Password.Equals(Convert.ToBase64String(hashWithSalt)))
+                        {
+                            HttpContext.Session.SetString("LoginUser", user.Id);
+                            HttpContext.Session.SetString("LoginUserName", user.Fullname);
+                            HttpContext.Session.SetString("LoginUserType", user.UserType);
+                            _logger.LogInformation("{actionStatus} {userType} User {userId} {userAction}.", "Successful", user.UserType, user.Id, "login");
 
-                        _notfy.Success("Login Successfully");
+                            _notfy.Success("Login Successfully");
 
-                        if (user.UserType == "Doctor")
-                        {
-                            return Redirect("~/DRR");
-                        } else if (user.UserType == "ITSupport")
-                        {
-                            return Redirect("~/ISR/Users");
-                        } else if (user.UserType == "Administrator")
-                        {
-                            return Redirect("~/Administrator/AdminHomePage");
-                        } else if (user.UserType == "Pharmacist")
-                        {
-                            return Redirect("~/Pharmacist");
+                            if (user.UserType == "Doctor")
+                            {
+                                return Redirect("~/DRR");
+                            }
+                            else if (user.UserType == "ITSupport")
+                            {
+                                return Redirect("~/ISR/Users");
+                            }
+                            else if (user.UserType == "Administrator")
+                            {
+                                return Redirect("~/Administrator/AdminHomePage");
+                            }
+                            else if (user.UserType == "Pharmacist")
+                            {
+                                return Redirect("~/Pharmacist");
+                            }
+                            else
+                            {
+                                return Redirect("~/");
+                            }
                         } else
                         {
-                            return Redirect("~/");
+                           
+                            _logger.LogInformation("{actionStatus} Organization User {userId} {userAction}. Password is incorrect.", "Unsuccessful", user.Id, "login");
+                            //ErrorMsg = "Login Information is incorrect";
+                            _notfy.Error("Login Information is incorrect");
+                            return Page();
                         }
+                        
                     }
                     else
                     {
-                        _logger.LogInformation("{actionStatus} Organization User {userId} {userAction}. Password is incorrect.", "Unsuccessful", user.Id, "login");
+                        _logger.LogInformation("{actionStatus} Organization User {userId} {userAction}. The email is not verified.", "Unsuccessful", user.Id, "login");
                         //ErrorMsg = "Login Information is incorrect";
-                        _notfy.Error("Login Information is incorrect");
+                        _notfy.Error("This email is not verified yet");
                         return Page();
                     }
                 }

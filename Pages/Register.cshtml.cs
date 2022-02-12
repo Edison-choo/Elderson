@@ -50,7 +50,7 @@ namespace Elderson.Pages
         }
         public void OnGet()
         {
-            //sendEmail("edisonchoo234@gmail.com");
+            //sendEmail("edisonchoo234@gmail.com", "c9d07563-9b76-4f8f-b2d9-211883a3b9c9", "1");
         }
 
         public IActionResult OnPost()
@@ -82,11 +82,14 @@ namespace Elderson.Pages
 
                 // Add user to Db
                 var valid = false;
+                var code = Guid.NewGuid().ToString();
                 while (!(valid))
                 {
                     string guid = Guid.NewGuid().ToString();
                     newUser.Id = guid;
                     newUser.CreatedAt = DateTime.Now;
+
+                    newUser.IsVerified = code;
                     valid = _svc.AddUser(newUser);
                 }
 
@@ -96,9 +99,11 @@ namespace Elderson.Pages
                 _svc.AddPatient(PatientRole);
 
                 _logger.LogInformation("{actionStatus} User {userId} {userAction}.", "Successful", newUser.Id, "register");
-                _notfy.Success("Register Successfully");
+                _notfy.Success("Register Successfully. Verify your email to login.");
 
-                return RedirectToPage("Login");
+                sendEmail(newUser.Email, newUser.Id, code);
+
+                return RedirectToPage("emailVerification");
             } else
             {
                 string messages = string.Join("; ", ModelState.Values
@@ -111,7 +116,7 @@ namespace Elderson.Pages
             return Page();
         }
 
-        public void sendEmail(string email)
+        public void sendEmail(string email, string id, string code)
         {
             MimeMessage message = new MimeMessage();
 
@@ -124,14 +129,15 @@ namespace Elderson.Pages
             message.Subject = "This is email subject";
 
             BodyBuilder bodyBuilder = new BodyBuilder();
-            bodyBuilder.HtmlBody = @"<div>
+            string link = $"location.href='https://localhost:44311/api/User/VerifyUser/{id}/{code}'";
+            bodyBuilder.HtmlBody = $@"<div>
     <h2 style='margin - bottom:20px; '>Verify This Email Address</h2>
        <p> Hi Peter,</p>
           <p> Please click the button below to verify your email address </p>
              <p> If you did not sign up to Elderson, please ignore this email or contact us at eldersonheelpdesk@gmail.com </p>
                 <p> Edison </p>
                 <p> IT Support Team</p>
-                   <button style = 'margin: 10px auto;' onclick='location.href = 'http://www.example.com''> Verify Email </button>
+                   <button style = 'margin: 10px auto;'><a style='text-decoration:none;color:black;' href='https://localhost:44311/api/User/VerifyUser/{id}/{code}'> Verify Email</a></button>
                       </div> ";
 
             message.Body = bodyBuilder.ToMessageBody();

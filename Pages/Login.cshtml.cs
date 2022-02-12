@@ -52,20 +52,29 @@ namespace Elderson.Pages.Users
                     string pwdWithSalt = Password + dbSalt;
                     byte[] hashWithSalt = hashing.ComputeHash(Encoding.UTF8.GetBytes(pwdWithSalt));
 
-                    if (user.Password.Equals(Convert.ToBase64String(hashWithSalt)))
+                    if (user.IsVerified == "1")
                     {
-                        HttpContext.Session.SetString("LoginUser", user.Id);
-                        HttpContext.Session.SetString("LoginUserName", user.Fullname);
-                        HttpContext.Session.SetString("LoginUserType", user.UserType);
+                        if (user.Password.Equals(Convert.ToBase64String(hashWithSalt)))
+                        {
+                            HttpContext.Session.SetString("LoginUser", user.Id);
+                            HttpContext.Session.SetString("LoginUserName", user.Fullname);
+                            HttpContext.Session.SetString("LoginUserType", user.UserType);
+
+                            _logger.LogInformation("{actionStatus} User {userId} {userAction}.", "Successful", user.Id, "login");
+                            _notfy.Success("Login Successfully");
+                            return Redirect("/");
+                        } else
+                        {
+                            _logger.LogInformation("{actionStatus} User {userId} {userAction}. Password is incorrect.", "Unsuccessful", user.Id, "login");
+                            //ErrorMsg = "Login Information is incorrect";
+                            _notfy.Error("Login Information is incorrect");
+                            return Page();
+                        }
                         
-                        _logger.LogInformation("{actionStatus} User {userId} {userAction}.", "Successful", user.Id, "login");
-                        _notfy.Success("Login Successfully");
-                        return Redirect("/");
                     } else
                     {
-                        _logger.LogInformation("{actionStatus} User {userId} {userAction}. Password is incorrect.", "Unsuccessful", user.Id, "login");
-                        //ErrorMsg = "Login Information is incorrect";
-                        _notfy.Error("Login Information is incorrect");
+                        _logger.LogInformation("{actionStatus} User {userId} {userAction}. This email is not verified.", "Unsuccessful", user.Id, "login");
+                        _notfy.Error("This email is not verified");
                         return Page();
                     }
                 } else

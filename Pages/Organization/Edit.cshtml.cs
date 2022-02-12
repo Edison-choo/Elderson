@@ -48,7 +48,7 @@ namespace Elderson.Pages.Organization
         public void OnGet()
         {
             var id = HttpContext.Session.GetString("LoginUser");
-            id = "2bf4dd3d-616e-4836-9954-6f12e3e3d8d1";
+            id = "8bbe4522-ff24-49f9-bb94-6eff25e16f84";
             SelectedUser = _svc.GetUserById(id);
             Birthdate = SelectedUser.Birthdate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
             PatientRole = _svc.GetPatientById(id);
@@ -71,14 +71,8 @@ namespace Elderson.Pages.Organization
             }
 
             UpdatedUser = _svc.GetUserById(SelectedUser.Id);
-            if (_svc.GetUserByEmail(SelectedUser.Email) != null && SelectedUser.Email != UpdatedUser.Email)
-            {
-                _logger.LogInformation("{actionStatus} User {userId} {userAction}. Email is already being used.", "Unsuccessful", SelectedUser.Id, "edit user");
-                _notfy.Error("Email is already used");
-                return Page();
-            }
+
             UpdatedUser.Fullname = SelectedUser.Fullname;
-            UpdatedUser.Email = SelectedUser.Email;
             UpdatedUser.Phone = SelectedUser.Phone;
             UpdatedUser.Gender = SelectedUser.Gender;
             UpdatedUser.CountryCode = SelectedUser.CountryCode;

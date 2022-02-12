@@ -14,6 +14,8 @@ using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using MimeKit;
+using MailKit.Net.Smtp;
 
 namespace Elderson.Pages.Users
 {
@@ -100,11 +102,14 @@ namespace Elderson.Pages.Users
 
                 // Add user to Db
                 var valid = false;
+                var code = Guid.NewGuid().ToString();
                 while (!(valid))
                 {
                     string guid = Guid.NewGuid().ToString();
                     newUser.Id = guid;
                     newUser.CreatedAt = DateTime.Now;
+
+                    newUser.IsVerified = code;
                     valid = _svc.AddUser(newUser);
                 }
 
@@ -114,6 +119,7 @@ namespace Elderson.Pages.Users
                     case "Patient":
                         PatientRole.Id = typeGuid;
                         PatientRole.UserId = newUser.Id;
+
                         _svc.AddPatient(PatientRole);
                         break;
                     case "Doctor":
@@ -154,6 +160,7 @@ namespace Elderson.Pages.Users
                         break;
                 }
 
+                sendEmail(newUser.Email, newUser.Id, code);
                 _logger.LogInformation("{actionStatus} User {userId} {userAction}.", "Successful", newUser.Id, "create user");
                 _notfy.Success("Create User Successfully");
                 return RedirectToPage("Index");
@@ -188,6 +195,42 @@ namespace Elderson.Pages.Users
                 return fileName;
             }
             return "";
+        }
+
+        public void sendEmail(string email, string id, string code)
+        {
+            MimeMessage message = new MimeMessage();
+
+            MailboxAddress from = new MailboxAddress("Admin", "eldersonhelpdesk@gmail.com");
+            message.From.Add(from);
+
+            MailboxAddress to = new MailboxAddress("User", email);
+            message.To.Add(to);
+
+            message.Subject = "This is email subject";
+
+            BodyBuilder bodyBuilder = new BodyBuilder();
+            string link = $"location.href='https://localhost:44311/api/User/VerifyUser/{id}/{code}'";
+            bodyBuilder.HtmlBody = $@"<div>
+    <h2 style='margin - bottom:20px; '>Verify This Email Address</h2>
+       <p> Hi Peter,</p>
+          <p> Please click the button below to verify your email address </p>
+             <p> If you did not sign up to Elderson, please ignore this email or contact us at eldersonheelpdesk@gmail.com </p>
+                <p> Edison </p>
+                <p> IT Support Team</p>
+                   <button style = 'margin: 10px auto;'><a style='text-decoration:none;color:black;' href='https://localhost:44311/api/User/VerifyUser/{id}/{code}'> Verify Email</a></button>
+                      </div> ";
+
+            message.Body = bodyBuilder.ToMessageBody();
+
+            SmtpClient client = new SmtpClient();
+            client.Connect("smtp.gmail.com", 465, true);
+            client.Authenticate("eldersonhelpdesk@gmail.com", "Elderson123");
+
+            client.Send(message);
+            client.Disconnect(true);
+            client.Dispose();
+
         }
     }
 }

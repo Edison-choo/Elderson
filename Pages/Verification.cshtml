@@ -1,0 +1,57 @@
+﻿@page
+@model Elderson.Pages.VerificationModel
+@{
+    Layout = "Shared/_LayoutEmpty";
+    ViewData["Title"] = "Verification page";
+}
+
+<style>
+    h3 {
+        font-weight:bold;
+        margin-top:70px;
+    }
+
+    .container {
+        margin-top:250px;
+        text-align:center;
+    }
+
+    button {
+        margin-top:30px;
+    }
+</style>
+        
+
+<div class="container">
+    <div class="row">
+        <div class="col-2" style="">
+        </div>
+        <div class="col-8" style="">
+            <img id="successIcon" height="200" src="~/images/success-icon.png" alt="success img" />
+            <h3>Verified!</h3>
+            <div>Congrats! You have successfully verified the account.</div>
+            @{ if (Model.userType == "Patient")
+                {
+                    <button class="btn btn-primary" onclick="location.href='/Login'">Go To Login</button>
+                }
+                else
+                {
+                    <button class="btn btn-primary" onclick="location.href='/OrganizationLogin'">Go To Login</button>
+                }
+            }
+
+        </div>
+    </div>
+</div>
+
+<div class="container" style="display:none;">
+    <div class="row">
+        <div class="col-2" style="">
+        </div>
+        <div class="col-8" style="">
+            <img id="dangerIcon" height="200" src="~/images/error-icon.png" alt="success img" />
+            <h3>Time expired!</h3>
+            <div>A new email has been sent to you.</div>
+        </div>
+    </div>
+</div>

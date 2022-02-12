@@ -27,7 +27,7 @@
     }
 
     .multisteps-form__progress {
-        margin-top:150px;
+        margin-top:200px;
     }
 
 
@@ -187,17 +187,7 @@
                                                     <span>Information about you</span>
                                                 </div>
                                                 
-                                            </div>
-                                            <div>
-                                                <div class="stepCircle">3</div>
-                                                <div class="d-block">
-                                                    <button class="multisteps-form__progress-btn" type="button" title="Order Info">Credit Card Information</button>
-                                                    <span>Card details to use for payment</span>
-                                                </div>
-                                                
-                                            </div>
-
-                                            
+                                            </div> 
                                             
                                         </div>
                                     </div>
@@ -209,7 +199,7 @@
                                 <div class="card-body">
                                     <form class="pt-3 .#msform multisteps-form__form" method="post">
                                         <input type="hidden" asp-for="newUser.UserType" value="Patient">
-                                        <fieldset class="multisteps-form__panel p-4 rounded bg-white js-active" data-animation="scaleIn">
+                                        <fieldset class="multisteps-form__panel p-4 rounded bg-white js-active" data-animation="scaleIn" style="margin-top:40px;">
                                             <h4>Register Page</h4>
                                             <h6 class="fw-light">Create an account</h6>
 
@@ -246,12 +236,12 @@
                                             <div class="text-center mt-4 fw-light">
                                                 Already have an account? <a href="/Login" class="text-primary">Login here</a>
                                             </div>
-                                            <hr />
+                                            @*<hr />
                                             <div class="mb-2">
                                                 <button type="button" class="btn btn-block btn-facebook auth-form-btn">
                                                     <i class="ti-facebook me-2"></i>Connect using facebook
                                                 </button>
-                                            </div>
+                                            </div>*@
                                         </fieldset>
 
                                         <fieldset class="multisteps-form__panel p-4 rounded bg-white" data-animation="scaleIn">
@@ -306,13 +296,13 @@
                                             <div class="d-flex justify-content-between">
                                                 <button type="button" class="btn btn-primary me-2 js-btn-prev">Cancel</button>
 
-                                                <button type="button" class="btn btn-primary me-2 js-btn-next">Next</button>
+                                                <button type="submit" class="btn btn-success me-2">Submit</button>
 
                                             </div>
                                         </fieldset>
 
                                         <fieldset class="multisteps-form__panel p-4 rounded bg-white" data-animation="scaleIn">
-                                            <h4>Card Details (Optional)</h4>
+                                            @*<h4>Card Details (Optional)</h4>
                                             <h6 class="fw-light">Set as your primary payment information</h6>
                                             <div class="form-group">
                                                 <input type="text" class="form-control form-control-lg" id="CardName" placeholder="NAME ON CARD">
@@ -332,6 +322,17 @@
                                                 <button type="button" class="btn btn-primary me-2 js-btn-prev">Cancel</button>
 
                                                 <button type="submit" class="btn btn-primary me-2">Submit</button>
+
+                                            </div>*@
+                                            <h4>Email Verification</h4>
+                                            <h6 class="fw-light">A verification link has been sent to your email account</h6>
+                                            <div class="form-group">
+                                                Please click on the link that has just been sent to your email account to verify your email to be able to login
+                                            </div>
+                                            <div class="d-flex justify-content-between">
+                                                <button type="button" class="btn btn-primary me-2 js-btn-prev">Cancel</button>
+
+                                                <button type="button" class="btn btn-primary me-2">Submit</button>
 
                                             </div>
                                         </fieldset>

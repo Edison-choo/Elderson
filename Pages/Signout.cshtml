@@ -1,0 +1,52 @@
+﻿@page
+@model Elderson.Pages.SignoutModel
+@{
+    Layout = "Shared/_LayoutEmpty";
+    ViewData["Title"] = "Signout page";
+}
+
+<style>
+    h1 {
+        font-weight: 800;
+        margin-top: 70px;
+    }
+
+    div {
+        font-size:1.2em;
+    }
+
+    .container {
+        margin-top: 210px;
+        text-align: center;
+    }
+
+    img {
+        display:block;
+        margin:0 auto;
+    }
+
+    button {
+        margin-top: 30px;
+        width:70%;
+    }
+
+</style>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-2" style="">
+        </div>
+        <div class="col-8" style="">
+
+            <h1>You are now logged out</h1>
+            <div>Thank you for using Elderson</div>
+
+                <img id="successIcon" height="250" src="~/images/log.png" alt="log img" />
+
+            <button class="btn btn-primary" onclick="location.href='/'">Go To Home</button>
+
+
+        </div>
+    </div>
+</div>

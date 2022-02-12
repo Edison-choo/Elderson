@@ -1,0 +1,62 @@
+﻿@page
+@model Elderson.Pages.Organization.ChangeEmailModel
+@{
+    Layout = "Shared/_LayoutITSupport";
+    ViewData["Title"] = "Change Email page";
+    ViewData["Header"] = "CHANGE EMAIL";
+    ViewData["Breadcrumb"] = "Profile > Change Email";
+}
+
+<div class="row">
+    <form class="forms-sample" method="post">
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Email</h4>
+                        <hr />
+                        <h5 style="margin-bottom:50px;">In order to protect your account, enter your password together with the new email:</h5>
+
+                        <div class="form-group d-flex">
+                            <div style="width:50%;">
+                                <label for="email">New Email:</label>
+                            </div>
+                            <div style="width:50%;">
+                                <input asp-for="email" type="text" class="form-control" id="email">
+                                <span asp-validation-for="email" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group d-flex">
+                            <div style="width:50%;">
+                                <label for="exampleInputPassword4">Current Password:</label>
+                            </div>
+                            <div style="width:50%;">
+                                <input asp-for="currentPwd" type="password" class="form-control" id="exampleInputPassword4">
+                                <span asp-validation-for="currentPwd" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div style="margin-top:50px;margin-bottom:40px;">
+                            *After changing your email, you will need to verify your email and re-login.
+                        </div>
+
+                        <input type="hidden" asp-for="Id" value="@Model.Id" />
+                        <span style="color:red;">@Model.ErrorMsg</span>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="d-flex justify-content-between">
+            <button type="button" onclick="history.back()" class="btn btn-primary me-2">Cancel</button>
+            <button type="submit" class="btn btn-primary me-2">Submit</button>
+
+        </div>
+
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -119,7 +119,7 @@
                         </div>
                         <div class="profileData">
                             @if (Model.user.Email != null)
-                            {@Model.user.Email}
+                            {@Model.user.Email  <button style="margin-left:20px;" onclick="changeDisplay('', 'editEmail')" class="btn btn-primary">Edit Email</button> }
                         else
                         { <text>To be updated</text>}
 
@@ -395,6 +395,37 @@
                 </form>
 
             </div>
+            <div class="info editEmail">
+                <h3>Change Email</h3>
+                <h5>In order to protect your account, enter your password together with the new email:</h5>
+                <form method="post" id="editEmailForm">
+                    <div class="form-group d-flex" style="margin-bottom:10px;">
+                        <div style="width:50%;">
+                            <label for="email">New Email:</label>
+                        </div>
+                        <div style="width:50%;">
+                            <input asp-for="viewModel2.email" type="text" class="form-control" id="email">
+                            <span asp-validation-for="viewModel2.email" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group d-flex" style="margin-bottom:10px;">
+                        <div style="width:50%;">
+                            <label for="exampleInputPassword4">Current Password:</label>
+                        </div>
+                        <div style="width:50%;">
+                            <input asp-for="viewModel2.password" type="password" class="form-control" id="exampleInputPassword4">
+                            <span asp-validation-for="viewModel2.password" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div style="margin-top:50px;margin-bottom:40px;">
+                        *After changing your email, you will need to verify your email and re-login.
+                    </div>
+
+                    <input type="hidden" asp-for="Id" value="@Model.Id" />
+                    <span style="color:red;">@Model.ErrorMsg</span>
+                    <button type="button" style="float:right;margin-top:10px;" class="btn btn-primary me-2 editSubmit" id="editEmailSubmit">Submit</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -460,7 +491,28 @@
                 if (response == "Success")
                     window.location.href = "/Profile";
                 else {
-                    alert();
+                    console.log("");
+                }
+            },
+            error: function (e) {
+                alert(e.responseText);
+            }
+        });
+    };
+
+    document.getElementById("editEmailSubmit").onclick = function () {
+        console.log("Submitting edit email form...")
+        console.log($("#editEmailForm").serialize());
+        $.ajax({
+            type: "POST",
+            url: "https://localhost:44311/api/User/EditEmail",
+            headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
+            data: $('#editEmailForm').serialize(),
+            success: function (response) {
+                if (response == "Success")
+                    window.location.href = "/";
+                else {
+                    console.log("");
                 }
             },
             error: function (e) {

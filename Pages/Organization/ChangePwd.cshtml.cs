@@ -49,7 +49,7 @@ namespace Elderson.Pages.Organization
         public void OnGet()
         {
             var id = HttpContext.Session.GetString("LoginUser");
-            id = "2bf4dd3d-616e-4836-9954-6f12e3e3d8d1";
+            id = "8bbe4522-ff24-49f9-bb94-6eff25e16f84";
             Id = id;
             user = _svc.GetUserById(id);
         }

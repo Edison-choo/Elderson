@@ -1,10 +1,10 @@
 ﻿@page
-@model Elderson.Pages.Organization.ChatModel
+@model Elderson.Pages.ChatModel
 @using Microsoft.AspNetCore.Http;
-@{ Layout = "Shared/_LayoutITSupport";
-    ViewData["Title"] = "Chat page";
-    ViewData["Header"] = "CHAT";
-    ViewData["Breadcrumb"] = "Chat"; }
+@{ 
+    Layout = "Shared/_Layout";
+    ViewData["Title"] = "Chat page"; 
+}
 
 <style>
     .left {
@@ -438,9 +438,21 @@
     }
 
     .headRight-sub div img {
-        display:none;
+        display: none;
+    }
+
+    .card {
+        box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
     }
 </style>
+
+<nav aria-label="breadcrumb" style="margin:35px;">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Elderson</a></li>
+        <li class="breadcrumb-item"><a href="#">Chat</a></li>
+    </ol>
+    <h3>Chat</h3>
+</nav>
 
 <div class="main-section d-flex justify-content-center" style="background-color:transparent;">
     <div class="left card">
@@ -514,7 +526,7 @@
             <div class="headRight-section d-flex justify-content-between">
                 <div class="headRight-sub d-flex">
                     <h3></h3>
-                    <div><img src="~/images/loadingAnim.gif" alt="loading" height="30"/></div>
+                    <div><img src="~/images/loadingAnim.gif" alt="loading" height="30" /></div>
                 </div>
                 <div class="chatSetting">
                     <i onclick="displaySetting()" style="font-size:1.5em;" class="mdi mdi-dots-vertical"></i>
@@ -675,6 +687,7 @@
 
 @*
     <script src="~/js/chat.js"></script>*@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
     var toUserId = "ISRChat";

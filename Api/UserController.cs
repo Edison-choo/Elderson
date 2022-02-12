@@ -9,6 +9,10 @@ using Elderson.Services;
 using System.Text.Json;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.Extensions.Logging;
+using System.Security.Cryptography;
+using System.Text;
+using MimeKit;
+using MailKit.Net.Smtp;
 
 namespace Elderson
 {
@@ -159,6 +163,32 @@ namespace Elderson
 
         }
 
+        [HttpGet("VerifyUser/{userId}/{code}", Name = "VerifyUser")]
+        public ActionResult<String> VerifyUser(string userId, string code)
+        {
+            User user = new User();
+
+            try
+            {
+                user = _svc.GetUserById(userId);
+                if (user.IsVerified == code)
+                {
+                    user.IsVerified = "1";
+                    _svc.UpdateUser(user);
+                    return RedirectToPage("/Verification", new { type = user.UserType });
+                } else
+                {
+                    return BadRequest("Wrong code");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return BadRequest("Error");
+            }
+
+        }
+
         //// GET api/<UserController>/5
         //[HttpGet("{id}")]
         //public string Get(int id)
@@ -229,6 +259,72 @@ namespace Elderson
 
         }
 
+        public class CompositeObject2
+        {
+            public ViewModel2 viewModel2 { get; set; }
+            public string Id { get; set; }
+
+        }
+        public class ViewModel2
+        {
+            public string email { get; set; }
+            public string password { get; set; }
+        }
+
+        [HttpPost("EditEmail", Name = "Post2")]
+        public ActionResult<string> Post2([FromForm] CompositeObject2 body)
+        {
+            Console.WriteLine(body.Id + body.viewModel2.email);
+            Console.WriteLine(ModelState.IsValid);
+
+            if (ModelState.IsValid)
+            {
+                var user = _svc.GetUserById(body.Id);
+
+                SHA512 hashing = SHA512.Create();
+                string checkPwdWithSalt = body.viewModel2.password + user.PasswordSalt;
+                byte[] checkHashWithSalt = hashing.ComputeHash(Encoding.UTF8.GetBytes(checkPwdWithSalt));
+
+                if (user.Password.Equals(Convert.ToBase64String(checkHashWithSalt)))
+                {
+                    user.Email = body.viewModel2.email;
+                    var code = Guid.NewGuid().ToString();
+                    user.IsVerified = code;
+                    Boolean valid = _svc.UpdateUser(user);
+                    if (valid)
+                    {
+                        sendEmail(user.Email, user.Id, code);
+                        _logger.LogInformation("{actionStatus} User {userId} {userAction}.", "Successful", user.Id, "update user");
+                        _notfy.Success("Change password Successfully");
+
+                        if (HttpContext.Session.GetString("LoginUser") != null)
+                        {
+                            HttpContext.Session.Remove("LoginUser");
+                            HttpContext.Session.Remove("LoginUserType");
+                            HttpContext.Session.Remove("LoginUserName");
+                            HttpContext.Session.Remove("ChatUser");
+                            _notfy.Success("Signout Successfully");
+
+                        }
+                        return Ok("Success");
+                    }
+
+                }
+                else
+                {
+                    _logger.LogInformation("{actionStatus} User {userId} {userAction}. Password is incorrect.", "Unsuccessful", user.Id, "update user");
+                    _notfy.Error("Current password is incorrect");
+                    //ErrorMsg = "Current password is incorrect";
+                }
+                return BadRequest("Error");
+            }
+            else
+            {
+                return BadRequest("Error");
+            }
+
+        }
+
         //// PUT api/<UserController>/5
         //[HttpPut("{id}")]
         //public void Put(int id, [FromBody] string value)
@@ -267,5 +363,40 @@ namespace Elderson
             return Ok("Success");
         }
 
+        public void sendEmail(string email, string id, string code)
+        {
+            MimeMessage message = new MimeMessage();
+
+            MailboxAddress from = new MailboxAddress("Admin", "eldersonhelpdesk@gmail.com");
+            message.From.Add(from);
+
+            MailboxAddress to = new MailboxAddress("User", email);
+            message.To.Add(to);
+
+            message.Subject = "This is email subject";
+
+            BodyBuilder bodyBuilder = new BodyBuilder();
+            string link = $"location.href='https://localhost:44311/api/User/VerifyUser/{id}/{code}'";
+            bodyBuilder.HtmlBody = $@"<div>
+    <h2 style='margin - bottom:20px; '>Verify This Email Address</h2>
+       <p> Hi Peter,</p>
+          <p> Please click the button below to verify your email address </p>
+             <p> If you did not sign up to Elderson, please ignore this email or contact us at eldersonheelpdesk@gmail.com </p>
+                <p> Edison </p>
+                <p> IT Support Team</p>
+                   <button style = 'margin: 10px auto;'><a style='text-decoration:none;color:black;' href='https://localhost:44311/api/User/VerifyUser/{id}/{code}'> Verify Email</a></button>
+                      </div> ";
+
+            message.Body = bodyBuilder.ToMessageBody();
+
+            SmtpClient client = new SmtpClient();
+            client.Connect("smtp.gmail.com", 465, true);
+            client.Authenticate("eldersonhelpdesk@gmail.com", "Elderson123");
+
+            client.Send(message);
+            client.Disconnect(true);
+            client.Dispose();
+
+        }
     }
 }

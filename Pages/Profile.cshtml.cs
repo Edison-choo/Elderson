@@ -37,6 +37,15 @@ namespace Elderson.Pages
             public string confirmPwd { get; set; }
         }
         [BindProperty]
+        public ViewModel2 viewModel2 { get; set; }
+        public class ViewModel2
+        {
+            [Required]
+            public string email { get; set; }
+            [Required]
+            public string password { get; set; }
+        }
+        [BindProperty]
         public string ErrorMsg { get; set; }
         [BindProperty]
         public Patient PatientRole { get; set; }
@@ -57,7 +66,7 @@ namespace Elderson.Pages
         public void OnGet()
         {
             //Id = HttpContext.Session.GetString("LoginUser");
-            Id = "73d9b865-0275-48e1-9d1d-4d0a2d45e792";
+            Id = "46f625fd-20fe-45b0-91f9-c6d266c16944";
             user = _svc.GetUserById(Id);
             PatientRole = _svc.GetPatientById(Id);
             Birthdate = user.Birthdate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
