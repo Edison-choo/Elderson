@@ -22,5 +22,6 @@ namespace Elderson.Models
         [Required]
         public string CallUUID { get; set; }
         public string FormId { get; set; }
+        public string Status { get; set; }
     }
 }

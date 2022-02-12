@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Elderson.Models;
 using Elderson.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,8 @@ namespace Elderson.Pages.DRR
 {
     public class CallModel : PageModel
     {
+        [BindProperty]
+        public string booking_id { get; set; }
         [BindProperty]
         public string myUserID { get; set; }
         [BindProperty]
@@ -36,10 +39,18 @@ namespace Elderson.Pages.DRR
             {
                 Redirect("~/Login");
             }
+            booking_id = id;
             myCallID = _svc.GetBookingById(id).CallUUID;
             myPatientID = _svc.GetBookingById(id).PatientID;
             myPatientName = _uSvc.GetNameById(myPatientID);
             HttpContext.Session.SetString("CallID", myCallID);
+        }
+        public IActionResult OnPost()
+        {
+            Booking myBooking = _svc.GetBookingById(booking_id);
+            myBooking.Status = "c";
+            _svc.UpdateBooking(myBooking);
+            return RedirectToPage("/");
         }
     }
 }

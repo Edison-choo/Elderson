@@ -58,5 +58,11 @@ namespace Elderson.Hubs
             string userID = Context.GetHttpContext().Session.GetString("LoginUser");
             await Clients.Group(groupname).SendAsync("ReceiveMessage", userID, message);
         }
+        public async Task SystemMessageEnd()
+        {
+            string groupname = Context.GetHttpContext().Session.GetString("CallID");
+            string userID = Context.GetHttpContext().Session.GetString("LoginUser");
+            await Clients.Groups(groupname).SendAsync("ReceiveMessage", "system", groupname + "end");
+        }
     }
 }
