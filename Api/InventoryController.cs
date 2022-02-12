@@ -71,7 +71,7 @@ namespace Elderson.Api
             {
                 var deleteInventory = _svc.GetInvMedicationById(Id);
                 var deleteMedication = _svc.GetMedicationById(Id);
-                _svc.DeleteInventory(deleteInventory);
+                _svc.DeleteInventory(deleteInventory, deleteMedication);
                 _svc.DeleteMedication(deleteMedication);
             }
             catch (Exception ex)

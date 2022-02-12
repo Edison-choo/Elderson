@@ -127,7 +127,7 @@
     </form>
 </div>
 
-<div class="modal fade" id=@("staticBackdrop"+@Model.SelectedInventoryItem.Id) data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id=@("staticBackdrop"+@Model.SelectedSupplier.Id) data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
@@ -139,7 +139,7 @@
                 </div>
                 <div class="d-flex justify-content-between" style="margin-top:30px;">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" onclick=@("deleteMedication("+"'"+@Model.SelectedInventoryItem.Id+"'"+")") class="btn btn-danger">Delete</button>
+                    <button type="button" onclick=@("deleteSupplier("+"'"+@Model.SelectedSupplier.Id+"'"+")") class="btn btn-danger">Delete</button>
                 </div>
             </div>
         </div>
