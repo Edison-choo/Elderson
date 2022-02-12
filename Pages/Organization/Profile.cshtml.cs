@@ -30,23 +30,33 @@ namespace Elderson.Pages.Organization
         {
             _svc = service;
         }
-        public void OnGet()
+        public IActionResult OnGet()
         {
-            var id = HttpContext.Session.GetString("LoginUser");
-            id = "8bbe4522-ff24-49f9-bb94-6eff25e16f84";
-            SelectedUser = _svc.GetUserById(id);
-            PatientRole = _svc.GetPatientById(id);
-            AdminRole = _svc.GetAdministratorById(id);
-            DoctorRole = _svc.GetDoctorById(id);
-            if (DoctorRole != null && DoctorRole.ClinicId != null)
+            if (HttpContext.Session.GetString("LoginUser") != null)
             {
-                SelectedClinic = _svc.GetClinicByDoctorId(DoctorRole.ClinicId);
+                if (HttpContext.Session.GetString("LoginUserType") != "Patient")
+                {
+
+                    var id = HttpContext.Session.GetString("LoginUser");
+                    //id = "8bbe4522-ff24-49f9-bb94-6eff25e16f84";
+                    SelectedUser = _svc.GetUserById(id);
+                    PatientRole = _svc.GetPatientById(id);
+                    AdminRole = _svc.GetAdministratorById(id);
+                    DoctorRole = _svc.GetDoctorById(id);
+                    if (DoctorRole != null && DoctorRole.ClinicId != null)
+                    {
+                        SelectedClinic = _svc.GetClinicByDoctorId(DoctorRole.ClinicId);
+                    }
+                    if ((AdminRole != null && AdminRole.ClinicId != null))
+                    {
+                        SelectedClinic = _svc.GetClinicByAdminId(AdminRole.ClinicId);
+                    }
+                    Birthdate = SelectedUser.Birthdate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+                    return Page();
+                }
             }
-            if ((AdminRole != null && AdminRole.ClinicId != null))
-            {
-                SelectedClinic = _svc.GetClinicByAdminId(AdminRole.ClinicId);
-            }
-            Birthdate = SelectedUser.Birthdate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+            return Redirect("~/");
+            
         }
     }
 }

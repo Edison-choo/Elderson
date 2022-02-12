@@ -45,21 +45,32 @@ namespace Elderson.Pages.Organization
             _svc = service;
             _notfy = notyf;
         }
-        public void OnGet()
+        public IActionResult OnGet()
         {
-            var id = HttpContext.Session.GetString("LoginUser");
-            id = "8bbe4522-ff24-49f9-bb94-6eff25e16f84";
-            SelectedUser = _svc.GetUserById(id);
-            Birthdate = SelectedUser.Birthdate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
-            PatientRole = _svc.GetPatientById(id);
-            AdminRole = _svc.GetAdministratorById(id);
-            DoctorRole = _svc.GetDoctorById(id);
-            allClinic = _svc.GetAllClinic();
-            clinics = new List<SelectListItem>();
-            foreach (var i in allClinic)
+            if (HttpContext.Session.GetString("LoginUser") != null)
             {
-                clinics.Add(new SelectListItem { Text = i.Name, Value = i.Id });
+                if (HttpContext.Session.GetString("LoginUserType") != "Patient")
+                {
+
+                    var id = HttpContext.Session.GetString("LoginUser");
+                    //id = "8bbe4522-ff24-49f9-bb94-6eff25e16f84";
+                    SelectedUser = _svc.GetUserById(id);
+                    Birthdate = SelectedUser.Birthdate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+                    PatientRole = _svc.GetPatientById(id);
+                    AdminRole = _svc.GetAdministratorById(id);
+                    DoctorRole = _svc.GetDoctorById(id);
+                    allClinic = _svc.GetAllClinic();
+                    clinics = new List<SelectListItem>();
+                    foreach (var i in allClinic)
+                    {
+                        clinics.Add(new SelectListItem { Text = i.Name, Value = i.Id });
+                    }
+                    return Page();
+                }
             }
+
+            return Redirect("~/");
+            
         }
 
         public IActionResult OnPost()

@@ -1,7 +1,7 @@
 ﻿@page
-@model Elderson.Pages.ISR.Users.ChatModel
+@model Elderson.Pages.ISR.Contacts.ChatModel
 @using Microsoft.AspNetCore.Http;
-@{ Layout = "Shared/_LayoutITSupport";
+@{ Layout = "Shared/_LayoutOrganization";
     ViewData["Title"] = "Chat page";
     ViewData["Header"] = "CHAT";
     ViewData["Breadcrumb"] = "Contact"; }
@@ -443,6 +443,13 @@
     .headRight-sub div img {
         display: none;
     }
+
+    .newMsg {
+        color: green;
+        padding: 0;
+        font-size: 0.85em;
+        display:none;
+    }
 </style>
 
 <div class="main-section d-flex justify-content-center" style="background-color:transparent;">
@@ -471,7 +478,7 @@
                                         <div class="desc">
                                             <small class="time">05:30 am</small>
                                             <h5>IT Support</h5>
-                                            <small>...</small>
+                                            <small class="newMsg">New Messages</small>
                                         </div>
                                     </div>
                                 </li>
@@ -483,7 +490,7 @@
                                         <div class="desc">
                                             <small class="time">05:30 am</small>
                                             <h5>@Model.allusers[user.Key].Fullname</h5>
-                                            <small></small>
+                                            <small class="newMsg">New Messages</small>
                                         </div>
                                     </div>
                                 </li>
@@ -500,7 +507,7 @@
                                         <div class="desc">
                                             <small class="time">05:30 am</small>
                                             <h5>@HttpContext.Session.GetString("ChatUserName")</h5>
-                                            <small></small>
+                                            <small class="newMsg">New Messages</small>
                                         </div>
                                     </div>
                                 </li>
@@ -785,7 +792,7 @@
                                     <div class="desc">
                                         <small class="time">3 day</small>
                                         <h5>${message.username}</h5>
-                                        <small>${message.when}</small>
+                                        <small class='newMsg'>New messages</small>
                                     </div>
                                 </div>
                             </li>`;

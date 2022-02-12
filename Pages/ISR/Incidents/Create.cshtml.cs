@@ -6,6 +6,7 @@ using AspNetCoreHero.ToastNotification.Abstractions;
 using Elderson.Models;
 using Elderson.Pages.Users;
 using Elderson.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -27,8 +28,18 @@ namespace Elderson.Pages.ISR.Incidents
             _logger = logger;
             _notfy = notyf;
         }
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            if (HttpContext.Session.GetString("LoginUser") != null)
+            {
+                if (HttpContext.Session.GetString("LoginUserType") == "ITSupport")
+                {
+
+                    return Page();
+                }
+            }
+
+            return Redirect("~/");
         }
 
         public IActionResult OnPost()

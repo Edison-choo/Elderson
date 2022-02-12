@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using WebSocketSharp;
 
-namespace Elderson.Pages.ISR.Users
+namespace Elderson.Pages.ISR.Contacts
 {
     public class ChatModel : PageModel
     {
@@ -29,50 +29,25 @@ namespace Elderson.Pages.ISR.Users
             _svc = service;
             _u_svc = userService;
         }
-        public void OnGet()
-        {
-            //using (WebSocket ws = new WebSocket("ws://localhost:44311"))
-            //{
-            //    ws.OnMessage += (sender, e) =>
-            //    {
-            //        if (e.IsText)
-            //        {
-            //            // Do something with e.Data.
-            //            return;
-            //        }
-
-            //        if (e.IsBinary)
-            //        {
-            //            // Do something with e.RawData.
-            //            return;
-            //        }
-            //        Console.WriteLine("Laputa says: " + e.Data);
-            //    };
-
-            //    ws.OnError += (sender, e) => {
-            //        return;
-            //    };
-
-
-            //    ws.Connect();
-            //    ws.Send("BALUS");
-            //    Console.ReadKey(true);
-            //}
-
-            //messages = _context.Messages.ToList();
+        public IActionResult OnGet()
+        {         
             if (HttpContext.Session.GetString("LoginUser") != null)
             {
-                allmessages = _svc.GetAllChats(HttpContext.Session.GetString("LoginUser"));
-                allusers = new Dictionary<string, User>();
-                foreach (var user in allmessages)
+                if (HttpContext.Session.GetString("LoginUserType") == "ITSupport")
                 {
-                    allusers[user.Key] = _u_svc.GetUserById(user.Key);
+
+                    allmessages = _svc.GetAllChats(HttpContext.Session.GetString("LoginUser"));
+                    allusers = new Dictionary<string, User>();
+                    foreach (var user in allmessages)
+                    {
+                        allusers[user.Key] = _u_svc.GetUserById(user.Key);
+                    }
+                    return Page();
                 }
-            } else
-            {
-                allmessages = new Dictionary<string, List<Message>>();
-                allusers = new Dictionary<string, User>();
-            }
+                
+            } 
+            return Redirect("~/");
+            
             
         }
     }

@@ -26,14 +26,25 @@ namespace Elderson.Pages.ISR.Contacts
             _svc = service;
             _u_svc = userService;
         }
-        public void OnGet()
+        public IActionResult OnGet()
         {
-            allmessages = _svc.GetAllChats("ISRChat");
-            allusers = new Dictionary<string, User>();
-            foreach (var user in allmessages)
+            if (HttpContext.Session.GetString("LoginUser") != null)
             {
-                allusers[user.Key] = _u_svc.GetUserById(user.Key);
+                if (HttpContext.Session.GetString("LoginUserType") == "ITSupport")
+                {
+
+                    allmessages = _svc.GetAllChats("ISRChat");
+                    allusers = new Dictionary<string, User>();
+                    foreach (var user in allmessages)
+                    {
+                        allusers[user.Key] = _u_svc.GetUserById(user.Key);
+                    }
+                    return Page();
+                }
             }
+
+            return Redirect("~/");
+            
 
         }
     }
