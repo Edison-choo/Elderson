@@ -45,7 +45,7 @@ namespace Elderson.Pages.Pharmacist.MedSup
             updatedSupplier.SupplierName = selectedSupplier.SupplierName;
             updatedSupplier.SupplierEmail = selectedSupplier.SupplierEmail;
             updatedSupplier.SupplierPhone = selectedSupplier.SupplierPhone;
-            updatedSupplier.SuppplierWebsite = selectedSupplier.SuppplierWebsite;
+            updatedSupplier.SupplierWebsite = selectedSupplier.SupplierWebsite;
             updatedSupplier.SupplierAddress = selectedSupplier.SupplierAddress;
             updatedSupplier.SupplierAbbreviation = selectedSupplier.SupplierAbbreviation;
             Boolean Valid = _svc.UpdateSupplier(updatedSupplier);

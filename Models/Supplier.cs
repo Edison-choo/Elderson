@@ -18,7 +18,7 @@ namespace Elderson.Models
         [Required(ErrorMessage = "Please enter Supplier Email")]
         public string SupplierEmail { get; set; }
         [Required(ErrorMessage = "Please enter Supplier Website")]
-        public string SuppplierWebsite { get; set; }
+        public string SupplierWebsite { get; set; }
         [Required(ErrorMessage = "Please enter Supplier Address")]
         public string SupplierAddress { get; set; }
 

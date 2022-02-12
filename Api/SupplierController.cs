@@ -52,7 +52,7 @@ namespace Elderson.Api
             try
             {
                 allsuppliers = _svc.GetAllSuppliers();
-                var jsonStr = JsonSerializer.Serialize(allsuppliers.Select(x => new { x.Id, x.SupplierAbbreviation, x.SupplierName, x.SupplierPhone, x.SupplierEmail, x.SuppplierWebsite }));
+                var jsonStr = JsonSerializer.Serialize(allsuppliers.Select(x => new { x.Id, x.SupplierAbbreviation, x.SupplierName, x.SupplierPhone, x.SupplierEmail, x.SupplierWebsite }));
                 return Ok(jsonStr);
             }
             catch (Exception ex)

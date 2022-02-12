@@ -23,20 +23,32 @@ namespace Elderson.Services
             return AllSuppliers;
         }
 
-        public Supplier GetSupplierbyId(string id)
+        public List<string> GetSupplierAbbreviation()
         {
-            Supplier supplier = _context.Supplier.Where(e => e.Id == id).FirstOrDefault();
+            List<Supplier> allSuppliers = new List<Supplier>();
+            allSuppliers = _context.Supplier.ToList();
+            List<string> allAbbreviations = new List<string>();
+            foreach (var a in allSuppliers)
+            {
+                allAbbreviations.Add(a.SupplierAbbreviation);
+            }
+            return allAbbreviations;
+        }
+
+        public Supplier GetSupplierbyId(string Id)
+        {
+            Supplier supplier = _context.Supplier.Where(e => e.Id == Id).FirstOrDefault();
             return supplier;
         }
 
-        private bool SupplierExists(string id)
+        private bool SupplierExists(string name)
         {
-            return _context.Supplier.Any(e => e.Id == id);
+            return _context.Supplier.Any(e => e.SupplierName == name);
         }
 
         public bool AddSupplier(Supplier supplier)
         {
-            if (SupplierExists(supplier.Id))
+            if (SupplierExists(supplier.SupplierName))
             {
                 return false;
             }

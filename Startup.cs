@@ -45,6 +45,7 @@ namespace Elderson
             services.AddTransient<FAQService>();
             services.AddTransient<FormService>();
             services.AddTransient<FormMedsService>();
+            services.AddTransient<SupplierService>();
             services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.TopCenter; });
             services.AddHttpContextAccessor();
             

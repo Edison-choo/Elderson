@@ -109,8 +109,8 @@
                                 <label for="supAbbr">Medical Supplier Abbreviation:</label>
 
                             </div>
-                            <div style="width:10%;">
-                                <input asp-for="newMedication.MedSupplierAbb" type="text" class="form-control" id="supAbbr">
+                            <div style="width:20%;">
+                                @Html.DropDownList("newMedication.MedSupplierAbb", Model.abbreviations as List<SelectListItem>, "--Select Supplier--", new { @class = "form-control" })
                                 <span asp-validation-for="newMedication.MedSupplierAbb" class="text-danger"></span>
                             </div>
 
