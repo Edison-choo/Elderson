@@ -42,7 +42,7 @@ namespace Elderson.Pages.Pharmacist.Inventory
                 newInventory.MedicationId = guid;
                 newMedication.Id = guid;
                 _svc.AddMedication(newMedication);
-                _svc.AddMedicationToInventory(newInventory);
+                _svc.AddMedicationToInventory(newInventory, newMedication);
                 return RedirectToPage("InventoryList");
             }
 

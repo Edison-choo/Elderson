@@ -57,7 +57,7 @@ namespace Elderson.Pages.Pharmacist.Inventory
             updatedMedication.MedDescription = selectedMedication.MedDescription;
             updatedMedication.MedSupplierAbb = selectedMedication.MedSupplierAbb;
             updatedMedication.MedAllergyIngredients = selectedMedication.MedAllergyIngredients;
-            Boolean invValid = _svc.UpdateInventory(updatedInv);
+            Boolean invValid = _svc.UpdateInventory(updatedInv, updatedMedication);
             Boolean medValid = _svc.UpdateMedication(updatedMedication);
             if (invValid && medValid)
             {

@@ -6,3 +6,97 @@
     ViewData["Header"] = "EDIT MEDICAL SUPPLIER";
     ViewData["Breadcrumb"] = "Medical Suppiers > Edit";
 }
+
+
+<div class="row">
+    <form class="forms-sample" method="post" asp-action="">
+        <input type="hidden" asp-for="@Model.selectedSupplier.Id" value="@Model.selectedSupplier.Id" />
+
+        <div class="row">
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Incident Information</h4>
+                        <hr />
+                        <div class="form-group d-flex">
+                            <div style="width:20%;">
+                                <label for="name">Supplier Name:</label>
+
+                            </div>
+                            <div style="width:40%;">
+                                <input asp-for="selectedSupplier.SupplierName" type="text" value="selectedSupplier.SupplierName" class="form-control" id="name">
+                                <span asp-validation-for="selectedSupplier.SupplierName" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="form-group d-flex">
+                            <div style="width:20%;">
+                                <label for="abbr">Supplier Abbreviation:</label>
+
+                            </div>
+                            <div style="width:10%;">
+                                <input asp-for="selectedSupplier.SupplierAbbreviation" type="text" value="selectedSupplier.SupplierAbbreviation" class="form-control" id="abbr">
+                                <span asp-validation-for="selectedSupplier.SupplierAbbreviation" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="form-group d-flex">
+                            <div style="width:20%;">
+                                <label for="price">Supplier Phone:</label>
+
+                            </div>
+                            <div style="width:20%;">
+                                <input asp-for="selectedSupplier.SupplierPhone" type="number" value="selectedSupplier.SupplierPhone" class="form-control" id="price">
+                                <span asp-validation-for="selectedSupplier.SupplierPhone" class="text-danger"></span>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group d-flex">
+                            <div style="width:20%;">
+                                <label for="minAmt">Supplier Email:</label>
+
+                            </div>
+                            <div style="width:10%;">
+                                <input asp-for="selectedSupplier.SupplierEmail" type="text" value="selectedSupplier.SupplierEmail" class="form-control" id="minAmt">
+                                <span asp-validation-for="selectedSupplier.SupplierEmail" class="text-danger"></span>
+                            </div>
+
+                        </div><div class="form-group d-flex">
+                            <div style="width:20%;">
+                                <label for="minAmt">Supplier Address:</label>
+
+                            </div>
+                            <div style="width:10%;">
+                                <input asp-for="selectedSupplier.SuppplierWebsite" type="text" value="selectedSupplier.SuppplierWebsite" class="form-control" id="minAmt">
+                                <span asp-validation-for="selectedSupplier.SuppplierWebsite" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="form-group d-flex">
+                            <div style="width:20%;">
+                                <label for="minAmt">Supplier Website:</label>
+
+                            </div>
+                            <div style="width:10%;">
+                                <input asp-for="selectedSupplier.SupplierAddress" type="text" value="selectedSupplier.SupplierAddress" class="form-control" id="minAmt">
+                                <span asp-validation-for="selectedSupplier.SupplierAddress" class="text-danger"></span>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <button type="button" class="btn btn-primary me-2" onClick="history.go(-1); return false;">Cancel</button>
+
+                <button type="submit" class="btn btn-primary me-2">Submit</button>
+
+            </div>
+
+        </div>
+    </form>
+</div>

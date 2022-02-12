@@ -13,16 +13,16 @@ namespace Elderson.Api
 
     [Route("api/[controller]")]
     [ApiController]
-    public class SupplierController : Controller
+    public class SupplierController : ControllerBase
     {
 
 
         private readonly EldersonContext _context;
         private SupplierService _svc;
-        public SupplierController(EldersonContext context, SupplierService ser)
+        public SupplierController(EldersonContext context, SupplierService service)
         {
             _context = context;
-            _svc = ser;
+            _svc = service;
         }
 
         [HttpDelete("{Id}")]
