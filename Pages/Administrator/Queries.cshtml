@@ -52,7 +52,7 @@
                     {
                         "data": function (data, type, full) {
                             return `<div class="btn-group">
-                                            <button type="button" style="height: 35px;" class="btn btn-primary btn-l text-white mb-0 me-0" ><a href="/Administrator/Queries?id=${data.Id}">Reply</a></button>
+                                            <button type="button" style="height: 35px;" class="btn btn-primary btn-l text-white mb-0 me-0" onclick="return message('${data.UserId}')">Reply</a></button>
                                             </div>`;
                             }
                         }
@@ -95,4 +95,20 @@
     </div>
 
 </div>
+
+<script>
+    function message(userId) {
+        $.ajax({
+            url: 'https://localhost:44311/api/User/ChatUser/' + userId,
+            type: 'GET',
+            success: function (result) {
+
+                console.log(result);
+                window.location.href = "/Organization/Chat";
+
+
+            }
+        });
+    }
+</script>
 

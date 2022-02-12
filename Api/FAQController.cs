@@ -30,7 +30,7 @@ namespace Elderson.Api
             try
             {
                 allQueries = _svc.GetAllQueries();
-                var jsonStr = JsonSerializer.Serialize(allQueries.Select(x => new { x.Id, x.FullName, x.Topic, x.Question }));
+                var jsonStr = JsonSerializer.Serialize(allQueries.Select(x => new { x.Id, x.FullName, x.Topic, x.Question, x.UserId }));
                 return Ok(jsonStr);
             }
             catch (Exception ex)
