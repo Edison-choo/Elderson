@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Elderson.Models;
 using Elderson.Services;
 using System.Globalization;
+using Microsoft.AspNetCore.Http;
 
 namespace Elderson.Pages.ISR.Users
 {
@@ -29,21 +30,33 @@ namespace Elderson.Pages.ISR.Users
         {
             _svc = service;
         }
-        public void OnGet(string id)
+        public IActionResult OnGet(string id)
         {
-            SelectedUser = _svc.GetUserById(id);
-            PatientRole = _svc.GetPatientById(id);
-            AdminRole = _svc.GetAdministratorById(id);
-            DoctorRole = _svc.GetDoctorById(id);
-            if ((DoctorRole != null && DoctorRole.ClinicId != null))
+            if (HttpContext.Session.GetString("LoginUser") != null)
             {
-                SelectedClinic = _svc.GetClinicByDoctorId(DoctorRole.ClinicId);
+                if (HttpContext.Session.GetString("LoginUserType") == "ITSupport")
+                {
+
+                    SelectedUser = _svc.GetUserById(id);
+                    PatientRole = _svc.GetPatientById(id);
+                    AdminRole = _svc.GetAdministratorById(id);
+                    DoctorRole = _svc.GetDoctorById(id);
+                    if ((DoctorRole != null && DoctorRole.ClinicId != null))
+                    {
+                        SelectedClinic = _svc.GetClinicByDoctorId(DoctorRole.ClinicId);
+                    }
+                    if ((AdminRole != null && AdminRole.ClinicId != null))
+                    {
+                        SelectedClinic = _svc.GetClinicByAdminId(AdminRole.ClinicId);
+                    }
+                    Birthdate = SelectedUser.Birthdate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+                    return Page();
+                }
             }
-            if ((AdminRole != null && AdminRole.ClinicId != null))
-            {
-                SelectedClinic = _svc.GetClinicByAdminId(AdminRole.ClinicId);
-            }
-            Birthdate = SelectedUser.Birthdate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+            return Redirect("~/");
+            
         }
     }
 }

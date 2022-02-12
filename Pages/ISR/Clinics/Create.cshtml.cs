@@ -26,8 +26,18 @@ namespace Elderson.Pages.ISR.Clinics
             _logger = logger;
             _notfy = notyf;
         }
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            if (HttpContext.Session.GetString("LoginUser") != null)
+            {
+                if (HttpContext.Session.GetString("LoginUserType") == "ITSupport")
+                {
+
+                    return Page();
+                }
+            }
+
+            return Redirect("~/");
         }
 
         public IActionResult OnPost()

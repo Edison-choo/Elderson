@@ -87,8 +87,9 @@
 <script>
     $(document).ready(function () {
         $.ajax({
-            url: `http://localhost:8081/api/data?q=select count(*) from streamwhere @@Timestamp >= Now() - 1d and actionStatus = 'Successful' and userAction = 'login'`,
-            type: 'DELETE',
+            url: `http://localhost:8081/api/data?q=select%20count(*)%20from%20stream%20where%20@Timestamp%20%3E=%20Now()%20-%201d%20and%20actionStatus%20=%20%27Successful%27%20and%20userAction%20=%20%27login%27`,
+            type: 'GET',
+            headers: { 'Access-Control-Allow-Origin': 'http://localhost:8081' },
             success: function (result) {
                 console.log(result);
 

@@ -11,6 +11,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Microsoft.Extensions.Logging;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Http;
 
 namespace Elderson.Pages.ISR.Users
 {
@@ -51,10 +52,21 @@ namespace Elderson.Pages.ISR.Users
             _svc = service;
             _notfy = notyf;
         }
-        public void OnGet(string id)
+        public IActionResult OnGet(string id)
         {
-            Id = id;
-            user = _svc.GetUserById(id);
+            if (HttpContext.Session.GetString("LoginUser") != null)
+            {
+                if (HttpContext.Session.GetString("LoginUserType") == "ITSupport")
+                {
+
+                    Id = id;
+                    user = _svc.GetUserById(id);
+                    return Page();
+                }
+            }
+
+            return Redirect("~/");
+            
         }
 
         public IActionResult OnPost()

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Elderson.Models;
 using Elderson.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -24,11 +25,22 @@ namespace Elderson.Pages.ISR.Clinics
         {
             _svc = service;
         }
-        public void OnGet(string id)
+        public IActionResult OnGet(string id)
         {
-            SelectedClinic = _svc.GetClinicById(id);
-            relatedDoctors = _svc.GetDoctorUsersByClinic(SelectedClinic.Name);
-            relatedAdmins = _svc.GetAdminUsersByClinic(SelectedClinic.Name);
+            if (HttpContext.Session.GetString("LoginUser") != null)
+            {
+                if (HttpContext.Session.GetString("LoginUserType") == "ITSupport")
+                {
+
+                    SelectedClinic = _svc.GetClinicById(id);
+                    relatedDoctors = _svc.GetDoctorUsersByClinic(SelectedClinic.Name);
+                    relatedAdmins = _svc.GetAdminUsersByClinic(SelectedClinic.Name);
+                    return Page();
+                }
+            }
+
+            return Redirect("~/");
+            
         }
     }
 }

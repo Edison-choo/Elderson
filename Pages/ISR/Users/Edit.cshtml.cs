@@ -45,19 +45,30 @@ namespace Elderson.Pages.ISR.Users
             _svc = service;
             _notfy = notyf;
         }
-        public void OnGet(string id)
+        public IActionResult OnGet(string id)
         {
-            SelectedUser = _svc.GetUserById(id);
-            Birthdate = SelectedUser.Birthdate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
-            PatientRole = _svc.GetPatientById(id);
-            AdminRole = _svc.GetAdministratorById(id);
-            DoctorRole = _svc.GetDoctorById(id);
-            allClinic = _svc.GetAllClinic();
-            clinics = new List<SelectListItem>();
-            foreach (var i in allClinic)
+            if (HttpContext.Session.GetString("LoginUser") != null)
             {
-                clinics.Add(new SelectListItem { Text = i.Name, Value = i.Id });
+                if (HttpContext.Session.GetString("LoginUserType") == "ITSupport")
+                {
+
+                    SelectedUser = _svc.GetUserById(id);
+                    Birthdate = SelectedUser.Birthdate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+                    PatientRole = _svc.GetPatientById(id);
+                    AdminRole = _svc.GetAdministratorById(id);
+                    DoctorRole = _svc.GetDoctorById(id);
+                    allClinic = _svc.GetAllClinic();
+                    clinics = new List<SelectListItem>();
+                    foreach (var i in allClinic)
+                    {
+                        clinics.Add(new SelectListItem { Text = i.Name, Value = i.Id });
+                    }
+                    return Page();
+                }
             }
+
+            return Redirect("~/");
+            
         }
 
         public IActionResult OnPost()

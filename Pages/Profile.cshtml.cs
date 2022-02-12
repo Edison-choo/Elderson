@@ -63,13 +63,25 @@ namespace Elderson.Pages
             _svc = service;
             _notfy = notyf;
         }
-        public void OnGet()
+        public IActionResult OnGet()
         {
-            //Id = HttpContext.Session.GetString("LoginUser");
-            Id = "46f625fd-20fe-45b0-91f9-c6d266c16944";
-            user = _svc.GetUserById(Id);
-            PatientRole = _svc.GetPatientById(Id);
-            Birthdate = user.Birthdate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+            if (HttpContext.Session.GetString("LoginUser") != null)
+            {
+                if (HttpContext.Session.GetString("LoginUserType") == "Patient")
+                {
+
+                    Id = HttpContext.Session.GetString("LoginUser");
+                    //Id = "46f625fd-20fe-45b0-91f9-c6d266c16944";
+                    user = _svc.GetUserById(Id);
+                    PatientRole = _svc.GetPatientById(Id);
+                    Birthdate = user.Birthdate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+                    return Page();
+                }
+            }
+
+            return Redirect("~/");
+
+            
         }
 
         

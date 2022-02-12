@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Elderson.Models;
 using Elderson.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -22,10 +23,21 @@ namespace Elderson.Pages.ISR.Incidents
             _svc = service;
             _u_svc = userService;
         }
-        public void OnGet(string id)
+        public IActionResult OnGet(string id)
         {
-            SelectedIncident = _svc.GetIncidentById(id);
-            SelectedUser = _u_svc.GetUserById(SelectedIncident.UserId);
+            if (HttpContext.Session.GetString("LoginUser") != null)
+            {
+                if (HttpContext.Session.GetString("LoginUserType") == "ITSupport")
+                {
+
+                    SelectedIncident = _svc.GetIncidentById(id);
+                    SelectedUser = _u_svc.GetUserById(SelectedIncident.UserId);
+                    return Page();
+                }
+            }
+
+            return Redirect("~/");
+            
         }
     }
 }

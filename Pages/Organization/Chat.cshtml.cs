@@ -29,22 +29,24 @@ namespace Elderson.Pages.Organization
             _svc = service;
             _u_svc = userService;
         }
-        public void OnGet()
+        public IActionResult OnGet()
         {
             if (HttpContext.Session.GetString("LoginUser") != null)
             {
-                allmessages = _svc.GetAllChats(HttpContext.Session.GetString("LoginUser"));
-                allusers = new Dictionary<string, User>();
-                foreach (var user in allmessages)
+                if (HttpContext.Session.GetString("LoginUserType") != "Patient")
                 {
-                    allusers[user.Key] = _u_svc.GetUserById(user.Key);
+
+                    allmessages = _svc.GetAllChats(HttpContext.Session.GetString("LoginUser"));
+                    allusers = new Dictionary<string, User>();
+                    foreach (var user in allmessages)
+                    {
+                        allusers[user.Key] = _u_svc.GetUserById(user.Key);
+                    }
+                    return Page();
                 }
             }
-            else
-            {
-                allmessages = new Dictionary<string, List<Message>>();
-                allusers = new Dictionary<string, User>();
-            }
+
+            return Redirect("~/");
 
         }
     }

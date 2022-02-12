@@ -28,9 +28,20 @@ namespace Elderson.Pages.ISR.Clinics
             _svc = service;
             _notfy = notyf;
         }
-        public void OnGet(string id)
+        public IActionResult OnGet(string id)
         {
-            SelectedClinic = _svc.GetClinicById(id);
+            if (HttpContext.Session.GetString("LoginUser") != null)
+            {
+                if (HttpContext.Session.GetString("LoginUserType") == "ITSupport")
+                {
+
+                    SelectedClinic = _svc.GetClinicById(id);
+                    return Page();
+                }
+            }
+
+            return Redirect("~/");
+            
         }
         public IActionResult OnPost()
         {

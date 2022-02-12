@@ -46,12 +46,23 @@ namespace Elderson.Pages.Organization
             _svc = service;
             _notfy = notyf;
         }
-        public void OnGet()
+        public IActionResult OnGet()
         {
-            var id = HttpContext.Session.GetString("LoginUser");
-            id = "8bbe4522-ff24-49f9-bb94-6eff25e16f84";
-            Id = id;
-            user = _svc.GetUserById(id);
+            if (HttpContext.Session.GetString("LoginUser") != null)
+            {
+                if (HttpContext.Session.GetString("LoginUserType") != "Patient")
+                {
+
+                    var id = HttpContext.Session.GetString("LoginUser");
+                    //id = "8bbe4522-ff24-49f9-bb94-6eff25e16f84";
+                    Id = id;
+                    user = _svc.GetUserById(id);
+                    return Page();
+                }
+            }
+
+            return Redirect("~/");
+            
         }
 
         public IActionResult OnPost()
