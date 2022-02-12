@@ -17,5 +17,6 @@ namespace Elderson.Models
         public DateTime StartDate { get; set; }
         [Required, DataType(DataType.Date)]
         public DateTime EndDate { get; set; }
+        public string PatientID { get; set; }
     }
 }
