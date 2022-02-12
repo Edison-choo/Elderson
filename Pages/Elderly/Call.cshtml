@@ -103,6 +103,9 @@
             </div>
         </div>
     </div>
+    <form method="post" id="formEnd" style="margin-top:20px;">
+        <button class="btn btn-danger" style="float:right;" id="btnEnd" type="button">End Chat</button>
+    </form>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
@@ -121,6 +124,9 @@
             }
         }
     })
+    $("#btnEnd").click(function () {
+        connection.invoke("SystemMessageEnd");
+    })
     connection.on("ReceiveMessage", (user, message) => {
         console.log(user + ":" + message);
         const div = document.createElement("div");
@@ -133,6 +139,9 @@
             else if (message == "@Model.myDoctorID" + "1") {
                 $("#status").text("Offline")
                 $(".chatImg").css("border", "3px solid grey")
+            }
+            else if (message == "@Model.myCallID" + "end") {
+                $("#formEnd").submit();
             }
         }
         else {

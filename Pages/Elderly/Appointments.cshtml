@@ -30,14 +30,15 @@
                 <tr>
                     <td><div>@item.Clinic</div></td>
                     <td>@item.BookDateTime.ToString("dd MMMM yyyy HH:mm tt")</td>
-                    @if (DateTime.Now < item.BookDateTime && item.BookDateTime < DateTime.Now.AddMinutes(30))
+                    @*@if (DateTime.Now < item.BookDateTime && item.BookDateTime < DateTime.Now.AddMinutes(30))
                     {
                         <td><a asp-page="/Elderly/Call" asp-route-id="@item.Id" class="btn btn-primary">Join Call</a></td>
                     }
                     else
                     {
                         <td><button class="btn btn-primary" disabled>Join Call</button></td>
-                    }
+                    }*@
+                    <td><a asp-page="/Elderly/Call" asp-route-id="@item.Id" class="btn btn-primary">Join Call</a></td>
                     <td style="text-align: right;">
                         <div class="dropdown">
                             <button class="btn dropdown-toggle"

@@ -27,7 +27,7 @@ namespace Elderson.Pages.Elderly
         {
             if (HttpContext.Session.GetString("LoginUser") != null)
             {
-                myBooking = _svc.GetBookingById(id);
+                myBooking = _svc.GetCanRescheduleBookingById(id);
             }
             else
             {
@@ -39,6 +39,7 @@ namespace Elderson.Pages.Elderly
             Booking updatedBook = _svc.GetBookingById(myBooking.Id);
             DateTime dateTime = updatedBook.BookDateTime;
             updatedBook.BookDateTime = myDateTime;
+            updatedBook.Status = "r";
             try
             {
                 Schedule schedule = _sSvc.GetScheduleByDateTime(updatedBook.BookDateTime);

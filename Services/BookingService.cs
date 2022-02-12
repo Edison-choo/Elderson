@@ -18,7 +18,13 @@ namespace Elderson.Services
         public List<Booking> GetBookingOfUser(string id)
         {
             List<Booking> AllUserBookings = new List<Booking>();
-            AllUserBookings = _context.Booking.Where(b => (b.PatientID == id) && (b.BookDateTime > DateTime.Now)).ToList();
+            AllUserBookings = _context.Booking.Where(b => (b.PatientID == id) && (b.BookDateTime > DateTime.Now) && (b.Status != "c")).ToList();
+            return AllUserBookings;
+        }
+        public List<Booking> GetBookingHistoryOfUser(string id)
+        {
+            List<Booking> AllUserBookings = new List<Booking>();
+            AllUserBookings = _context.Booking.Where(b => (b.PatientID == id) && (b.BookDateTime > DateTime.Now) && (b.Status == "c")).ToList();
             return AllUserBookings;
         }
         public List<Booking> GetBookingOfDoctor(string id)
@@ -30,6 +36,11 @@ namespace Elderson.Services
         public Booking GetBookingById(string id)
         {
             Booking book = _context.Booking.Where(b => (b.Id == id) && (b.BookDateTime > DateTime.Now)).FirstOrDefault();
+            return book;
+        }
+        public Booking GetCanRescheduleBookingById(string id)
+        {
+            Booking book = _context.Booking.Where(b => (b.Id == id) && (b.BookDateTime > DateTime.Now) && (b.Status.ToLower() != "r")).FirstOrDefault();
             return book;
         }
         public Booking GetBookingByCallId(string id)

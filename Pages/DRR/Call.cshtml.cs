@@ -13,8 +13,6 @@ namespace Elderson.Pages.DRR
     public class CallModel : PageModel
     {
         [BindProperty]
-        public string booking_id { get; set; }
-        [BindProperty]
         public string myUserID { get; set; }
         [BindProperty]
         public string myCallID { get; set; }
@@ -39,7 +37,6 @@ namespace Elderson.Pages.DRR
             {
                 Redirect("~/Login");
             }
-            booking_id = id;
             myCallID = _svc.GetBookingById(id).CallUUID;
             myPatientID = _svc.GetBookingById(id).PatientID;
             myPatientName = _uSvc.GetNameById(myPatientID);
@@ -47,10 +44,10 @@ namespace Elderson.Pages.DRR
         }
         public IActionResult OnPost()
         {
-            Booking myBooking = _svc.GetBookingById(booking_id);
+            Booking myBooking = _svc.GetBookingByCallId(HttpContext.Session.GetString("CallID"));
             myBooking.Status = "c";
             _svc.UpdateBooking(myBooking);
-            return RedirectToPage("/");
+            return RedirectToPage("~/DRR/");
         }
     }
 }

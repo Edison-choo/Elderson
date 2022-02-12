@@ -41,5 +41,9 @@ namespace Elderson.Pages.Elderly
             myDoctorName = _uSvc.GetNameById(myDoctorID);
             HttpContext.Session.SetString("CallID", myCallID);
         }
+        public IActionResult OnPost()
+        {
+            return RedirectToPage("~/");
+        }
     }
 }
