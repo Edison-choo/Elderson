@@ -16,7 +16,7 @@ namespace Elderson.Pages.Pharmacist.Inventory
         public MedInventory SelectedInventoryItem { get; set; }
         [BindProperty]
         public Medication SelectedMedication { get; set; }
-        public string supplier { get; set; }
+        public List<string> supplier { get; set; }
         private InventoryService _svc;
         private SupplierService _sup_svc;
         public ViewInventoryObjModel(InventoryService service, SupplierService supplier_service)
@@ -28,8 +28,17 @@ namespace Elderson.Pages.Pharmacist.Inventory
         {
             SelectedInventoryItem = _svc.GetInvMedicationById(id);
             SelectedMedication = _svc.GetMedicationById(id);
+            supplier = new List<string>();
+            if (SelectedMedication.MedSupplierID != null)
+            {
 
-            string supplier = String.Format("<a href=\"/Pharmacist/MedSup/ViewSupplierObj?id={0}\">{1}</a>", SelectedMedication.MedSupplierID, SelectedMedication.MedSupplierAbb);
+                supplier.Add(String.Format("<a href=\"/Pharmacist/MedSup/ViewSupplierObj?id={0}\">{1}</a>", SelectedMedication.MedSupplierID, SelectedMedication.MedSupplierAbb));
+
+            }
+            else
+            {
+                supplier = null;
+            }
         }
     }
 }

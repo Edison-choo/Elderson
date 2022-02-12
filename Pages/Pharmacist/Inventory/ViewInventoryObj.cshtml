@@ -88,9 +88,14 @@
                                 }
                                 else
                                 {
-                                    
+                                    string concat = "";
+                                    foreach (var a in Model.supplier)
+                                    {
+                                        concat = concat + " " + a + ".";
+                                    }
 
-                                    @Html.Raw(@Model.supplier)
+                                    @Html.Raw(concat);
+                                    
                                 }
                             </div>
                         </div>
