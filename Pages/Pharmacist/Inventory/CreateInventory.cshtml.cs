@@ -54,7 +54,7 @@ namespace Elderson.Pages.Pharmacist.Inventory
                 newInventory.MedicationId = guid;
                 newMedication.Id = guid;
 
-                if ( _svc.AddMedicationToInventory(newInventory, newMedication) && _svc.AddMedication(newMedication))
+                if ( _svc.AddMedicationToInventory(newInventory, newMedication))
                 {
 
                     return RedirectToPage("InventoryList");

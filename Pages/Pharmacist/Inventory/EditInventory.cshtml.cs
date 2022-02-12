@@ -6,6 +6,7 @@ using Elderson.Models;
 using Elderson.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 
 namespace Elderson.Pages.Pharmacist.Inventory
@@ -20,19 +21,30 @@ namespace Elderson.Pages.Pharmacist.Inventory
 
         public MedInventory updatedInv { get; set; }
         public Medication updatedMedication { get; set; }
-
+        [BindProperty]
+        public List<SelectListItem> abbreviations { get; set; }
+        public List<Supplier> suppliers { get; set; }
 
         private InventoryService _svc;
+        private SupplierService _supplier_svc;
+
         private readonly ILogger<EditInventoryModel> _logger;
-        public EditInventoryModel(ILogger<EditInventoryModel> logger, InventoryService service)
+        public EditInventoryModel(ILogger<EditInventoryModel> logger, InventoryService service, SupplierService supplier_service)
         {
             _svc = service;
             _logger = logger;
+            _supplier_svc = supplier_service;
         }
         public void OnGet(string id)
         {
             selectedInv = _svc.GetInvMedicationById(id);
             selectedMedication = _svc.GetMedicationById(id);
+            suppliers = _supplier_svc.GetAllSuppliers();
+            abbreviations = new List<SelectListItem>();
+            foreach (var a in suppliers)
+            {
+                abbreviations.Add(new SelectListItem { Text = a.SupplierAbbreviation, Value = a.SupplierAbbreviation });
+            }
         }
 
         public IActionResult OnPost()

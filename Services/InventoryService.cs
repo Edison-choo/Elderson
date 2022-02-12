@@ -55,7 +55,7 @@ namespace Elderson.Services
 
         public bool AddMedicationToInventory(MedInventory inventory, Medication medication)
         {
-            if (!AddMedication())
+            if (MedicationExists(medication.MedName))
             {
                 return false;
             } 
@@ -63,21 +63,13 @@ namespace Elderson.Services
             {
 
                 _context.Add(inventory);
+                _context.Add(medication);
                 _context.SaveChanges();
                 return true;
             }
             return false;
         }
-        public bool AddMedication(Medication medication)
-        {
-            if (MedicationExists(medication.MedName))
-            {
-                return false;
-            }
-            _context.Add(medication);
-            _context.SaveChanges();
-            return true;
-        }
+        
 
         public bool UpdateMedication(Medication medication)
         {

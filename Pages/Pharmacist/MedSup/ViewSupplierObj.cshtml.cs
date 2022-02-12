@@ -13,14 +13,24 @@ namespace Elderson.Pages.Pharmacist.MedSup
     {
         [BindProperty]
         public Supplier SelectedSupplier { get; set; }
+
+        public ArrayList<string> medAbbreviations { get; set; }
+        public List<Medication> Medications { get; set; }
         private SupplierService _svc;
-        public ViewSupplierObjModel(SupplierService service)
+        private InventoryService _med_svc;
+        public ViewSupplierObjModel(SupplierService service, InventoryService inventory_service)
         {
             _svc = service;
+            _med_svc = inventory_service;
         }
         public void OnGet(string id)
         {
             SelectedSupplier = _svc.GetSupplierbyId(id);
+            Medications = _med_svc.GetAllMedications();
+            foreach (var m in Medications)
+            {
+                medAbbreviations.Add("", m.Id);
+            }
         }
     }
 }
