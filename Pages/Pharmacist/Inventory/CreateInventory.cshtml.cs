@@ -53,6 +53,7 @@ namespace Elderson.Pages.Pharmacist.Inventory
                 newInventory.Id = guid;
                 newInventory.MedicationId = guid;
                 newMedication.Id = guid;
+                newMedication.MedSupplierID = 
 
                 if ( _svc.AddMedicationToInventory(newInventory, newMedication))
                 {

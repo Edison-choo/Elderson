@@ -21,5 +21,6 @@ namespace Elderson.Models
         public string MedSupplierAbb { get; set; }
 
         public string MedAllergyIngredients { get; set; }
+        public string MedSupplierID { get; set; }
     }
 }
