@@ -61,9 +61,11 @@ namespace Elderson.Services
             } 
             else if (!MedicationExists(medication.MedName))
             {
-
-                _context.Add(inventory);
                 _context.Add(medication);
+
+                _context.SaveChanges();
+                _context.Add(inventory);
+
                 _context.SaveChanges();
                 return true;
             }

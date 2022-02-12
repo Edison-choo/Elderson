@@ -24,7 +24,7 @@
 
                             </div>
                             <div style="width:40%;">
-                                <input asp-for="selectedSupplier.SupplierName" type="text" value="selectedSupplier.SupplierName" class="form-control" id="name">
+                                <input asp-for="selectedSupplier.SupplierName" type="text" value="@Model.selectedSupplier.SupplierName" class="form-control" id="name">
                                 <span asp-validation-for="selectedSupplier.SupplierName" class="text-danger"></span>
                             </div>
 
@@ -35,7 +35,7 @@
 
                             </div>
                             <div style="width:10%;">
-                                <input asp-for="selectedSupplier.SupplierAbbreviation" type="text" value="selectedSupplier.SupplierAbbreviation" class="form-control" id="abbr">
+                                <input asp-for="selectedSupplier.SupplierAbbreviation" type="text" value="@Model.selectedSupplier.SupplierAbbreviation" class="form-control" id="abbr">
                                 <span asp-validation-for="selectedSupplier.SupplierAbbreviation" class="text-danger"></span>
                             </div>
 
@@ -46,7 +46,7 @@
 
                             </div>
                             <div style="width:20%;">
-                                <input asp-for="selectedSupplier.SupplierPhone" type="number" value="selectedSupplier.SupplierPhone" class="form-control" id="price">
+                                <input asp-for="selectedSupplier.SupplierPhone" type="number" value="@Model.selectedSupplier.SupplierPhone" class="form-control" id="price">
                                 <span asp-validation-for="selectedSupplier.SupplierPhone" class="text-danger"></span>
                             </div>
 
@@ -58,7 +58,7 @@
 
                             </div>
                             <div style="width:40%;">
-                                <input asp-for="selectedSupplier.SupplierEmail" type="text" value="selectedSupplier.SupplierEmail" class="form-control" id="minAmt">
+                                <input asp-for="selectedSupplier.SupplierEmail" type="text" value="@Model.selectedSupplier.SupplierEmail" class="form-control" id="minAmt">
                                 <span asp-validation-for="selectedSupplier.SupplierEmail" class="text-danger"></span>
                             </div>
 
@@ -68,7 +68,7 @@
 
                             </div>
                             <div style="width:40%;">
-                                <input asp-for="selectedSupplier.SupplierWebsite" type="text" value="selectedSupplier.SuppplierWebsite" class="form-control" id="minAmt">
+                                <input asp-for="selectedSupplier.SupplierWebsite" type="text" value="@Model.selectedSupplier.SupplierWebsite" class="form-control" id="minAmt">
                                 <span asp-validation-for="selectedSupplier.SupplierWebsite" class="text-danger"></span>
                             </div>
 
@@ -79,7 +79,7 @@
 
                             </div>
                             <div style="width:60%;">
-                                <input asp-for="selectedSupplier.SupplierAddress" type="text" value="selectedSupplier.SupplierAddress" class="form-control" id="minAmt">
+                                <input asp-for="selectedSupplier.SupplierAddress" type="text" value="@Model.selectedSupplier.SupplierAddress" class="form-control" id="minAmt">
                                 <span asp-validation-for="selectedSupplier.SupplierAddress" class="text-danger"></span>
                             </div>
 

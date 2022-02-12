@@ -17,14 +17,18 @@ namespace Elderson.Pages.Pharmacist.Inventory
         [BindProperty]
         public Medication SelectedMedication { get; set; }
         private InventoryService _svc;
-        public ViewInventoryObjModel(InventoryService service)
+        private SupplierService _sup_svc;
+        public ViewInventoryObjModel(InventoryService service, SupplierService supplier_service)
         {
             _svc = service;
+            _sup_svc = supplier_service;
         }
         public void OnGet(string id)
         {
             SelectedInventoryItem = _svc.GetInvMedicationById(id);
             SelectedMedication = _svc.GetMedicationById(id);
+            
+            string supplier = SelectedMedication.MedSupplierID
         }
     }
 }

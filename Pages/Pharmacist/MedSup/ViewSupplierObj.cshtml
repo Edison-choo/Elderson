@@ -9,7 +9,7 @@
 }
 
 <style>
-    a {
+    .dropdown-item {
         color: white;
         text-decoration: none;
     }
@@ -92,7 +92,7 @@
                                 Website:
                             </p>
                             <div class="profileData">
-                                $@Model.SelectedSupplier.SupplierWebsite
+                                @Model.SelectedSupplier.SupplierWebsite
                             </div>
                         </div>
                         <div>
@@ -108,14 +108,21 @@
                                 Supplied Medications:
                             </div>
                             <div class="profileData">
-                                @if (Model.SelectedSupplier.SuppliedMeds == null)
+                                @if (Model.medAbbreviations != null)
                                 {
-                                    @:NA (Not Applicable)
-                                }
-                                else
-                                {
-                                    @Model.SelectedSupplier.SuppliedMeds
-                                }
+                                    string concat = "";
+                                    foreach (var a in Model.medAbbreviations)
+                                    {
+                                        concat = concat + " " + a + ".";
+                                    }
+
+                                    @Html.Raw(concat);
+                                    }
+                                    else
+                                    {
+                                        @:NULL
+                                    }
+                                @*<a href="/Pharmacist/Inventory/ViewInventoryObj?id=057af492-ab2f-4522-ae0b-7deb72750cdb">CSP</a>*@
                             </div>
                         </div>
 

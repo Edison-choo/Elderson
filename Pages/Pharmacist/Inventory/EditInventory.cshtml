@@ -11,6 +11,7 @@
     <form class="forms-sample" method="post" asp-action="">
         <input type="hidden" asp-for="@Model.selectedMedication.Id" value="@Model.selectedMedication.Id" />
         <input type="hidden" asp-for="@Model.selectedInv.Id" value="@Model.selectedInv.Id" />
+        <input type="hidden" asp-for="@Model.selectedMedication.MedSupplierID" value="@Model.selectedMedication.MedSupplierID" />
         <div class="row">
             <div class="col-12 grid-margin stretch-card">
                 <div class="card">
@@ -90,7 +91,7 @@
 
                             </div>
                             <div style="width:10%;">
-                                <input asp-for="selectedMedication.MedAllergyIngredients"  value="@Model.selectedMedication.MedSupplierAbb" type="text" class="form-control" id="minAmt">
+                                <input asp-for="selectedMedication.MedAllergyIngredients" value="@Model.selectedMedication.MedSupplierAbb" type="text" class="form-control" id="minAmt">
                                 <span asp-validation-for="selectedMedication.MedAllergyIngredients" class="text-danger"></span>
                             </div>
 

@@ -51,7 +51,7 @@ namespace Elderson.Pages.Pharmacist.MedSup
             Boolean Valid = _svc.UpdateSupplier(updatedSupplier);
             if (Valid)
             {
-                return RedirectToPage("InventoryList");
+                return RedirectToPage("SupplierList");
             }
 
             return Page();
