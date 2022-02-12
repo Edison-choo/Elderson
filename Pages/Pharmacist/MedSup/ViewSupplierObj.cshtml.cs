@@ -29,7 +29,10 @@ namespace Elderson.Pages.Pharmacist.MedSup
             Medications = _med_svc.GetAllMedications();
             foreach (var m in Medications)
             {
-                medAbbreviations.Add("", m.Id);
+                if (SelectedSupplier.Id.Equals(m.MedSupplierID))
+                {
+                    
+                }
             }
         }
     }
