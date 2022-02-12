@@ -11,6 +11,7 @@ using System.Text;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.Extensions.Options;
 
 namespace Elderson.Pages.Users
 {
@@ -28,6 +29,7 @@ namespace Elderson.Pages.Users
         private UserService _svc;
         private readonly ILogger<LoginModel> _logger;
         private readonly INotyfService _notfy;
+
         public LoginModel(ILogger<LoginModel> logger, UserService service, INotyfService notyf)
         {
             _logger = logger;

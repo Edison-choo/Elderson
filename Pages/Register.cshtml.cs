@@ -131,8 +131,8 @@ namespace Elderson.Pages
              <p> If you did not sign up to Elderson, please ignore this email or contact us at eldersonheelpdesk@gmail.com </p>
                 <p> Edison </p>
                 <p> IT Support Team</p>
-                   <button style = 'margin: 10px auto;'> Verify Email </button>
-                    </div> ";
+                   <button style = 'margin: 10px auto;' onclick='location.href = 'http://www.example.com''> Verify Email </button>
+                      </div> ";
 
             message.Body = bodyBuilder.ToMessageBody();
 

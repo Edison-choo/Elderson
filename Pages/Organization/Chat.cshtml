@@ -189,7 +189,7 @@
             }
 
                 .message ul li:last-child {
-                    margin-bottom: 20px;
+                    margin-bottom: 50px;
                 }
 
                 .message ul li.msg-left {
@@ -383,7 +383,7 @@
         display: block;
     }
 
-    .pictureDisplay {
+    .pictureDisplay, .extendPictureDisplay {
         overflow: hidden;
         background-color: #808080;
         position: absolute;
@@ -395,38 +395,51 @@
         display: none;
     }
 
-        .pictureDisplay button {
-            float: right;
-            z-index: 6;
-            height: 50px;
-            width: 50px;
-            background-color: transparent;
-            border: none;
-            display: block;
-        }
+    .displayImg {
+        cursor: pointer;
+    }
 
-            .pictureDisplay button:last-child {
-                width: auto;
-                margin-right: 20px;
-                height: 40px;
-                border: solid white 1px;
-                color: white;
-            }
+    .pictureDisplay button, .extendPictureDisplay button {
+        float: right;
+        z-index: 6;
+        height: 50px;
+        width: 50px;
+        background-color: transparent;
+        border: none;
+        display: block;
+    }
 
-        .pictureDisplay i {
-            margin-top: 20px;
-            color: white;
+        .pictureDisplay button:last-child {
+            width: auto;
+            margin-right: 20px;
             height: 40px;
-            width: 40px;
+            border: solid white 1px;
+            color: white;
         }
 
-        .pictureDisplay img {
-            margin: 80px auto;
-            clear: both;
-            display: block;
-            box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-            object-fit: contain;
-        }
+    .pictureDisplay i, .extendPictureDisplay i {
+        margin-top: 20px;
+        color: white;
+        height: 40px;
+        width: 40px;
+    }
+
+    .pictureDisplay img, extendPictureDisplay img {
+        margin: 80px auto;
+        clear: both;
+        display: block;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+        object-fit: contain;
+    }
+
+    .extendPictureDisplay img {
+        margin: 100px auto;
+        margin-right: 40px;
+    }
+
+    .headRight-sub div img {
+        display:none;
+    }
 </style>
 
 <div class="main-section d-flex justify-content-center" style="background-color:transparent;">
@@ -499,9 +512,9 @@
     <div class="right card d-flex align-content-between">
         <div class="head-section">
             <div class="headRight-section d-flex justify-content-between">
-                <div class="headRight-sub">
-                    <h3></h3>
-                    <small></small>
+                <div class="headRight-sub d-flex">
+                    <h3>test</h3>
+                    <div><img src="~/images/loadingAnim.gif" alt="loading" height="30"/></div>
                 </div>
                 <div class="chatSetting">
                     <i onclick="displaySetting()" style="font-size:1.5em;" class="mdi mdi-dots-vertical"></i>
@@ -518,7 +531,7 @@
                 <div class="message wholeChat" data-mcs-theme="minimal-dark">
                     <ul id="messageList" class="test showActive " style="overflow:hidden;">
                         <li>
-                            @{ 
+                            @{
                                 if (!Model.allmessages.ContainsKey("ISRChat") || HttpContext.Session.GetString("ChatUser") != "ISRChat")
                                 {
                                     <div class="defaultChat" style="">
@@ -528,7 +541,7 @@
                                     </div>
 
                                 }
-                                
+
                             }
                         </li>
                     </ul>
@@ -553,7 +566,7 @@
                                             }
                                             else
                                             {
-                                                <li class="msg-left">
+                                                <li class="msg-left displayImg">
                                                     <div class="msg-left-sub">
                                                         <div class="msg-desc">
                                                             <img src="~/uploads/images/@(msg.Text.Split(" ")[1])" alt="Alternate Text" height="100" width="100" />
@@ -579,7 +592,7 @@
                                             }
                                             else
                                             {
-                                                <li class="msg-right">
+                                                <li class="msg-right displayImg">
                                                     <div class="msg-right-sub">
                                                         <div class="msg-desc">
                                                             <img src="~/uploads/images/@(msg.Text.Split(" ")[1])" alt="Alternate Text" height="100" width="100" />
@@ -604,7 +617,10 @@
                         }
 
                     }
-
+                    <div id="messageList" class="extendPictureDisplay" style="overflow:hidden;">
+                        <button onclick="closePicture()" style="float:left;" type="button"><i class="fa fa-close fa-lg"></i></button>
+                        <img id="extendPhoto" src="~/images/defaultChat.png" alt="Error" height="350" width="350" />
+                    </div>
                     <div id="messageList" class="pictureDisplay" style="overflow:hidden;">
                         <button onclick="closePicture()" style="float:left;" type="button"><i class="fa fa-close fa-lg"></i></button>
                         <img id="chatPhoto" src="~/images/defaultChat.png" alt="Error" height="350" width="350" />
@@ -700,21 +716,21 @@
         console.log("sending..." + user);
 
         document.getElementById("messageInput").value = "";
+        connection.invoke("SendLoadingToGroup", userId, toUserId, $("#messageInput")[0].value).catch(function (err) {
+            return console.error(err.toString());
+        });
         let message = new Message(user, text, new Date(), userId, toUserId);
         console.log(`sending ${message} says ${message.text} at ${message.when}`);
 
 
         var li = document.createElement("li");
-        var divFirst = document.createElement("div");
         var divSecond = document.createElement("div");
         var divThird = document.createElement("div");
         var small = document.createElement("small");
         li.setAttribute("class", "msg-right")
-        divFirst.setAttribute("class", "msg-right")
         divSecond.setAttribute("class", "msg-right-sub")
         divThird.setAttribute("class", "msg-desc")
-        li.appendChild(divFirst);
-        divFirst.appendChild(divSecond);
+        li.appendChild(divSecond);
         divSecond.appendChild(divThird);
         divSecond.appendChild(small);
 
@@ -728,6 +744,9 @@
         connection.invoke("SendMessageToGroup", toUserId, message).catch(function (err) {
             return console.error(err.toString());
         });
+
+        scrollBottom();
+
         event.preventDefault();
     });
 
@@ -739,22 +758,20 @@
 
         if ('@HttpContext.Session.GetString("LoginUser")' != message.userId && '@HttpContext.Session.GetString("LoginUser")' == message.toUserId) {
             var li = document.createElement("li");
-            var divFirst = document.createElement("div");
             var divSecond = document.createElement("div");
             var divThird = document.createElement("div");
             var small = document.createElement("small");
 
             li.setAttribute("class", "msg-left")
-            divFirst.setAttribute("class", "msg-left")
             divSecond.setAttribute("class", "msg-left-sub")
             divThird.setAttribute("class", "msg-desc")
 
-            li.appendChild(divFirst);
-            divFirst.appendChild(divSecond);
+            li.appendChild(divSecond);
             divSecond.appendChild(divThird);
             divSecond.appendChild(small);
 
             if (message.text.indexOf("filen@me") != -1) {
+                li.classList.add("displayImg");
                 divThird.innerHTML = `<img src="/uploads/images/${message.text.split(" ")[1]}" alt="ChatImage" height="100" width="100" />`;
             } else {
                 divThird.textContent = `${message.text}`;
@@ -780,6 +797,8 @@
                 document.getElementsByClassName(message.userId)[0].appendChild(li);
 
             }
+
+            scrollBottom();
         }
 
     });
@@ -873,7 +892,7 @@
         toUserId = userId;
         console.log(toUserId);
 
-
+        scrollBottom();
     }
 
     $(".startISRChat").on("click", function () {
@@ -895,8 +914,16 @@
         }
     }
 
+    $(document.body).on("click", ".displayImg", function () {
+        console.log($(this).find("img").attr("src"));
+        $("#extendPhoto").attr("src", `${$(this).find("img").attr("src")}`);
+        $(".extendPictureDisplay").show();
+
+    });
+
     function closePicture() {
         $(".pictureDisplay").hide();
+        $(".extendPictureDisplay").hide();
         $("#fileInput").val("");
     }
 
@@ -953,7 +980,22 @@
     $("document").ready(function () {
         console.log(document.forms[3]);
         console.log(document.forms[4]);
+
+        scrollBottom();
     });
+
+    function scrollBottom() {
+        const out = $(".showActive")[0];
+
+        const isScrolledToBottom = out.scrollHeight - out.clientHeight <= out.scrollTop + 1
+
+        console.log(isScrolledToBottom);
+
+        // scroll to bottom if isScrolledToBottom is true
+        if (!isScrolledToBottom) {
+            out.scrollTop = out.scrollHeight - out.clientHeight
+        }
+    }
 
     function sendPicture(filename) {
        var user = '@HttpContext.Session.GetString("LoginUserName")';
@@ -968,19 +1010,17 @@
 
 
         var li = document.createElement("li");
-        var divFirst = document.createElement("div");
         var divSecond = document.createElement("div");
         var divThird = document.createElement("div");
         var small = document.createElement("small");
         li.setAttribute("class", "msg-right")
-        divFirst.setAttribute("class", "msg-right")
         divSecond.setAttribute("class", "msg-right-sub")
         divThird.setAttribute("class", "msg-desc")
-        li.appendChild(divFirst);
-        divFirst.appendChild(divSecond);
+        li.appendChild(divSecond);
         divSecond.appendChild(divThird);
         divSecond.appendChild(small);
 
+        li.classList.add("displayImg");
         divThird.innerHTML = `<img src="/uploads/images/${filename}" alt="ChatImage" height="100" width="100" />`;
         small.textContent = `${message.when.toLocaleString().split(" ")[1].slice(0, -3) + message.when.toLocaleString().split(" ")[2]}`;
 
@@ -992,4 +1032,24 @@
             return console.error(err.toString());
         });
     }
+
+    $("#messageInput").on("keyup", function () {
+        var userId = '@HttpContext.Session.GetString("LoginUser")';
+        connection.invoke("SendLoadingToGroup", userId, toUserId, $("#messageInput")[0].value).catch(function (err) {
+            return console.error(err.toString());
+        });
+
+    });
+
+    connection.on("ReceiveLoading", function (userId, message) {
+        console.log(userId, message)
+
+        if ($(".chatActive").attr("id") == userId) {
+            if (message != "") {
+                $(".headRight-sub div img").show();
+            } else {
+                $(".headRight-sub div img").hide();
+            }
+        }
+    });
 </script>

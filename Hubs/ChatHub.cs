@@ -103,5 +103,12 @@ namespace Elderson.Hubs
 
             return Clients.Group(userId).SendAsync("ReceiveDeleteNoti", itsId);
         }
+
+        public Task SendLoadingToGroup(string userId, string toUserId, string message)
+        {
+            Console.WriteLine(userId, message);
+
+            return Clients.Group(toUserId).SendAsync("ReceiveLoading", userId, message);
+        }
     }
 }

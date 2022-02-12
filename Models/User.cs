@@ -23,5 +23,6 @@ namespace Elderson.Models
         public DateTime CreatedAt { get; set; }
         public string PasswordSalt { get; set; }
         public string CountryCode { get; set; }
+        public string IsVerified { get; set; }
     }
 }
