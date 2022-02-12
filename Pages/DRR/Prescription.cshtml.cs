@@ -88,8 +88,16 @@ namespace Elderson.Pages.DRR
             Prescription prescription = new Prescription();
             prescription.Id = Guid.NewGuid().ToString();
             prescription.PatientName = patientuser.Fullname;
-            prescription.PatientId = patientuser.Fullname;
+            prescription.PatientId = booking.PatientID;
+            prescription.FormId = currentform_id;
+            prescription.DoctorName = _usrsvc.GetUserById(HttpContext.Session.GetString("LoginUser")).Fullname;
+            prescription.Date = DateTime.Now;
+            prescription.Status = "0";
+            prescription.Symptoms = booking.Symptoms;
+            prescription.BookingId = booking_id;
+            prescription.DoctorId = HttpContext.Session.GetString("LoginUser");
 
+            _pssvc.AddPrescription(prescription);
 
             return RedirectToPage("Consultation");
         }

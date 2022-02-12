@@ -60,6 +60,8 @@
 
 <form method="post">
     <input type="hidden" asp-for="currentform_id" id="newformid" />
+    <input type="hidden" asp-for="booking_id" />
+    <input type="hidden" asp-for="booking.PatientID" />
     <div>
         <p><h3>Patient Name</h3></p>
         <input asp-for="patientuser.Fullname" class="customForm-input" readonly />
