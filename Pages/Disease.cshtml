@@ -1,0 +1,71 @@
+﻿@page
+@model Elderson.Pages.DiseaseModel
+@{
+}
+<nav aria-label="breadcrumb" style="margin:35px;">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Elderson</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Disease Search</li>
+    </ol>
+    <h3>Disease Search</h3>
+</nav>
+<div class="container">
+    <h3>Searched for: @Model.searchString</h3>
+    <div id="diseaseBody">
+
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    getDisease()
+    async function getDisease() {
+        try {
+            var response = await fetch(`https://disease-info-api.herokuapp.com/diseases/` + "@Model.searchString")
+            if ("@Model.searchString".length == 0) {
+            formatDisease()
+            }
+            else {
+                formatDiseases()
+            }
+        }
+        catch {
+            $("#diseaseBody").append(`<h3 style="text-align:center; margin:50px;"><i class="fas fa-exclamation-triangle"></i> No results for "${"@Model.searchString"}"</h3>`)
+        }
+        disease = await response.json();
+
+    }
+    function formatDisease() {
+        for (var i = 0; i < disease.diseases.length; i++) {
+            $("#diseaseBody").append(`
+            <div class="card" style="margin:10px;">
+                <div class="card-body">
+                <h5 class="card-title">${disease.diseases[i].name}</h5>
+                <p>${disease.diseases[i].facts[0]}</p>
+                <a href="Disease?search=${encodeURIComponent(disease.diseases[i].name)}" class="btn btn-primary">Click to learn more</a>
+                </div>
+            </div>
+        `)
+        }
+    }
+    function formatDiseases() {
+        $("#diseaseBody").append(`
+                <div class="card" style="margin:10px;">
+                  <div class="card-body">
+                    <h3 class="card-title">${disease.disease.name}</h3>
+                    <h6 class="card-subtitle mb-2 text-muted">Last updated: ${disease.disease.data_updated_at}</h6>
+                    <hr/>
+                    <p class="card-text">
+                        <h6>Symptoms:</h6>
+                        <p>${disease.disease.symptoms}</p>
+                        <h6>Diagnosis:</h6>
+                        <p>${disease.disease.diagnosis}</p>
+                        <h6>Treatment:</h6>
+                        <p>${disease.disease.treatment}</p>
+                        <h6>Prevention:</h6>
+                        <p>${disease.disease.prevention}</p>
+                    </p>
+                  </div>
+                </div>
+            `)
+    }
+</script>

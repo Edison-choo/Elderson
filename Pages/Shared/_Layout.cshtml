@@ -50,8 +50,9 @@
                 </a>
 
                 <!-- Search form -->
-                <form class="input-group w-auto my-auto d-none d-sm-flex">
+                <div class="input-group w-auto my-auto d-none d-sm-flex">
                     <input autocomplete="off"
+                           id="diseaseSearch"
                            type="search"
                            class="form-control rounded"
                            placeholder="Search"
@@ -59,7 +60,7 @@
                     <span class="input-group-text border-0 d-none d-lg-flex">
                         <i class="fas fa-search"></i>
                     </span>
-                </form>
+                </div>
             </div>
             <!-- Left elements -->
             <!-- Center elements -->
@@ -257,7 +258,13 @@
     <script src="~/js/main.js"></script>
     <!-- MDB -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.10.1/mdb.min.js"></script>
-
+    <script>
+        $("#diseaseSearch").on("keypress", function (e) {
+            if (e.which == 13) {
+                window.location.replace(`/Disease?search=${encodeURIComponent($("#diseaseSearch").val())}`)
+            }
+        })
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
