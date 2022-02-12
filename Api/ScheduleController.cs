@@ -47,6 +47,26 @@ namespace Elderson.Api
 
         }
 
+        // GET: api/<ScheduleController>/DoctorSchedule
+        [HttpGet("GetDoctorSchedule/{doctor_id}", Name = "GetDoctorSchedule")]
+        public ActionResult<List<Schedule>> GetDoctorSchedule(string doctor_id)
+        {
+            List<Schedule> allschedule = new List<Schedule>();
+
+            try
+            {
+                allschedule = _svc.GetScheduleByDoctorTime(doctor_id);
+                var jsonStr = JsonSerializer.Serialize(allschedule.Select(x => new { x.Id, x.DoctorId, x.StartDateTime }));
+                return Ok(jsonStr);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("instalmentController.getCarLoan", ex);
+                return BadRequest();
+            }
+
+        }
+
         // GET: api/<ScheduleController>/GetAllBookings/doctor_id
         [HttpGet("GetAllBookings/{doctor_id}", Name = "GetAllBookings")]
         public ActionResult<List<Booking>> GetAllBookings(string doctor_id)
@@ -56,7 +76,7 @@ namespace Elderson.Api
             try
             {
                 allbookings = _bksvc.GetBookingOfDoctor(doctor_id);
-                var jsonStr = JsonSerializer.Serialize(allbookings.Select(x => new { x.Id, x.Clinic, x.BookDateTime, x.Symptoms, x.PatientID, x.DoctorID, x.CallUUID, x.FormId, PatientName = _usrsvc.GetUserById(x.PatientID).Fullname, date = x.BookDateTime.Date.ToShortDateString(), time = x.BookDateTime.ToLongTimeString() }));
+                var jsonStr = JsonSerializer.Serialize(allbookings.Select(x => new { x.Id, x.Clinic, x.BookDateTime, x.Symptoms, x.PatientID, x.DoctorID, x.CallUUID, x.FormId, x.Status, PatientName = _usrsvc.GetUserById(x.PatientID).Fullname, date = x.BookDateTime.Date.ToShortDateString(), time = x.BookDateTime.ToLongTimeString() }).OrderByDescending(x => x.Status));
                 return Ok(jsonStr);
             }
             catch (Exception ex)

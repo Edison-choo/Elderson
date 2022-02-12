@@ -1,0 +1,18 @@
+﻿@page
+@model Elderson.Pages.DRR.PrescriptionModel
+@{
+    Layout = "Shared/_LayoutDoctor";
+    ViewData["Title"] = "Prescription";
+    ViewData["Breadcrumb"] = "Elderson > Consultation > Form > Prescription";
+    ViewData["Header"] = "Health and Medication (HM) Prescription";
+}
+
+<div>
+    <p><h3>Patient Name</h3></p>
+    <input asp-for="patientuser.Fullname" class="customForm-input" readonly />
+    <p><h3>Patient's Symptom</h3></p>
+    <input asp-for="booking.Symptoms" class="customForm-input" readonly /> 
+</div>
+
+
+

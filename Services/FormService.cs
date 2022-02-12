@@ -20,6 +20,11 @@ namespace Elderson.Services
             return _context.Schedule.Any(e => e.Id == id);
         }
 
+        public bool TemplateFormExist(string id)
+        {
+            return _context.Schedule.Any(e => e.Id == id);
+        }
+
         public bool AddForm(Form form)
         {
             if (FormExist(form.Id))

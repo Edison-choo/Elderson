@@ -1,0 +1,87 @@
+﻿@page
+@model Elderson.Pages.DRR.FormSelectModel
+@{
+    Layout = "Shared/_LayoutDoctor";
+    ViewData["Title"] = "HM Form";
+    ViewData["Breadcrumb"] = "Elderson > Consultation > Form";
+    ViewData["Header"] = "Health and Medication (HM) Form";
+}
+<style>
+    .form-card {
+        height: 225px;
+        width: 180px;
+        border-radius: 6px;
+        margin-top: 2%;
+        background-color: grey;
+    }
+
+        .form-card:hover {
+            background-color: darkgrey;
+        }
+
+    .Custom-Form {
+        text-align: center;
+        color: white;
+        text-decoration: none;
+        padding-top: 40%;
+    }
+
+    .temp-form {
+        margin-bottom: 3%;
+        display: flex;
+    }
+</style>
+
+<input type="hidden" asp-for="Booking_Id" id="bookingid" />
+<input type="hidden" asp-for="New_Id" id="newid" />
+
+<script>
+    $(document).ready(function () {
+        console.log("Loading webpage...")
+        $.ajax({
+            url: 'https://localhost:44311/api/Form/' + '@Model.Doctor_Id',
+            type: 'GET',
+            success: function (result) {
+                console.log("Items retrieve successfully")
+                console.log(JSON.parse(result));
+                var data = JSON.parse(result);
+                for (i = 0; i < data.length; i++) {
+
+                    $(".temp-form").append(
+                        `
+                        <a href="Prescription?bookingid=${document.getElementById("bookingid").value}&formid=${data[i].Id}" style="text-decoration:none; height: 225px; width: 180px;">
+                            <div class="form-card">
+                                <h3 class="Custom-Form">${data[i].TemplateName}</h3>
+                            </div>
+                        </a>
+                        `
+                    );
+                }
+            }
+        });
+    });
+
+</script>
+
+
+<h1>Template Form</h1>
+<div class="temp-form" id="temp-form">
+    
+</div>
+
+<h1>HM Form</h1>
+
+<a onclick="sendPrescription()" style="text-decoration:none; height: 225px; width: 180px;">
+    <div class="form-card">
+        <h3 class="Custom-Form">Add<br /><br />Form</h3>
+    </div>
+</a>
+
+<script>
+    var booking_id = document.getElementById("bookingid").value;
+    var new_id = document.getElementById("newid").value;
+    function sendPrescription() {
+        window.location.href = `/DRR/Prescription?bookingid=${booking_id}&formid=${new_id}`;
+    }
+    
+</script>

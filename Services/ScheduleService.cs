@@ -50,6 +50,13 @@ namespace Elderson.Services
             return AllSchedule;
         }
 
+        public List<Schedule> GetScheduleByDoctorTime(string doctor_id)
+        {
+            List<Schedule> AllSchedule = new List<Schedule>();
+            AllSchedule = _context.Schedule.Where(x => x.DoctorId == doctor_id && x.StartDateTime >= DateTime.Now).ToList();
+            return AllSchedule;
+        }
+
         public Schedule GetScheduleById(String id)
         {
             Schedule schedule = _context.Schedule.Where(e => e.Id == id).FirstOrDefault();
