@@ -25,10 +25,7 @@ namespace Elderson.Pages.Elderly
             {
                 myBookings = _svc.GetBookingOfUser(HttpContext.Session.GetString("LoginUser"));
             }
-            else
-            {
-                Redirect("~/");
-            }
+            Redirect("~/");
         }
     }
 }
