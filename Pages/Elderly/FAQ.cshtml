@@ -20,7 +20,7 @@
         font-weight: bold;
     }
 
-        .active, .accordion:hover {
+        .active-a, .accordion:hover {
             background-color: #a1caf1;
         }
 
@@ -32,7 +32,7 @@
             margin-left: 5px;
         }
 
-    .active:after {
+    .active-a:after {
         content: "\2212";
     }
 
@@ -73,6 +73,7 @@
     .contact-us {
         padding-left: 60px;
     }
+    p {margin-top: 10px;}
 </style>
 <nav aria-label="breadcrumb" style="margin:35px;">
     <ol class="breadcrumb">
@@ -84,12 +85,12 @@
 <div class="container-accordian">
     <button class="accordion">How do i book an appointment?</button>
     <div class="panel">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <p>In order to book an appointment, you have to first login into your account, click on "Book" on the navigation bar and select a location, timing, and the doctor that you prefer</p>
     </div>
 
     <button class="accordion">What are the types of payment method supported?</button>
     <div class="panel">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <p>We accept online payment via all VISA and MasterCard debit / credit cards.</p>
     </div>
 
     <button class="accordion">What kinds of conditions are suitable for a video consultation?</button>
@@ -103,12 +104,12 @@
 
     <button class="accordion">How do I reset my password?</button>
     <div class="panel">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <p>You can can on the Forget Password link or contact the IT support for further assistance</p>
     </div>
 
     <button class="accordion">How are medications purchased?</button>
     <div class="panel">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <p>They can be purchased after the medical consultation during check out</p>
     </div>
 </div>
 
@@ -150,7 +151,7 @@
 
     for (i = 0; i < acc.length; i++) {
         acc[i].addEventListener("click", function () {
-            this.classList.toggle("active");
+            this.classList.toggle("active-a");
             var panel = this.nextElementSibling;
             if (panel.style.maxHeight) {
                 panel.style.maxHeight = null;

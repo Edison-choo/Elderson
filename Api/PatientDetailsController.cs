@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using AspNetCoreHero.ToastNotification.Abstractions;
 using Elderson.Models;
 using Elderson.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,10 +20,15 @@ namespace Elderson.Api
         public PatientDetails NewEntry { get; set; }
         private readonly EldersonContext _context;
         private AdministratorService _svc;
-        public PatientDetailsController(EldersonContext context, AdministratorService service)
+        private readonly INotyfService _notfy;
+        private readonly ILogger<UserController> _logger;
+        public PatientDetailsController(EldersonContext context, AdministratorService service, INotyfService notyf, ILogger<UserController> logger)
         {
             _context = context;
             _svc = service;
+            _notfy = notyf;
+            _logger = logger;
+
         }
         // GET: api/<controller>
         [HttpGet]
@@ -92,6 +99,53 @@ namespace Elderson.Api
                 Console.WriteLine("PatientDetailsController.DeleteDetails", ex);
             }
             return Ok();
+        }
+
+        public class CompositeObject
+        {
+            public PatientDetails patientDetails { get; set; }
+
+        }
+
+        // POST api/<UserController>
+        [HttpPost]
+        public ActionResult<string> Post([FromForm] CompositeObject body)
+        {
+            Console.WriteLine(body.patientDetails.Title + body.patientDetails.DetailsofVisit);
+            Console.WriteLine(ModelState.IsValid);
+
+            if (!(ModelState.IsValid))
+            {
+                _notfy.Error("Error");
+                Console.WriteLine("Test1");
+                return BadRequest("Error");
+            }
+
+            PatientDetails UpdatedDetails;
+
+            UpdatedDetails = _svc.GetEntryById(body.patientDetails.Id);
+            if (_svc.GetEntryById(body.patientDetails.Id) != null && body.patientDetails.Id != UpdatedDetails.Id)
+            {
+                _logger.LogInformation("{actionStatus} User {userId} {userAction}. Email is already being used.", "Unsuccessful", body.patientDetails.Id, "edit user details");
+                _notfy.Error("ID is already used");
+                Console.WriteLine("Test2");
+                return BadRequest("Error");
+            }
+            UpdatedDetails.Title = body.patientDetails.Title;
+            UpdatedDetails.DetailsofVisit = body.patientDetails.DetailsofVisit;
+            Boolean valid = _svc.UpdateEntry(UpdatedDetails);
+
+            if (valid)
+            {
+                _logger.LogInformation("{actionStatus} User {userId} {userAction}.", "Successful", body.patientDetails.Id, "edit user");
+                _notfy.Success("Edit User Successfully");
+                Console.WriteLine("Test3");
+                return Ok("Success");
+
+            }
+            Console.WriteLine("Test4"); ;
+            return BadRequest("Error");
+
         }
     }
 }
