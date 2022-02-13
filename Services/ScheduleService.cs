@@ -117,10 +117,10 @@ namespace Elderson.Services
         {
             return _context.Schedule.Any(e => e.DoctorId == doctorID);
         }
-        public Schedule GetScheduleByDateTime(DateTime datetime)
+        public Schedule GetScheduleByDateTime(string doctorID, DateTime datetime)
         {
             Schedule schedule = new Schedule();
-            schedule = _context.Schedule.Where(s => s.StartDateTime == datetime).FirstOrDefault();
+            schedule = _context.Schedule.Where(s => s.DoctorId == doctorID && s.StartDateTime == datetime).FirstOrDefault();
             return schedule;
         }
         public bool UpdateScheduleStatus(Schedule schedule)

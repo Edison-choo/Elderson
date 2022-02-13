@@ -81,9 +81,8 @@
         `)
         }
     }
-    function removeCartItem(id) {
-        fetch(`https://localhost:44311/api/Cart/RemoveCartItem/` + id);
+    async function removeCartItem(id) {
+        await fetch(`https://localhost:44311/api/Cart/RemoveCartItem/` + id);
         getCart();
     }
-    function 
 </script>
