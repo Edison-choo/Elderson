@@ -21,16 +21,37 @@
                 </tr>
             </thead>
             <tbody>
+
                 @if (Model.specificPrescriptionList != null)
                 {
+                    var count = 0;
                     foreach (var p in Model.specificPrescriptionList)
                     {
-                        
+                        var datediff = DateTime.Now - p;
                         <tr>
-                            <td>Your Prescription is on its way!</td>
-                            <td>@Html.Raw(p)</td>
+                            @if (datediff.Days < 1)
+                            {
+                                count += 1;
+                                <td>Your Prescription is on its way!</td>
+                                <td>@Html.Raw(p.Date.ToShortDateString())</td>
+
+                            }
                         </tr>
                     }
+                    if (count == 0)
+                    {
+                        <tr>
+                            <td>You do not have any new notifications currently!</td>
+                            <td></td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td>You do not have any new notifications currently!</td>
+                        <td></td>
+                    </tr>
                 }
             </tbody>
         </table>

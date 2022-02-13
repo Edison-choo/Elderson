@@ -14,7 +14,7 @@ namespace Elderson.Pages.Elderly
     {
         public Prescription prescription { get; set; }
         public List<Prescription> prescriptionList { get; set; }
-        public List<string> specificPrescriptionList { get; set; } = new List<string>();
+        public List<DateTime> specificPrescriptionList { get; set; } = new List<DateTime>();
         private PrescriptionService _svc;
         public NotificationsModel(PrescriptionService service)
         {
@@ -30,7 +30,7 @@ namespace Elderson.Pages.Elderly
                 {
                     if (p.PatientId == HttpContext.Session.GetString("LoginUser") && p.Status == "1")
                     {
-                        specificPrescriptionList.Add(p.Date.ToShortDateString().ToString());
+                        specificPrescriptionList.Add(p.Date);
                     }
                     else
                     {
