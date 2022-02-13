@@ -53,7 +53,6 @@ namespace Elderson.Pages
                 return Redirect("DateAndTime");
             }
             return Redirect("~/");
-            
         }
         public IActionResult OnPost()
         {

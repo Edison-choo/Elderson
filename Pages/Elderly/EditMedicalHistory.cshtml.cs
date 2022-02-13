@@ -14,15 +14,10 @@ namespace Elderson.Pages.Elderly
     {
         [BindProperty]
         public MedicalHistory medicalHistory { get; set; }
+        [BindProperty]
+        public MedicalHistory updatedMedicalHistory { get; set; }
         private string m_id { get; set; }
-        [BindProperty]
-        public string conditionName { get; set; }
-        [BindProperty]
-        public string conditionDescription { get; set; }
-        [BindProperty]
-        public DateTime StartDate { get; set; }
-        [BindProperty]
-        public DateTime EndDate { get; set; }
+
         private MedicalHistoryService _svc;
         public EditMedicalHistoryModel(MedicalHistoryService service)
         {
@@ -44,10 +39,10 @@ namespace Elderson.Pages.Elderly
             if (ModelState.IsValid)
             {
                 MedicalHistory newmedicalHistory = _svc.GetMedicalHistoryById(m_id);
-                newmedicalHistory.Name = conditionName;
-                newmedicalHistory.Description = conditionDescription;
-                newmedicalHistory.StartDate = StartDate;
-                newmedicalHistory.EndDate = EndDate;
+                newmedicalHistory.Name = updatedMedicalHistory.Name;
+                newmedicalHistory.Description = updatedMedicalHistory.Description;
+                newmedicalHistory.StartDate = updatedMedicalHistory.StartDate;
+                newmedicalHistory.EndDate = updatedMedicalHistory.EndDate;
                 _svc.UpdateMedicalHistory(newmedicalHistory);
                 return Redirect("/Elderly/MedicalHistory");
             }
