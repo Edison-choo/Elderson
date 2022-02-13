@@ -17,6 +17,8 @@ namespace Elderson.Pages.Pharmacist.Prescrip
         public FormMeds SelectedMedication { get; set; }
         public List<FormMeds> medication { get; set; }
         public List<string> specificMedication { get; set; }
+
+        public Prescription updatedPrescription { get; set; }
         private FormMedsService _svc;
         private PrescriptionService _pres_svc;
         public ViewPrescriptionObjModel(FormMedsService service, PrescriptionService prescription_service)
@@ -41,6 +43,29 @@ namespace Elderson.Pages.Pharmacist.Prescrip
                 }
             }
                 
+        }
+
+        public IActionResult OnPost()
+        {
+            if (!(ModelState.IsValid))
+            {
+                return Page();
+            }
+
+            updatedPrescription = _pres_svc.GetPrescriptionByID(SelectedPrescripiton.Id);
+
+            if (_pres_svc.GetPrescriptionByID(SelectedPrescripiton.Id) != null && SelectedPrescripiton.Id != SelectedPrescripiton.Id)
+            {
+                return Page();
+            }
+            updatedPrescription.Status = "1";
+            Boolean Valid = _pres_svc.UpdatePrescription(updatedPrescription);
+            if (Valid)
+            {
+                return RedirectToPage("PastPrescriptions");
+            }
+
+            return Page();
         }
     }
 }

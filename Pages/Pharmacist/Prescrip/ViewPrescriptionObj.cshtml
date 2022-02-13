@@ -91,7 +91,7 @@
                                 Date:
                             </p>
                             <div class="profileData">
-                                @Model.SelectedPrescripiton.Date
+                                @Model.SelectedPrescripiton.Date.ToShortDateString()
                             </div>
                         </div>
                         <div>
@@ -150,7 +150,10 @@
                 </div>
                 <div class="d-flex justify-content-between" style="margin-top:30px;">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" onclick=@("updatePrescription("+"'"+@Model.SelectedPrescripiton.Id+"'"+")") class="btn btn-danger">Update</button>
+                    <form method="post">
+                        
+                        <button type="submit" class="btn btn-danger">Update</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -161,12 +164,12 @@
 
     function updatePrescription(Id) {
         $.ajax({
-            url: 'https://localhost:44311/api/Supplier/' + Id,
-            type: 'DELETE',
+            url: 'https://localhost:44311/api/Inventory/UpdatePrescription/' + Id,
+            type: 'POST',
             success: function (result) {
 
                 console.log(result);
-                window.location.href = "/Pharmacist/MedSup/SupplierList";
+                window.location.href = "/Pharmacist/Prescrip/ViewOldPrescriptions";
 
 
             }

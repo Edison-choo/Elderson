@@ -58,7 +58,7 @@ namespace Elderson.Api
             {
                 allPrescriptions = _pres_svc.GetPrescriptionsNew();
 
-                var jsonString = JsonSerializer.Serialize(allPrescriptions.Select(y => new { y.Id, y.FormId, y.PatientId, y.PatientName, y.Status, y.DoctorName, y.Date }));
+                var jsonString = JsonSerializer.Serialize(allPrescriptions.Select(y => new { y.Id, y.FormId, y.PatientId, y.PatientName, y.Status, y.DoctorName, Date = y.Date.ToShortDateString() }));
                 return Ok(jsonString);
             }
             catch (Exception ex)
@@ -110,14 +110,17 @@ namespace Elderson.Api
         //{
         //}
 
-
+        public MedInventory oldInv { get; set; }
         [HttpPost("{medication_id}/{quantity}")]
         public ActionResult<List<FormMeds>> Post(string medication_id, int quantity)
         {
+            oldInv = _svc.GetInvMedicationById(medication_id);
             MedInventory inventory = new MedInventory();
             inventory.Id = medication_id;
             inventory.MedicationId = medication_id;
             inventory.CurrentAmt = quantity;
+            inventory.MinimumAmt = oldInv.MinimumAmt;
+            inventory.Price = oldInv.Price;
             Medication med = _svc.GetMedicationById(medication_id);
             try
             {
