@@ -42,9 +42,14 @@ namespace Elderson.Services
             return _context.Supplier.Any(e => e.SupplierName == name);
         }
 
+        private bool SupplierExistsGuid(string id)
+        {
+            return _context.Supplier.Any(e => e.Id == id);
+        }
+
         public bool AddSupplier(Supplier supplier)
         {
-            if (SupplierExists(supplier.SupplierName))
+            if (SupplierExists(supplier.SupplierName) || SupplierExistsGuid(supplier.Id)
             {
                 return false;
             }

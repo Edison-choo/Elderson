@@ -1,11 +1,9 @@
 ﻿@page
 @model Elderson.Pages.ISR.Clinics.CreateModel
-@{
-    Layout = "Shared/_LayoutOrganization";
-    ViewData["Title"] = "Create Clinic page";
-    ViewData["Header"] = "CREATE CLINIC";
-    ViewData["Breadcrumb"] = "Clinic Management > Clinics";
-}
+@{ Layout = "Shared/_LayoutOrganization";
+                ViewData["Title"] = "Create Clinic page";
+                ViewData["Header"] = "CREATE CLINIC";
+                ViewData["Breadcrumb"] = "Clinic Management > Clinics"; }
 
 <div class="row">
     <form class="forms-sample incidentForm" method="post" asp-action="">
@@ -21,10 +19,12 @@
 
                             </div>
                             <div style="width:80%;">
-                                <input type="text" asp-for="newClinic.Name" class="form-control" id="name">
+                                <input type="text" onkeyup="searchAPI()" asp-for="newClinic.Name" class="form-control" id="clinicName">
                                 <span asp-validation-for="newClinic.Name" class="text-danger"></span>
                             </div>
+                            <div class="searchClinic">
 
+                            </div>
                         </div>
                         <div class="form-group d-flex">
                             <div style="width:20%;">
@@ -93,3 +93,7 @@
         </div>
     </form>
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
