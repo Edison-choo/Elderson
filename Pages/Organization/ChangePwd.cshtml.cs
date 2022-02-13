@@ -27,7 +27,7 @@ namespace Elderson.Pages.Organization
         public ViewModel viewModel { get; set; }
         public class ViewModel
         {
-            [Required, RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^0-9a-zA-Z]).{8,}$", ErrorMessage = "Password must meet requirements")]
+            [Required, RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^0-9a-zA-Z]).{8,}$", ErrorMessage = "Password needs at one special characters, one uppercase letter, one lowercase letter, one digit with length more than 8.")]
             public string newPwd { get; set; }
 
             [Required]

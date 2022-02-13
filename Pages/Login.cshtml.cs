@@ -39,8 +39,35 @@ namespace Elderson.Pages.Users
             _svc = service;
             _notfy = notyf;
         }
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            if (HttpContext.Session.GetString("LoginUser") != null)
+            {
+                if (HttpContext.Session.GetString("LoginUserType") == "Doctor")
+                {
+                    return Redirect("~/DRR");
+                }
+                else if (HttpContext.Session.GetString("LoginUserType") == "ITSupport")
+                {
+                    return Redirect("~/ISR/Users");
+                }
+                else if (HttpContext.Session.GetString("LoginUserType") == "Administrator")
+                {
+                    return Redirect("~/Administrator/AdminHomePage");
+                }
+                else if (HttpContext.Session.GetString("LoginUserType") == "Pharmacist")
+                {
+                    return Redirect("~/Pharmacist");
+                }
+                else
+                {
+                    return Redirect("~/");
+                }
+    
+            }
+
+            return Page();
+
         }
 
         public IActionResult OnPost()

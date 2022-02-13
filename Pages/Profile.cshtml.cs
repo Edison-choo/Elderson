@@ -29,7 +29,7 @@ namespace Elderson.Pages
         {
             [Required]
             public string currentPwd { get; set; }
-            [Required, RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^0-9a-zA-Z]).{8,}$", ErrorMessage = "Password must meet requirements")]
+            [Required, RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^0-9a-zA-Z]).{8,}$", ErrorMessage = "Password needs at one special characters, one uppercase letter, one lowercase letter, one digit with length more than 8.")]
             public string newPwd { get; set; }
 
             [Required]

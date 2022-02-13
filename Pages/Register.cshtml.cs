@@ -13,6 +13,7 @@ using MailKit.Net.Smtp;
 using MimeKit;
 using Microsoft.Extensions.Logging;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Http;
 
 namespace Elderson.Pages
 {
@@ -32,7 +33,7 @@ namespace Elderson.Pages
         public ViewModel viewModel { get; set; }
         public class ViewModel
         {
-            [Required, RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^0-9a-zA-Z]).{8,}$", ErrorMessage = "Password must meet requirements")]
+            [Required, RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^0-9a-zA-Z]).{8,}$", ErrorMessage = "Password needs at one special characters, one uppercase letter, one lowercase letter, one digit with length more than 8.")]
             public string pwd { get; set; }
 
             [Required]
@@ -48,9 +49,35 @@ namespace Elderson.Pages
             _logger = logger;
             _notfy = notyf;
         }
-        public void OnGet()
+        public IActionResult OnGet()
         {
             //sendEmail("edisonchoo234@gmail.com", "c9d07563-9b76-4f8f-b2d9-211883a3b9c9", "1");
+            if (HttpContext.Session.GetString("LoginUser") != null)
+            {
+                if (HttpContext.Session.GetString("LoginUserType") == "Doctor")
+                {
+                    return Redirect("~/DRR");
+                }
+                else if (HttpContext.Session.GetString("LoginUserType") == "ITSupport")
+                {
+                    return Redirect("~/ISR/Users");
+                }
+                else if (HttpContext.Session.GetString("LoginUserType") == "Administrator")
+                {
+                    return Redirect("~/Administrator/AdminHomePage");
+                }
+                else if (HttpContext.Session.GetString("LoginUserType") == "Pharmacist")
+                {
+                    return Redirect("~/Pharmacist");
+                }
+                else
+                {
+                    return Redirect("~/");
+                }
+
+            }
+
+            return Page();
         }
 
         public IActionResult OnPost()
