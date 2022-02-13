@@ -485,7 +485,7 @@
                                 <li id="ISRChat" onclick="changeChat(this, 'ISRChat')">
                                     <div class="chatList">
                                         <div class="desc">
-                                            <small class="time">05:30 am</small>
+                                            <small class="time"></small>
                                             <h5>IT Support</h5>
                                             <small class="newMsg">New Messages</small>
                                         </div>
@@ -497,7 +497,7 @@
                                 <li id="@user.Key" onclick="changeChat(this, '@user.Key')">
                                     <div class="chatList">
                                         <div class="desc">
-                                            <small class="time">05:30 am</small>
+                                            <small class="time"></small>
                                             <h5>@Model.allusers[user.Key].Fullname</h5>
                                             @{ if (Model.allmessages[user.Key].Where(m => m.ToUserId != user.Key).Any(m => m.Read == "0"))
                                                 {
@@ -519,7 +519,7 @@
                                 <li id="@HttpContext.Session.GetString("ChatUser")" onclick="changeChat(this, '@HttpContext.Session.GetString("ChatUser")')">
                                     <div class="chatList">
                                         <div class="desc">
-                                            <small class="time">05:30 am</small>
+                                            <small class="time"></small>
                                             <h5>@HttpContext.Session.GetString("ChatUserName")</h5>
                                             <small class="newMsg">New Messages</small>
                                         </div>
@@ -812,7 +812,7 @@
                 document.getElementById("chatUser").innerHTML += `<li id="${message.userId}" class="" onclick="changeChat(this, '${message.userId}')">
                                 <div class="chatList">
                                     <div class="desc">
-                                        <small class="time">3 day</small>
+                                        <small class="time"></small>
                                         <h5>${message.username}</h5>
                                         <small>${message.when}</small>
                                     </div>

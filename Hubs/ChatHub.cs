@@ -124,11 +124,15 @@ namespace Elderson.Hubs
         {
             Console.WriteLine(userId, toUserId);
             var allmsg = _svc.GetAllChats(userId);
-            foreach (var msg in allmsg[toUserId])
+            if (allmsg.Keys.Contains(toUserId))
             {
-                msg.Read = "1";
-                _svc.UpdateChat(msg);
+                foreach (var msg in allmsg[toUserId])
+                {
+                    msg.Read = "1";
+                    _svc.UpdateChat(msg);
+                }
             }
+            
             return Clients.Group(toUserId).SendAsync("ReceiveRead", userId);
         }
     }

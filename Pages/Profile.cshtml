@@ -472,7 +472,16 @@
             success: function (result) {
 
                 console.log(result);
-                window.location.href = "/";
+                console.log("signing out...")
+                $.ajax({
+                    url: 'https://localhost:44311/api/User/Signout',
+                    type: 'GET',
+                    success: function (result) {
+                        console.log("sign out successfully")
+                        window.location.href = "/Signout";
+
+                    }
+                });
 
             }
         });
