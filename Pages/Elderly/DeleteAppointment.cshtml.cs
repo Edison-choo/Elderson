@@ -22,7 +22,7 @@ namespace Elderson.Pages.Elderly
             _svc = service;
             _sSvc = sService;
         }
-        public void OnGet(string id)
+        public IActionResult OnGet(string id)
         {
             if (HttpContext.Session.GetString("LoginUser") != null)
             {
@@ -31,8 +31,9 @@ namespace Elderson.Pages.Elderly
                 updateSchedule.Availability = "A";
                 _svc.DeleteBooking(deleteBook);
                 _sSvc.UpdateScheduleStatus(updateSchedule);
+                return Page();
             }
-            Redirect("~/");
+            return Redirect("~/");
         }
     }
 }

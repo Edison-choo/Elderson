@@ -16,16 +16,27 @@
     </div>
     <br />
     <div>
-        @foreach (var item in Model.myMedicalHistory)
+        @if (Model.myMedicalHistory.Count != 0)
         {
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">@item.Name</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">@item.StartDate.ToString() - @item.StartDate.ToString()</h6>
-                    <p class="card-text">@item.Description</p>
-                    <a asp-page="/Elderly/DeleteMedicalHistory" asp-route-id="@item.Id" class="btn btn-danger card-link">Delete</a>
-                    <a asp-page="/Elderly/EditMedicalHistory" asp-route-id="@item.Id" class="btn btn-primary card-link">Edit</a>
+            @foreach (var item in Model.myMedicalHistory)
+            {
+                <div class="card">
+                    <div class="card-header" style="background-color: #F4F3FF">
+                        <h5 class="card-title">@item.Name</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@item.StartDate.ToString("dd MMMM yyyy") - @item.StartDate.ToString("dd MMMM yyyy")</h6>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Description: @item.Description</p>
+                        <a asp-page="/Elderly/DeleteMedicalHistory" asp-route-id="@item.Id" class="btn btn-danger card-link">Delete</a>
+                        <a asp-page="/Elderly/EditMedicalHistory" asp-route-id="@item.Id" class="btn btn-primary card-link">Edit</a>
+                    </div>
                 </div>
+            }
+        }
+        else
+        {
+            <div style="background: #FBFBFB; padding: 100px; text-align: center;">
+                <h3><i class="fas fa-exclamation-triangle"></i> You have not added any entries for your medical history</h3>
             </div>
         }
     </div>

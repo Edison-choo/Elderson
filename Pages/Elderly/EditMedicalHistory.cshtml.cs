@@ -36,10 +36,7 @@ namespace Elderson.Pages.Elderly
                 medicalHistory = _svc.GetMedicalHistoryById(id);
                 return Page();
             }
-            else
-            {
-                return Redirect("~/");
-            }
+            return Redirect("~/");
 
         }
         public IActionResult OnPost()

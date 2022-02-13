@@ -26,10 +26,7 @@ namespace Elderson.Pages.Elderly
                 myMedicalHistory = _svc.GetMedicalHistoryOfUser(HttpContext.Session.GetString("LoginUser"));
                 return Page();
             }
-            else
-            {
-                return Redirect("~/");
-            }
+            return Redirect("~/");
         }
     }
 }

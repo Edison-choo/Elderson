@@ -23,16 +23,14 @@ namespace Elderson.Pages.Elderly
             _svc = service;
             _sSvc = sService;
         }
-        public void OnGet(string id)
+        public IActionResult OnGet(string id)
         {
             if (HttpContext.Session.GetString("LoginUser") != null)
             {
                 myBooking = _svc.GetCanRescheduleBookingById(id);
+                return Page();
             }
-            else
-            {
-                Redirect("~/Login");
-            }
+            return Redirect("~/");
         }
         public IActionResult OnPost()
         {

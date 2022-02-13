@@ -19,13 +19,14 @@ namespace Elderson.Pages.Elderly
         {
             _svc = service;
         }
-        public void OnGet()
+        public IActionResult OnGet()
         {
             if (HttpContext.Session.GetString("LoginUser") != null)
             {
                 myBookings = _svc.GetBookingOfUser(HttpContext.Session.GetString("LoginUser"));
+                return Page();
             }
-            Redirect("~/");
+            return Redirect("~/");
         }
     }
 }
