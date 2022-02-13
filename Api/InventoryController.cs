@@ -49,23 +49,25 @@ namespace Elderson.Api
         }
 
         [HttpGet("GetPrescriptions", Name = "GetPrescriptions")]
-        //public ActionResult<List<Medication>> GetPrescriptions()
-        //{
-        //    List<Prescription> allPrescriptions = new List<Prescription>();
+        public ActionResult<List<Medication>> GetPrescriptions()
+        {
+            List<Prescription> allPrescriptions = new List<Prescription>();
+            List<FormMeds> formMedsByID = new List<FormMeds>();
 
-        //    //try
-        //    //{
-        //    //    allPrescriptions = _pres_svc.();
-        //    //    var jsonString = JsonSerializer.Serialize(allmedications.Select(y => new { y.Id, y.MedName, y.MedAbbreviation, y.MedType, y.MedSupplierAbb, CurrentAmt = _svc.GetInvMedicationById(y.Id).CurrentAmt, Price = "$" + _svc.GetInvMedicationById(y.Id).Price }));
-        //    //    return Ok(jsonString);
-        //    //}
-        //    //catch (Exception ex)
-        //    //{
-        //    //    Console.WriteLine("instalmentController.getCarLoan", ex);
-        //    //    return BadRequest();
-        //    //}
+            try
+            {
+                allPrescriptions = _pres_svc.GetPrescriptionsNew();
 
-        //}
+                var jsonString = JsonSerializer.Serialize(allPrescriptions.Select(y => new { y.Id, y.FormId, y.PatientId, y.PatientName, y.Status, y.DoctorName, y.Date }));
+                return Ok(jsonString);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("instalmentController.getCarLoan", ex);
+                return BadRequest();
+            }
+
+        }
 
 
         //// GET api/<UserController>/5

@@ -27,6 +27,20 @@ namespace Elderson.Services
             return allPrescriptions;
         }
 
+        public List<Prescription> GetPrescriptionsOld()
+        {
+            List<Prescription> oldprescriptions = new List<Prescription>();
+            oldprescriptions = _context.Prescription.Where(e => e.Status == "1").ToList();
+            return oldprescriptions;
+        }
+
+        public List<Prescription> GetPrescriptionsNew()
+        {
+            List<Prescription> newPrescriptions = new List<Prescription>();
+            newPrescriptions = _context.Prescription.Where(e => e.Status == "0").ToList();
+            return newPrescriptions;
+        }
+
         public bool AddPrescription(Prescription prescription)
         {
             if (PrescriptionExist(prescription.Id))
