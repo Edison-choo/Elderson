@@ -20,6 +20,13 @@ namespace Elderson.Services
             return _context.Prescription.Any(e => e.Id == id);
         }
 
+        public List<Prescription> GetAllPrescriptions()
+        {
+            List<Prescription> allPrescriptions = new List<Prescription>();
+            allPrescriptions = _context.Prescription.ToList();
+            return allPrescriptions;
+        }
+
         public bool AddPrescription(Prescription prescription)
         {
             if (PrescriptionExist(prescription.Id))

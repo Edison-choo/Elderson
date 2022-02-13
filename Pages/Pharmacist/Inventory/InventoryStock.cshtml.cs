@@ -38,44 +38,44 @@ namespace Elderson.Pages.Pharmacist.Inventory
             inventory = _svc.GetAllInventories();
         }
 
-        public IActionResult OnPost()
-        {
-            inventory = _svc.GetAllInventories();
-            medication = _svc.GetAllMedications();
-            if (!(ModelState.IsValid))
-            {
-                var errors = ModelState.Values.SelectMany(v => v.Errors);
-                foreach ( var error in errors)
-                {
-                    Console.WriteLine(error);
-                }
-                return Page();
-            }
-            try
-            {
-                foreach (var m in inventory)
-                {
-                    updatedInventory = new MedInventory();
-                    updateMedication = new Medication();
-                    updatedInventory.CurrentAmt = selectedInventory.CurrentAmt;
-                    updatedInventory.MinimumAmt = m.MinimumAmt;
-                    updatedInventory.Price = m.Price;
-                    updatedInventory.MedicationId = m.Id;
-                    updateMedication = _svc.GetMedicationById(m.MedicationId);
-                    bool invValid = _svc.UpdateInventory(updatedInventory, updateMedication);
-                    if (invValid)
-                    {
-                        return RedirectToPage("InventoryList");
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+        //public IActionResult OnPost()
+        //{
+        //    inventory = _svc.GetAllInventories();
+        //    medication = _svc.GetAllMedications();
+        //    if (!(ModelState.IsValid))
+        //    {
+        //        var errors = ModelState.Values.SelectMany(v => v.Errors);
+        //        foreach ( var error in errors)
+        //        {
+        //            Console.WriteLine(error);
+        //        }
+        //        return Page();
+        //    }
+        //    try
+        //    {
+        //        foreach (var m in inventory)
+        //        {
+        //            updatedInventory = new MedInventory();
+        //            updateMedication = new Medication();
+        //            updatedInventory.CurrentAmt = selectedInventory.CurrentAmt;
+        //            updatedInventory.MinimumAmt = m.MinimumAmt;
+        //            updatedInventory.Price = m.Price;
+        //            updatedInventory.MedicationId = m.Id;
+        //            updateMedication = _svc.GetMedicationById(m.MedicationId);
+        //            bool invValid = _svc.UpdateInventory(updatedInventory, updateMedication);
+        //            if (invValid)
+        //            {
+        //                return RedirectToPage("InventoryList");
+        //            }
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
 
-            return Page();
+        //    return Page();
 
-        }
+        //}
     }
 }

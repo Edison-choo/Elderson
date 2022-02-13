@@ -64,6 +64,27 @@ namespace Elderson.Api
         //{
         //}
 
+
+        [HttpPost("{medication_id}/{quantity}")]
+        public ActionResult<List<FormMeds>> Post(string medication_id, int quantity)
+        {
+            MedInventory inventory = new MedInventory();
+            inventory.Id = medication_id;
+            inventory.MedicationId = medication_id;
+            inventory.CurrentAmt = quantity;
+            Medication med = _svc.GetMedicationById(medication_id);
+            try
+            {
+                _svc.UpdateInventory(inventory, med);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return Ok();
+        }
+
+
         [HttpDelete("{Id}")]
         public ActionResult Delete(string Id)
         {

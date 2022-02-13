@@ -53,9 +53,14 @@ namespace Elderson.Services
             return _context.Medications.Any(e => e.MedName == MedName);
         }
 
+        private bool MedicationExistsGuid(string id)
+        {
+            return _context.Medications.Any(e => e.Id == id);
+        }
+
         public bool AddMedicationToInventory(MedInventory inventory, Medication medication)
         {
-            if (MedicationExists(medication.MedName))
+            if (MedicationExists(medication.MedName) || MedicationExistsGuid(medication.Id))
             {
                 return false;
             } 
@@ -85,7 +90,7 @@ namespace Elderson.Services
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MedicationExists(medication.Id))
+                if (!MedicationExists(medication.MedName) && !MedicationExistsGuid(medication.Id))
                 {
                     updated = false;
                 }
@@ -109,7 +114,7 @@ namespace Elderson.Services
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MedicationExists(medication.MedName))
+                if (!MedicationExists(medication.MedName) && !MedicationExistsGuid(medication.Id))
                 {
                     updated = false;
                 }
@@ -134,7 +139,7 @@ namespace Elderson.Services
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MedicationExists(medication.MedName))
+                if (!MedicationExists(medication.MedName) && !MedicationExistsGuid(medication.Id))
                 {
                     deleted = false;
                 }
@@ -159,7 +164,7 @@ namespace Elderson.Services
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MedicationExists(theMedication.MedName))
+                if (!MedicationExists(theMedication.MedName) && !MedicationExistsGuid(theMedication.Id))
                 {
                     deleted = false;
                 }
