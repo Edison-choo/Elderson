@@ -9,7 +9,7 @@ namespace Elderson.Models
     public class MedicalHistory
     {
         public string Id { get; set; }
-        [Required, Range(1, 50, ErrorMessage = "Name needs to be within 50 characters")]
+        [Required]
         public string Name { get; set; }
         [Required]
         public string Description { get; set; }

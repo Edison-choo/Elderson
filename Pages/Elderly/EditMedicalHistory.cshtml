@@ -4,8 +4,8 @@
 }
 <nav aria-label="breadcrumb" style="margin:35px;">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Elderson</a></li>
-        <li class="breadcrumb-item"><a href="#">Medical History</a></li>
+        <li class="breadcrumb-item"><a href="~/">Elderson</a></li>
+        <li class="breadcrumb-item"><a href="~/Elderly/MedicalHistory">Medical History</a></li>
         <li class="breadcrumb-item active" aria-current="page">Edit Medical History</li>
     </ol>
     <h3>Edit Medical History</h3>
@@ -13,31 +13,32 @@
 <div class="container">
     <div asp-validation-summary="All" class="text-danger"></div>
     <form method="post">
+        <input type="hidden" asp-for="medicalHistory.Id" />
         <div class="form-outline mb-4">
-            <input type="text" asp-for="updatedMedicalHistory.Name" class="form-control" value="@Model.medicalHistory.Name"/>
+            <input type="text" asp-for="medicalHistory.Name" class="form-control" value="@Model.medicalHistory.Name" />
             <label class="form-label" for="conditionName">Name</label>
         </div>
 
         <div class="form-outline mb-4">
-            <textarea class="form-control" asp-for="updatedMedicalHistory.Description" rows="4"></textarea>
+            <textarea class="form-control" asp-for="medicalHistory.Description" rows="4"></textarea>
             <label class="form-label" for="conditionDescription">Enter a brief description of your condidtion</label>
         </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-outline mb-4">
-                    <input type="date" asp-for="updatedMedicalHistory.StartDate" class="form-control" value="@Model.medicalHistory.StartDate.ToString("yyyy-MM-dd")"/>
+                    <input type="date" asp-for="medicalHistory.StartDate" class="form-control" value="@Model.medicalHistory.StartDate.ToString("yyyy-MM-dd")" />
                     <label class="form-label" for="StartDate">Start Date of condition</label>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-outline mb-4">
-                    <input type="date" asp-for="updatedMedicalHistory.EndDate" class="form-control" value="@Model.medicalHistory.EndDate.ToString("yyyy-MM-dd")"/>
+                    <input type="date" asp-for="medicalHistory.EndDate" class="form-control" value="@Model.medicalHistory.EndDate.ToString("yyyy-MM-dd")" />
                     <label class="form-label" for="EndDate">End Date of condition</label>
                 </div>
             </div>
         </div>
         <!-- Submit button -->
-        <button type="submit" class="btn btn-primary btn-block mb-4">Edit</button>
+        <button type="submit" class="btn btn-primary btn-block mb-4" style="background-color: #6C63FF;">Edit</button>
     </form>
     <script>
         document.getElementById("updatedMedicalHistory_Description").innerHTML = "@Model.medicalHistory.Description"

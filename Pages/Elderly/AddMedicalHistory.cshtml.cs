@@ -13,13 +13,7 @@ namespace Elderson.Pages.Elderly
     public class AddMedicalHistoryModel : PageModel
     {
         [BindProperty]
-        public string conditionName { get; set; }
-        [BindProperty]
-        public string conditionDescription { get; set; }
-        [BindProperty]
-        public DateTime StartDate { get; set; }
-        [BindProperty]
-        public DateTime EndDate { get; set; }
+        public MedicalHistory medicalHistory { get; set; }
         private MedicalHistoryService _svc;
         public AddMedicalHistoryModel(MedicalHistoryService service)
         {
@@ -43,10 +37,10 @@ namespace Elderson.Pages.Elderly
             {
                 MedicalHistory newMedicalHistory = new MedicalHistory();
                 newMedicalHistory.Id = Guid.NewGuid().ToString();
-                newMedicalHistory.Name = conditionName;
-                newMedicalHistory.Description = conditionDescription;
-                newMedicalHistory.StartDate = StartDate;
-                newMedicalHistory.EndDate = EndDate;
+                newMedicalHistory.Name = medicalHistory.Name;
+                newMedicalHistory.Description = medicalHistory.Description;
+                newMedicalHistory.StartDate = medicalHistory.StartDate;
+                newMedicalHistory.EndDate = medicalHistory.EndDate;
                 newMedicalHistory.PatientID = HttpContext.Session.GetString("LoginUser");
                 _svc.AddMedicalHistory(newMedicalHistory);
                 return Redirect("/Elderly/MedicalHistory");

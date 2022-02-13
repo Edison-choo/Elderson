@@ -4,15 +4,15 @@
 }
 <nav aria-label="breadcrumb" style="margin:35px;">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Elderson</a></li>
+        <li class="breadcrumb-item"><a href="~/">Elderson</a></li>
         <li class="breadcrumb-item active" aria-current="page">Medical History</li>
     </ol>
-    <h3>Booking History</h3>
+    <h3>Medical History</h3>
 </nav>
 <div class="container">
     <div style="display:flex; justify-content:space-between;">
         <div style="display:flex; justify-content:flex-start">Share with us your medical history. It will help the doctors give a better diagnosis!</div>
-        <div style="display:flex; justify-content:flex-end"><a asp-page="AddMedicalHistory" class="btn btn-primary">Add</a></div>
+        <div style="display:flex; justify-content:flex-end"><a asp-page="AddMedicalHistory" class="btn btn-primary" style="background-color: #6C63FF;">Add</a></div>
     </div>
     <br />
     <div>
@@ -20,6 +20,24 @@
         {
             @foreach (var item in Model.myMedicalHistory)
             {
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Delete Booking</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                You are about to delete a medical history entry.
+                                Are you sure?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <a asp-page="/Elderly/DeleteMedicalHistory" asp-route-id="@item.Id" class="btn btn-danger card-link">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="card">
                     <div class="card-header" style="background-color: #F4F3FF">
                         <h5 class="card-title">@item.Name</h5>
@@ -27,10 +45,13 @@
                     </div>
                     <div class="card-body">
                         <p class="card-text">Description: @item.Description</p>
-                        <a asp-page="/Elderly/DeleteMedicalHistory" asp-route-id="@item.Id" class="btn btn-danger card-link">Delete</a>
-                        <a asp-page="/Elderly/EditMedicalHistory" asp-route-id="@item.Id" class="btn btn-primary card-link">Edit</a>
+                        <button type="button" class="btn btn-danger card-link" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
+                            Delete
+                        </button>
+                        <a asp-page="/Elderly/EditMedicalHistory" asp-route-id="@item.Id" class="btn btn-primary card-link" style="background-color: #6C63FF;">Edit</a>
                     </div>
                 </div>
+                <br/>
             }
         }
         else

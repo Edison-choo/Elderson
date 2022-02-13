@@ -6,12 +6,12 @@
 <link rel="stylesheet" href="~/css/bookingStyle.css" />
 <nav aria-label="breadcrumb" style="margin:35px;">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Elderson</a></li>
-        <li class="breadcrumb-item"><a href="#">Clinic</a></li>
-        <li class="breadcrumb-item"><a href="#">Doctor</a></li>
+        <li class="breadcrumb-item"><a href="~/">Elderson</a></li>
+        <li class="breadcrumb-item"><a href="~/Elderly/Clinic">Clinic</a></li>
+        <li class="breadcrumb-item"><a href="~/Elderly/Doctor">Doctor</a></li>
         <li class="breadcrumb-item active" aria-current="page">Date & Time</li>
     </ol>
-    <h3>Clinic</h3>
+    <h3>Date & Time</h3>
 </nav>
 <div class="container">
     <div asp-validation-summary="All" class="text-danger"></div>
@@ -95,7 +95,7 @@
         </div>
         <br />
         <div class="d-flex justify-content-between">
-            <a style="background-color: #6C63FF" asp-page="/Elderly/Doctor" asp-route-clinic="@Model.myClinic" class="btn btn-primary">Back</a>
+            <a asp-page="/Elderly/Doctor" asp-route-clinic="@Model.myClinic" class="btn btn-danger">Back</a>
             <button style="background-color: #6C63FF" class="btn btn-primary">Continue</button>
         </div>
     </form>

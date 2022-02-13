@@ -31,7 +31,7 @@ namespace Elderson.Pages.Elderly
                 updateSchedule.Availability = "A";
                 _svc.DeleteBooking(deleteBook);
                 _sSvc.UpdateScheduleStatus(updateSchedule);
-                return Page();
+                return Redirect("~/Elderly/Appointments");
             }
             return Redirect("~/");
         }

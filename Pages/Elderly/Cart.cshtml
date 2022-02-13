@@ -3,7 +3,13 @@
 @{
 }
 <script>document.getElementById("navItemCart").classList.add("usingIcon")</script>
-<div style="margin:100px;"></div>
+<nav aria-label="breadcrumb" style="margin:35px;">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="~/">Elderson</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Cart</li>
+    </ol>
+    <h3>Cart</h3>
+</nav>
 <div class="container">
     <table class="table">
         <thead>
@@ -30,7 +36,7 @@
             <h3>TOTAL <span style="float:right;" id="total"></span></h3>
             <br />
             <form method="post">
-                <div><button class="btn btn-primary btn-block" style="float:right">PROCEED TO PAYMENT</button></div>
+                <div><button class="btn btn-primary btn-block" style="background-color: #6C63FF; float:right">PROCEED TO PAYMENT</button></div>
             </form>
         </div>
     </div>

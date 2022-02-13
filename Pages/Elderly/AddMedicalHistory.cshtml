@@ -4,8 +4,8 @@
 }
 <nav aria-label="breadcrumb" style="margin:35px;">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Elderson</a></li>
-        <li class="breadcrumb-item"><a href="#">Medical History</a></li>
+        <li class="breadcrumb-item"><a href="~/">Elderson</a></li>
+        <li class="breadcrumb-item"><a href="~/Elderly/MedicalHistory">Medical History</a></li>
         <li class="breadcrumb-item active" aria-current="page">Add Medical History</li>
     </ol>
     <h3>Add Medical History</h3>
@@ -14,29 +14,29 @@
     <div asp-validation-summary="All" class="text-danger"></div>
     <form method="post">
         <div class="form-outline mb-4">
-            <input type="text" asp-for="conditionName" class="form-control" />
+            <input type="text" asp-for="medicalHistory.Name" class="form-control" />
             <label class="form-label" for="conditionName">Name</label>
         </div>
 
         <div class="form-outline mb-4">
-            <textarea class="form-control" asp-for="conditionDescription" rows="4"></textarea>
+            <textarea class="form-control" asp-for="medicalHistory.Description" rows="4"></textarea>
             <label class="form-label" for="conditionDescription">Enter a brief description of your condidtion</label>
         </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-outline mb-4">
-                    <input type="date" asp-for="StartDate"  class="form-control" />
+                    <input type="date" asp-for="medicalHistory.StartDate"  class="form-control" />
                     <label class="form-label" for="StartDate">Start Date of condition</label>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-outline mb-4">
-                    <input type="date" asp-for="EndDate"  class="form-control" />
+                    <input type="date" asp-for="medicalHistory.EndDate"  class="form-control" />
                     <label class="form-label" for="EndDate">End Date of condition</label>
                 </div>
             </div>
         </div>
         <!-- Submit button -->
-        <button type="submit" class="btn btn-primary btn-block mb-4">Add</button>
+        <button type="submit" style="background-color: #6C63FF;" class="btn btn-primary btn-block mb-4">Add</button>
     </form>
 </div>

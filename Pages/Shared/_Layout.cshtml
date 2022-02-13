@@ -51,7 +51,7 @@
             <div class="d-flex">
                 <!-- Brand -->
                 <a class="navbar-brand me-2 mb-1 d-flex align-items-center" href="~/">
-                    <img src="https://png.pngtree.com/png-clipart/20200709/original/pngtree-e-logo-png-image_3611500.jpg"
+                    <img src="~/images/EldersonLogo.png"
                          height="50"
                          loading="lazy"
                          style="margin-top: 2px;" />
@@ -165,10 +165,7 @@ else
                     <a class="dropdown-item" href="~/Elderly/Prescriptions">Prescription</a>
                 </li>
                 <li>
-                    <a class="dropdown-item" href="#">Help & Support</a>
-                </li>
-                <li>
-                    <a class="dropdown-item" asp-page="Chat">Chat</a>
+                    <a class="dropdown-item" href="~/Chat">Chat</a>
                 </li>
                 <li>
                     <a class="dropdown-item" onclick='signout()'>Log Out</a>
@@ -180,12 +177,12 @@ else
 else
 {
 <div class="d-flex align-items-center">
-    <a href="~/Login" class="btn btn-link px-3 me-2">
-        Login
+    <a href="~/Login" class="btn btn-link" style="color: #6C63FF">
+        <h6>Login</h6>
     </a>
-    <a href="~/Register" class="btn btn-primary me-3">
-        Sign up for free
-    </a>
+    <a href="~/Register" class="btn btn-primary" style="background: #6C63FF">
+        <h6>Sign up for free</h6>
+</a>
 </div> } }
             <!-- Right elements -->
         </div>
@@ -212,23 +209,23 @@ else
                     <div class="col-lg-2 col-md-6 footer-links">
                         <h4>Useful Links</h4>
                         <ul>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">Book</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">Search</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="~/">Home</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="~/Elderly/Clinic">Book</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="~/Disease">Search</a></li>
                         </ul>
                     </div>
 
                     <div class="col-lg-3 col-md-6 footer-links">
                         <h4>Support</h4>
                         <ul>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">Help & Support</a></li>
-                            <li><i class="bx bx-chevron-right"></i> <a href="#">FAQ Page</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="~/Chat">Help & Support</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="~/Elderly/FAQ">FAQ Page</a></li>
                         </ul>
                     </div>
 
                     <div class="col-lg-4 col-md-6 footer-newsletter">
                         <h4>Enterprise Login</h4>
-                        <a asp-page="OrganizationLogin" class="btn btn-primary btn-lg" style="width:125px;">Login</a>
+                        <a href="~/OrganizationLogin" class="btn btn-primary btn-lg" style="width:125px; background: #6C63FF">Login</a>
                     </div>
 
                 </div>

@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="~/css/bookingStyle.css" />
 <nav aria-label="breadcrumb" style="margin:35px;">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Elderson</a></li>
+        <li class="breadcrumb-item"><a href="~/">Elderson</a></li>
         <li class="breadcrumb-item active" aria-current="page">Appointments</li>
     </ol>
     <h3>Appointments</h3>
@@ -32,11 +32,11 @@
                     <td>@item.BookDateTime.ToString("dd MMMM yyyy HH:mm tt")</td>
                     @if (DateTime.Now >= item.BookDateTime && item.BookDateTime <= DateTime.Now.AddMinutes(30))
                     {
-                        <td><a asp-page="/Elderly/Call" asp-route-id="@item.Id" class="btn btn-primary">Join Call</a></td>
+                        <td><a asp-page="/Elderly/Call" asp-route-id="@item.Id" style="background-color: #6C63FF;" class="btn btn-primary">Join Call</a></td>
                     }
                     else
                     {
-                        <td><button class="btn btn-primary" disabled>Join Call</button></td>
+                        <td><button class="btn btn-primary" style="background-color: #6C63FF;" disabled>Join Call</button></td>
                     }
                     @*<td><a asp-page="/Elderly/Call" asp-route-id="@item.Id" class="btn btn-primary">Join Call</a></td>*@
                     <td style="text-align: right;">

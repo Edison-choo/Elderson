@@ -4,7 +4,7 @@
 }
 <nav aria-label="breadcrumb" style="margin:35px;">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Elderson</a></li>
+        <li class="breadcrumb-item"><a href="~/">Elderson</a></li>
         <li class="breadcrumb-item active" aria-current="page">Prescriptions</li>
     </ol>
     <h3>Prescriptions</h3>
@@ -41,12 +41,12 @@
         <h3 style="text-align:right;">$@Model.total</h3>
         <br />
         <form method="post">
-            <button class="btn btn-primary">Add To Cart</button>
+            <button class="btn btn-primary" style="background-color: #6C63FF;">Add To Cart</button>
         </form>
     }
     else
     {
-        <div style="padding: 100px; text-align: center;>
+        <div style="padding: 100px; text-align: center;">
             <h3><i class="fas fa-exclamation-triangle"></i> You have no prescriptions</h3>
         </div>
     }
