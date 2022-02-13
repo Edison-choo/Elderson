@@ -69,6 +69,27 @@ namespace Elderson.Api
 
         }
 
+        [HttpGet("GetOldPrescriptions", Name = "GetOldPrescriptions")]
+        public ActionResult<List<Medication>> GetOldPrescriptions()
+        {
+            List<Prescription> allPrescriptions = new List<Prescription>();
+            List<FormMeds> formMedsByID = new List<FormMeds>();
+
+            try
+            {
+                allPrescriptions = _pres_svc.GetPrescriptionsOld();
+
+                var jsonString = JsonSerializer.Serialize(allPrescriptions.Select(y => new { y.Id, y.FormId, y.PatientId, y.PatientName, y.Status, y.DoctorName, y.Date }));
+                return Ok(jsonString);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("instalmentController.getCarLoan", ex);
+                return BadRequest();
+            }
+
+        }
+
 
         //// GET api/<UserController>/5
         //[HttpGet("{id}")]

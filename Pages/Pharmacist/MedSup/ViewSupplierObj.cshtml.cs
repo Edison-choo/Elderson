@@ -30,7 +30,7 @@ namespace Elderson.Pages.Pharmacist.MedSup
             medAbbreviations = new List<string>();
             foreach (var m in Medications)
             {
-                if (SelectedSupplier.Id.Equals(m.MedSupplierID) && m.MedAbbreviation != null)
+                if (SelectedSupplier.Id.Equals(m.MedSupplierID))
                 {
                     
                     medAbbreviations.Add(String.Format("<a href=\"/Pharmacist/Inventory/ViewInventoryObj?id={0}\">{1}</a>", m.Id, m.MedAbbreviation));

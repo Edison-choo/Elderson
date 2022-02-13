@@ -20,6 +20,12 @@ namespace Elderson.Services
             return _context.Prescription.Any(e => e.Id == id);
         }
 
+        public Prescription GetPrescriptionByID(string id)
+        {
+            Prescription prescription = _context.Prescription.Where(e => e.Id == id).FirstOrDefault();
+            return prescription;
+        }
+
         public List<Prescription> GetAllPrescriptions()
         {
             List<Prescription> allPrescriptions = new List<Prescription>();
@@ -52,6 +58,30 @@ namespace Elderson.Services
             return true;
         }
 
-        
+        public bool UpdatePrescription(Prescription prescription)
+        {
+            bool updated = true;
+            _context.Attach(prescription).State = EntityState.Modified;
+
+            try
+            {
+                _context.SaveChanges();
+                updated = true;
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!PrescriptionExist(prescription.Id))
+                {
+                    updated = false;
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return updated;
+        }
+
+
     }
 }

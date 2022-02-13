@@ -55,7 +55,7 @@
                                             <i style="font-size:1.5em;" class="mdi mdi-dots-vertical"></i>
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby=${"dropdownMenuSplitButton" + data.Id}>
-                                            <a class="dropdown-item" href="/Pharmacist/Prescrip/ViewPrescriptionObj?id=${data.Id}">View</a>
+                                            <a class="dropdown-item" href="/Pharmacist/Prescrip/ViewPrescriptionObj?id=${data.Id}&?formId=${data.FormId}">View</a>
                                         </div>
                                     </div>`;
                             }
@@ -102,23 +102,3 @@
     </div>
 
 </div>
-
-<script>
-
-    function deleteMedication(Id) {
-        $.ajax({
-            url: 'https://localhost:44311/api/Inventory/' + Id,
-            type: 'DELETE',
-            success: function (result) {
-
-                console.log(result);
-                console.log("Item deleted successfully");
-                $('#inventorytable').DataTable().ajax.reload();
-                $('.fade').removeClass("show");
-
-
-            }
-        });
-    }
-
-</script>
