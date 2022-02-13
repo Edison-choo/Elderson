@@ -28,7 +28,12 @@ namespace Elderson.Pages
             _logger = logger;
             _sSvc = sService;
         }
-        public void OnGet()
+        public IActionResult Remove(string id)
+        {
+            
+            return Redirect("~/");
+        }
+        public IActionResult OnGet()
         {
             if (HttpContext.Session.GetString("LoginUser") != null)
             {
@@ -40,10 +45,11 @@ namespace Elderson.Pages
                         myTotal += item.Price;
                     }
                 }
+                return Page();
             }
             else
             {
-                Redirect("Index");
+                return Redirect("~/");
             }
             
         }
@@ -75,7 +81,7 @@ namespace Elderson.Pages
             {
                 return Page();
             }
-            return RedirectToPage("Index");
+            return Redirect("~/");
         }
     }
     public static class SessionExtensions

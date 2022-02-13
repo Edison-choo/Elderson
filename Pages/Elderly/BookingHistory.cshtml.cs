@@ -28,31 +28,25 @@ namespace Elderson.Pages.Elderly
             _svc = service;
             _usvc = uservice;
         }
-        public void OnGet()
+        public IActionResult OnGet()
         {
             if (HttpContext.Session.GetString("LoginUser") != null)
             {
-                try
+                bookingHistoryList = new List<BookingHistory>();
+                bookings = _svc.GetBookingHistoryOfUser(HttpContext.Session.GetString("LoginUser"));
+                foreach (Booking booking in bookings)
                 {
-                    bookingHistoryList = new List<BookingHistory>();
-                    bookings = _svc.GetBookingHistoryOfUser(HttpContext.Session.GetString("LoginUser"));
-                    foreach (Booking booking in bookings)
-                    {
-                        BookingHistory bookingHistory = new BookingHistory();
-                        bookingHistory.clinicName = booking.Clinic;
-                        bookingHistory.doctorName = _usvc.GetUserById(booking.DoctorID).Fullname;
-                        bookingHistory.BookingDateTime = booking.BookDateTime;
-                        bookingHistoryList.Add(bookingHistory);
-                    }
+                    BookingHistory bookingHistory = new BookingHistory();
+                    bookingHistory.clinicName = booking.Clinic;
+                    bookingHistory.doctorName = _usvc.GetUserById(booking.DoctorID).Fullname;
+                    bookingHistory.BookingDateTime = booking.BookDateTime;
+                    bookingHistoryList.Add(bookingHistory);
                 }
-                catch
-                {
-                    RedirectToPage("~/");
-                }
+                return Page();
             }
             else
             {
-                RedirectToPage("~/");
+                return Redirect("~/");
             }
         }
     }

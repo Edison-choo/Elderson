@@ -12,32 +12,66 @@
                 <th style="font-weight:bold; background-color:#F4F3FF;">Price</th>
                 <th style="font-weight:bold; background-color:#F4F3FF;">Quantity</th>
                 <th style="font-weight:bold; background-color:#F4F3FF;">Subtotal</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
-            
-                    @if (Model.myCart != null)
-                    {
-                        @foreach (var item in Model.myCart)
-                        {<tr>
-        <td>
-            <h5>@item.ItemName</h5>
-            <div>@Convert.ToDateTime(item.BookDateTime).ToString("dd MMMM yyyy HH:mm tt")</div>
-            <div>Clinic: @item.Clinic</div>
-        </td>
-        <td>$@item.Price</td>
-        <td>@item.Quantity</td>
-        <td>$@(item.Price * item.Quantity)</td>
-    </tr>
-        }
-        }
+
+            @if (Model.myCart != null)
+            {
+                @foreach (var item in Model.myCart)
+                {
+                    <tr>
+                        <td>
+                            <h5>@item.ItemName</h5>
+                            <div>@Convert.ToDateTime(item.BookDateTime).ToString("dd MMMM yyyy HH:mm tt")</div>
+                            <div>Clinic: @item.Clinic</div>
+                        </td>
+                        <td>$@item.Price</td>
+                        <td>@item.Quantity</td>
+                        <td>$@(item.Price * item.Quantity)</td>
+                        <td><button class="fas fa-trash" onclick="removeCartItem(@item.Id)"></button></td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr style="background: #FBFBFB; ">
+                    <td colspan="5">
+                        <div style="margin:100px; text-align:center;">
+                            <h3><i class="fas fa-exclamation-triangle"></i> Your cart is empty</h3>
+                        </div>
+                    </td>
+                </tr>
+            }
 
         </tbody>
-        
     </table>
     <br />
-    <form method="post">
-        <div style="display:inline-flex"><button class="btn btn-primary" style="float:right">PROCEED TO PAYMENT</button></div>
-    </form>
+    <div class="row" style="margin-top:100px;">
+        <div class="col-md-8">
+
+        </div>
+        <div class="col-md-4">
+            <div>Subtotal <span style="float:right;">$@Model.myTotal</span></div>
+            <div>Shipping fee <span style="float:right;">$0</span></div>
+            <hr />
+            <h3>TOTAL <span style="float:right;">$@Model.myTotal</span></h3>
+            <form method="post">
+                <div style="display:inline-flex"><button class="btn btn-primary btn-block" style="float:right">PROCEED TO PAYMENT</button></div>
+            </form>
+        </div>
+    </div>
     <br />
 </div>
+<script>
+    function removeCartItem(cart_id) {
+        $.ajax({
+            url: '@Url.Action("removeCartItem")',
+            type: 'POST',
+            data: { id: cart_id },
+        }).done(function () {
+            alert('Modify Movie');
+        });
+    }
+</script>

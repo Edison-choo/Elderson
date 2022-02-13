@@ -28,7 +28,7 @@ namespace Elderson.Pages.Elderly
             _svc = service;
             _uSvc = uService;
         }
-        public void OnGet(string id)
+        public IActionResult OnGet(string id)
         {
             if (_svc.isInCall(id, HttpContext.Session.GetString("LoginUser")))
             {
@@ -38,10 +38,11 @@ namespace Elderson.Pages.Elderly
                 myDoctorName = _uSvc.GetNameById(myDoctorID);
                 myDoctorPhoto = _uSvc.GetDoctorById(myDoctorID).Photo;
                 HttpContext.Session.SetString("CallID", myCallID);
+                return Page();
             }
             else
             {
-                Redirect("~/");
+                return Redirect("~/");
             }
             
         }

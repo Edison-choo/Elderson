@@ -36,7 +36,7 @@ namespace Elderson.Pages
         {
             _svc = service;
         }
-        public void OnGet()
+        public IActionResult OnGet()
         {
             if (HttpContext.Session.GetString("LoginUser") != null)
             {
@@ -48,10 +48,11 @@ namespace Elderson.Pages
                     myDate = HttpContext.Session.GetString("myDate");
                     myTime = HttpContext.Session.GetString("myTime");
                     myDateTime = HttpContext.Session.GetString("myDateTime");
+                    return Page();
                 }
-                Redirect("DateAndTime");
+                return Redirect("DateAndTime");
             }
-            Redirect("~/");
+            return Redirect("~/");
             
         }
         public IActionResult OnPost()
@@ -62,6 +63,7 @@ namespace Elderson.Pages
                 {
                     myCart = HttpContext.Session.GetCart("Cart");
                 }
+                cartItem.Id = Guid.NewGuid().ToString();
                 cartItem.ItemName = "Online Consultation";
                 cartItem.Price = 20;
                 cartItem.Quantity = 1;

@@ -23,7 +23,7 @@
                 </tr>
             </thead>
             <tbody>
-                @if (Model.myBookings != null)
+                @if (Model.myBookings.Count != 0)
                 {
                     @foreach (var item in Model.myBookings)
                     {
@@ -79,7 +79,16 @@
                 </tr>
                     }
                 }
-
+            else
+            {
+            <tr style="background: #FBFBFB; ">
+                <td colspan="4">
+                    <div style="margin:100px; text-align:center;">
+                        <h3><i class="fas fa-exclamation-triangle"></i> No pending appointments currently</h3>
+                    </div>
+                </td>
+            </tr>
+            }
             </tbody>
         </table>
     </div>
