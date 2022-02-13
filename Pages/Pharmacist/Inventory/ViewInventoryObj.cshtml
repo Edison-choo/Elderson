@@ -80,10 +80,19 @@
                         </div>
                         <div>
                             <p class="form-group d-flex">
+                                Allergy Ingredients:
+                            </p>
+                            <div class="profileData">
+                                @Model.SelectedMedication.MedAllergyIngredients
+                            </div>
+                        </div>
+                        <div>
+                            <p class="form-group d-flex">
                                 Medication Supplier:
                             </p>
                             <div class="profileData">
-                                @if (Model.SelectedMedication.MedSupplierAbb == null) { 
+                                @if (Model.SelectedMedication.MedSupplierAbb == null)
+                                {
                                     @:NA (Not Applicable)
                                 }
                                 else
@@ -95,7 +104,7 @@
                                     }
 
                                     @Html.Raw(concat);
-                                    
+
                                 }
                             </div>
                         </div>
@@ -131,7 +140,7 @@
                                 @Model.SelectedMedication.MedDescription
                             </div>
                         </div>
-                        
+
 
                     </div>
                 </div>
