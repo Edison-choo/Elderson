@@ -93,8 +93,8 @@ namespace Elderson.Api
         {
             try
             {
-                var deleteUser = _svc.GetScheduleById(scheduleId);
-                _svc.DeleteSchedule(deleteUser);
+                var deleteSchedule = _svc.GetScheduleById(scheduleId);
+                _svc.DeleteSchedule(deleteSchedule);
                 return RedirectToPage("DRR/Index");
             }
             catch (Exception ex)
