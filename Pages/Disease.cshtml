@@ -17,10 +17,12 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+    let disease;
     getDisease()
     async function getDisease() {
         try {
             var response = await fetch(`https://disease-info-api.herokuapp.com/diseases/` + "@Model.searchString")
+            disease = await response.json();
             if ("@Model.searchString".length == 0) {
             formatDisease()
             }
@@ -31,8 +33,6 @@
         catch {
             $("#diseaseBody").append(`<h3 style="text-align:center; margin:50px;"><i class="fas fa-exclamation-triangle"></i> No results for "${"@Model.searchString"}"</h3>`)
         }
-        disease = await response.json();
-
     }
     function formatDisease() {
         for (var i = 0; i < disease.diseases.length; i++) {

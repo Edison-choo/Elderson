@@ -14,24 +14,24 @@
     <div asp-validation-summary="All" class="text-danger"></div>
     <form method="post">
         <div class="form-outline mb-4">
-            <input type="text" asp-for="conditionName" class="form-control" value="@Model.medicalHistory.Name"/>
+            <input type="text" asp-for="updatedMedicalHistory.Name" class="form-control" value="@Model.medicalHistory.Name"/>
             <label class="form-label" for="conditionName">Name</label>
         </div>
 
         <div class="form-outline mb-4">
-            <textarea class="form-control" asp-for="conditionDescription" rows="4"></textarea>
+            <textarea class="form-control" asp-for="updatedMedicalHistory.Description" rows="4"></textarea>
             <label class="form-label" for="conditionDescription">Enter a brief description of your condidtion</label>
         </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-outline mb-4">
-                    <input type="date" asp-for="StartDate" class="form-control" value="@Model.medicalHistory.StartDate.ToString("yyyy-MM-dd")"/>
+                    <input type="date" asp-for="updatedMedicalHistory.StartDate" class="form-control" value="@Model.medicalHistory.StartDate.ToString("yyyy-MM-dd")"/>
                     <label class="form-label" for="StartDate">Start Date of condition</label>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-outline mb-4">
-                    <input type="date" asp-for="EndDate" class="form-control" value="@Model.medicalHistory.EndDate.ToString("yyyy-MM-dd")"/>
+                    <input type="date" asp-for="updatedMedicalHistory.EndDate" class="form-control" value="@Model.medicalHistory.EndDate.ToString("yyyy-MM-dd")"/>
                     <label class="form-label" for="EndDate">End Date of condition</label>
                 </div>
             </div>
@@ -40,6 +40,6 @@
         <button type="submit" class="btn btn-primary btn-block mb-4">Edit</button>
     </form>
     <script>
-        document.getElementById("conditionDescription").innerHTML = "@Model.medicalHistory.Description"
+        document.getElementById("updatedMedicalHistory_Description").innerHTML = "@Model.medicalHistory.Description"
     </script>
 </div>
