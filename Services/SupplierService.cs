@@ -49,7 +49,7 @@ namespace Elderson.Services
 
         public bool AddSupplier(Supplier supplier)
         {
-            if (SupplierExists(supplier.SupplierName) || SupplierExistsGuid(supplier.Id)
+            if (SupplierExists(supplier.SupplierName) || SupplierExistsGuid(supplier.Id))
             {
                 return false;
             }
