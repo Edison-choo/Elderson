@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNetCoreHero.ToastNotification.Abstractions;
 using Elderson.Models;
 using Elderson.Services;
 using Microsoft.AspNetCore.Http;
@@ -20,26 +21,20 @@ namespace Elderson.Pages
         public int myTotal { get; set; } = 0;
         private BookingService _svc;
         private readonly ILogger<CartModel> _logger;
+        private readonly INotyfService _notfy;
         private ScheduleService _sSvc;
 
-        public CartModel(ILogger<CartModel> logger, BookingService service, ScheduleService sService)
+        public CartModel(ILogger<CartModel> logger, BookingService service, ScheduleService sService, INotyfService notyf)
         {
             _svc = service;
             _logger = logger;
             _sSvc = sService;
+            _notfy = notyf;
         }
         public IActionResult OnGet()
         {
             if (HttpContext.Session.GetString("LoginUser") != null)
             {
-                if (HttpContext.Session.GetCart("Cart") != null)
-                {
-                    //myCart = HttpContext.Session.GetCart("Cart");
-                    //foreach (CartItem item in myCart)
-                    //{
-                    //    myTotal += item.Price;
-                    //}
-                }
                 return Page();
             }
             else
@@ -52,24 +47,65 @@ namespace Elderson.Pages
         {
             if (ModelState.IsValid)
             {
+                bool valid = true;
                 myCart = HttpContext.Session.GetCart("Cart");
-                foreach (CartItem item in myCart)
+                if (myCart == null)
                 {
-                    string bookUUID = Guid.NewGuid().ToString();
-                    string callUUID = Guid.NewGuid().ToString();
-                    Booking book = new Booking();
-                    book.Id = bookUUID;
-                    book.Clinic = item.Clinic;
-                    book.BookDateTime = Convert.ToDateTime(item.BookDateTime);
-                    book.Symptoms = item.Symptoms;
-                    book.PatientID = HttpContext.Session.GetString("LoginUser");
-                    book.DoctorID = item.DoctorID;
-                    book.CallUUID = callUUID;
-                    _svc.AddBooking(book);
-                    Schedule schedule = _sSvc.GetScheduleByDateTime(Convert.ToDateTime(item.BookDateTime));
-                    schedule.Availability = "B";
-                    _sSvc.UpdateScheduleStatus(schedule);
-                    HttpContext.Session.Remove("Cart");
+                    _notfy.Warning("Your cart is empty!");
+                    valid = false;
+                }
+                else
+                {
+                    bool avail = true;
+                    List<DateTime> times = new List<DateTime>();
+                    foreach (CartItem item in myCart)
+                    {
+                        Schedule availability =
+                            _sSvc.GetScheduleByDateTime(item.DoctorID, Convert.ToDateTime(item.BookDateTime));
+                        if (times.Contains(availability.StartDateTime))
+                        {
+                            avail = false;
+                        }
+                        times.Add(availability.StartDateTime);
+                        if (availability.Availability.ToUpper() != "A")
+                        {
+                            avail = false;
+                        }
+                        if (DateTime.Now > availability.StartDateTime)
+                        {
+                            avail = false;
+                        }
+                    }
+                    if (!avail)
+                    {
+                        valid = false;
+                        _notfy.Warning("Booking is invalid!");
+                    }
+                }
+                if (valid)
+                {
+                    foreach (CartItem item in myCart)
+                    {
+                        string bookUUID = Guid.NewGuid().ToString();
+                        string callUUID = Guid.NewGuid().ToString();
+                        Booking book = new Booking();
+                        book.Id = bookUUID;
+                        book.Clinic = item.Clinic;
+                        book.BookDateTime = Convert.ToDateTime(item.BookDateTime);
+                        book.Symptoms = item.Symptoms;
+                        book.PatientID = HttpContext.Session.GetString("LoginUser");
+                        book.DoctorID = item.DoctorID;
+                        book.CallUUID = callUUID;
+                        _svc.AddBooking(book);
+                        Schedule schedule = _sSvc.GetScheduleByDateTime(item.DoctorID, Convert.ToDateTime(item.BookDateTime));
+                        schedule.Availability = "B";
+                        _sSvc.UpdateScheduleStatus(schedule);
+                        HttpContext.Session.Remove("Cart");
+                    }
+                }
+                else
+                {
+                    return Page();
                 }
             }
             else

@@ -40,8 +40,8 @@ namespace Elderson.Pages.Elderly
             updatedBook.Status = "r";
             try
             {
-                Schedule schedule = _sSvc.GetScheduleByDateTime(updatedBook.BookDateTime);
-                Schedule schedule2 = _sSvc.GetScheduleByDateTime(dateTime);
+                Schedule schedule = _sSvc.GetScheduleByDateTime(updatedBook.DoctorID, updatedBook.BookDateTime);
+                Schedule schedule2 = _sSvc.GetScheduleByDateTime(updatedBook.DoctorID, dateTime);
                 schedule.Availability = "B";
                 schedule2.Availability = "A";
                 _svc.UpdateBooking(updatedBook);

@@ -27,7 +27,7 @@ namespace Elderson.Pages.Elderly
             if (HttpContext.Session.GetString("LoginUser") != null)
             {
                 Booking deleteBook = _svc.GetBookingById(id);
-                Schedule updateSchedule = _sSvc.GetScheduleByDateTime(deleteBook.BookDateTime);
+                Schedule updateSchedule = _sSvc.GetScheduleByDateTime(deleteBook.DoctorID, deleteBook.BookDateTime);
                 updateSchedule.Availability = "A";
                 _svc.DeleteBooking(deleteBook);
                 _sSvc.UpdateScheduleStatus(updateSchedule);
