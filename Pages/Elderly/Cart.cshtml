@@ -12,39 +12,10 @@
                 <th style="font-weight:bold; background-color:#F4F3FF;">Price</th>
                 <th style="font-weight:bold; background-color:#F4F3FF;">Quantity</th>
                 <th style="font-weight:bold; background-color:#F4F3FF;">Subtotal</th>
-                <th></th>
+                <th style="font-weight:bold; background-color:#F4F3FF;">Remove</th>
             </tr>
         </thead>
-        <tbody>
-
-            @if (Model.myCart != null)
-            {
-                @foreach (var item in Model.myCart)
-                {
-                    <tr>
-                        <td>
-                            <h5>@item.ItemName</h5>
-                            <div>@Convert.ToDateTime(item.BookDateTime).ToString("dd MMMM yyyy HH:mm tt")</div>
-                            <div>Clinic: @item.Clinic</div>
-                        </td>
-                        <td>$@item.Price</td>
-                        <td>@item.Quantity</td>
-                        <td>$@(item.Price * item.Quantity)</td>
-                        <td><button class="fas fa-trash" onclick="removeCartItem(@item.Id)"></button></td>
-                    </tr>
-                }
-            }
-            else
-            {
-                <tr style="background: #FBFBFB; ">
-                    <td colspan="5">
-                        <div style="margin:100px; text-align:center;">
-                            <h3><i class="fas fa-exclamation-triangle"></i> Your cart is empty</h3>
-                        </div>
-                    </td>
-                </tr>
-            }
-
+        <tbody id="cartBody">
         </tbody>
     </table>
     <br />
@@ -53,25 +24,66 @@
 
         </div>
         <div class="col-md-4">
-            <div>Subtotal <span style="float:right;">$@Model.myTotal</span></div>
+            <div>Subtotal <span style="float:right;" id="subTotal"></span></div>
             <div>Shipping fee <span style="float:right;">$0</span></div>
             <hr />
-            <h3>TOTAL <span style="float:right;">$@Model.myTotal</span></h3>
+            <h3>TOTAL <span style="float:right;" id="total"></span></h3>
+            <br />
             <form method="post">
-                <div style="display:inline-flex"><button class="btn btn-primary btn-block" style="float:right">PROCEED TO PAYMENT</button></div>
+                <div><button class="btn btn-primary btn-block" style="float:right">PROCEED TO PAYMENT</button></div>
             </form>
         </div>
     </div>
     <br />
 </div>
 <script>
-    function removeCartItem(cart_id) {
-        $.ajax({
-            url: '@Url.Action("removeCartItem")',
-            type: 'POST',
-            data: { id: cart_id },
-        }).done(function () {
-            alert('Modify Movie');
-        });
+    let cart;
+    let total = 0;
+    getCart();
+    async function getCart() {
+        var response = await fetch(`https://localhost:44311/api/Cart`)
+        cart = await response.json();
+        formatCart();
     }
+    function formatCart() {
+        total = 0;
+        if (cart != null) {
+            $("#cartBody").html("");
+            for (i = 0; i < cart.length; i++) {
+                obj = cart[i];
+                total += (obj.Price * obj.Quantity)
+                $("#cartBody").append(`
+                <tr>
+                    <td>
+                        <h5>${obj.ItemName}</h5>
+                        <div>${obj.BookDateTime}</div>
+                        <div>Clinic: ${obj.Clinic}</div>
+                    </td>
+                    <td>$${obj.Price}</td>
+                    <td>${obj.Quantity}</td>
+                    <td>$${obj.Price * obj.Quantity}</td>
+                    <td><button class="btn btn-danger" onclick="removeCartItem(${i})"><i class="fas fa-trash-alt"></i></button></td>
+                </tr>
+            `)
+            }
+            $("#subTotal").text(`$${total}`)
+            $("#total").text(`$${total}`)
+        }
+        else {
+            $("#cartBody").html(`
+                <tr style="background: #FBFBFB; ">
+                    <td colspan="5">
+                        <div style="margin:100px; text-align:center;">
+                            <h3><i class="fas fa-exclamation-triangle"></i> Your cart is empty</h3>
+                        </div>
+                    </td>
+                </tr>
+        `)
+        }
+    }
+    function removeCartItem(id) {
+        fetch(`https://localhost:44311/api/Cart/RemoveCartItem/` + id);
+        getCart();
+    }
+    function 
 </script>

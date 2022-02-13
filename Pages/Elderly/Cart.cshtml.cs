@@ -28,22 +28,17 @@ namespace Elderson.Pages
             _logger = logger;
             _sSvc = sService;
         }
-        public IActionResult Remove(string id)
-        {
-            
-            return Redirect("~/");
-        }
         public IActionResult OnGet()
         {
             if (HttpContext.Session.GetString("LoginUser") != null)
             {
                 if (HttpContext.Session.GetCart("Cart") != null)
                 {
-                    myCart = HttpContext.Session.GetCart("Cart");
-                    foreach (CartItem item in myCart)
-                    {
-                        myTotal += item.Price;
-                    }
+                    //myCart = HttpContext.Session.GetCart("Cart");
+                    //foreach (CartItem item in myCart)
+                    //{
+                    //    myTotal += item.Price;
+                    //}
                 }
                 return Page();
             }
