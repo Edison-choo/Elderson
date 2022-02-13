@@ -103,7 +103,10 @@ namespace Elderson.Api
 
         public class CompositeObject
         {
-            public PatientDetails patientDetails { get; set; }
+            //public PatientDetails patientDetails { get; set; }
+            public string DetailsofVisit { get; set; }
+            public string Title { get; set; }
+            public string Id { get; set; }
 
         }
 
@@ -111,7 +114,7 @@ namespace Elderson.Api
         [HttpPost]
         public ActionResult<string> Post([FromForm] CompositeObject body)
         {
-            Console.WriteLine(body.patientDetails.Title + body.patientDetails.DetailsofVisit);
+            Console.WriteLine(body.Title + body.DetailsofVisit);
             Console.WriteLine(ModelState.IsValid);
 
             if (!(ModelState.IsValid))
@@ -123,21 +126,21 @@ namespace Elderson.Api
 
             PatientDetails UpdatedDetails;
 
-            UpdatedDetails = _svc.GetEntryById(body.patientDetails.Id);
-            if (_svc.GetEntryById(body.patientDetails.Id) != null && body.patientDetails.Id != UpdatedDetails.Id)
+            UpdatedDetails = _svc.GetEntryById(body.Id);
+            if (_svc.GetEntryById(body.Id) != null && body.Id != UpdatedDetails.Id)
             {
-                _logger.LogInformation("Unsuccessful", body.patientDetails.Id, "edit user details");
+                _logger.LogInformation("Unsuccessful", body.Id, "edit user details");
                 _notfy.Error("ID is already used");
                 Console.WriteLine("Test2");
                 return BadRequest("Error");
             }
-            UpdatedDetails.Title = body.patientDetails.Title;
-            UpdatedDetails.DetailsofVisit = body.patientDetails.DetailsofVisit;
+            UpdatedDetails.Title = body.Title;
+            UpdatedDetails.DetailsofVisit = body.DetailsofVisit;
             Boolean valid = _svc.UpdateEntry(UpdatedDetails);
 
             if (valid)
             {
-                _logger.LogInformation("{actionStatus} User {userId} {userAction}.", "Successful", body.patientDetails.Id, "edit user");
+                _logger.LogInformation("{actionStatus} User {userId} {userAction}.", "Successful", body.Id, "edit user");
                 _notfy.Success("Edit User Successfully");
                 Console.WriteLine("Test3");
                 return Ok("Success");
