@@ -29,7 +29,7 @@ namespace Elderson.Pages
         {
             [Required]
             public string currentPwd { get; set; }
-            [Required]
+            [Required, RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^0-9a-zA-Z]).{8,}$", ErrorMessage = "Password must meet requirements")]
             public string newPwd { get; set; }
 
             [Required]
@@ -40,7 +40,7 @@ namespace Elderson.Pages
         public ViewModel2 viewModel2 { get; set; }
         public class ViewModel2
         {
-            [Required]
+            [Required, RegularExpression(@"^([a-zA-Z0-9]+)([\.{1}])?([a-zA-Z0-9]+)\@(?:gmail|GMAIL)([\.])(?:com|COM)$", ErrorMessage = "The email format is invalid. Only gmail is allowed.")]
             public string email { get; set; }
             [Required]
             public string password { get; set; }

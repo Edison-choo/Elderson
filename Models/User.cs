@@ -9,7 +9,7 @@ namespace Elderson.Models
     public class User
     {
         public string Id { get; set; }
-        [Required, RegularExpression(@"^\S+@\S+\.\S+$", ErrorMessage ="The email format is invalid")]
+        [Required, RegularExpression(@"^([a-zA-Z0-9]+)([\.{1}])?([a-zA-Z0-9]+)\@(?:gmail|GMAIL)([\.])(?:com|COM)$", ErrorMessage ="The email format is invalid. Only gmail is allowed.")]
         public string Email { get; set; }
         public string Password { get; set; }
         public string Phone { get; set; }

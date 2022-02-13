@@ -1,18 +1,16 @@
 ﻿@page
 @model Elderson.Pages.ISR.Incidents.EditModel
-@{
-    Layout = "Shared/_LayoutOrganization";
-    ViewData["Title"] = "Edit Incident page";
-    ViewData["Header"] = "EDIT INCIDENT";
-    ViewData["Breadcrumb"] = "Incident Management > Incidents";
-}
+@{ Layout = "Shared/_LayoutOrganization";
+                ViewData["Title"] = "Edit Incident page";
+                ViewData["Header"] = "EDIT INCIDENT";
+                ViewData["Breadcrumb"] = "Incident Management > Incidents"; }
 
 <style>
 </style>
 
 <div class="row">
     <form class="forms-sample incidentForm" method="post" asp-action="">
-        <input type="hidden" asp-for="SelectedIncident.Id" value="@Model.SelectedIncident.Id"/>
+        <input type="hidden" asp-for="SelectedIncident.Id" value="@Model.SelectedIncident.Id" />
         <div class="row">
             <div class="col-12 grid-margin stretch-card">
                 <div class="card">
@@ -73,7 +71,7 @@
                             </div>
                             <div style="width:80%;">
                                 @Html.DropDownList("Select", new SelectList(Enum.GetValues(typeof(Models.CategoryType))), null, new { @class = "form-control multiple-checkboxes", @id = "multiple-checkboxes", @multiple = "multiple" })
-                                <input asp-for="SelectedIncident.Category" type="hidden" id="category" value="@Model.SelectedIncident.Category"/>
+                                <input asp-for="SelectedIncident.Category" type="hidden" id="category" value="@Model.SelectedIncident.Category" />
                                 <span asp-validation-for="SelectedIncident.Category" class="text-danger"></span>
                             </div>
 
@@ -105,6 +103,10 @@
     </form>
 </div>
 
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
 <script>
     $(document).ready(function () {
         $('#multiple-checkboxes').multiselect();
@@ -114,7 +116,7 @@
             console.log(`a .checkbox input[value='${catList[i]}']`);
             $(`a .checkbox input[value='${catList[i]}']`).click()
         }
-        
+
         $(".multiselect-selected-text").text($("#category").val());
     });
 

@@ -541,7 +541,8 @@
                     <div><img src="~/images/loadingAnim.gif" alt="loading" height="30" /></div>
                 </div>
                 <div class="chatSetting">
-                    <i onclick="displaySetting()" style="font-size:1.5em;" class="mdi mdi-dots-vertical"></i>
+                    
+                    <i onclick="displaySetting()" style="font-size:1.5em;" class="fa fa-ellipsis-v"></i>
                     <div class="setting card">
                         <div class="settingItem" data-toggle="modal" data-target="#deleteChat">
                             Delete Chat
@@ -555,7 +556,7 @@
                 <div class="message wholeChat" data-mcs-theme="minimal-dark">
                     <ul id="messageList" class="test showActive " style="overflow:hidden;">
                         <li>
-                            @{ if (!Model.allmessages.ContainsKey("ISRChat") || HttpContext.Session.GetString("ChatUser") != "ISRChat")
+                            @{ if (!Model.allmessages.ContainsKey("ISRChat") && HttpContext.Session.GetString("ChatUser") != "ISRChat")
                                             {
                                 <div class="defaultChat" style="">
                                     <img src="~/images/defaultChat.png" alt="Alternate Text" />

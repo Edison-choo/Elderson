@@ -1,36 +1,41 @@
 ﻿@page
 @model Elderson.Pages.Users.LoginModel
 @{ Layout = "Shared/_LayoutEmpty";
-                ViewData["Title"] = "Login page"; }
+    ViewData["Title"] = "Login page"; }
 
 
 <div class="container-scroller">
     <div class="container-fluid page-body-wrapper full-page-wrapper">
+
         <div class="content-wrapper d-flex align-items-center auth px-0">
+            <div style="width:120px;height:30px; background-color:transparent; position:absolute; top:30px; left:30px;"><button onclick="history.back()" class="btn"><i style="padding-right:5px;" class="mdi mdi-arrow-left-bold-circle-outline"></i>Back</button> </div>
+
             <div class="row w-100 mx-0">
                 <div class="col-lg-4 mx-auto">
                     <div class="auth-form-light text-left py-5 px-4 px-sm-5">
                         <div class="brand-logo">
-                                <img src="../../images/logo.svg" alt="logo">
-                            </div>
+                            <img src="../../images/logo.svg" alt="logo">
+                        </div>
                         <h4>Login Page</h4>
                         <h6 class="fw-light">Sign in to continue.</h6>
                         <form class="pt-3" method="post">
                             <div class="form-group">
                                 <input type="email" asp-for="Email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Username">
+                                <span asp-validation-for="Email" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <input type="password" asp-for="Password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password">
+                                <span asp-validation-for="Password" class="text-danger"></span>
                             </div>
                             <span style="color:red;">@Model.ErrorMsg</span>
                             <div class="my-2 d-flex justify-content-between align-items-center">
                                 @*<div class="form-check">
-                                    <label class="form-check-label text-muted">
-                                        <input type="checkbox" class="form-check-input">
-                                        Keep me signed in
-                                    </label>
-                                </div>
-                                <a href="#" class="auth-link text-black">Forgot password?</a>*@
+                                        <label class="form-check-label text-muted">
+                                            <input type="checkbox" class="form-check-input">
+                                            Keep me signed in
+                                        </label>
+                                    </div>
+                                    <a href="#" class="auth-link text-black">Forgot password?</a>*@
                             </div>
                             <div class="mt-3">
                                 <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" type="submit">SIGN IN</button>
@@ -40,11 +45,11 @@
                                 Don't have an account? <a href="/Register" class="text-primary">Create</a>
                             </div>
                             @*<hr />
-                            <div class="mb-2">
-                                <button type="button" class="btn btn-block btn-facebook auth-form-btn">
-                                    <i class="ti-facebook me-2"></i>Connect using facebook
-                                </button>
-                            </div>*@
+                                <div class="mb-2">
+                                    <button type="button" class="btn btn-block btn-facebook auth-form-btn">
+                                        <i class="ti-facebook me-2"></i>Connect using facebook
+                                    </button>
+                                </div>*@
                         </form>
                     </div>
                 </div>
@@ -52,6 +57,10 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
 
 @*<div>
         <h2 style="margin-bottom:20px;">Verify This Email Address</h2>

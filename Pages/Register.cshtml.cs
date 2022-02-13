@@ -32,7 +32,7 @@ namespace Elderson.Pages
         public ViewModel viewModel { get; set; }
         public class ViewModel
         {
-            [Required]
+            [Required, RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^0-9a-zA-Z]).{8,}$", ErrorMessage = "Password must meet requirements")]
             public string pwd { get; set; }
 
             [Required]

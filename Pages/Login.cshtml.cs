@@ -12,15 +12,18 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.Extensions.Options;
+using System.ComponentModel.DataAnnotations;
 
 namespace Elderson.Pages.Users
 {
     public class LoginModel : PageModel
     {
         [BindProperty]
+        [Required, RegularExpression(@"^\S+@\S+\.\S+$", ErrorMessage = "The email format is invalid")]
         public string Email { get; set; }
 
         [BindProperty]
+        [Required]
         public string Password { get; set; }
 
         [BindProperty]

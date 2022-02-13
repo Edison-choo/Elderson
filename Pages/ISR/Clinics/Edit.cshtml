@@ -1,11 +1,9 @@
 ﻿@page
 @model Elderson.Pages.ISR.Clinics.EditModel
-@{
-    Layout = "Shared/_LayoutOrganization";
-    ViewData["Title"] = "Edit Clinic page";
-    ViewData["Header"] = "EDIT CLINIC";
-    ViewData["Breadcrumb"] = "Clinic Management > Clinics";
-}
+@{ Layout = "Shared/_LayoutOrganization";
+                ViewData["Title"] = "Edit Clinic page";
+                ViewData["Header"] = "EDIT CLINIC";
+                ViewData["Breadcrumb"] = "Clinic Management > Clinics"; }
 
 <div class="row">
     <form class="forms-sample incidentForm" method="post" asp-action="">
@@ -94,6 +92,10 @@
         </div>
     </form>
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
 
 <script>
 </script>

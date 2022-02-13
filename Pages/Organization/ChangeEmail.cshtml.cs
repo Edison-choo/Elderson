@@ -26,7 +26,7 @@ namespace Elderson.Pages.Organization
         [Required]
         public string currentPwd { get; set; }
         [BindProperty]
-        [Required]
+        [Required, RegularExpression(@"^([a-zA-Z0-9]+)([\.{1}])?([a-zA-Z0-9]+)\@(?:gmail|GMAIL)([\.])(?:com|COM)$", ErrorMessage = "The email format is invalid. Only gmail is allowed.")]
         public string email { get; set; }
         [BindProperty]
         public string ErrorMsg { get; set; }

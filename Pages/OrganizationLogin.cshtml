@@ -8,20 +8,23 @@
 <div class="container-scroller">
     <div class="container-fluid page-body-wrapper full-page-wrapper">
         <div class="content-wrapper d-flex align-items-center auth px-0">
+            <div style="width:120px;height:30px; background-color:transparent; position:absolute; top:30px; left:30px;"><button onclick="history.back()" class="btn"><i style="padding-right:5px;" class="mdi mdi-arrow-left-bold-circle-outline"></i>Back</button> </div>
             <div class="row w-100 mx-0">
                 <div class="col-lg-4 mx-auto">
                     <div class="auth-form-light text-left py-5 px-4 px-sm-5">
                         @*<div class="brand-logo">
-                            <img src="../../images/logo.svg" alt="logo">
-                        </div>*@
+                                <img src="../../images/logo.svg" alt="logo">
+                            </div>*@
                         <h4>Organization User Login</h4>
 
                         <form class="pt-3" method="post">
                             <div class="form-group">
                                 <input type="email" asp-for="Email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Username">
+                                <span asp-validation-for="Email" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <input type="password" asp-for="Password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password">
+                                <span asp-validation-for="Password" class="text-danger"></span>
                             </div>
                             <span style="color:red;">@Model.ErrorMsg</span>
 
@@ -35,3 +38,7 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

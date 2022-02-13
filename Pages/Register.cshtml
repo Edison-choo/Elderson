@@ -1,9 +1,7 @@
 ﻿@page
 @model Elderson.Pages.RegisterModel
-@{
-    Layout = "Shared/_LayoutEmpty";
-    ViewData["Title"] = "Register page";
-}
+@{ Layout = "Shared/_LayoutEmpty";
+                ViewData["Title"] = "Register page"; }
 
 <style>
     * {
@@ -11,7 +9,7 @@
         padding: 0;
         box-sizing: border-box;
     }
-/*    .multisteps-form__progress {
+    /*    .multisteps-form__progress {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
     }*/
@@ -20,43 +18,43 @@
         height: 50px;
         width: 50px;
         background-color: lightgray;
-        border-radius:45px;
-        margin-right:20px;
-        padding:13px 20px;
-        color:white;
+        border-radius: 45px;
+        margin-right: 20px;
+        padding: 13px 20px;
+        color: white;
     }
 
     .multisteps-form__progress {
-        margin-top:200px;
+        margin-top: 200px;
     }
 
 
-    .multisteps-form__progress div {
-        display: flex;
-        justify-content: start;
-        margin-bottom:24px;
-    }
+        .multisteps-form__progress div {
+            display: flex;
+            justify-content: start;
+            margin-bottom: 24px;
+        }
 
         .multisteps-form__progress span {
-            opacity:40%;
-            font-size:0.8em;
+            opacity: 40%;
+            font-size: 0.8em;
         }
 
     .multisteps-form__progress-btn {
         border: none;
         background-color: transparent;
         outline: none !important;
-        opacity:60%;
-        display:block;
+        opacity: 60%;
+        display: block;
     }
 
         .multisteps-form__progress-btn.js-active {
             color: yellowgreen;
         }
 
-        .stepCircle.js-active {
-            background-color: yellowgreen;
-        }
+    .stepCircle.js-active {
+        background-color: yellowgreen;
+    }
 
 
     /*    .multisteps-form__progress-btn {
@@ -133,43 +131,44 @@
         height: 0;
         opacity: 0;
         visibility: hidden;
-        max-width:730px;
+        max-width: 730px;
     }
 
-    .multisteps-form__panel.js-active {
-        height: auto;
-        opacity: 1;
-        visibility: visible;
-    }
+        .multisteps-form__panel.js-active {
+            height: auto;
+            opacity: 1;
+            visibility: visible;
+        }
 
-    .multisteps-form__panel[data-animation="scaleIn"] {
-        transform: scale(0.9);
-    }
+        .multisteps-form__panel[data-animation="scaleIn"] {
+            transform: scale(0.9);
+        }
 
-    .multisteps-form__panel[data-animation="scaleIn"].js-active {
-        transition-property: all;
-        transition-duration: 0.2s;
-        transition-timing-function: linear;
-        transition-delay: 0s;
-        transform: scale(1);
-    }
+            .multisteps-form__panel[data-animation="scaleIn"].js-active {
+                transition-property: all;
+                transition-duration: 0.2s;
+                transition-timing-function: linear;
+                transition-delay: 0s;
+                transform: scale(1);
+            }
 
     @@media (min-width: 500px) {
-    .multisteps-form__progress-btn {
-        text-indent: 0;
+        .multisteps-form__progress-btn {
+            text-indent: 0;
+        }
     }
-}
 </style>
 
 <div class="container-scroller">
     <div class="container-fluid page-body-wrapper full-page-wrapper">
         <div class="content-wrapper d-flex align-items-center auth px-0">
+            <div style="width:120px;height:30px; background-color:transparent; position:absolute; top:30px; left:30px;"><button onclick="history.back()" class="btn"><i style="padding-right:5px;" class="mdi mdi-arrow-left-bold-circle-outline"></i>Back</button> </div>
             <div class="row w-100 mx-0  d-flex justify-content-center">
                 <div class="col-lg-8">
                     <div class="row d-flex justify-content-between">
                         <div class="col-lg-4">
                             <div class="row " style="margin-bottom:30px; margin-right:10px;">
-                                <div class="card"  style="height:700px;">
+                                <div class="card" style="height:720px;">
                                     <div class="card-body">
                                         <div class="multisteps-form__progress">
                                             <div>
@@ -178,7 +177,7 @@
                                                     <button class="multisteps-form__progress-btn js-active" type="button" title="User Info">Login Information</button>
                                                     <span>Use email and password to login</span>
                                                 </div>
-                                                
+
                                             </div>
                                             <div>
                                                 <div class="stepCircle">2</div>
@@ -186,16 +185,16 @@
                                                     <button class="multisteps-form__progress-btn" type="button" title="Address">Personal Information</button>
                                                     <span>Information about you</span>
                                                 </div>
-                                                
-                                            </div> 
-                                            
+
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-8">
-                            <div class="card"  style="height: 700px;">
+                            <div class="card" style="height: 720px;">
                                 <div class="card-body">
                                     <form class="pt-3 .#msform multisteps-form__form" method="post">
                                         <input type="hidden" asp-for="newUser.UserType" value="Patient">
@@ -237,11 +236,11 @@
                                                 Already have an account? <a href="/Login" class="text-primary">Login here</a>
                                             </div>
                                             @*<hr />
-                                            <div class="mb-2">
-                                                <button type="button" class="btn btn-block btn-facebook auth-form-btn">
-                                                    <i class="ti-facebook me-2"></i>Connect using facebook
-                                                </button>
-                                            </div>*@
+                                                <div class="mb-2">
+                                                    <button type="button" class="btn btn-block btn-facebook auth-form-btn">
+                                                        <i class="ti-facebook me-2"></i>Connect using facebook
+                                                    </button>
+                                                </div>*@
                                         </fieldset>
 
                                         <fieldset class="multisteps-form__panel p-4 rounded bg-white" data-animation="scaleIn">
@@ -303,27 +302,27 @@
 
                                         <fieldset class="multisteps-form__panel p-4 rounded bg-white" data-animation="scaleIn">
                                             @*<h4>Card Details (Optional)</h4>
-                                            <h6 class="fw-light">Set as your primary payment information</h6>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control form-control-lg" id="CardName" placeholder="NAME ON CARD">
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control form-control-lg" id="CardNumber" placeholder="CARD NUMBER">
-                                            </div>
-                                            <div class="d-flex justify-content-between">
-                                                <div class="form-group" style="width:48%;">
-                                                    <input type="text" class="form-control form-control-lg" id="ExpiryDate" placeholder="EXPIRY DATE">
+                                                <h6 class="fw-light">Set as your primary payment information</h6>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control form-control-lg" id="CardName" placeholder="NAME ON CARD">
                                                 </div>
-                                                <div class="form-group" style="width:48%;">
-                                                    <input type="text" class="form-control form-control-lg" id="SecurityCode" placeholder="SECURITY CODE">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control form-control-lg" id="CardNumber" placeholder="CARD NUMBER">
                                                 </div>
-                                            </div>
-                                            <div class="d-flex justify-content-between">
-                                                <button type="button" class="btn btn-primary me-2 js-btn-prev">Cancel</button>
+                                                <div class="d-flex justify-content-between">
+                                                    <div class="form-group" style="width:48%;">
+                                                        <input type="text" class="form-control form-control-lg" id="ExpiryDate" placeholder="EXPIRY DATE">
+                                                    </div>
+                                                    <div class="form-group" style="width:48%;">
+                                                        <input type="text" class="form-control form-control-lg" id="SecurityCode" placeholder="SECURITY CODE">
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-between">
+                                                    <button type="button" class="btn btn-primary me-2 js-btn-prev">Cancel</button>
 
-                                                <button type="submit" class="btn btn-primary me-2">Submit</button>
+                                                    <button type="submit" class="btn btn-primary me-2">Submit</button>
 
-                                            </div>*@
+                                                </div>*@
                                             <h4>Email Verification</h4>
                                             <h6 class="fw-light">A verification link has been sent to your email account</h6>
                                             <div class="form-group">
@@ -338,20 +337,24 @@
                                         </fieldset>
                                     </form>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
                 </div>
-                        
 
-                    
-                    
+
+
+
 
             </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
 
 <script>
     //DOM elements
@@ -372,7 +375,7 @@
         elemSet.forEach(elem => {
             elem.classList.remove(className);
         });
-        
+
     }; //return exect parent node of the element
 
 

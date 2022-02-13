@@ -28,16 +28,16 @@ namespace Elderson.Pages.ISR.Clinics
         }
         public IActionResult OnGet()
         {
-            if (HttpContext.Session.GetString("LoginUser") != null)
-            {
-                if (HttpContext.Session.GetString("LoginUserType") == "ITSupport")
-                {
+            //if (HttpContext.Session.GetString("LoginUser") != null)
+            //{
+            //    if (HttpContext.Session.GetString("LoginUserType") == "ITSupport")
+            //    {
 
                     return Page();
-                }
-            }
+            //    }
+            //}
 
-            return Redirect("~/");
+            //return Redirect("~/");
         }
 
         public IActionResult OnPost()
