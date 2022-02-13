@@ -56,7 +56,7 @@ namespace Elderson.Api
             try
             {
                 allschedule = _svc.GetScheduleByDoctorTime(doctor_id);
-                var jsonStr = JsonSerializer.Serialize(allschedule.Select(x => new { x.Id, x.DoctorId, x.StartDateTime }));
+                var jsonStr = JsonSerializer.Serialize(allschedule.Select(x => new { x.Id, x.DoctorId, x.StartDateTime, x.Availability }));
                 return Ok(jsonStr);
             }
             catch (Exception ex)
@@ -76,7 +76,7 @@ namespace Elderson.Api
             try
             {
                 allbookings = _bksvc.GetBookingOfDoctor(doctor_id);
-                var jsonStr = JsonSerializer.Serialize(allbookings.Select(x => new { x.Id, x.Clinic, x.BookDateTime, x.Symptoms, x.PatientID, x.DoctorID, x.CallUUID, x.FormId, x.Status, PatientName = _usrsvc.GetUserById(x.PatientID).Fullname, date = x.BookDateTime.Date.ToShortDateString(), time = x.BookDateTime.ToLongTimeString() }).OrderByDescending(x => x.Status));
+                var jsonStr = JsonSerializer.Serialize(allbookings.Where(y => y.FormId == null).Select(x => new { x.Id, x.Clinic, x.BookDateTime, x.Symptoms, x.PatientID, x.DoctorID, x.CallUUID, x.FormId, x.Status, PatientName = _usrsvc.GetUserById(x.PatientID).Fullname, date = x.BookDateTime.Date.ToShortDateString(), time = x.BookDateTime.ToLongTimeString() }).OrderByDescending(x => x.Status));
                 return Ok(jsonStr);
             }
             catch (Exception ex)

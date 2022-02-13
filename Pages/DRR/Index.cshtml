@@ -1,7 +1,7 @@
 ﻿@page
 @model Elderson.Pages.DRR.IndexModel
 @{
-    Layout = "Shared/_LayoutDoctor";
+    Layout = "Shared/_LayoutOrganization";
     ViewData["Title"] = "Schedule";
     ViewData["Breadcrumb"] = "Elderson > My Schedule";
     ViewData["Header"] = "Current Schedule";
@@ -57,6 +57,16 @@
                                 return data.StartDateTime.slice(11, -3) + "PM"
                             }
 
+                        }
+                    },
+                    {
+                        "data": function (data) {
+                            if (data.Availability == "A") {
+                                return "Not Booked";
+                            }
+                            else {
+                                return "Booked";
+                            }
                         }
                     },
                     {
@@ -120,6 +130,7 @@
                     <tr>
                         <th>Date</th>
                         <th style="width:20%;">Time</th>
+                        <th>Availability</th>
                         <th style="width:175px;">ACTION</th>
 
                     </tr>

@@ -34,18 +34,19 @@ namespace Elderson.Pages.DRR
             {
                 if (HttpContext.Session.GetString("LoginUserType") == "Doctor")
                 {
+                    newForm = new Form();
                     uuid = Guid.NewGuid().ToString();
                     ErrMsg = "";
                     return Page();
                 }
             }
 
-            return Redirect("~/Elderly");
+            return Redirect("~/");
         }
 
         public IActionResult OnPost()
         {
-            if(newForm.TemplateName == "")
+            if (newForm.TemplateName == null)
             {
                 ErrMsg = "Please enter a template name";
                 return Page();

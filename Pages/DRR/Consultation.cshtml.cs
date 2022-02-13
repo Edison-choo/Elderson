@@ -22,7 +22,7 @@ namespace Elderson.Pages.DRR
                 }
             }
 
-            return Redirect("~/Elderly");
+            return Redirect("~/");
         }
     }
 }

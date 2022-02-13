@@ -1,7 +1,7 @@
 ﻿@page
 @model Elderson.Pages.DRR.EditFormModel
 @{
-    Layout = "Shared/_LayoutDoctor";
+    Layout = "Shared/_LayoutOrganization";
     ViewData["Title"] = "Edit Template Form";
     ViewData["Breadcrumb"] = "Elderson > Form > Edit Form";
     ViewData["Header"] = "Edit Template Form";
@@ -13,7 +13,7 @@
     }
 
     #btnContainer {
-        margin-top: 20%;
+        margin-top: 5%;
     }
 
     #submitBtn {
@@ -35,7 +35,6 @@
     #formtable_wrapper {
         width: 70%;
         margin: 0 auto;
-        border: 1px solid black;
         padding: 5%;
         background-color: seashell;
     }
@@ -45,12 +44,31 @@
         margin: 0 auto;
     }
 
+
     #medtable_filter {
         display: none;
     }
 
     .medBtn {
         cursor: pointer;
+    }
+
+    #quanDiv {
+        display: none;
+        margin: 0 auto;
+        padding-bottom: 2%;
+        width: 70%;
+        background-color: seashell;
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+    #formtable_info {
+        display: none;
+    }
+
+    #formtable_paginate {
+        float: right;
     }
 </style>
 
@@ -66,22 +84,32 @@
         <input asp-for="editForm.DoctorId" type="hidden" />
         <br />
 
+        <br />
         <div class="addMeds" id="addMeds">
             <p style="margin-top:1%;">
-                <h3>Medication Needed:    <i class="medBtn fas fa-plus-circle fa-lg" id="plus" onclick="displayAddMeds()"></i><i class="medBtn fas fa-minus-circle fa-lg" id="minus" onclick="closeAddMeds()"></i></h3>
+                <h3>Medication Needed:    <i class="medBtn fa fa-plus-circle fa-lg" id="plus" onclick="displayAddMeds()"></i><i class="medBtn fa fa-minus-circle fa-lg" id="minus" onclick="closeAddMeds()"></i></h3>
             </p>
             <div class="table-responsive" id="allMeds">
                 <table class="table table-hover" id="formtable" style="width:100%;">
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th style="width:20%;">Quantity</th>
                             <th style="width:175px;">Medicine Type</th>
                             <th>Allergy</th>
                             <th></th>
                         </tr>
                     </thead>
                 </table>
+
+                <h3 style="text-align:center; background-color: seashell; width: 70%; margin: 0 auto; padding-bottom: 3%;">Quantity: </h3>
+                <div id="quanDiv">
+                    <label id="medicinename" style="width: 35%;"></label>
+                    <div class="input-group" ">
+                        <i class="medBtn fa fa-minus-square fa-2x" onclick="reduce()"></i> <input type="number" class="quantity" id="quantity" value="0" step="0" min="0" max="20" readonly style="width:70%;text-align:center; height: 80%;"> <i class="medBtn fa fa-plus-square fa-2x" onclick="add()"></i>
+                    </div>
+                    <input type="hidden" id="medid" />
+                    <a onclick="addMedication()" class="btn btn-primary" style="color:white; float:left;">Confirm</a>
+                </div>
             </div>
 
             <div class="table-responsive" id="addedMeds">
@@ -97,9 +125,8 @@
                 </table>
             </div>
         </div>
-
         <div id="btnContainer">
-            <div><a asp-page="/DRR/Form" class="btn btn-primary">Back</a></div>
+            <div><a href="/DRR/Form" class="btn btn-danger">Back</a></div>
             <button id="submitBtn" class="btn btn-primary">Edit</button>
         </div>
     </form>
@@ -109,6 +136,12 @@
     var allMed = document.getElementById("allMeds");
     allMed.style.display = "none";
     document.getElementById("minus").style.display = "none";
+
+    function callquanDiv(id, medname) {
+        document.getElementById("medid").value = id;
+        document.getElementById("medicinename").innerHTML = medname;
+        document.getElementById("quanDiv").style.display = "flex";
+    }
 
     callMedsTable();
 
@@ -183,22 +216,12 @@
                 },
                 "columns": [
                     { "data": "MedName" },
-                    {
-                        "data": function (data) {
-                            return `
-                                <div class="input-group">
-                               <i class="medBtn far fa-minus-square fa-2x" onclick="reduce()"></i> <input type="number" id="quantity" value="0" step="0" min="0" max="20" readonly style="width:35%;text-align:center"> <i class="medBtn far fa-plus-square fa-2x" onclick="add()"></i>
-                                 </div>
-                                `;
-
-                        }
-                    },
                     { "data": "MedType" },
                     { "data": "MedAllergyIngredients" },
                     {
                         "data": function (data) {
                             return `
-                                <a onclick="addMedication('${data.Id}')" class="btn btn-primary" style="color:white">Add</a>
+                                <a onclick="callquanDiv('${data.Id}', '${data.MedName}')" class="btn btn-primary" style="color:white">Select</a>
                             `;
                         }
                     }
@@ -240,7 +263,8 @@
         document.getElementById("quantity").stepDown();
     }
 
-    function addMedication(id) {
+    function addMedication() {
+        var id = document.getElementById("medid").value;
         var uuidVal = document.getElementById("editFormId").value;
         var quantity = document.getElementById("quantity").value;
         if (quantity < 1) {
