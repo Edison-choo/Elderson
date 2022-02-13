@@ -47,11 +47,35 @@ namespace Elderson.Api
                 return BadRequest(ex);
             }   
         }
+        [HttpGet(Name = "GetMedication")]
+        public ActionResult<List<CartItem>> GetMedication()
+        {
+            try
+            {
+                List<CartMedication> cartItems = new List<CartMedication>();
+                cartItems = HttpContext.Session.GetMedicationCart("MedicationCart");
+                var jsonStr = JsonSerializer.Serialize(cartItems);
+                return Ok(jsonStr);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
         [HttpGet("{apiname}/{Id}", Name = "RemoveCartItem")]
-        public void Get(int Id)
+        public void RemoveCartItem(int Id)
         {
             List<CartItem> cartItems = new List<CartItem>();
             cartItems = HttpContext.Session.GetCart("Cart");
+            cartItems.RemoveAt(Id);
+            HttpContext.Session.SetCart("Cart", cartItems);
+            _notfy.Warning("Item removed!");
+        }
+        [HttpGet("{apiname}/{Id}", Name = "RemoveCartItem")]
+        public void RemoveMedication(int Id)
+        {
+            List<CartMedication> cartItems = new List<CartMedication>();
+            cartItems = HttpContext.Session.GetMedicationCart("MedicationCart");
             cartItems.RemoveAt(Id);
             HttpContext.Session.SetCart("Cart", cartItems);
             _notfy.Warning("Item removed!");

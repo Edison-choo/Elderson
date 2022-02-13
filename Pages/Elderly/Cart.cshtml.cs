@@ -126,5 +126,10 @@ namespace Elderson.Pages
             var value = session.GetString(key);
             return value == null ? default(List<CartItem>) : JsonConvert.DeserializeObject<List<CartItem>>(value);
         }
+        public static List<CartMedication> GetMedicationCart(this ISession session, string key)
+        {
+            var value = session.GetString(key);
+            return value == null ? default(List<CartMedication>) : JsonConvert.DeserializeObject<List<CartMedication>>(value);
+        }
     }
 }

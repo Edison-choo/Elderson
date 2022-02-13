@@ -82,6 +82,11 @@ namespace Elderson.Services
             return updated;
         }
 
+        //WK Services
+        public Prescription GetPrescriptionByPatientID(string Id)
+        {
+            return _context.Prescription.Where(p => p.PatientId == Id && p.IsPurchased == false).FirstOrDefault();
+        }
 
     }
 }

@@ -17,5 +17,6 @@ namespace Elderson.Models
         public string Symptoms { get; set; }
         public string BookingId { get; set; }
         public string DoctorId { get; set; }
+        public bool IsPurchased { get; set; }
     }
 }

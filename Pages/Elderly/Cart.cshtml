@@ -38,16 +38,23 @@
 </div>
 <script>
     let cart;
+    let medicationCart;
     let total = 0;
     getCart();
+    getMedication();
     async function getCart() {
         var response = await fetch(`https://localhost:44311/api/Cart`)
         cart = await response.json();
         formatCart();
     }
+    async function getMedication() {
+        var response1 = await fetch(`https://localhost:44311/api/GetMedication`)
+        medicationCart = await response1.json();
+        formatMedicationCart();
+    }
     function formatCart() {
         total = 0;
-        if (cart != null) {
+        if (cart != null && medicationCart != null) {
             $("#cartBody").html("");
             for (i = 0; i < cart.length; i++) {
                 obj = cart[i];
@@ -81,8 +88,17 @@
         `)
         }
     }
+    formatMedicationCart(){
+        for()
+    }
     async function removeCartItem(id) {
         await fetch(`https://localhost:44311/api/Cart/RemoveCartItem/` + id);
         getCart();
+        getMedication();
+    }
+    async function removeMedication(id) {
+        await fetch(`https://localhost:44311/api/Cart/RemoveMedication/` + id);
+        getCart();
+        getMedication();
     }
 </script>
