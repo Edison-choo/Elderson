@@ -126,7 +126,7 @@ namespace Elderson.Api
             UpdatedDetails = _svc.GetEntryById(body.patientDetails.Id);
             if (_svc.GetEntryById(body.patientDetails.Id) != null && body.patientDetails.Id != UpdatedDetails.Id)
             {
-                _logger.LogInformation("{actionStatus} User {userId} {userAction}. Email is already being used.", "Unsuccessful", body.patientDetails.Id, "edit user details");
+                _logger.LogInformation("Unsuccessful", body.patientDetails.Id, "edit user details");
                 _notfy.Error("ID is already used");
                 Console.WriteLine("Test2");
                 return BadRequest("Error");
@@ -147,5 +147,5 @@ namespace Elderson.Api
             return BadRequest("Error");
 
         }
-    }
+    } 
 }

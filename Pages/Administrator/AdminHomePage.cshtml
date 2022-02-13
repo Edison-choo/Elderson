@@ -28,6 +28,7 @@
             <div class="card">
                 <div class="card-body">
                     <p>Total Bookings</p>
+                    <p id="bookings">20</p>
                 </div>
             </div>
         </div>
@@ -35,6 +36,12 @@
             <div class="card">
                 <div class="card-body">
                     <p>Recent Bookings</p>
+                    <ul id="recent-bookings">
+                        <li>Cruz Chua</li>
+                        <li>Wee Wye Keong</li>
+                        <li>Edison Choo</li>
+                        <li>Lim Yu Zheng</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -93,4 +100,21 @@
 
 <style>
     p {text-align: center; font-weight: bold;}
+    #bookings{
+        font-size: 40px;
+        text-align: center;
+        font-weight: bold;
+        margin-top: 22%;
+        margin-bottom: 25%
+    }
+    #recent-bookings{
+        list-style-type: none;
+        margin-top: 12%;
+        margin-bottom: 13%;
+        text-align: center;
+        font-size: 15px;
+    }
+    li{
+        margin-bottom: 5px;
+    }
 </style>

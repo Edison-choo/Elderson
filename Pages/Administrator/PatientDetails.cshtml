@@ -76,15 +76,16 @@
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <form id="editDetails" action="/PatientDetails?handler=EditDetails" method="post">
+                                            <input type="hidden" name="newEntry.Id" value="newEntry.Id" />
                                             <div class="modal-body">
                                             <table style="text-align:center; width: 95%;">
-                                                <td><input placeholder="Title" name="NewEntry.Title"></tr>
-                                                <td><textarea placeholder="Description" rows="4" name="NewEntry.DetailsofVisit"></textarea></tr>
+                                                <td><input placeholder="Title" name="newEntry.Title"></tr>
+                                                <td><textarea placeholder="Description" rows="4" name="newEntry.DetailsofVisit"></textarea></tr>
                                             </table>
                                                 </div>
                                                 <div class="d-flex justify-content-between" style="margin-top:30px;">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <button style="height:44px;" type="submit" onclick=${"editEntry(" + "'" + data.Id + "'" + ")"} class="btn btn-success">Update</button>
+                                                    <button style="height:44px;" type="button" class="btn btn-success" id="edit" onclick=${"editEntry()"}>Update</button>
                                                 </div>
                                             </form>
                                             </div>
@@ -103,7 +104,7 @@
                                                     </h4>
                                                 </div>
                                                 <div class="d-flex justify-content-between" style="margin-top:30px;">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close">Close</button>
                                                     <button style="height:44px;" type="button" onclick=${"deleteEntry(" + "'" + data.Id + "'" + ")"} class="btn btn-danger">Delete</button>
                                                 </div>
                                             </div>
@@ -229,17 +230,37 @@
             }
         });
     }
-    function editEntry(patientdetailsId) {
+    //function editEntry(patientdetailsId) {
+    //    $.ajax({
+    //        method: "PUT",
+    //        data: $("editDetails").serialize(),
+    //        url: 'https://localhost:44311/api/PatientDetails/' + patientdetailsId,
+    //        success: function (result) {
+    //            console.log("Item edited successfully")
+    //            $('#detailstable').DataTable().ajax.reload();
+    //        }
+    //    })
+    //}
+       function editEntry() {
+        console.log("Submitting form...")
+        console.log($("#editDetails").serialize());
         $.ajax({
-            method: "PUT",
-            data: $("editDetails").serialize(),
-            url: 'https://localhost:44311/api/PatientDetails/' + patientdetailsId,
-            success: function (result) {
-                console.log("Item edited successfully")
-                $('#detailstable').DataTable().ajax.reload();
+            type: "POST",
+            url: "https://localhost:44311/api/PatientDetails",
+            headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
+            data: $('#editDetails').serialize(),
+            success: function (response) {
+                if (response == "Success")
+                    window.location.href = "/PatientList";
+                else {
+                    console.log("");
+                }
+            },
+            error: function (e) {
+                alert(e.responseText);
             }
-        })
-    }
+        });
+    };
 
 
 </script>
@@ -307,5 +328,8 @@
 
     .dropdown-toggle::after {
         display: none;
+    }
+    #close{
+        background-color: red;
     }
 </style>
