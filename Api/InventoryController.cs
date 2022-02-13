@@ -16,11 +16,15 @@ namespace Elderson.Api
     {
         private readonly EldersonContext _context;
         private InventoryService _svc;
+        private FormMedsService _formmed_svc;
+        private PrescriptionService _pres_svc;
 
-        public InventoryController(EldersonContext context, InventoryService service)
+        public InventoryController(EldersonContext context, InventoryService service, FormMedsService formMedService, PrescriptionService prescripService)
         {
             _context = context;
             _svc = service;
+            _formmed_svc = formMedService;
+            _pres_svc = prescripService;
         }
 
         // GET: api/<InventoryController>
@@ -43,6 +47,25 @@ namespace Elderson.Api
             }
 
         }
+
+        [HttpGet("GetPrescriptions", Name = "GetPrescriptions")]
+        //public ActionResult<List<Medication>> GetPrescriptions()
+        //{
+        //    List<Prescription> allPrescriptions = new List<Prescription>();
+
+        //    //try
+        //    //{
+        //    //    allPrescriptions = _pres_svc.();
+        //    //    var jsonString = JsonSerializer.Serialize(allmedications.Select(y => new { y.Id, y.MedName, y.MedAbbreviation, y.MedType, y.MedSupplierAbb, CurrentAmt = _svc.GetInvMedicationById(y.Id).CurrentAmt, Price = "$" + _svc.GetInvMedicationById(y.Id).Price }));
+        //    //    return Ok(jsonString);
+        //    //}
+        //    //catch (Exception ex)
+        //    //{
+        //    //    Console.WriteLine("instalmentController.getCarLoan", ex);
+        //    //    return BadRequest();
+        //    //}
+
+        //}
 
 
         //// GET api/<UserController>/5
