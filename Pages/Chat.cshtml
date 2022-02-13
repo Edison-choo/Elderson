@@ -444,6 +444,13 @@
     .card {
         box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
     }
+
+    .newMsg {
+        color: green;
+        padding: 0;
+        font-size: 0.85em;
+        display: none;
+    }
 </style>
 
 <nav aria-label="breadcrumb" style="margin:35px;">
@@ -480,7 +487,7 @@
                                         <div class="desc">
                                             <small class="time">05:30 am</small>
                                             <h5>IT Support</h5>
-                                            <small>...</small>
+                                            <small class="newMsg">New Messages</small>
                                         </div>
                                     </div>
                                 </li>
@@ -492,7 +499,12 @@
                                         <div class="desc">
                                             <small class="time">05:30 am</small>
                                             <h5>@Model.allusers[user.Key].Fullname</h5>
-                                            <small></small>
+                                            @{ if (Model.allmessages[user.Key].Where(m => m.ToUserId != user.Key).Any(m => m.Read == "0"))
+                                                {
+                                        <small class="newMsg" style="display:block;">New Messages</small> }
+                                    else
+                                    {
+                                        <small class="newMsg">New Messages</small> } }
                                         </div>
                                     </div>
                                 </li>
@@ -509,7 +521,7 @@
                                         <div class="desc">
                                             <small class="time">05:30 am</small>
                                             <h5>@HttpContext.Session.GetString("ChatUserName")</h5>
-                                            <small></small>
+                                            <small class="newMsg">New Messages</small>
                                         </div>
                                     </div>
                                 </li>
@@ -543,18 +555,19 @@
                 <div class="message wholeChat" data-mcs-theme="minimal-dark">
                     <ul id="messageList" class="test showActive " style="overflow:hidden;">
                         <li>
-                            @{
-                                if (!Model.allmessages.ContainsKey("ISRChat") || HttpContext.Session.GetString("ChatUser") != "ISRChat")
-                                {
-                                    <div class="defaultChat" style="">
-                                        <img src="~/images/defaultChat.png" alt="Alternate Text" />
-                                        <div>Start talking to IT Support</div>
-                                        <button class="btn btn-primary startISRChat">Chat</button>
-                                    </div>
-
-                                }
-
-                            }
+                            @{ if (!Model.allmessages.ContainsKey("ISRChat") || HttpContext.Session.GetString("ChatUser") != "ISRChat")
+                                            {
+                                <div class="defaultChat" style="">
+                                    <img src="~/images/defaultChat.png" alt="Alternate Text" />
+                                    <div>Start talking to IT Support</div>
+                                    <button class="btn btn-primary startISRChat">Chat</button>
+                                </div> }
+                                            else
+                                            {
+                                                <div class="defaultChat" style="">
+                                                    <img src="~/images/defaultChat.png" alt="Alternate Text" />
+                                                </div>
+                                            } }
                         </li>
                     </ul>
 
@@ -808,7 +821,9 @@
                 document.getElementsByClassName(message.userId)[0].appendChild(li);
             } else {
                 document.getElementsByClassName(message.userId)[0].appendChild(li);
-
+                if ($(`.chatActive`).attr("id") != message.userId) {
+                    $(`#${message.userId} small:last-child`).show();
+                }
             }
 
             scrollBottom();
@@ -820,12 +835,21 @@
         console.log(userId, name)
 
         if ($(`#${userId}`)[0] != null) {
+            var valid = true;
             $(`.${userId}`).append($(".ISRChat")[0].innerHTML);
+            if ($(`.chatActive`).attr("id") != "ISRChat" && $(`.chatActive`).attr("id") != userId) {
+                $(`#${userId} small:last-child`).show();
+                valid = false;
+            }
             $(".ISRChat").remove();
             $("#ISRChat").remove();
-            $(`#${userId}`).addClass("chatActive", "active");
-            $(`.${userId}`).addClass("showActive");
-            $(`.${userId}`).show();
+            if (valid) {
+                $(`#${userId}`).addClass("chatActive");
+                $(`#${userId}`).addClass("active");
+                $(`.${userId}`).addClass("showActive");
+                $(`.${userId}`).show();
+                $(`#${userId} small:last-child`).hide();
+            }
         } else {
             var userList = $(`#ISRChat`);
             userList.removeAttr("id");
@@ -835,6 +859,9 @@
             $(".ISRChat").addClass(userId);
             $(`.${userId}`).removeClass("ISRChat");
             $(`#${userId} h5`)[0].textContent = name;
+            if ($(`.chatActive`).attr("id") != userId) {
+                $(`#${userId} small:last-child`).show();
+            }
         }
 
         var chatHeader = document.querySelector(".headRight-sub h3");
@@ -904,6 +931,12 @@
 
         toUserId = userId;
         console.log(toUserId);
+
+        $(`#${userId} small:last-child`).hide();
+
+        connection.invoke("SendReadToGroup", '@HttpContext.Session.GetString("LoginUser")', toUserId).catch(function (err) {
+            return console.error(err.toString());
+        });
 
         scrollBottom();
     }

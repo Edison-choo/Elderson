@@ -28,6 +28,7 @@ namespace Elderson.Hubs
             string guid = Guid.NewGuid().ToString();
             message.Id = guid;
             message.When = DateTime.Now;
+            message.Read = "0";
             _svc.AddChat(message);
             await Clients.All.SendAsync("ReceiveMessage", message);
         }
@@ -79,6 +80,7 @@ namespace Elderson.Hubs
             string guid = Guid.NewGuid().ToString();
             message.Id = guid;
             message.When = DateTime.Now;
+            message.Read = "0";
             _svc.AddChat(message);
             return Clients.Group(receiver).SendAsync("ReceiveMessage", message);
         }
@@ -108,7 +110,26 @@ namespace Elderson.Hubs
         {
             Console.WriteLine(userId, message);
 
-            return Clients.Group(toUserId).SendAsync("ReceiveLoading", userId, message);
+            if (toUserId != "ISRChat")
+            {
+                return Clients.Group(toUserId).SendAsync("ReceiveLoading", userId, message);
+
+            } else
+            {
+                return Clients.Group("empty").SendAsync("ReceiveLoading", userId, message); ;
+            }
+        }
+
+        public Task SendReadToGroup(string userId, string toUserId)
+        {
+            Console.WriteLine(userId, toUserId);
+            var allmsg = _svc.GetAllChats(userId);
+            foreach (var msg in allmsg[toUserId])
+            {
+                msg.Read = "1";
+                _svc.UpdateChat(msg);
+            }
+            return Clients.Group(toUserId).SendAsync("ReceiveRead", userId);
         }
     }
 }

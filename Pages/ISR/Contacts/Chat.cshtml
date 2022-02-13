@@ -490,7 +490,15 @@
                                         <div class="desc">
                                             <small class="time">05:30 am</small>
                                             <h5>@Model.allusers[user.Key].Fullname</h5>
-                                            <small class="newMsg">New Messages</small>
+                                            @{ if (Model.allmessages[user.Key].Where(m => m.ToUserId != user.Key).Any(m => m.Read == "0"))
+                                                {
+                                        <small class="newMsg" style="display:block;">New Messages</small> 
+                                        } else
+                    {
+                                        <small class="newMsg">New Messages</small>
+                    }
+                                                }
+                                            
                                         </div>
                                     </div>
                                 </li>
@@ -541,7 +549,9 @@
                 <div class="message wholeChat" data-mcs-theme="minimal-dark">
                     <ul id="messageList" class="test showActive " style="overflow:hidden;">
                         <li>
-
+                            <div class="defaultChat" style="">
+                                <img src="~/images/defaultChat.png" alt="Alternate Text" />
+                            </div>
                         </li>
                     </ul>
 
@@ -609,8 +619,8 @@
                         {
                             if (!Model.allmessages.ContainsKey(HttpContext.Session.GetString("ChatUser")))
                             {
-                                <ul id="messageList" class="@HttpContext.Session.GetString("ChatUser")">
-                                </ul>
+                                        <ul id="messageList" class="@HttpContext.Session.GetString("ChatUser")">
+                                        </ul>
                             }
 
                         }
@@ -792,7 +802,7 @@
                                     <div class="desc">
                                         <small class="time">3 day</small>
                                         <h5>${message.username}</h5>
-                                        <small class='newMsg'>New messages</small>
+                                        <small class='newMsg' style="display:block;">New messages</small>
                                     </div>
                                 </div>
                             </li>`;
@@ -800,7 +810,12 @@
                 document.getElementsByClassName(message.userId)[0].appendChild(li);
             } else {
                 document.getElementsByClassName(message.userId)[0].appendChild(li);
-
+                console.log($(`#${message.userId}`)[0]);
+                console.log($(`.chatActive`).attr("id") != message.userId);
+                if ($(`.chatActive`).attr("id") != message.userId) {
+                    $(`#${message.userId} small:last-child`).show();
+                }
+                
             }
 
             scrollBottom();
@@ -819,6 +834,10 @@
         $(".ISRChat").addClass(userId);
         $(`.${userId}`).removeClass("ISRChat");
         toUserId = userId;
+
+        if ($(`.chatActive`).attr("id") != userId) {
+            $(`#${userId} small:last-child`).show();
+        }
 
         @{
             if (HttpContext.Session.GetString("ChatUser") != null)
@@ -874,6 +893,12 @@
 
         toUserId = userId;
         console.log(toUserId);
+
+        $(`#${userId} small:last-child`).hide();
+
+        connection.invoke("SendReadToGroup", '@HttpContext.Session.GetString("LoginUser")', toUserId).catch(function (err) {
+            return console.error(err.toString());
+        });
 
         scrollBottom();
     }

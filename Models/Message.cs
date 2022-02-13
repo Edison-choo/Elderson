@@ -16,6 +16,7 @@ namespace Elderson.Models
 
         public string UserId { get; set; }
         public string ToUserId { get; set; }
+        public string Read { get; set; }
 
         //public string UserId { get; set; }
         //public virtual AppUser Sender { get; set; }
