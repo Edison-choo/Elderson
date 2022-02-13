@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Elderson.Models;
 using Elderson.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -30,14 +31,24 @@ namespace Elderson.Pages.Pharmacist.Inventory
             _logger = logger;
             _supplier_svc = supplier_service;
         }
-        public void OnGet()
+        public IActionResult OnGet()
         {
-            suppliers = _supplier_svc.GetAllSuppliers();
-            abbreviations = new List<SelectListItem>();
-            foreach (var a in suppliers)
+            if (HttpContext.Session.GetString("LoginUser") != null)
             {
-                abbreviations.Add(new SelectListItem { Text = a.SupplierAbbreviation, Value = a.SupplierAbbreviation });
+                if (HttpContext.Session.GetString("LoginUserType") == "Pharmacist")
+                {
+                    suppliers = _supplier_svc.GetAllSuppliers();
+                    abbreviations = new List<SelectListItem>();
+                    foreach (var a in suppliers)
+                    {
+                        abbreviations.Add(new SelectListItem { Text = a.SupplierAbbreviation, Value = a.SupplierAbbreviation });
+                    }
+                    return Page();
+                }
             }
+
+            return Redirect("~/");
+
         }
 
         public IActionResult OnPost()

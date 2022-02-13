@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Elderson.Models;
 using Elderson.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -26,22 +27,33 @@ namespace Elderson.Pages.Pharmacist.Prescrip
             _svc = service;
             _pres_svc = prescription_service;
         }
-        public void OnGet(string id, string formId)
+        public IActionResult OnGet(string id, string formId)
         {
-            SelectedPrescripiton = _pres_svc.GetPrescriptionByID(id);
-            medication = _svc.GetFormMedsByFormId(formId);
-            specificMedication = new List<string>();
-            foreach(var m in medication)
+
+            if (HttpContext.Session.GetString("LoginUser") != null)
             {
-                if (SelectedPrescripiton.FormId != null && SelectedPrescripiton.FormId.Equals(m.FormId))
+                if (HttpContext.Session.GetString("LoginUserType") == "Pharmacist")
                 {
-                    specificMedication.Add(String.Format("{0}: {1}", m.MedName, m.MedType));
-                }
-                else
-                {
-                    medication = null;
+                    SelectedPrescripiton = _pres_svc.GetPrescriptionByID(id);
+                    medication = _svc.GetFormMedsByFormId(formId);
+                    specificMedication = new List<string>();
+                    foreach (var m in medication)
+                    {
+                        if (SelectedPrescripiton.FormId != null && SelectedPrescripiton.FormId.Equals(m.FormId))
+                        {
+                            specificMedication.Add(String.Format("{0}: {1}", m.MedName, m.MedType));
+                        }
+                        else
+                        {
+                            medication = null;
+                        }
+                    }
+                    return Page();
                 }
             }
+
+            return Redirect("~/Elderly");
+            
                 
         }
 

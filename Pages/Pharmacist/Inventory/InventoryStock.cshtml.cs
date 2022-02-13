@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Elderson.Models;
 using Elderson.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -32,10 +33,19 @@ namespace Elderson.Pages.Pharmacist.Inventory
         }
 
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
-            medication = _svc.GetAllMedications();
-            inventory = _svc.GetAllInventories();
+            if (HttpContext.Session.GetString("LoginUser") != null)
+            {
+                if (HttpContext.Session.GetString("LoginUserType") == "Pharmacist")
+                {
+                    medication = _svc.GetAllMedications();
+                    inventory = _svc.GetAllInventories();
+                    return Page();
+                }
+            }
+
+            return Redirect("~/");
         }
 
         //public IActionResult OnPost()

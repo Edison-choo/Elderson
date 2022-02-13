@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Elderson.Models;
 using Elderson.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -23,25 +24,36 @@ namespace Elderson.Pages.Pharmacist.MedSup
             _svc = service;
             _med_svc = inventory_service;
         }
-        public void OnGet(string id)
+        public IActionResult OnGet(string id)
         {
-            SelectedSupplier = _svc.GetSupplierbyId(id);
-            Medications = _med_svc.GetAllMedications();
-            medAbbreviations = new List<string>();
-            foreach (var m in Medications)
+
+            if (HttpContext.Session.GetString("LoginUser") != null)
             {
-                if (SelectedSupplier.Id.Equals(m.MedSupplierID))
+                if (HttpContext.Session.GetString("LoginUserType") == "Pharmacist")
                 {
-                    
-                    medAbbreviations.Add(String.Format("<a href=\"/Pharmacist/Inventory/ViewInventoryObj?id={0}\">{1}</a>", m.Id, m.MedAbbreviation));
-                    
-                }
-                else
-                {
-                    medAbbreviations = null;
+                    SelectedSupplier = _svc.GetSupplierbyId(id);
+                    Medications = _med_svc.GetAllMedications();
+                    medAbbreviations = new List<string>();
+                    foreach (var m in Medications)
+                    {
+                        if (SelectedSupplier.Id.Equals(m.MedSupplierID))
+                        {
+
+                            medAbbreviations.Add(String.Format("<a href=\"/Pharmacist/Inventory/ViewInventoryObj?id={0}\">{1}</a>", m.Id, m.MedAbbreviation));
+
+                        }
+                        else
+                        {
+                            medAbbreviations = null;
+                        }
+                    }
+                    return Page();
                 }
             }
-            
+
+            return Redirect("~/");
+
+
         }
     }
 }

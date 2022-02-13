@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Elderson.Models;
 using Elderson.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -22,8 +23,17 @@ namespace Elderson.Pages.Pharmacist.MedSup
             _svc = service;
             _logger = logger;
         }
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            if (HttpContext.Session.GetString("LoginUser") != null)
+            {
+                if (HttpContext.Session.GetString("LoginUserType") == "Pharmacist")
+                {
+                    return Page();
+                }
+            }
+
+            return Redirect("~/");
         }
 
         public IActionResult OnPost()
