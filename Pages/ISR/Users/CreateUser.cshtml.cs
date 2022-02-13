@@ -112,6 +112,13 @@ namespace Elderson.Pages.Users
                     return Page();
                 }
 
+                var image = photoUpload();
+                if (image == "extension error")
+                {
+                    _notfy.Error("Photo upload can only be jpeg, jpgp or png");
+                    return Page();
+                }
+
                 // Add user to Db
                 var valid = false;
                 var code = Guid.NewGuid().ToString();
@@ -135,7 +142,7 @@ namespace Elderson.Pages.Users
                         _svc.AddPatient(PatientRole);
                         break;
                     case "Doctor":
-                        var image = photoUpload();
+                        
                         if (image != "")
                         {
                             DoctorRole.Photo = image;
@@ -197,14 +204,19 @@ namespace Elderson.Pages.Users
                 var uploads = Path.Combine(webHostEnvironment.WebRootPath, "uploads\\images");
                 var extensions = Path.GetExtension(files[0].FileName);
 
-                var fileName = Guid.NewGuid().ToString().Replace("-", "") + extensions;
-
-                using (var filestream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create))
+                if (extensions == ".jpeg" || extensions == ".png" || extensions == ".jpg") 
                 {
-                    files[0].CopyTo(filestream);
+                    var fileName = Guid.NewGuid().ToString().Replace("-", "") + extensions;
+
+                    using (var filestream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create))
+                    {
+                        files[0].CopyTo(filestream);
+                    }
+                    Console.WriteLine(DateTime.Now.ToString().Replace(" ", "") + extensions);
+                    return fileName;
                 }
-                Console.WriteLine(DateTime.Now.ToString().Replace(" ", "") + extensions);
-                return fileName;
+                return "extension error";
+
             }
             return "";
         }

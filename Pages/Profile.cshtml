@@ -274,6 +274,7 @@
                 <form method="post" asp-page-handler="Edit" id="editForm" asp-route-sessioncount="10">
                     <input type="hidden" asp-for="@Model.user.Id" value="@Model.user.Id" />
                     <input type="hidden" asp-for="@Model.user.UserType" value="@Model.user.UserType" />
+                    <input type="hidden" asp-for="@Model.user.Email" value="@Model.user.Email" />
                     <div class="divTitle">
                         Contact Information
                     </div>
@@ -285,16 +286,6 @@
                             <div class="profileData">
                                 <input asp-for="user.Fullname" type="text" value="@Model.user.Fullname" class="form-control" id="exampleInputEmail3" placeholder="EMAIL">
                                 <span asp-validation-for="user.Fullname" class="text-danger"></span>
-
-                            </div>
-                        </div>
-                        <div class="profileInfo d-flex">
-                            <div class="profileLb">
-                                Email Address
-                            </div>
-                            <div class="profileData">
-                                <input asp-for="user.Email" type="email" value="@Model.user.Email" class="form-control" id="exampleInputEmail3" placeholder="EMAIL">
-                                <span asp-validation-for="user.Email" class="text-danger"></span>
 
                             </div>
                         </div>

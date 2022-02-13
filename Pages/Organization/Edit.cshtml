@@ -8,7 +8,7 @@
 
 
 <div class="row">
-    <form class="forms-sample" method="post" asp-action="">
+    <form class="forms-sample" enctype="multipart/form-data" method="post" asp-action="">
         <input type="hidden" asp-for="@Model.SelectedUser.Id" value="@Model.SelectedUser.Id" />
         <input type="hidden" asp-for="@Model.SelectedUser.Email" value="@Model.SelectedUser.Email" />
         <div class="row">
@@ -94,47 +94,58 @@
     <div class="row doctorForm">
         <div class="col-12 grid-margin stretch-card">
             <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Doctor Related Information</h4>
-                    <hr />
-                    <div class="form-group  d-flex">
-                        <div style="width:30%;">
-                            <label>Select Relationship</label>
+                        <div class="card-body">
+                            <h4 class="card-title">Doctor Related Information</h4>
+                            <hr />
+                            <div class="form-group  d-flex">
+                                <div style="width:30%;">
+                                    <label>Select Relationship</label>
 
-                        </div>
-                        <div style="width:70%;">
-                            @Html.DropDownList("DoctorRole.Language", new SelectList(Enum.GetValues(typeof(Models.LanguageType))), "--Select language--", new { @class = "form-control" })
-                            <span asp-validation-for="DoctorRole.Language" class="text-danger"></span>
-                        </div>
-
-                    </div>
-                    <div class="form-group  d-flex">
-                        <div style="width:30%;">
-                            <label for="workExp">Work Experience (In Year)</label>
-
-                        </div>
-                        <div style="width:70%;">
-                            <input asp-for="DoctorRole.WorkExp" value="@Model.DoctorRole.WorkExp" type="text" class="form-control" id="workExp" placeholder="WORK EXPERIENCE">
-                            <span asp-validation-for="DoctorRole.WorkExp" class="text-danger"></span>
-                        </div>
-
-
-                    </div>
-                    <div class="useExist clinicChoice">
-                        <div class="form-group  d-flex">
-                            <div style="width:30%;">
-                                <label>Choose Existing Clinic</label>
+                                </div>
+                                <div style="width:70%;">
+                                    @Html.DropDownList("DoctorRole.Language", new SelectList(Enum.GetValues(typeof(Models.LanguageType))), "--Select language--", new { @class = "form-control" })
+                                    <span asp-validation-for="DoctorRole.Language" class="text-danger"></span>
+                                </div>
 
                             </div>
-                            <div style="width:70%;">
-                                @Html.DropDownList("DoctorRole.ClinicId", Model.clinics as List<SelectListItem>, "--Select language--", new { @class = "form-control" })
-                                <span asp-validation-for="DoctorRole.ClinicId" class="text-danger"></span>
+                            <div class="form-group  d-flex">
+                                <div style="width:30%;">
+                                    <label for="workExp">Work Experience (In Year)</label>
+
+                                </div>
+                                <div style="width:70%;">
+                                    <input asp-for="DoctorRole.WorkExp" value="@Model.DoctorRole.WorkExp" type="text" class="form-control" id="workExp" placeholder="WORK EXPERIENCE">
+                                    <span asp-validation-for="DoctorRole.WorkExp" class="text-danger"></span>
+                                </div>
+
+
+                            </div>
+                            <div class="form-group  d-flex">
+                                <div style="width:30%;">
+                                    <label for="photo">Profile Photo</label>
+
+                                </div>
+                                <div style="width:70%;" class="d-flex">
+                                    <img id="profilePhoto" src="~/uploads/images/@Model.DoctorRole.Photo" alt="Image" width="100" height="100" style="border:1px solid grey; margin-right:10px;" />
+                                    <input asp-for="DoctorRole.Photo" onchange="document.getElementById('profilePhoto').src = window.URL.createObjectURL(this.files[0])" type="file" class="form-control" id="photo" placeholder="Profile Photo">
+                                    <span asp-validation-for="DoctorRole.Photo" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="useExist clinicChoice">
+                                <div class="form-group  d-flex">
+                                    <div style="width:30%;">
+                                        <label>Choose Existing Clinic</label>
+
+                                    </div>
+                                    <div style="width:70%;">
+                                        @Html.DropDownList("DoctorRole.ClinicId", Model.clinics as List<SelectListItem>, "--Select language--", new { @class = "form-control" })
+                                        <span asp-validation-for="DoctorRole.ClinicId" class="text-danger"></span>
+                                    </div>
+
+                                </div>
                             </div>
 
                         </div>
-                    </div>
-
-                </div>
             </div>
         </div>
     </div> }

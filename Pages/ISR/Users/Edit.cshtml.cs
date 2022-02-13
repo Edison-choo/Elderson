@@ -11,6 +11,8 @@ using Microsoft.Extensions.Logging;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Http;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Elderson.Pages.ISR.Users
 {
@@ -39,11 +41,13 @@ namespace Elderson.Pages.ISR.Users
         private UserService _svc;
         private readonly ILogger<EditModel> _logger;
         private readonly INotyfService _notfy;
-        public EditModel(ILogger<EditModel> logger, UserService service, INotyfService notyf)
+        private readonly IWebHostEnvironment webHostEnvironment;
+        public EditModel(ILogger<EditModel> logger, UserService service, INotyfService notyf, IWebHostEnvironment hostEnvironment)
         {
             _logger = logger;
             _svc = service;
             _notfy = notyf;
+            webHostEnvironment = hostEnvironment;
         }
         public IActionResult OnGet(string id)
         {
@@ -79,6 +83,13 @@ namespace Elderson.Pages.ISR.Users
                 return Page();
             }
 
+            var image = photoUpload();
+            if (image == "extension error")
+            {
+                _notfy.Error("Photo upload can only be jpeg, jpgp or png");
+                return Page();
+            }
+
             UpdatedUser = _svc.GetUserById(SelectedUser.Id);
             if (_svc.GetUserByEmail(SelectedUser.Email) != null && SelectedUser.Email != UpdatedUser.Email)
             {
@@ -108,7 +119,7 @@ namespace Elderson.Pages.ISR.Users
                     break;
                 case "Doctor":
                     UpdatedDoctor = _svc.GetDoctorById(UpdatedUser.Id);
-                    
+
                     //if (UpdatedDoctor.ClinicId == DoctorRole.ClinicId)
                     //{
                     //    UpdatedClinic = _svc.GetClinicByDoctorId(UpdatedDoctor.ClinicId);
@@ -118,6 +129,11 @@ namespace Elderson.Pages.ISR.Users
                     //    UpdatedClinic.Phone = selectedClinic.Phone;
                     //    _svc.UpdateClinic(UpdatedClinic);
                     //}
+
+                    if (image != "")
+                    {
+                        UpdatedDoctor.Photo = image;
+                    }
 
                     UpdatedDoctor.ClinicId = DoctorRole.ClinicId;
                     UpdatedDoctor.Language = DoctorRole.Language;
@@ -139,6 +155,31 @@ namespace Elderson.Pages.ISR.Users
             }
 
             return Page();
+        }
+
+        public string photoUpload()
+        {
+            var files = HttpContext.Request.Form.Files;
+            if (files.Count != 0)
+            {
+                var uploads = Path.Combine(webHostEnvironment.WebRootPath, "uploads\\images");
+                var extensions = Path.GetExtension(files[0].FileName);
+
+                if (extensions == ".jpeg" || extensions == ".png" || extensions == ".jpg")
+                {
+                    var fileName = Guid.NewGuid().ToString().Replace("-", "") + extensions;
+
+                    using (var filestream = new FileStream(Path.Combine(uploads, fileName), FileMode.Create))
+                    {
+                        files[0].CopyTo(filestream);
+                    }
+                    Console.WriteLine(DateTime.Now.ToString().Replace(" ", "") + extensions);
+                    return fileName;
+                }
+                return "extension error";
+
+            }
+            return "";
         }
     }
 }
