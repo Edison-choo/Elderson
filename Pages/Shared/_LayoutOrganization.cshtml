@@ -590,178 +590,174 @@
             <!-- partial:partials/_sidebar.html -->
             @{ if (Context.Session.GetString("LoginUserType") == "ITSupport")
                 {
-        <nav class="sidebar sidebar-offcanvas" id="sidebar">
-            <ul class="nav">
-                <li class="nav-item nav-category">User Management</li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#userManagement" aria-expanded="false" aria-controls="userManagement">
-                        <i class="menu-icon mdi mdi-account-multiple-outline"></i>
-                        <span class="menu-title">User Management</span>
-                        <i class="menu-arrow"></i>
-                    </a>
-                    <div class="collapse" id="userManagement">
-                        <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"> <a class="nav-link" href="/ISR/Users">All Users</a></li>
-                            <li class="nav-item"> <a class="nav-link" href="/ISR/Users/CreateUser">Create User</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="nav-item nav-category">INCIDENT MANAGEMENT</li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/ISR/Incidents">
-                        <i class="mdi mdi-book-open menu-icon"></i>
-                        <span class="menu-title">All Incidents</span>
-                    </a>
-
-                </li>
-                <li class="nav-item nav-category">CLINIC MANAGEMENT</li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/ISR/Clinics">
-                        <i class="mdi mdi-hospital-building menu-icon"></i>
-                        <span class="menu-title">All Clinics</span>
-                    </a>
-                </li>
-                <li class="nav-item nav-category">Contact</li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/ISR/Contacts/PendingChat">
-                        <i class="mdi mdi-comment-multiple-outline menu-icon"></i>
-                        <span class="menu-title">Pending Chat</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/ISR/Contacts/Chat">
-                        <i class="mdi mdi-comment-outline menu-icon"></i>
-                        <span class="menu-title">Chat</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/ISR/Contacts/SendEmail">
-                        <i class="mdi mdi-email-outline menu-icon"></i>
-                        <span class="menu-title">Email</span>
-                    </a>
-                </li>
-            </ul>
-        </nav> }
-                    else if (Context.Session.GetString("LoginUserType") == "Doctor")
-                    {
-                        <nav class="sidebar sidebar-offcanvas" id="sidebar">
-                            <ul class="nav">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/DRR/Index">
-                                        <i class="far fa-calendar-alt"></i>
-                                        <span class="menu-title">My Schedule</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/DRR/Consultation">
-                                        <i class="far fa-clipboard"></i>
-                                        <span class="menu-title">Consultation</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/DRR/Form">
-                                        <i class="far fa-file-alt"></i>
-                                        <span class="menu-title">Form</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="index.html">
-                                        <i class="fas fa-th-large"></i>
-                                        <span class="menu-title">Dashboard</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="collapse" href="/Organization/Chat" aria-expanded="false" aria-controls="charts">
-                                        <i class="menu-icon mdi mdi-chart-line"></i>
-                                        <span class="menu-title">Chat</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                    }
-                    else if (Context.Session.GetString("LoginUserType") == "Administrator")
-                    {
-                        <nav class="sidebar sidebar-offcanvas" id="sidebar">
-                            <ul class="nav">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/Administrator/AdminHomePage">
-                                        <i class="mdi mdi-grid-large menu-icon"></i>
-                                        <span class="menu-title">Dashboard</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/Administrator/PatientList">
-                                        <i class="menu-icon mdi mdi-floor-plan"></i>
-                                        <span class="menu-title">Patients</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/Administrator/Queries">
-                                        <i class="menu-icon mdi mdi-card-text-outline"></i>
-                                        <span class="menu-title">Queries</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="collapse" href="/Organization/Chat" aria-expanded="false" aria-controls="charts">
-                                <i class="mdi mdi-comment-outline menu-icon"></i>
-                                <span class="menu-title">Chat</span>
+                    <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                        <ul class="nav">
+                            <li class="nav-item nav-category">User Management</li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="collapse" href="#userManagement" aria-expanded="false" aria-controls="userManagement">
+                                    <i class="menu-icon mdi mdi-account-multiple-outline"></i>
+                                    <span class="menu-title">User Management</span>
+                                    <i class="menu-arrow"></i>
                                 </a>
-                                </li>
-                            </ul>
-                        </nav>
-                    }
-                    else if (Context.Session.GetString("LoginUserType") == "Pharmacist")
-                    {
-                        <nav class="sidebar sidebar-offcanvas" id="sidebar">
-                            <ul class="nav">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/Pharmacist/Index">
-                                        <i class="mdi mdi-grid-large menu-icon"></i>
-                                        <span class="menu-title">Home</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item nav-category">Pharmacy Functions</li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/Pharmacist/Inventory/InventoryList">
-                                        <i class="mdi mdi-book-open menu-icon"></i>
-                                        <span class="menu-title">Inventory</span>
-                                    </a>
+                                <div class="collapse" id="userManagement">
+                                    <ul class="nav flex-column sub-menu">
+                                        <li class="nav-item"> <a class="nav-link" href="/ISR/Users">All Users</a></li>
+                                        <li class="nav-item"> <a class="nav-link" href="/ISR/Users/CreateUser">Create User</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="nav-item nav-category">INCIDENT MANAGEMENT</li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/ISR/Incidents">
+                                    <i class="mdi mdi-book-open menu-icon"></i>
+                                    <span class="menu-title">All Incidents</span>
+                                </a>
 
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="collapse" href="#prescriptions" aria-expanded="false" aria-controls="prescriptions">
-                                        <i class="menu-icon mdi mdi-account-multiple-outline"></i>
-                                        <span class="menu-title">Prescriptions</span>
-                                        <i class="menu-arrow"></i>
-                                    </a>
-                                    <div class="collapse" id="prescriptions">
-                                        <ul class="nav flex-column sub-menu">
-                                            <li class="nav-item"> <a class="nav-link" href="/Pharmacist/Prescrip/ViewNewPrescriptions">Incoming Prescriptions</a></li>
-                                            <li class="nav-item"> <a class="nav-link" href="/Pharmacist/Prescrip/PastPrescriptions">Past Prescriptions</a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/Pharmacist/MedSup/SupplierList">
-                                        <i class="mdi mdi-source-branch menu-icon"></i>
-                                        <span class="menu-title">Medical Suppliers</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/Pharmacist/Delivery/Deliveries">
-                                        <i class="mdi mdi-comment-outline menu-icon"></i>
-                                        <span class="menu-title">Deliveries</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="collapse" href="/Organization/Chat" aria-expanded="false" aria-controls="charts">
-                                        <i class="menu-icon mdi mdi-chart-line"></i>
-                                        <span class="menu-title">Chat</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                    } }
+                            </li>
+                            <li class="nav-item nav-category">CLINIC MANAGEMENT</li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/ISR/Clinics">
+                                    <i class="mdi mdi-hospital-building menu-icon"></i>
+                                    <span class="menu-title">All Clinics</span>
+                                </a>
+                            </li>
+                            <li class="nav-item nav-category">Contact</li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/ISR/Contacts/PendingChat">
+                                    <i class="mdi mdi-comment-multiple-outline menu-icon"></i>
+                                    <span class="menu-title">Pending Chat</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/ISR/Contacts/Chat">
+                                    <i class="mdi mdi-comment-outline menu-icon"></i>
+                                    <span class="menu-title">Chat</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/ISR/Contacts/SendEmail">
+                                    <i class="mdi mdi-email-outline menu-icon"></i>
+                                    <span class="menu-title">Email</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav> }
+                else if (Context.Session.GetString("LoginUserType") == "Doctor")
+                {
+                    <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                        <ul class="nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/DRR/Index">
+                                    <i class="far fa-calendar-alt"></i>
+                                    <span class="menu-title">My Schedule</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/DRR/Consultation">
+                                    <i class="far fa-clipboard"></i>
+                                    <span class="menu-title">Consultation</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/DRR/Form">
+                                    <i class="far fa-file-alt"></i>
+                                    <span class="menu-title">Form</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html">
+                                    <i class="fas fa-th-large"></i>
+                                    <span class="menu-title">Dashboard</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="collapse" href="/Organization/Chat" aria-expanded="false" aria-controls="charts">
+                                    <i class="menu-icon mdi mdi-chart-line"></i>
+                                    <span class="menu-title">Chat</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                }
+                else if (Context.Session.GetString("LoginUserType") == "Administrator")
+                {
+                    <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                        <ul class="nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Administrator/AdminHomePage">
+                                    <i class="mdi mdi-grid-large menu-icon"></i>
+                                    <span class="menu-title">Dashboard</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Administrator/PatientList">
+                                    <i class="menu-icon mdi mdi-floor-plan"></i>
+                                    <span class="menu-title">Patients</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Administrator/Queries">
+                                    <i class="menu-icon mdi mdi-card-text-outline"></i>
+                                    <span class="menu-title">Queries</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="collapse" href="/Organization/Chat" aria-expanded="false" aria-controls="charts">
+                                    <i class="mdi mdi-comment-outline menu-icon"></i>
+                                    <span class="menu-title">Chat</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                }
+                else if (Context.Session.GetString("LoginUserType") == "Pharmacist")
+                {
+                    
+                    <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                        <ul class="nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Pharmacist/Index">
+                                    <i class="mdi mdi-grid-large menu-icon"></i>
+                                    <span class="menu-title">Home</span>
+                                </a>
+                            </li>
+                            <li class="nav-item nav-category">Pharmacy Functions</li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Pharmacist/Inventory/InventoryList" data-bs-toggle="collapse" aria-expanded="false" aria-controls="charts">
+                                    <i class="mdi mdi-book-open menu-icon"></i>
+                                    <span class="menu-title">Inventory</span>
+                                </a>
+
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="collapse" href="#prescriptions" aria-expanded="false" aria-controls="prescriptions">
+                                    <i class="menu-icon mdi mdi-account-multiple-outline"></i>
+                                    <span class="menu-title">Prescriptions</span>
+                                    <i class="menu-arrow"></i>
+                                </a>
+                                <div class="collapse" id="prescriptions" data-bs-toggle="collapse" aria-expanded="false" aria-controls="charts">
+                                    <ul class="nav flex-column sub-menu">
+                                        <li class="nav-item"> <a class="nav-link" href="/Pharmacist/Prescrip/ViewNewPrescription">Incoming Prescriptions</a></li>
+                                        <li class="nav-item"> <a class="nav-link" href="/Pharmacist/Prescrip/PastPrescriptions">Past Prescriptions</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Pharmacist/MedSup/SupplierList" data-bs-toggle="collapse" aria-expanded="false" aria-controls="charts">
+                                    <i class="mdi mdi-source-branch menu-icon"></i>
+                                    <span class="menu-title">Medical Suppliers</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="collapse" href="/Organization/Chat" aria-expanded="false" aria-controls="charts">
+                                    <i class="menu-icon mdi mdi-chart-line"></i>
+                                    <span class="menu-title">Chat</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </nav>
+                } }
 
             <!-- partial -->
             <div class="main-panel">
