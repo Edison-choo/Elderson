@@ -47,7 +47,7 @@ namespace Elderson.Api
                 return BadRequest(ex);
             }   
         }
-        [HttpGet(Name = "GetMedication")]
+        [HttpGet("{apiname}", Name = "GetMedication")]
         public ActionResult<List<CartItem>> GetMedication()
         {
             try
@@ -71,7 +71,7 @@ namespace Elderson.Api
             HttpContext.Session.SetCart("Cart", cartItems);
             _notfy.Warning("Item removed!");
         }
-        [HttpGet("{apiname}/{Id}", Name = "RemoveCartItem")]
+        [HttpGet("{apiname}/{Id}", Name = "RemoveMedication")]
         public void RemoveMedication(int Id)
         {
             List<CartMedication> cartItems = new List<CartMedication>();

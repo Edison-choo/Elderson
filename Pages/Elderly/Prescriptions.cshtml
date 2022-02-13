@@ -9,31 +9,45 @@
     </ol>
     <h3>Prescriptions</h3>
 </nav>
-<h6>Prescriptions from "@Model.myPrescription.DoctorName"</h6>
-<table class="table">
-    <thead>
-        <tr>
-            <th style="font-weight:bold; background-color:#F4F3FF;">Medication</th>
-            <th style="font-weight:bold; background-color:#F4F3FF;">Price</th>
-            <th style="font-weight:bold; background-color:#F4F3FF;">Quantity</th>
-            <th style="font-weight:bold; background-color:#F4F3FF;">Subtotal</th>
-        </tr>
-    </thead>
-    <tbody id="prescriptionBody">
-        @if (Model.cartMedicationList.Count != 0)
-        {
-            foreach (var item in Model.cartMedicationList)
-            {
+<div class="container">
+    @if (Model.cartMedicationList.Count != 0)
+    {
+        <h6>Prescriptions from "@Model.myPrescription.DoctorName"</h6>
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>@item.ItemName</td>
-                    <td>@item.Price</td>
-                    <td>@item.Quantity</td>
-                    <td>@{(item.Price * item.Quantity).ToString();} </td>
+                    <th style="font-weight:bold; background-color:#F4F3FF;">Medication</th>
+                    <th style="font-weight:bold; background-color:#F4F3FF;">Price</th>
+                    <th style="font-weight:bold; background-color:#F4F3FF;">Quantity</th>
+                    <th style="font-weight:bold; background-color:#F4F3FF;">Subtotal</th>
                 </tr>
-            }
-        }
-    </tbody>
-</table>
-<h3 style="text-align:right;">$@Model.total</h3>
-<br />
-<button class="btn btn-primary">Add To Cart</button>
+            </thead>
+            <tbody id="prescriptionBody">
+                @if (Model.cartMedicationList.Count != 0)
+                {
+                    foreach (var item in Model.cartMedicationList)
+                    {
+                        <tr>
+                            <td>@item.ItemName</td>
+                            <td>$@item.Price</td>
+                            <td>@item.Quantity</td>
+                            <td>$@{(item.Price * item.Quantity).ToString();} </td>
+                        </tr>
+                    }
+                }
+
+            </tbody>
+        </table>
+        <h3 style="text-align:right;">$@Model.total</h3>
+        <br />
+        <form method="post">
+            <button class="btn btn-primary">Add To Cart</button>
+        </form>
+    }
+    else
+    {
+        <div style="padding: 100px; text-align: center;>
+            <h3><i class="fas fa-exclamation-triangle"></i> You have no prescriptions</h3>
+        </div>
+    }
+</div>

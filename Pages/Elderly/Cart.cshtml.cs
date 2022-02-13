@@ -20,15 +20,17 @@ namespace Elderson.Pages
         [BindProperty]
         public int myTotal { get; set; } = 0;
         private BookingService _svc;
+        private PrescriptionService _psvc;
         private readonly ILogger<CartModel> _logger;
         private readonly INotyfService _notfy;
         private ScheduleService _sSvc;
 
-        public CartModel(ILogger<CartModel> logger, BookingService service, ScheduleService sService, INotyfService notyf)
+        public CartModel(ILogger<CartModel> logger, BookingService service, ScheduleService sService, PrescriptionService pservice, INotyfService notyf)
         {
             _svc = service;
             _logger = logger;
             _sSvc = sService;
+            _psvc = pservice;
             _notfy = notyf;
         }
         public IActionResult OnGet()
@@ -102,6 +104,14 @@ namespace Elderson.Pages
                         _sSvc.UpdateScheduleStatus(schedule);
                         HttpContext.Session.Remove("Cart");
                     }
+                }
+                if (HttpContext.Session.GetString("Prescription") != null)
+                {
+                    Prescription myPrescription = _psvc.GetPrescriptionByID(HttpContext.Session.GetString("Prescription"));
+                    myPrescription.IsPurchased = true;
+                    _psvc.UpdatePrescription(myPrescription);
+                    HttpContext.Session.Remove("Prescription");
+                    HttpContext.Session.Remove("MedicationCart");
                 }
                 else
                 {

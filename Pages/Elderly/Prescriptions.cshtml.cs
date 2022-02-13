@@ -19,6 +19,7 @@ namespace Elderson.Pages.Elderly
         public List<FormMeds> tempMedList { get; set; }
         [BindProperty]
         public List<CartMedication> cartMedicationList { get; set; }
+        public Medication medication { get; set; }
         [BindProperty]
         public Double total { get; set; } = 0;
         private PrescriptionService _svc;
@@ -32,13 +33,45 @@ namespace Elderson.Pages.Elderly
         }
         public IActionResult OnGet()
         {
+            cartMedicationList = new List<CartMedication>();
             if (HttpContext.Session.GetString("LoginUser") != null)
             {
+                if (_svc.GetPrescriptionByPatientID(HttpContext.Session.GetString("LoginUser")) != null)
+                {
+                    myPrescription = _svc.GetPrescriptionByPatientID(HttpContext.Session.GetString("LoginUser"));
+                    tempMedList = _fsvc.GetFormMedsByFormId(myPrescription.FormId);
+                    medications = new List<Medication>();
+                    foreach (var i in tempMedList)
+                    {
+                        medication = new Medication();
+                        medication = _isvc.GetMedicationById(i.MedicationId);
+                        medications.Add(medication);
+                        CartMedication cartMedication = new CartMedication();
+                        cartMedication.Id = Guid.NewGuid().ToString();
+                        cartMedication.DoctorID = myPrescription.DoctorId;
+                        cartMedication.ItemName = medication.MedName;
+                        cartMedication.Price = _isvc.GetInvMedicationById(medication.Id).Price;
+                        cartMedication.Quantity = i.Quantity;
+                        cartMedicationList.Add(cartMedication);
+                        total += (cartMedication.Price * cartMedication.Quantity);
+                    }
+                }
+                return Page();
+            }
+            return Redirect("~/");
+        }
+        public IActionResult OnPost()
+        {
+            if (_svc.GetPrescriptionByPatientID(HttpContext.Session.GetString("LoginUser")) != null)
+            {
+                cartMedicationList = new List<CartMedication>();
                 myPrescription = _svc.GetPrescriptionByPatientID(HttpContext.Session.GetString("LoginUser"));
                 tempMedList = _fsvc.GetFormMedsByFormId(myPrescription.FormId);
+                medications = new List<Medication>();
                 foreach (var i in tempMedList)
                 {
-                    Medication medication = _isvc.GetMedicationById(i.MedicationId);
+                    medication = new Medication();
+                    medication = _isvc.GetMedicationById(i.MedicationId);
                     medications.Add(medication);
                     CartMedication cartMedication = new CartMedication();
                     cartMedication.Id = Guid.NewGuid().ToString();
@@ -49,13 +82,9 @@ namespace Elderson.Pages.Elderly
                     cartMedicationList.Add(cartMedication);
                     total += (cartMedication.Price * cartMedication.Quantity);
                 }
-                return Page();
             }
-            return Redirect("~/");
-        }
-        public IActionResult OnPost()
-        {
             HttpContext.Session.SetCart("MedicationCart", cartMedicationList);
+            HttpContext.Session.SetString("Prescription", myPrescription.Id);
             return Redirect("~/Elderly/Cart");
         }
     }
