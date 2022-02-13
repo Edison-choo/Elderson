@@ -76,15 +76,15 @@
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <form id="editDetails" action="/PatientDetails?handler=EditDetails" method="post">
-                                            <input type="hidden" name="newEntry.Id" value="newEntry.Id" />
+                                            <input type="hidden" name="Id" value="${data.Id}" />
                                             <div class="modal-body">
                                             <table style="text-align:center; width: 95%;">
-                                                <td><input placeholder="Title" name="newEntry.Title"></tr>
-                                                <td><textarea placeholder="Description" rows="4" name="newEntry.DetailsofVisit"></textarea></tr>
+                                                <td><input placeholder="Title" name="Title"></tr>
+                                                <td><textarea placeholder="Description" rows="4" name="DetailsofVisit"></textarea></tr>
                                             </table>
                                                 </div>
                                                 <div class="d-flex justify-content-between" style="margin-top:30px;">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close-update">Close</button>
                                                     <button style="height:44px;" type="button" class="btn btn-success" id="edit" onclick=${"editEntry()"}>Update</button>
                                                 </div>
                                             </form>
@@ -251,7 +251,7 @@
             data: $('#editDetails').serialize(),
             success: function (response) {
                 if (response == "Success")
-                    window.location.href = "/PatientList";
+                    window.location.href = "PatientList";
                 else {
                     console.log("");
                 }
@@ -329,7 +329,7 @@
     .dropdown-toggle::after {
         display: none;
     }
-    #close{
+    #close-update{
         background-color: red;
     }
 </style>
