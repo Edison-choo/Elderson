@@ -26,13 +26,13 @@
 
     <link rel="stylesheet" href="~/css/Custom.css" />
 
-    @{ 
+    @{
         if (ViewData["Header"] == "CHAT")
         {
             <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
             <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.css">
-        } 
+        }
     }
 </head>
 <body>
@@ -648,30 +648,24 @@
                         <ul class="nav">
                             <li class="nav-item">
                                 <a class="nav-link" href="/DRR/Index">
-                                    <i class="far fa-calendar-alt"></i>
+                                    <i class="menu-icon mdi-calendar-clock"></i>
                                     <span class="menu-title">My Schedule</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/DRR/Consultation">
-                                    <i class="far fa-clipboard"></i>
-                                    <span class="menu-title">Consultation</span>
+                                    <i class="mdi"></i>
+                                    <span class="menu">Consultation</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/DRR/Form">
-                                    <i class="far fa-file-alt"></i>
+                                    <i class="menu-icon mdi mdi-file-document"></i>
                                     <span class="menu-title">Form</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="index.html">
-                                    <i class="fas fa-th-large"></i>
-                                    <span class="menu-title">Dashboard</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-bs-toggle="collapse" href="/Organization/Chat" aria-expanded="false" aria-controls="charts">
+                                <a class="nav-link" href="/Organization/Chat">
                                     <i class="menu-icon mdi mdi-chart-line"></i>
                                     <span class="menu-title">Chat</span>
                                 </a>
@@ -702,7 +696,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-bs-toggle="collapse" href="/Organization/Chat" aria-expanded="false" aria-controls="charts">
+                                <a class="nav-link" href="/Organization/Chat">
                                     <i class="mdi mdi-comment-outline menu-icon"></i>
                                     <span class="menu-title">Chat</span>
                                 </a>
@@ -712,7 +706,7 @@
                 }
                 else if (Context.Session.GetString("LoginUserType") == "Pharmacist")
                 {
-                    
+
                     <nav class="sidebar sidebar-offcanvas" id="sidebar">
                         <ul class="nav">
                             <li class="nav-item">
@@ -723,19 +717,19 @@
                             </li>
                             <li class="nav-item nav-category">Pharmacy Functions</li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/Pharmacist/Inventory/InventoryList" data-bs-toggle="collapse" aria-expanded="false" aria-controls="charts">
+                                <a class="nav-link" href="/Pharmacist/Inventory/InventoryList">
                                     <i class="mdi mdi-book-open menu-icon"></i>
                                     <span class="menu-title">Inventory</span>
                                 </a>
 
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-bs-toggle="collapse" href="#prescriptions" aria-expanded="false" aria-controls="prescriptions">
+                                <a class="nav-link" href="#prescriptions">
                                     <i class="menu-icon mdi mdi-account-multiple-outline"></i>
                                     <span class="menu-title">Prescriptions</span>
                                     <i class="menu-arrow"></i>
                                 </a>
-                                <div class="collapse" id="prescriptions" data-bs-toggle="collapse" aria-expanded="false" aria-controls="charts">
+                                <div class="collapse" id="prescriptions">
                                     <ul class="nav flex-column sub-menu">
                                         <li class="nav-item"> <a class="nav-link" href="/Pharmacist/Prescrip/ViewNewPrescription">Incoming Prescriptions</a></li>
                                         <li class="nav-item"> <a class="nav-link" href="/Pharmacist/Prescrip/PastPrescriptions">Past Prescriptions</a></li>
@@ -743,13 +737,13 @@
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/Pharmacist/MedSup/SupplierList" data-bs-toggle="collapse" aria-expanded="false" aria-controls="charts">
+                                <a class="nav-link" href="/Pharmacist/MedSup/SupplierList">
                                     <i class="mdi mdi-source-branch menu-icon"></i>
                                     <span class="menu-title">Medical Suppliers</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-bs-toggle="collapse" href="/Organization/Chat" aria-expanded="false" aria-controls="charts">
+                                <a class="nav-link" href="/Organization/Chat">
                                     <i class="menu-icon mdi mdi-chart-line"></i>
                                     <span class="menu-title">Chat</span>
                                 </a>
@@ -771,11 +765,11 @@
                 <!-- content-wrapper ends -->
                 <!-- partial:partials/_footer.html -->
                 @*<footer class="footer">
-                <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block"></span>
-                    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Copyright © 2021. All rights reserved.</span>
-                </div>
-            </footer>*@
+                        <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block"></span>
+                            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Copyright © 2021. All rights reserved.</span>
+                        </div>
+                    </footer>*@
                 <!-- partial -->
             </div>
             <!-- main-panel ends -->

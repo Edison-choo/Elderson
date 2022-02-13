@@ -82,7 +82,7 @@ namespace Elderson.Pages.Users
                     }
                 } else
                 {
-                    _logger.LogInformation("{actionStatus} User {userId} {userAction}. Login information is incorrect.", "unsuccessful", user.Id, "login");
+                    _logger.LogInformation("{actionStatus} User {userAction}. Login information is incorrect.", "unsuccessful","login");
                     //ErrorMsg = "Login Information is incorrect";
                     _notfy.Error("Login Information is incorrect");
                     return Page();

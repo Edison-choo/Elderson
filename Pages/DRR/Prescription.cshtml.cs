@@ -86,7 +86,8 @@ namespace Elderson.Pages.DRR
         public IActionResult OnPost()
         {
             Prescription prescription = new Prescription();
-            prescription.Id = Guid.NewGuid().ToString();
+            string uuid = Guid.NewGuid().ToString();
+            prescription.Id = uuid;
             prescription.PatientName = patientuser.Fullname;
             prescription.PatientId = booking.PatientID;
             prescription.FormId = currentform_id;
@@ -98,6 +99,11 @@ namespace Elderson.Pages.DRR
             prescription.DoctorId = HttpContext.Session.GetString("LoginUser");
 
             _pssvc.AddPrescription(prescription);
+
+            Booking updateBooking = new Booking();
+            updateBooking = _bksvc.GetBookingById(booking_id);
+            updateBooking.FormId = uuid;
+            _bksvc.UpdateBooking(updateBooking);
 
             return RedirectToPage("Consultation");
         }
