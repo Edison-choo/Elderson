@@ -111,11 +111,12 @@ namespace Elderson.Api
         //}
 
         public MedInventory oldInv { get; set; }
+        public MedInventory inventory { get; set; }
         [HttpPost("{medication_id}/{quantity}")]
         public ActionResult<List<FormMeds>> Post(string medication_id, int quantity)
         {
             oldInv = _svc.GetInvMedicationById(medication_id);
-            MedInventory inventory = new MedInventory();
+            inventory = new MedInventory();
             inventory.Id = medication_id;
             inventory.MedicationId = medication_id;
             inventory.CurrentAmt = quantity;

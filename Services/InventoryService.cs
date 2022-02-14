@@ -38,7 +38,7 @@ namespace Elderson.Services
 
         public MedInventory GetInvMedicationById(string id)
         {
-            MedInventory inventory = _context.Inventory.Where(e => e.Id == id).FirstOrDefault();
+            MedInventory inventory = _context.Inventory.AsNoTracking().Where(e => e.Id == id).FirstOrDefault();
             return inventory;
         }
 

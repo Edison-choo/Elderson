@@ -100,7 +100,7 @@
                     { "data": "CurrentAmt" },
                     {
                         "data": function (data) {
-                            return `<input type="number" id="quantity">`
+                            return `<input type="number" id="${data.Id}">`
                         }
                     },
                     {
@@ -128,7 +128,7 @@
     });
 
     function updateMedication(id) {
-        var quantity = document.getElementById("quantity").value;
+        var quantity = document.getElementById(id).value;
         if (quantity < 1) {
             alert("Please add quantity of medicine")
         }
