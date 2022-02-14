@@ -77,7 +77,6 @@
         else {
             getClinicSpecific(`${clinics.firstPage}`);
         }
-        
     })
     function formatClinicTable() {
         $("#clinicBody").html("");
@@ -97,29 +96,33 @@
     function formatPage() {
         $("#paginator").html("");
         if (searchString.length != 0) {
-            $("#paginator").append(`<li class="page-item "><button onclick="getClinicSpecific(${clinics.previousPage}&searchFilter=${searchString})" class="page-link"><span aria-hidden="true">&laquo;</span></button></li>`)
+            $("#paginator").append(`<li class="page-item "><button id="btnPrev" onclick="getClinicSpecific(${clinics.previousPage}&searchFilter=${searchString})" class="page-link"><span aria-hidden="true">&laquo;</span></button></li>`)
         } else {
-            $("#paginator").append(`<li class="page-item "><button onclick="getClinicSpecific(${clinics.previousPage})" class="page-link"><span aria-hidden="true">&laquo;</span></button></li>`)
+            $("#paginator").append(`<li class="page-item "><button id="btnPrev" onclick="getClinicSpecific(${clinics.previousPage})" class="page-link"><span aria-hidden="true">&laquo;</span></button></li>`)
         }
         
         for (var i = 0; i < clinics.totalPages; i++) {
             if (i + 1 == clinics.pageNumber) {
                 if (searchString.length != 0) {
-                    $("#paginator").append(`<li class="page-item active"><button onclick="getClinicSpecific('https://localhost:44311/api/Clinic/GetAll?pageNumber=${i + 1}&pageSize=10&searchFilter=${searchString}')" class="page-link">${i + 1}</button></li>`)
+                    $("#paginator").append(`<li class="page-item active"><button id="btn${i+1}" class="page-link">${i + 1}</button></li>`)
                 } else {
-                    $("#paginator").append(`<li class="page-item active"><button onclick="getClinicSpecific('https://localhost:44311/api/Clinic/GetAll?pageNumber=${i + 1}&pageSize=10')" class="page-link">${i + 1}</button></li>`)
+                    $("#paginator").append(`<li class="page-item active"><button id="btn${i + 1}" class="page-link">${i + 1}</button></li>`)
                 }
-                
             }
             else {
-                $("#paginator").append(`<li class="page-item"><button class="page-link">${i + 1}</button></li>`)
+                $("#paginator").append(`<li class="page-item"><button id="btn${i + 1}" class="page-link">${i + 1}</button></li>`)
             }
-            
         }
         if (searchString.length != 0) {
-            $("#paginator").append(`<li class="page-item "><button onclick="getClinicSpecific(${clinics.nextPage}&searchFilter=${searchString})" class="page-link"><span aria-hidden="true">&laquo;</span></button></li>`)
+            $("#paginator").append(`<li class="page-item "><button id="btnNext" class="page-link"><span aria-hidden="true">&raquo;</span></button></li>`)
         } else {
-            $("#paginator").append(`<li class="page-item "><button onclick="getClinicSpecific(${clinics.nextPage})" class="page-link"><span aria-hidden="true">&raquo;</span></button></li>`)
+            $("#paginator").append(`<li class="page-item "><button id="btnNext" class="page-link"><span aria-hidden="true">&raquo;</span></button></li>`)
         }
+        $("#btnPrev").click(function () {
+            getClinicSpecific(clinics.previousPage);
+        })
+        $("#btnNext").click(function () {
+            getClinicSpecific(clinics.nextPage);
+        })
     }
 </script>
