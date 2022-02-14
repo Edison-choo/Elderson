@@ -51,7 +51,6 @@ namespace Elderson.Api
             {
                 var deleteForm = _svc.GetFormById(formId);
                 _svc.DeleteForm(deleteForm);
-                return RedirectToPage("DRR/Form");
             }
             catch (Exception ex)
             {

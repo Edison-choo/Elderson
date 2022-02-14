@@ -49,6 +49,14 @@
         display: none;
     }
 
+    #medtable_info {
+        display: none;
+    }
+
+    #medtable_paginate {
+        float: right;
+    }
+
     .medBtn {
         cursor: pointer;
     }
@@ -70,6 +78,47 @@
     #formtable_paginate {
         float: right;
     }
+
+    #medtable thead tr {
+        background-color: lightseagreen;
+    }
+
+    #medtable thead tr th {
+        background-color: lightseagreen;
+        padding: 1%;
+    }
+
+    #medtable tbody tr td {
+        padding: 1%;
+    }
+    #addedMeds {
+        margin-top: 1%;
+    }
+
+    #alertPopup {
+        display:none;
+    }
+    .alert {
+        padding: 20px;
+        background-color: #f44336;
+        color: white;
+        width: 100%;
+    }
+
+    .closebtn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+        .closebtn:hover {
+            color: black;
+        }
 </style>
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -77,6 +126,11 @@
 <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<div class="alert" id="alertPopup">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    Please add quantity of medicine
+</div>
 
 <div class="customForm">
     <form method="post">
@@ -105,7 +159,7 @@
                 <h3 style="text-align:center; background-color: seashell; width: 70%; margin: 0 auto; padding-bottom: 3%;">Quantity: </h3>
                 <div id="quanDiv">
                     <label id="medicinename" style="width: 35%;"></label>
-                    <div class="input-group" ">
+                    <div class="input-group">
                         <i class="medBtn fa fa-minus-square fa-2x" onclick="reduce()"></i> <input type="number" class="quantity" id="quantity" value="0" step="0" min="0" max="20" readonly style="width:70%;text-align:center; height: 80%;"> <i class="medBtn fa fa-plus-square fa-2x" onclick="add()"></i>
                     </div>
                     <input type="hidden" id="medid" />
@@ -114,12 +168,12 @@
             </div>
 
             <div class="table-responsive" id="addedMeds">
-                <table class="table table-hover" id="medtable" style="width:100%">
+                <table id="medtable" style="width:100%" border="1">
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th style="width:20%;">Quantity</th>
-                            <th style="width:175px;">Medicine Type</th>
+                            <th>Quantity</th>
+                            <th>Medicine Type</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -271,7 +325,10 @@
         var uuidVal = document.getElementById("uuidVal").value;
         var quantity = document.getElementById("quantity").value;
         if (quantity < 1) {
-            alert("Please add quantity of medicine")
+            document.getElementById("alertPopup").style.display = "block";
+            const alertTimeout = setTimeout(function () {
+                document.getElementById("alertPopup").style.display = "none";
+            }, 2500);
         }
         else {
             $.ajax({
@@ -279,6 +336,9 @@
                 type: 'POST',
                 success: function (result) {
                     console.log("Item added successfully");
+                    document.getElementById("medid").value = "";
+                    document.getElementById("quanDiv").style.display = "none";
+                    document.getElementById("medicinename").innerHTML = "";
                     $('#medtable').DataTable().ajax.reload();
                 }
             });

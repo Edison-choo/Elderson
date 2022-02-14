@@ -65,5 +65,29 @@ namespace Elderson.Services
             }
             return deleted;
         }
+
+        public bool UpdateFormMedsQuantity(FormMeds formmed)
+        {
+            bool updated = true;
+            _context.Attach(formmed).State = EntityState.Modified;
+
+            try
+            {
+                _context.SaveChanges();
+                updated = true;
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!FormMedExist(formmed.Id))
+                {
+                    updated = false;
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return updated;
+        }
     }
 }

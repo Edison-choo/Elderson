@@ -68,22 +68,41 @@ namespace Elderson.Api
         [HttpPost("{med_id}/{form_id}/{quantity}")]
         public ActionResult<List<FormMeds>> Post(string med_id, string form_id, int quantity)
         {
+            bool check = true;
+            List<FormMeds> checkformmed = _svc.GetFormMedsByFormId(form_id);
             FormMeds formMed = new FormMeds();
-            formMed.Id = Guid.NewGuid().ToString();
-            formMed.MedicationId = med_id;
-            formMed.FormId = form_id;
-            formMed.Quantity = quantity;
-            Medication med = _invsvc.GetMedicationById(med_id);
-            formMed.MedName = med.MedName;
-            formMed.MedType = med.MedType;
-            try
+            foreach (FormMeds chkformmed in checkformmed)
             {
-                _svc.AddFormMeds(formMed);
+                string medid = chkformmed.MedicationId;
+                if (medid.Contains(med_id))
+                {
+                    
+                    formMed = _svc.GetFormMedsById(chkformmed.Id);
+                    formMed.Quantity = quantity;
+                    _svc.UpdateFormMedsQuantity(formMed);
+                    check = false;
+                }
             }
-            catch (Exception ex)
+
+            if (check)
             {
-                Console.WriteLine("UserController.DeleteUser", ex);
+                formMed.Id = Guid.NewGuid().ToString();
+                formMed.MedicationId = med_id;
+                formMed.FormId = form_id;
+                formMed.Quantity = quantity;
+                Medication med = _invsvc.GetMedicationById(med_id);
+                formMed.MedName = med.MedName;
+                formMed.MedType = med.MedType;
+                try
+                {
+                    _svc.AddFormMeds(formMed);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("UserController.DeleteUser", ex);
+                }
             }
+            
             return Ok();
         }
 

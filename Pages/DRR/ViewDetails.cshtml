@@ -7,6 +7,10 @@
     ViewData["Header"] = "Patient's Details";
 }
 
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+
 <style>
     #symptomcard {
         width: 100%;
@@ -17,9 +21,31 @@
         border-radius: 8px;
     }
 
-    #symptomcard span{
-        font-size: 19px;
-    }
+        #symptomcard span {
+            font-size: 19px;
+        }
+        #medhisCont {
+            margin-top: 5%;
+        }
+        #medhis_info {
+            display: none;
+        }
+        #medhis_paginate {
+            float: right;
+        }
+        
+        #medhis thead tr {
+            background-color:lightseagreen;
+        }
+
+        #medhis thead tr th {
+            background-color: lightseagreen;
+            padding: 1.5%;
+        }
+
+        #medhis tbody tr td {
+            padding: 3%;
+        }
 </style>
 
 <h1>Patient</h1>
@@ -51,5 +77,62 @@
     <span>@Model.bkdetail.Symptoms</span>
 </div>
 
+<div id="medhisCont">
+    <h1>Patient's Medical History</h1>
+    <table id="medhis" width="100%" border="1">
+        <thead>
+            <tr>
+                <th>Medical Condition</th>
+                <th>Description</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
 <a href="/DRR/Consultation" class="btn btn-danger" style="margin-top: 5%;">Back</a>
+
+<script>
+     $(document).ready(function () {
+        console.log("Loading webpage...")
+         $.ajax({
+             url: 'https://localhost:44311/api/Schedule/GetAllMedicalHistory/' + '@Model.patdetail.UserId',
+            type: 'GET',
+            success: function (result) {
+                console.log("Items retrieve successfully")
+                console.log(JSON.parse(result));
+
+            }
+        });
+         $('#medhis').DataTable(
+            {
+                "ajax": {
+                    'url': 'https://localhost:44311/api/Schedule/GetAllMedicalHistory/' + '@Model.patdetail.UserId',
+                    'type': 'GET',
+                    "dataSrc": function (json) {
+                        return JSON.parse(JSON.stringify(json));
+                    }
+                },
+                "columns": [
+                    { "data": "Name" },
+                    { "data": "Description" },
+                    { "data": "startdate" },
+                    { "data" : "enddate" }
+                ],
+                "info": true,
+                "ordering": true,
+                "search": false,
+                "processing": true,
+                'autoWidth': false,
+                'lengthChange': false,
+                'paging': true,
+                'pagingType': 'numbers',
+                'ordering': false,
+                'dom': "fltip",
+                'pageLength': 5
+            }
+        );
+    });
+</script>
 

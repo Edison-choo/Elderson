@@ -7,17 +7,11 @@
     ViewData["Header"] = "Schedule For Booking";
 }
 
-@{       if (Model.check)
-            {
-                <script>
-                    alert("This timing have already been scheduled for booking.");
-                </script>
-            }
-}
+
 
 <style>
-    .montharrow:hover{
-        cursor:not-allowed;
+    .montharrow:hover {
+        cursor: not-allowed;
     }
 </style>
 
@@ -31,6 +25,42 @@
             <input type="hidden" asp-for="hour" id="hour" />
             <input type="hidden" asp-for="min" id="min" />
         </div>
+        @{ if (Model.check)
+            {
+                <style>
+                    .alert {
+                        padding: 20px;
+                        background-color: #f44336;
+                        color: white;
+                        width: 73.5%;
+                    }
+
+                    .closebtn {
+                        margin-left: 15px;
+                        color: white;
+                        font-weight: bold;
+                        float: right;
+                        font-size: 22px;
+                        line-height: 20px;
+                        cursor: pointer;
+                        transition: 0.3s;
+                    }
+
+                        .closebtn:hover {
+                            color: black;
+                        }
+                </style>
+                <div class="alert" id="alertPopup">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    Schedule is already deployed for booking.
+                </div>
+                <script>
+                    const alertTimeout = setTimeout(function () {
+                        document.getElementById("alertPopup").style.display = "none";
+                    }, 5000)
+                </script>
+            }
+        }
     </div>
     <div>
         <table id="calendar" class="table table-bordered">
@@ -126,7 +156,7 @@
         border: 3px solid blue;
     }
 
-    .timing{
+    .timing {
         width: 100px;
     }
 </style>
@@ -145,7 +175,8 @@
     for (i = tddate; i <= ld.getDate(); i++) {
         dates.push({
             "date": String(i),
-            "avail": "a"})
+            "avail": "a"
+        })
     }
 
     let times = [
@@ -263,7 +294,7 @@
             } else {
                 $("#timeSelect3").append(`<div class="timing a" data-hour="${hour}" data-min="${min}0" data-value="${hour}:${min}0" data-value2="${secondhour}:${secondmin}0">${hour}:${min}0 - <br/> ${secondhour}:${secondmin}0 </div>`);
             }
-            
+
             if (min == 0) {
                 min = 3;
             } else {
@@ -311,7 +342,7 @@
                     useGrouping: false
                 })}`
                 $("#dateSelect").val(date)
-                $(this).css("border", "3px solid blue");
+                $(this).css("border", "3px solid rgb(25, 119, 204)");
                 setTime(padZero(parseInt($(this).text())));
             })
         })
@@ -328,7 +359,7 @@
         $(".timing").each(function () {
             $(this).click(function () {
                 $(".timing").css("border", "1px solid #B8B8B8")
-                $(this).css("border", "1px solid #000000")
+                $(this).css("border", "3px solid rgb(25, 119, 204)")
                 $("#continueBtn").css("display", "block")
                 $("#Date").val(padZero(parseInt(date)))
                 $("#Month").val(padZero(this_month + 1))

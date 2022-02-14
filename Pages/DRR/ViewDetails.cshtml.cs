@@ -33,6 +33,7 @@ namespace Elderson.Pages.DRR
             {
                 if (HttpContext.Session.GetString("LoginUserType") == "Doctor")
                 {
+
                     bkdetail = _svc.GetPatientDetails(id);
                     usrdetail = _svc.GetUserDetails(bkdetail.PatientID);
                     patdetail = _svc.GetPatient(bkdetail.PatientID);

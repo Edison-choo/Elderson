@@ -1,4 +1,5 @@
-﻿using Elderson.Models;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Elderson.Models;
 using Elderson.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,13 +19,15 @@ namespace Elderson.Api
         private ScheduleService _svc;
         private BookingService _bksvc;
         private UserService _usrsvc;
+        private MedicalHistoryService _mhsvc;
 
-        public ScheduleController(EldersonContext context, ScheduleService service, BookingService bookservice, UserService userservice)
+        public ScheduleController(EldersonContext context, ScheduleService service, BookingService bookservice, UserService userservice, MedicalHistoryService mhservice)
         {
             _context = context;
             _svc = service;
             _bksvc = bookservice;
             _usrsvc = userservice;
+            _mhsvc = mhservice;
         }
 
         // GET: api/<ScheduleController>
@@ -87,6 +90,26 @@ namespace Elderson.Api
 
         }
 
+        // GET: api/<ScheduleController>/GetAllMedicalHistory/patient_id
+        [HttpGet("GetAllMedicalHistory/{patient_id}", Name = "GetAllMedicalHistory")]
+        public ActionResult<List<MedicalHistory>> GetAllMedicalHistory(string patient_id)
+        {
+            List<MedicalHistory> allhistory = new List<MedicalHistory>();
+
+            try
+            {
+                allhistory = _mhsvc.GetMedicalHistoryOfUser(patient_id);
+                var jsonStr = JsonSerializer.Serialize(allhistory.Select(x => new { x.Id, x.Name, x.Description, startdate = x.StartDate.Date.ToShortDateString(), enddate = x.EndDate.Date.ToShortDateString(), x.PatientID }));
+                return Ok(jsonStr);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("instalmentController.getCarLoan", ex);
+                return BadRequest();
+            }
+
+        }
+
         // DELETE api/<ScheduleController>/2
         [HttpDelete("{scheduleId}")]
         public ActionResult Delete(string scheduleId)
@@ -95,7 +118,6 @@ namespace Elderson.Api
             {
                 var deleteSchedule = _svc.GetScheduleById(scheduleId);
                 _svc.DeleteSchedule(deleteSchedule);
-                return RedirectToPage("DRR/Index");
             }
             catch (Exception ex)
             {
