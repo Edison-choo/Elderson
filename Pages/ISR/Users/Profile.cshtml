@@ -68,7 +68,6 @@
                                     <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" id="dropdownMenuSplitButton1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuSplitButton1">
-                                        <a class="dropdown-item" asp-page="Lock" asp-route-id="@Model.SelectedUser.Id">Lock</a>
                                         <a class="dropdown-item" asp-page="ChangePwd" asp-route-id="@Model.SelectedUser.Id">Change password</a>
                                         <a class="dropdown-item" data-toggle="modal" data-target=@("#staticBackdrop" + Model.SelectedUser.Id)>Delete</a>
                                     </div>
