@@ -91,7 +91,7 @@
 
                             </div>
                             <div style="width:10%;">
-                                <input asp-for="selectedMedication.MedAllergyIngredients" value="@Model.selectedMedication.MedAllergyIngredients" type="text" class="form-control" id="minAmt">
+                                <textarea asp-for="selectedMedication.MedAllergyIngredients" value="@Model.selectedMedication.MedAllergyIngredients" type="text" class="form-control" id="minAmt"></textarea>
                                 <span asp-validation-for="selectedMedication.MedAllergyIngredients" class="text-danger"></span>
                             </div>
 
