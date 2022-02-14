@@ -51,7 +51,7 @@ namespace Elderson.Pages
             {
                 bool valid = true;
                 myCart = HttpContext.Session.GetCart("Cart");
-                if (myCart == null)
+                if (myCart == null && HttpContext.Session.GetString("Prescription") == null)
                 {
                     _notfy.Warning("Your cart is empty!");
                     valid = false;
