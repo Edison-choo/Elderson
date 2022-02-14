@@ -24,7 +24,7 @@ namespace Elderson.Services
         public List<Booking> GetBookingHistoryOfUser(string id)
         {
             List<Booking> AllUserBookings = new List<Booking>();
-            AllUserBookings = _context.Booking.Where(b => (b.PatientID == id) && (b.BookDateTime > DateTime.Now) && (b.Status == "c")).ToList();
+            AllUserBookings = _context.Booking.Where(b => (b.PatientID == id) && (b.Status == "c")).ToList();
             return AllUserBookings;
         }
         public List<Booking> GetBookingOfDoctor(string id)
