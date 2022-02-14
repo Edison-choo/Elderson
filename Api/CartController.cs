@@ -71,14 +71,5 @@ namespace Elderson.Api
             HttpContext.Session.SetCart("Cart", cartItems);
             _notfy.Warning("Item removed!");
         }
-        [HttpGet("{apiname}/{Id}", Name = "RemoveMedication")]
-        public void RemoveMedication(int Id)
-        {
-            List<CartMedication> cartItems = new List<CartMedication>();
-            cartItems = HttpContext.Session.GetMedicationCart("MedicationCart");
-            cartItems.RemoveAt(Id);
-            HttpContext.Session.SetCart("Cart", cartItems);
-            _notfy.Warning("Item removed!");
-        }
     }
 }

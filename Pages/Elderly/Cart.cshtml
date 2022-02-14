@@ -61,6 +61,7 @@
         formatMedicationCart();
     }
     function formatCart() {
+        $("#cartBody").html("");
         total = 0;
         if (cart != null) {
             for (i = 0; i < cart.length; i++) {
@@ -80,7 +81,7 @@
                 </tr>
             `)
             }
-            
+            $("#total").text(`$${total}`)
         }
     }
     function formatMedicationCart() {
