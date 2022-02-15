@@ -20,7 +20,39 @@
     .popupbtn {
         width: 40%;
     }
+    #alertPopup {
+        display: none;
+    }
+
+    .alert {
+        padding: 20px;
+        background-color: #f44336;
+        color: white;
+        width: 100%;
+    }
+
+    .closebtn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+        .closebtn:hover {
+            color: black;
+        }
+
 </style>
+
+<div class="alert" id="alertPopup">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    Schedule is booked, and cannot be deleted
+</div>
+
 
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
@@ -173,6 +205,10 @@
     }
 
     function nodelete() {
-        alert("Schedule is booked, and cannot be deleted");
+        document.getElementById("alertPopup").style.display = "block";
+        const alertTimeout = setTimeout(function () {
+            document.getElementById("alertPopup").style.display = "none";
+        }, 2500);
+        //alert("Schedule is booked, and cannot be deleted");
     }
 </script>
