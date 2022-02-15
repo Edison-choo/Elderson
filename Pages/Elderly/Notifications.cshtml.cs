@@ -30,15 +30,7 @@ namespace Elderson.Pages.Elderly
                 {
                     if (p.PatientId == HttpContext.Session.GetString("LoginUser") && p.Status == "1")
                     {
-                        try
-                        {
-
-                            specificPrescriptionList.Add(p.Date);
-                        }
-                        catch(Exception ex)
-                        {
-
-                        }
+                        specificPrescriptionList.Add(p.Date);
                     }
                     else
                     {

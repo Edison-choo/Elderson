@@ -79,7 +79,7 @@ namespace Elderson.Api
             {
                 allPrescriptions = _pres_svc.GetPrescriptionsOld();
 
-                var jsonString = JsonSerializer.Serialize(allPrescriptions.Select(y => new { y.Id, y.FormId, y.PatientId, y.PatientName, y.Status, y.DoctorName, Date = y.Date.ToShortDateString() }));
+                var jsonString = JsonSerializer.Serialize(allPrescriptions.Select(y => new { y.Id, y.FormId, y.PatientId, y.PatientName, y.Status, y.DoctorName, y.Date }));
                 return Ok(jsonString);
             }
             catch (Exception ex)

@@ -2,9 +2,9 @@
 @model Elderson.Pages.Pharmacist.Prescrip.ViewPrescriptionObjModel
 @{
     Layout = "Shared/_LayoutOrganization";
-    ViewData["Title"] = "View Prescription Page";
-    ViewData["Header"] = "VIEW PRESCRIPTION";
-    ViewData["Breadcrumb"] = "View Prescriptions > View ";
+    ViewData["Title"] = "View Supplier Page";
+    ViewData["Header"] = "VIEW SUPPLIER";
+    ViewData["Breadcrumb"] = "Medical Supplier > View ";
 
 }
 
@@ -55,7 +55,7 @@
             <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Prescription Information</h4>
+                        <h4 class="card-title">Supplier Information</h4>
                         <hr />
                         <div>
                             <p class="form-group d-flex">
@@ -108,7 +108,7 @@
                                     string concat = "";
                                     foreach (var a in Model.specificMedication)
                                     {
-                                        concat = concat + " " + a + " ";
+                                        concat = concat + " " + a + "|";
                                     }
 
                                     @Html.Raw(concat);
