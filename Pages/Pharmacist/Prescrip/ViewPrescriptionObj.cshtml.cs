@@ -39,9 +39,9 @@ namespace Elderson.Pages.Pharmacist.Prescrip
                     specificMedication = new List<string>();
                     foreach (var m in medication)
                     {
-                        if (SelectedPrescripiton.FormId != null && SelectedPrescripiton.FormId.Equals(m.FormId))
+                        if (SelectedPrescripiton.FormId != null && SelectedPrescripiton.FormId.Equals(m.FormId.Trim()))
                         {
-                            specificMedication.Add(String.Format("{0}: {1}", m.MedName, m.MedType));
+                            specificMedication.Add(String.Format("{0}: {1}", m.MedName, m.Quantity));
                         }
                         else
                         {
