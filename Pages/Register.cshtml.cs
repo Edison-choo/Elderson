@@ -116,7 +116,7 @@ namespace Elderson.Pages
                     newUser.Id = guid;
                     newUser.CreatedAt = DateTime.Now;
 
-                    newUser.IsVerified = code;
+                    newUser.IsVerified = "1";
                     valid = _svc.AddUser(newUser);
                 }
 
@@ -128,7 +128,7 @@ namespace Elderson.Pages
                 _logger.LogInformation("{actionStatus} User {userId} {userAction}.", "Successful", newUser.Id, "register");
                 _notfy.Success("Register Successfully. Verify your email to login.");
 
-                sendEmail(newUser.Email, newUser.Id, code);
+                //sendEmail(newUser.Email, newUser.Id, code);
 
                 return RedirectToPage("emailVerification");
             } else
@@ -171,7 +171,7 @@ namespace Elderson.Pages
 
             SmtpClient client = new SmtpClient();
             client.Connect("smtp.gmail.com", 465, true);
-            client.Authenticate("eldersonhelpdesk@gmail.com", "Elderson123");
+            client.Authenticate("", "");
 
             client.Send(message);
             client.Disconnect(true);

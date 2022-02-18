@@ -73,11 +73,11 @@ namespace Elderson.Pages.Organization
                 {
                     user.Email = email;
                     var code = Guid.NewGuid().ToString();
-                    user.IsVerified = code;
+                    user.IsVerified = "1";
                     Boolean valid = _svc.UpdateUser(user);
                     if (valid)
                     {
-                        sendEmail(user.Email, user.Id, code);
+                        //sendEmail(user.Email, user.Id, code);
                         _logger.LogInformation("{actionStatus} User {userId} {userAction}.", "Successful", user.Id, "update user");
                         _notfy.Success("Change password Successfully");
 
@@ -90,7 +90,7 @@ namespace Elderson.Pages.Organization
                             _notfy.Success("Signout Successfully");
 
                         }
-                        return RedirectToPage("/");
+                        return Redirect("~/Signout");
                     }
 
                 }
@@ -136,7 +136,7 @@ namespace Elderson.Pages.Organization
 
             SmtpClient client = new SmtpClient();
             client.Connect("smtp.gmail.com", 465, true);
-            client.Authenticate("eldersonhelpdesk@gmail.com", "Elderson123");
+            client.Authenticate("", "");
 
             client.Send(message);
             client.Disconnect(true);

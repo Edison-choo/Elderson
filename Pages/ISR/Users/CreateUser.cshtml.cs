@@ -128,7 +128,7 @@ namespace Elderson.Pages.Users
                     newUser.Id = guid;
                     newUser.CreatedAt = DateTime.Now;
 
-                    newUser.IsVerified = code;
+                    newUser.IsVerified = "1";
                     valid = _svc.AddUser(newUser);
                 }
 
@@ -179,7 +179,7 @@ namespace Elderson.Pages.Users
                         break;
                 }
 
-                sendEmail(newUser.Email, newUser.Id, code);
+                //sendEmail(newUser.Email, newUser.Id, code);
                 _logger.LogInformation("{actionStatus} User {userId} {userAction}.", "Successful", newUser.Id, "create user");
                 _notfy.Success("Create User Successfully");
                 return RedirectToPage("Index");
@@ -249,7 +249,7 @@ namespace Elderson.Pages.Users
 
             SmtpClient client = new SmtpClient();
             client.Connect("smtp.gmail.com", 465, true);
-            client.Authenticate("eldersonhelpdesk@gmail.com", "Elderson123");
+            client.Authenticate("", "");
 
             client.Send(message);
             client.Disconnect(true);
